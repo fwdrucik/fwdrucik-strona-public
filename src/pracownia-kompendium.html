@@ -1,0 +1,35 @@
+<section class="page-hero pracownia-hero">
+  <div class="container">
+    <h1>Kompendium Pracowni Drucika</h1>
+    <p class="lead">Co robi rezystor? Skąd robot wie, że ktoś nacisnął przycisk? Znajdź hasło, obejrzyj rysunek i zrób próbę w lekcji.</p>
+    <nav class="kurs-linki" aria-label="Działy kompendium">
+      <a href="#wiedza-elektronika">Elektronika</a>
+      <a href="#wiedza-arduino">Arduino</a>
+      <a href="#wiedza-druk-3d">Druk 3D</a>
+      <a href="/pracownia/#kurs">Mapa kursu</a>
+    </nav>
+    <div class="kurs-szukaj" data-szukaj-wiedzy hidden>
+      <label for="kurs-fraza">Znajdź hasło</label>
+      <input id="kurs-fraza" type="search" placeholder="Np. dioda, STOP, warstwa" autocomplete="off">
+      <p role="status" data-licznik-wiedzy></p>
+    </div>
+  </div>
+</section>
+
+<!-- PRACOWNIA_WIEDZA -->
+
+<div class="container pracownia-sekcja">
+  <details>
+    <summary>Źródła dla opiekunów i nauczycieli</summary>
+    <ul>
+      <li><a href="https://lafvintech.com/pages/tutorials">LAFVIN · tutoriale do zestawu LA009 Ultimate Starter Kit for UNO R3</a></li>
+      <li><a href="https://docs.arduino.cc/software/ide-v2/tutorials/getting-started/ide-v2-downloading-and-installing">Arduino · instalacja Arduino IDE 2</a></li>
+      <li><a href="https://openstax.org/books/physics/pages/19-2-series-circuits">OpenStax · obwody szeregowe</a></li>
+      <li><a href="https://openstax.org/books/physics/pages/19-3-parallel-circuits">OpenStax · obwody równoległe</a></li>
+      <li><a href="https://github.com/arduino/docs-content/blob/main/content/built-in-examples/02.digital/InputPullupSerial/InputPullupSerial.md">Arduino · odczyt przycisku z INPUT_PULLUP</a></li>
+      <li><a href="https://help.prusa3d.com/article/modeling-with-3d-printing-in-mind_164135">Prusa · orientacja części do druku</a></li>
+    </ul>
+  </details>
+</div>
+<script src="/assets/pracownia.js" defer></script>
+<script src="/assets/pracownia-generatory.js" defer></script>

@@ -1,0 +1,99 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "DHT22 i AHT20: Pomiar temperatury i wilgotności w hali",
+  "description": "Analiza techniczna czujników DHT22 i AHT20 w zastosowaniach warsztatowych. Sprawdź specyfikację, dokładność pomiarową i integrację z systemami kontroli.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-08-16",
+  "dateModified": "2026-08-16",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/dht22-aht20-pomiar-temperatury-wilgotnosci/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-blue">Elektronika i magistrale</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 6 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 16.08.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">DHT22 i AHT20: Pomiar temperatury i wilgotności w hali</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">DHT22 czy AHT20? Porównujemy sposób pomiaru temperatury i wilgotności oraz wymagania przy podłączeniu.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#charakterystyka-dht22">Charakterystyka techniczna DHT22</a></li>
+      <li><a href="#charakterystyka-aht20">Architektura i parametry AHT20</a></li>
+      <li><a href="#porownanie-parametrow">Zestawienie parametrów technicznych</a></li>
+      <li><a href="#wplyw-srodowiska">Wpływ warunków warsztatowych na pomiar</a></li>
+      <li><a href="#zastosowanie-praktyczne">Zastosowanie w warsztacie F.W. DRUCIK</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="charakterystyka-dht22">1. Charakterystyka techniczna DHT22</h2>
+<p>Czujnik DHT22 (znany również jako AM2302) to popularny moduł cyfrowy wykorzystujący pojemnościowy czujnik wilgotności oraz termistor NTC do pomiaru temperatury. Komunikacja odbywa się za pomocą jednoprzewodowego protokołu cyfrowego, co upraszcza implementację, ale narzuca ścisłe rygory czasowe (timingi).</p><p>DHT22: zasilanie 3,3–5,5 V i pobór prądu podczas pomiaru zwykle do 1,5 mA. Potwierdź wartości w dokumentacji modułu. Zachowaj co najmniej 2 sekundy między odczytami ze względu na czas stabilizacji sensora.</p>
+
+    <figure>
+      <img src="/assets/blog/dht22-aht20-pomiar-temperatury-wilgotnosci.jpg" width="1280" height="853" loading="lazy" alt="DHT22 i AHT20: Pomiar temperatury i wilgotności w hali">
+      <figcaption>Widok zbliżeniowy na cyfrowy czujnik wilgotności i temperatury zamontowany na płytce stykowej.
+        <span class="zrodlo">Fot. <a href="https://commons.wikimedia.org/wiki/File:AM2302_(DHT22)_digital_temperature_and_humidity_sensor_module.jpg" target="_blank" rel="noopener nofollow">Suyash Dwivedi</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener nofollow">CC BY-SA 4.0</a>, Wikimedia Commons.</span>
+      </figcaption>
+    </figure>
+
+
+    <h2 id="charakterystyka-aht20">2. Architektura i parametry AHT20</h2>
+<p>AHT20 stanowi nowszą konstrukcję opartą na magistrali I2C. Jest to sensor typu MEMS, który integruje układ przetwarzania sygnału z elementem pomiarowym w jednej obudowie. W przeciwieństwie do DHT22, AHT20 charakteryzuje się wyższą stabilnością długoterminową i szybszym czasem odpowiedzi.</p><p>AHT20 pracuje przy 2,0–5,5 V. I2C pozwala współdzielić szynę z innymi urządzeniami. Orientacyjna dokładność wynosi ±2% RH i ±0,3°C; zależy od kalibracji oraz samonagrzewania układu.</p>
+
+    <h2 id="porownanie-parametrow">3. Zestawienie parametrów technicznych</h2>
+<table><thead><tr><th>Parametr</th><th>DHT22</th><th>AHT20</th></tr></thead><tbody><tr><td>Interfejs</td><td>1-Wire (własny)</td><td>I2C</td></tr><tr><td>Napięcie zasilania</td><td>3,3V - 5,5V</td><td>2,0V - 5,5V</td></tr><tr><td>Dokładność RH</td><td>±2-5%</td><td>±2%</td></tr><tr><td>Dokładność Temp</td><td>±0,5°C</td><td>±0,3°C</td></tr><tr><td>Czas próbkowania</td><td>min. 2s</td><td>zależny od trybu</td></tr></tbody></table><p>Wszystkie powyższe dane są wartościami orientacyjnymi. Przed wdrożeniem w środowisku przemysłowym należy każdorazowo sprawdzić notę katalogową konkretnego egzemplarza sensora, gdyż na rynku dostępnych jest wiele zamienników o różnych parametrach fizycznych.</p>
+
+    <h2 id="wplyw-srodowiska">4. Wpływ warunków warsztatowych na pomiar</h2>
+<p>Warsztat to środowisko o wysokim stopniu zanieczyszczenia powietrza (pył metaliczny, opary olejów, rozpuszczalniki). Sensory typu DHT22 i AHT20 nie posiadają wbudowanych filtrów membranowych, co sprawia, że są podatne na degradację wskutek osadzania się zanieczyszczeń na strukturze sensora wilgotności.</p><p><em>Ostrzeżenie BHP:</em> Podczas montażu układów pomiarowych w pobliżu maszyn CNC lub stanowisk spawalniczych, należy zapewnić odpowiednią izolację galwaniczną oraz ochronę przed wyładowaniami elektrostatycznymi (ESD). Nie wolno montować czujników w bezpośrednim sąsiedztwie źródeł ciepła lub w miejscach narażonych na bezpośrednie działanie chłodziwa, gdyż może to doprowadzić do zwarcia i uszkodzenia sterownika.</p>
+
+    <h2 id="zastosowanie-praktyczne">5. Zastosowanie w warsztacie F.W. DRUCIK</h2>
+<p>W warunkach warsztatu F.W. DRUCIK (Domosław 13A, 06-120 Winnica) precyzyjny pomiar wilgotności jest kluczowy przy procesach wymagających stabilnych warunków, takich jak <a href="/uslugi/druk-3d/">druk 3D</a> (higroskopijność filamentów) czy przechowywanie komponentów elektronicznych. Jeśli potrzebujesz pomocy w integracji systemów monitoringu, kalibracji czujników lub naprawie układów sterowania, zapraszamy do kontaktu.</p><p>Nasza oferta obejmuje szeroki zakres usług technicznych, od <a href="/uslugi/elektromechanika/">elektromechaniki</a> po zaawansowane <a href="/uslugi/maszyny-cnc/">maszyny CNC</a>. W przypadku problemów z automatyką przemysłową, prosimy o kontakt pod numerem 601 726 924 lub adresem e-mail fwdrucik@gmail.com. Pracujemy od poniedziałku do piątku w godzinach 8-17 oraz w soboty od 9 do 13.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Czy DHT22 i AHT20 można stosować zamiennie w kodzie?</summary>
+        <p>Nie, sensory te korzystają z zupełnie innych protokołów komunikacyjnych. DHT22 wymaga obsługi czasowej linii danych, podczas gdy AHT20 komunikuje się przez standardową magistralę I2C.</p>
+      </details>
+      <details>
+        <summary>Jaki jest wpływ zanieczyszczeń na odczyty wilgotności?</summary>
+        <p>Osadzanie się pyłu i oparów olejowych na czujniku powoduje zatykanie porów elementu pomiarowego. Prowadzi to do znacznego wydłużenia czasu odpowiedzi oraz błędnych wskazań wilgotności względnej.</p>
+      </details>
+      <details>
+        <summary>Czy te czujniki nadają się do pracy na zewnątrz?</summary>
+        <p>Sensory te nie są przystosowane do pracy w trudnych warunkach atmosferycznych bez dodatkowej obudowy ochronnej. Bez odpowiedniego zabezpieczenia przed wilgocią i kondensacją, ulegną szybkiej korozji.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

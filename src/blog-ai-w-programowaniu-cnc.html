@@ -1,0 +1,208 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "AI w programowaniu maszyn CNC — co realnie działa, a co jest marketingiem",
+  "description": "Adaptacyjne sterowanie posuwem, monitorowanie zużycia narzędzia, modele językowe a G-code. Gdzie sztuczna inteligencja pomaga w obróbce, a gdzie szkodzi.",
+  "author": {"@type": "Organization", "name": "F.W. DRUCIK"},
+  "publisher": {"@type": "Organization", "name": "F.W. DRUCIK", "logo": {"@type": "ImageObject", "url": "https://fwdrucik.pl/assets/favicon.png"}},
+  "datePublished": "2026-08-14",
+  "dateModified": "2026-08-14",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/ai-w-programowaniu-cnc/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-orange">Spawanie &amp; CNC</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 12 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 08.08.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">AI w programowaniu maszyn CNC — co realnie działa, a co jest marketingiem</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">AI w CAM może skrócić obróbkę, ale błędna ścieżka może uszkodzić wrzeciono. Sprawdzamy, które funkcje pomagają i co zweryfikować przed uruchomieniem maszyny.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#pojecia">Uporządkujmy pojęcia: algorytm, uczenie maszynowe, model językowy</a></li>
+      <li><a href="#dziala">Co realnie działa dzisiaj</a></li>
+      <li><a href="#llm">Modele językowe a G-code — gdzie pomagają, gdzie szkodzą</a></li>
+      <li><a href="#przyklad">Przykład: co można, a czego nie oddać modelowi</a></li>
+      <li><a href="#marketing">Czego nie da się dziś kupić, choć bywa obiecywane</a></li>
+      <li><a href="#zasady">Zasady bezpiecznej pracy z programem od AI</a></li>
+      <li><a href="#male">Co z tego ma mały warsztat</a></li>
+      <li><a href="#warsztat">Maszyny CNC i oprogramowanie w Winnicy</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="pojecia">1. Uporządkujmy pojęcia: algorytm, uczenie maszynowe, model językowy</h2>
+    <p>Pod hasłem „AI w CNC" kryją się trzy zupełnie różne rzeczy i mylenie ich jest źródłem większości rozczarowań:</p>
+    <ul>
+      <li><strong>Algorytm optymalizacyjny</strong> — deterministyczny kod, który liczy ścieżkę narzędzia tak, by utrzymać stałe obciążenie skrawania. Tu nie ma żadnego uczenia. Strategie trochoidalne i adaptacyjne działają w oprogramowaniu CAM od lat i są najbardziej wartościową „AI", jaką można kupić — mimo że AI nie są.</li>
+      <li><strong>Uczenie maszynowe</strong> — model wytrenowany na danych z czujników (prąd wrzeciona, drgania, emisja akustyczna), który rozpoznaje stan narzędzia albo nadchodzącą awarię. Działa, ale wymaga danych z <em>tej konkretnej</em> maszyny i procesu; model wytrenowany gdzie indziej zwykle nie przenosi się bez ponownego strojenia.</li>
+      <li><strong>Model językowy</strong> — narzędzie generujące tekst, w tym kod. Zna składnię G-code, ale nie ma modelu geometrii detalu, mocowania ani maszyny. Nie „widzi" kolizji i nie zna zakresu ruchu twojej obrabiarki.</li>
+    </ul>
+    <p>Praktyczna konsekwencja: pierwsza grupa nadaje się do produkcji od razu, druga wymaga inwestycji w czujniki i dane, trzecia jest asystentem, którego wynik trzeba zweryfikować w całości.</p>
+
+    <h2 id="dziala">2. Co realnie działa dzisiaj</h2>
+    <div class="tabela-wrap">
+      <table>
+        <thead>
+          <tr><th>Zastosowanie</th><th>Na czym polega</th><th>Realny efekt</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Ścieżki adaptacyjne i trochoidalne w CAM</td>
+            <td>Utrzymanie stałego kąta opasania narzędzia zamiast stałej głębokości skrawania</td>
+            <td>Krótszy czas obróbki i wyraźnie dłuższa żywotność narzędzia, zwłaszcza w materiałach trudnoskrawalnych</td>
+          </tr>
+          <tr>
+            <td>Adaptacyjne sterowanie posuwem na maszynie</td>
+            <td>Sterowanie modyfikuje posuw na podstawie obciążenia wrzeciona w czasie rzeczywistym</td>
+            <td>Ochrona narzędzia przy naddatku nierównomiernym, np. w odlewach i po spawaniu</td>
+          </tr>
+          <tr>
+            <td>Monitorowanie stanu narzędzia</td>
+            <td>Analiza prądu wrzeciona, drgań i emisji akustycznej; klasyfikacja stanu ostrza</td>
+            <td>Wymiana narzędzia przed pęknięciem zamiast po zniszczeniu detalu</td>
+          </tr>
+          <tr>
+            <td>Predykcyjne utrzymanie ruchu</td>
+            <td>Śledzenie trendu drgań łożysk wrzeciona, temperatury, poboru prądu napędów</td>
+            <td>Planowany przestój zamiast awaryjnego; największa oszczędność w całej liście</td>
+          </tr>
+          <tr>
+            <td>Kontrola jakości z użyciem wizji</td>
+            <td>Kamera plus klasyfikator rozpoznający braki, wyszczerbienia, brak otworu</td>
+            <td>Sprawdzanie 100% sztuk zamiast wyrywkowego, przy prostych i powtarzalnych cechach</td>
+          </tr>
+          <tr>
+            <td>Rozpoznawanie cech konstrukcyjnych w modelu 3D</td>
+            <td>Automatyczne wykrycie kieszeni, otworów, gwintów i przypisanie operacji</td>
+            <td>Skrócenie żmudnej części pracy technologa przy typowych detalach</td>
+          </tr>
+          <tr>
+            <td>Symulacja i wykrywanie kolizji</td>
+            <td>Model maszyny, uchwytów i półfabrykatu, weryfikacja całego programu przed uruchomieniem</td>
+            <td>Nie jest to AI, ale to najważniejsze narzędzie na tej liście — bez niego reszta jest ryzykowna</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <figure>
+      <img src="/assets/blog/cnc-frezarka.jpg" width="1280" height="853" loading="lazy"
+           alt="Frezarka CNC podczas obróbki detalu metalowego w przestrzeni roboczej">
+      <figcaption>Największy zysk z „inteligentnych" funkcji daje to, co dzieje się przed uruchomieniem: dobra strategia ścieżki i symulacja z modelem mocowania.
+        <span class="zrodlo">Fot. <a href="https://commons.wikimedia.org/wiki/File:CNC_milling_machine.jpg" target="_blank" rel="noopener nofollow">Impressionmanufacturer</a>, licencja <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener nofollow">CC BY-SA 4.0</a>, Wikimedia Commons.</span>
+      </figcaption>
+    </figure>
+
+    <p>Zwróć uwagę na proporcje: największe i najpewniejsze korzyści dają rzeczy najmniej efektowne — dobra strategia ścieżki, symulacja i pomiar drgań. Efekt „AI napisze program" jest w tym zestawieniu marginalny.</p>
+
+    <h2 id="llm">3. Modele językowe a G-code — gdzie pomagają, gdzie szkodzą</h2>
+    <p>Model językowy zna składnię G-code, bo widział jej mnóstwo. Nie zna natomiast twojej maszyny. To rozróżnienie wyznacza granicę zastosowań.</p>
+    <p><strong>Zadania, w których model językowy realnie oszczędza czas:</strong></p>
+    <ul>
+      <li><strong>Wyjaśnianie cudzego programu</strong> — „co robi ta sekcja", „dlaczego tu jest kompensacja promienia". Świetne przy przejmowaniu starych programów bez dokumentacji.</li>
+      <li><strong>Makra i parametryzacja</strong> — przeliczenia, pętle, zmienne, powtarzalne wzory otworów. Kod jest krótki, łatwy do sprawdzenia wzrokiem.</li>
+      <li><strong>Konwersje i przeliczenia</strong> — cale na milimetry, prędkość skrawania na obroty przy zadanej średnicy, posuw na ostrze na posuw minutowy.</li>
+      <li><strong>Skrypty pomocnicze</strong> — przetworzenie pliku z sondy pomiarowej, wygenerowanie raportu z logów maszyny, filtrowanie i porównywanie programów. To zwykły Python, w którym błąd nie kosztuje wrzeciona.</li>
+      <li><strong>Szkice postprocesora i dokumentacja</strong> — wersje wstępne, które i tak przechodzą przez ręce technologa.</li>
+      <li><strong>Nauka</strong> — pytania o znaczenie kodów, różnice między dialektami sterowań, typowe strategie.</li>
+    </ul>
+    <p><strong>Zadania, w których model językowy jest niebezpieczny:</strong></p>
+    <ul>
+      <li><strong>Generowanie kompletnego programu obróbczego na detal.</strong> Model nie ma geometrii detalu ani mocowania, więc nie może zagwarantować braku kolizji. To nie jest kwestia „lepszego modelu" — brakuje mu danych wejściowych, a nie inteligencji.</li>
+      <li><strong>Dobór parametrów skrawania do konkretnego narzędzia.</strong> Poda wartości wyglądające sensownie, ale prawdziwe dane są w katalogu producenta narzędzia i zależą od sztywności maszyny, wysięgu, chłodzenia i stanu uchwytu.</li>
+      <li><strong>Przenoszenie kodu między sterowaniami.</strong> Dialekty różnią się cyklami, składnią makr i domyślnymi ustawieniami. Konwersja „w locie" bywa poprawna składniowo i błędna technologicznie.</li>
+      <li><strong>Cokolwiek, co ma pójść na maszynę bez symulacji.</strong> Bez wyjątków.</li>
+    </ul>
+    <p class="uwaga"><strong>Najważniejsza cecha do zapamiętania:</strong> model językowy zawsze zwraca odpowiedź, także wtedy, gdy jej nie zna. Nieistniejący kod cyklu albo zmyślony parametr sterowania wygląda dokładnie tak samo jak prawdziwy. Weryfikacja w dokumentacji sterowania nie jest opcjonalna.</p>
+
+    <h2 id="przyklad">4. Przykład: co można, a czego nie oddać modelowi</h2>
+    <p>Rozważmy typowe zlecenie: płyta aluminiowa, kilkanaście otworów w regularnej siatce, dwie kieszenie, obrys.</p>
+    <ul>
+      <li><strong>Siatka otworów jako makro parametryczne</strong> — dobre zadanie dla modelu. Kod ma kilkanaście linii, sprawdzenie zajmuje minutę, a błąd ujawni się natychmiast w symulacji.</li>
+      <li><strong>Przeliczenie parametrów</strong> — prędkość skrawania z katalogu na obroty wrzeciona, posuw na ostrze na posuw minutowy. Model liczy poprawnie, ale wartości wejściowe bierzesz z katalogu narzędzia, nie od niego.</li>
+      <li><strong>Ścieżki kieszeni</strong> — to zadanie dla CAM, nie dla modelu językowego. CAM zna geometrię i policzy strategię adaptacyjną z kontrolą opasania.</li>
+      <li><strong>Kolejność operacji i mocowanie</strong> — decyzja technologa. Tu liczy się wiedza o odkształceniach, dostępie do detalu i o tym, co się stanie, gdy zdejmiesz naddatek z jednej strony płyty.</li>
+      <li><strong>Raport z pomiarów sondą</strong> — świetne zadanie dla skryptu wygenerowanego z pomocą modelu. Zero ryzyka, realna oszczędność czasu.</li>
+    </ul>
+    <p>Wzorzec jest prosty: <strong>oddawaj modelowi to, co możesz w całości sprawdzić w minutę, i to, czego błąd nie dotyka maszyny.</strong></p>
+
+    <h2 id="marketing">5. Czego nie da się dziś kupić, choć bywa obiecywane</h2>
+    <ul>
+      <li><strong>„Wrzuć model 3D, odbierz gotowy detal."</strong> Automatyczne rozpoznawanie cech i dobór operacji działa dla typowych, prostych geometrii. Mocowanie, kolejność, dostępność narzędzi i odkształcenia nadal wymagają człowieka.</li>
+      <li><strong>„AI dobierze parametry lepiej niż producent narzędzia."</strong> Dane katalogowe powstają z prób na konkretnych materiałach i maszynach. Model bez danych z twojej maszyny nie ma podstaw do lepszej rekomendacji.</li>
+      <li><strong>„System sam wykryje każdą awarię."</strong> Monitorowanie stanu wykrywa to, czego przykłady widziało w danych uczących. Nowy rodzaj usterki zwykle przechodzi niezauważony.</li>
+      <li><strong>„Nie trzeba już symulacji."</strong> Odwrotnie — im więcej automatycznego generowania, tym większa rola symulacji jako ostatniej bariery przed kolizją.</li>
+    </ul>
+
+    <h2 id="zasady">6. Zasady bezpiecznej pracy z programem od AI</h2>
+    <ol>
+      <li><strong>Zawsze symulacja</strong> z modelem maszyny, uchwytów i półfabrykatu. Symulacja samej ścieżki bez modelu mocowania nie wykryje najgroźniejszych kolizji.</li>
+      <li><strong>Przegląd nagłówka programu</strong>: układ współrzędnych, jednostki, płaszczyzna pracy, kompensacja długości i promienia narzędzia, wywołanie chłodziwa. Tu powstaje najwięcej cichych błędów.</li>
+      <li><strong>Weryfikacja tablicy narzędzi</strong> — długości, promienie, numery. Program może być poprawny, a zawartość magazynu inna niż założono.</li>
+      <li><strong>Pierwsze uruchomienie w trybie pojedynczego bloku</strong>, z posuwem szybkim ograniczonym i ręką na wyłączniku bezpieczeństwa.</li>
+      <li><strong>Przejazd nad detalem</strong> z podniesionym punktem zerowym (dry run) przed skrawaniem.</li>
+      <li><strong>Ograniczenie posuwu do kilkunastu procent</strong> przy pierwszym przejściu skrawającym.</li>
+      <li><strong>Nie wyłączaj wyłączników krańcowych ani limitów programowych</strong>, żeby „program przeszedł". To jest ostatnie zabezpieczenie maszyny.</li>
+      <li><strong>Zapisuj wersje programów.</strong> Zwykłe repozytorium plików pozwala odtworzyć, która wersja jechała, gdy powstał brak.</li>
+    </ol>
+    <p class="uwaga"><strong>BHP.</strong> Przy uruchamianiu nowego programu obowiązują zamknięte osłony, okulary ochronne i wolna droga ewakuacji. Największe ryzyko powstaje nie przy pracy maszyny, lecz przy pochyleniu się nad przestrzenią roboczą w trakcie próbnego przejazdu.</p>
+
+    <h2 id="male">7. Co z tego ma mały warsztat</h2>
+    <p>Bez inwestycji w drogie systemy nadzoru można sięgnąć po rzeczy, które kosztują niewiele i dają efekt od razu:</p>
+    <ul>
+      <li><strong>Dobra strategia ścieżki w CAM</strong> — najtańsza i największa poprawa. Zysk widać w liczbie zużytych frezów.</li>
+      <li><strong>Pomiar drgań i temperatury wrzeciona</strong> prostym rejestratorem na mikrokontrolerze. Trend miesięczny mówi o łożyskach więcej niż osłuchiwanie. Podstawy takiego układu opisaliśmy w <a href="/blog/kurs-esp32-arduino-czesc-1/">kursie ESP32 i Arduino</a>.</li>
+      <li><strong>Zbieranie danych z maszyny</strong> — czasy cykli, przestoje, zużycie narzędzi. Bez danych żadna analiza, obojętnie jak nazwana, nie ma na czym pracować.</li>
+      <li><strong>Modele językowe do zadań pomocniczych</strong> — makra, skrypty, dokumentacja, wyjaśnianie starych programów. Realna oszczędność godzin przy zerowym ryzyku.</li>
+      <li><strong>Symulacja przed każdym uruchomieniem.</strong> Jedna uniknięta kolizja zwraca koszt oprogramowania.</li>
+    </ul>
+    <p>Warto też zauważyć, że modele językowe są dziś dostępne również w wersjach uruchamianych lokalnie, bez wysyłania danych na zewnątrz. Dla warsztatu pracującego na dokumentacji klientów to istotna różnica — rysunki i programy nie opuszczają firmy.</p>
+
+    <h2 id="warsztat">8. Maszyny CNC i oprogramowanie w Winnicy</h2>
+    <p>Budujemy maszyny CNC na zamówienie i modernizujemy starsze obrabiarki — konstrukcja, elektronika, sterowanie i uruchomienie. Zajmujemy się też oprogramowaniem: sterownikami w C++, automatyzacją w Pythonie i aplikacjami Android w Kotlinie, które spinają maszynę z resztą firmy. Szczegóły: <a href="/uslugi/maszyny-cnc/">budowa maszyn CNC</a> oraz <a href="/uslugi/programowanie-aplikacje/">programowanie i aplikacje</a>. Prototypy i części zamienne wykonujemy również metodą <a href="/uslugi/druk-3d/">druku 3D</a>.</p>
+    <p>Warsztat: Domosław 13A, 06-120 Winnica (powiat pułtuski, województwo mazowieckie). Telefon 601 726 924, e-mail fwdrucik@gmail.com. Pon.–pt. 8:00–17:00, sob. 9:00–13:00. Opis zlecenia i bezpłatna wstępna wycena: <a href="/kontakt/">formularz kontaktowy</a>.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Czy model językowy napisze mi program na frezarkę?</summary>
+        <p>Model może napisać poprawnie wyglądający kod, ale bez geometrii detalu, mocowania i parametrów maszyny nie wykluczy kolizji. Ścieżki generuj w CAM. LLM wykorzystuj do makr, obliczeń i wyjaśniania kodu.</p>
+      </details>
+      <details>
+        <summary>Czy ścieżki adaptacyjne to sztuczna inteligencja?</summary>
+        <p>Nie, to algorytmy geometryczne utrzymujące stałe obciążenie narzędzia. Bywają tak nazywane w materiałach handlowych, ale nie zawierają uczenia maszynowego. Jednocześnie dają największy i najpewniejszy zysk z całej listy „inteligentnych" funkcji.</p>
+      </details>
+      <details>
+        <summary>Od czego zacząć wdrażanie takich narzędzi w małym warsztacie?</summary>
+        <p>Od zbierania danych i od symulacji. Rejestrowanie czasów cykli, przestojów i zużycia narzędzi kosztuje niewiele, a bez tych danych żadna analiza nie ma na czym pracować. Drugim krokiem jest porządna symulacja programów przed uruchomieniem.</p>
+      </details>
+      <details>
+        <summary>Czy dane z rysunków klientów są bezpieczne przy korzystaniu z AI?</summary>
+        <p>Usługi chmurowe przesyłają dane na zewnętrzne serwery. Przy poufnej dokumentacji sprawdź warunki usługi i uzyskaj zgodę klienta. Model lokalny pozwala zatrzymać dane w firmie.</p>
+      </details>
+      <details>
+        <summary>Czy monitorowanie zużycia narzędzia opłaca się przy małych seriach?</summary>
+        <p>Przy pojedynczych sztukach zysk jest niewielki, bo koszt wdrożenia rozkłada się na mało detali. Opłacalność rośnie przy produkcji powtarzalnej, obróbce drogich materiałów oraz tam, gdzie pęknięcie narzędzia niszczy detal o wysokiej wartości dodanej.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

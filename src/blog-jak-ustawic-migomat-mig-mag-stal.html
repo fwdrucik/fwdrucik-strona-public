@@ -1,0 +1,159 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Jak ustawić migomat do stali — prąd, napięcie, drut i gaz",
+  "description": "Kurs MIG/MAG cz. 1: dobór drutu i gazu, reguły prądu i napięcia, tabela nastaw dla blach 1–6 mm i diagnoza łuku po dźwięku.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-09-26",
+  "dateModified": "2026-09-26",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/jak-ustawic-migomat-mig-mag-stal/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-orange">Spawanie & CNC</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 6 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 26.09.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Jak ustawić migomat do stali — prąd, napięcie, drut i gaz</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Większość złych spoin to nie krzywa ręka, tylko źle dobrane pokrętła. Reguły z głowy, tabela startowa dla stali i diagnoza łuku po dźwięku — część 1 kursu MIG/MAG.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#mig-czy-mag">MIG czy MAG — różnica to gaz</a></li>
+      <li><a href="#drut">Jaki drut do jakiej blachy</a></li>
+      <li><a href="#reguly">Cztery reguły z głowy</a></li>
+      <li><a href="#tabela">Tabela startowa: stal, drut 0,8, gaz M21</a></li>
+      <li><a href="#diagnoza">Diagnoza na słuch i na oko</a></li>
+      <li><a href="#przenoszenie">Rodzaje przenoszenia metalu</a></li>
+      <li><a href="#seria">Seria i wsparcie warsztatu</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="mig-czy-mag">1. MIG czy MAG — różnica to gaz</h2>
+<p>Spawarka jest ta sama, zmienia się gaz osłonowy. MAG używa gazu aktywnego i służy do stali, MIG — gazu obojętnego i służy do aluminium oraz miedzi. Liczby w tym kursie to punkt startowy, nie przepis: zawsze zrób próbę na złomie z tego samego materiału i tej samej grubości.</p>
+<div class="tabela-wrap"><table>
+<thead><tr><th></th><th>MAG</th><th>MIG</th></tr></thead>
+<tbody>
+<tr><td>Gaz</td><td>CO₂ albo Ar+CO₂ 82/18 (M21)</td><td>100% Ar, przy grubym aluminium Ar+He</td></tr>
+<tr><td>Materiał</td><td>stal czarna, nierdzewka (Ar + 2% CO₂)</td><td>aluminium, miedź</td></tr>
+<tr><td>Biegunowość</td><td>DC+ (uchwyt na plusie)</td><td>DC+</td></tr>
+</tbody>
+</table></div>
+<p><strong>Uwaga:</strong> drut samoosłonowy (bezgazowy) spawa się na odwrotnej biegunowości, DC−. Przy zmianie drutu sprawdź, jak podpięte są przewody.</p>
+
+    <figure>
+      <img src="/assets/blog/jak-ustawic-migomat-mig-mag-stal.jpg" width="1024" height="960" loading="lazy" alt="Jak ustawić migomat do stali — prąd, napięcie, drut i gaz">
+      <figcaption>Spawanie stali migomatem w warsztacie.
+        <span class="zrodlo">Fot. <a href="https://www.flickr.com/photos/30268134@N06/2832912619" target="_blank" rel="noopener nofollow">TechShop</a>, <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener nofollow">CC BY 2.0</a>, Openverse.</span>
+      </figcaption>
+    </figure>
+
+
+    <h2 id="drut">2. Jaki drut do jakiej blachy</h2>
+<ul>
+<li><strong>0,6 mm</strong> — blacha karoseryjna 0,5–1,5 mm,</li>
+<li><strong>0,8 mm</strong> — 0,8–4 mm, drut uniwersalny do warsztatu,</li>
+<li><strong>1,0 mm</strong> — 3–10 mm; przy aluminium to minimum,</li>
+<li><strong>1,2 mm</strong> — od 8 mm w górę i do łuku natryskowego.</li>
+</ul>
+
+    <h2 id="reguly">3. Cztery reguły z głowy</h2>
+<ol>
+<li><strong>Prąd:</strong> około 30–40 A na każdy milimetr grubości stali przy jednym przejściu.</li>
+<li><strong>Napięcie:</strong> U ≈ 14 + 0,05 × I. Przy 100 A wychodzi około 19 V.</li>
+<li><strong>Gaz:</strong> przepływ w l/min ≈ 10 × średnica drutu w mm, czyli 8–12 l/min. Na przeciągu więcej albo osłona od wiatru.</li>
+<li><strong>Wolny wylot drutu</strong> (od końcówki prądowej do materiału): 10–15 × średnica drutu, czyli 8–12 mm przy łuku zwarciowym.</li>
+</ol>
+
+    <h2 id="tabela">4. Tabela startowa: stal, drut 0,8, gaz M21</h2>
+<div class="tabela-wrap"><table>
+<thead><tr><th>Blacha</th><th>Prąd</th><th>Napięcie</th><th>Podajnik</th></tr></thead>
+<tbody>
+<tr><td>1 mm</td><td>40–60 A</td><td>15–16 V</td><td>2–3 m/min</td></tr>
+<tr><td>2 mm</td><td>70–90 A</td><td>17–18 V</td><td>3,5–4,5 m/min</td></tr>
+<tr><td>3 mm</td><td>100–130 A</td><td>18–19,5 V</td><td>5–6 m/min</td></tr>
+<tr><td>4 mm</td><td>130–160 A</td><td>19–21 V</td><td>6,5–8 m/min</td></tr>
+<tr><td>6 mm i więcej</td><td>170–220 A (drut 1,0)</td><td>22–25 V</td><td>kilka przejść albo łuk natryskowy</td></tr>
+</tbody>
+</table></div>
+<p>W spawarce bez synergii prąd ustawiasz podajnikiem — więcej drutu to większy prąd. Napięcie ustawia długość łuku. Te dwa pokrętła muszą do siebie pasować.</p>
+
+    <h2 id="diagnoza">5. Diagnoza na słuch i na oko</h2>
+<p>Dobrze ustawiony łuk zwarciowy brzmi jak równe skwierczenie boczku na patelni. Jeśli słyszysz coś innego, poszukaj objawu w tabeli.</p>
+<div class="tabela-wrap"><table>
+<thead><tr><th>Objaw</th><th>Przyczyna</th></tr></thead>
+<tbody>
+<tr><td>Syczenie, grube krople odprysku, płaski szeroki ścieg, podtopienia, drut przywiera do końcówki</td><td>napięcie za wysokie albo za mało drutu</td></tr>
+<tr><td>Drut wbija się w blachę, uchwyt odpycha, ścieg wąski i wysoki</td><td>napięcie za niskie albo za dużo drutu</td></tr>
+<tr><td>Przepalenia</td><td>prąd za duży albo za wolne prowadzenie</td></tr>
+<tr><td>Ścieg leży na wierzchu, nie wtapia się w brzegi (przyklejenie)</td><td>prąd za mały albo za szybkie prowadzenie</td></tr>
+<tr><td>Pory w spoinie</td><td>brak gazu, przeciąg, brudny materiał, za długi wylot drutu</td></tr>
+</tbody>
+</table></div>
+<p><strong>Indukcyjność (dynamika, dławik):</strong> więcej indukcyjności daje miękki łuk, mniej odprysków i płaski ścieg; mniej indukcyjności — twardy łuk, głębsze przetopienie i więcej odprysków.</p>
+
+    <h2 id="przenoszenie">6. Rodzaje przenoszenia metalu</h2>
+<ul>
+<li><strong>Zwarciowy</strong> — niskie parametry, cienkie blachy, spawanie w pozycjach.</li>
+<li><strong>Mieszany (grubokroplowy)</strong> — strefa, której unikasz: dużo odprysków.</li>
+<li><strong>Natryskowy</strong> — gaz z co najmniej 80% argonu, dla drutu 1,0 od około 180 A i 26 V. Tylko pozycja podolna i naboczna, gruba stal.</li>
+<li><strong>Impulsowy</strong> — opisany w <a href="/blog/puls-podwojny-puls-migomat-ustawienia/">części 4</a>.</li>
+</ul>
+
+    <h2 id="seria">7. Seria i wsparcie warsztatu</h2>
+<p>Cała seria kursu MIG/MAG:</p>
+<ol>
+<li><strong>Ustawianie migomatu do stali</strong> (ten wpis)</li>
+<li><a href="/blog/technika-spawania-mig-mag-pchanie-ciagniecie-pozycje/">Technika prowadzenia uchwytu</a></li>
+<li><a href="/blog/spawanie-aluminium-migomatem-drut-gaz-technika/">Aluminium migomatem</a></li>
+<li><a href="/blog/puls-podwojny-puls-migomat-ustawienia/">Puls i podwójny puls</a></li>
+</ol>
+<p>Spawamy stal, nierdzewkę i aluminium metodami MIG/MAG i TIG — konstrukcje, naprawy i elementy na zamówienie. Szczegóły: <a href="/uslugi/spawanie/">spawanie w F.W. DRUCIK</a>. Warsztat: Domosław 13A, 06-120 Winnica, pon.–pt. 8:00–17:00, sob. 9:00–13:00, tel. 601 726 924.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Jak dobrać napięcie do prądu w migomacie?</summary>
+        <p>Punktem startowym jest wzór U ≈ 14 + 0,05 × I, np. przy 100 A około 19 V. Potem poprawiasz na słuch — dobry łuk zwarciowy równo skwierczy.</p>
+      </details>
+      <details>
+        <summary>Jaki przepływ gazu ustawić przy MIG/MAG?</summary>
+        <p>Około 10 × średnica drutu w mm, czyli 8–12 l/min dla drutu 0,8–1,0. Przy przeciągu trzeba więcej albo osłonić stanowisko.</p>
+      </details>
+      <details>
+        <summary>Dlaczego migomat syczy i mocno pryska?</summary>
+        <p>Najczęściej napięcie jest za wysokie w stosunku do prędkości podajnika. Zmniejsz napięcie albo dodaj drutu.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

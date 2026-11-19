@@ -1,0 +1,99 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Wizja komputerowa w kontroli jakości detali — co da się zrobić małym kosztem",
+  "description": "Sprawdź, jak wdrożyć podstawowe systemy wizyjne do kontroli jakości detali w warsztacie i produkcji, wykorzystując dostępne narzędzia i wiedzę techniczną.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-06-05",
+  "dateModified": "2026-06-05",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/wizja-komputerowa-w-kontroli-jakosci/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-green">Druk 3D</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 8 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 15.08.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Wizja komputerowa w kontroli jakości detali — co da się zrobić małym kosztem</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Kontrola wymiarów, obecności części i montażu za pomocą obrazu. Pokazujemy zastosowania otwartych bibliotek wizyjnych.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#podstawy_sprzetowe">Dobór sprzętu wizyjnego</a></li>
+      <li><a href="#algorytmy_detekcji">Metody przetwarzania obrazu</a></li>
+      <li><a href="#kalibracja_i_dokladnosc">Kalibracja układu pomiarowego</a></li>
+      <li><a href="#bezpieczenstwo_i_bhp">Bezpieczeństwo pracy z systemami wizyjnymi</a></li>
+      <li><a href="#wspolpraca_z_warsztatem">Wdrożenie w F.W. DRUCIK</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="podstawy_sprzetowe">1. Dobór sprzętu wizyjnego</h2>
+<p>Podstawą systemu wizyjnego jest przetwornik obrazu. W warunkach warsztatowych często wystarczają kamery przemysłowe z interfejsem USB 3.0 lub dedykowane moduły typu Raspberry Pi Camera Module. Kluczowym parametrem jest rozdzielczość (zależna od pola widzenia - FOV) oraz czas ekspozycji.</p><p>Utrzymuj stałą odległość kamery według dokumentacji stanowiska. Zapewnij powtarzalne oświetlenie; polaryzacja pomaga ograniczyć odblaski metalu przy kontroli części CNC.</p>
+
+    <figure>
+      <img src="/assets/blog/wizja-komputerowa-w-kontroli-jakosci.jpg" width="600" height="314" loading="lazy" alt="Wizja komputerowa w kontroli jakości detali — co da się zrobić małym kosztem">
+      <figcaption>Schemat systemu wizji maszynowej: kamera i obiektyw, oświetlenie, taśma z obiektem oraz oprogramowanie do przetwarzania obrazu.
+        <span class="zrodlo">Rys. <a href="https://commons.wikimedia.org/wiki/File:Machine_Vision_System.jpg" target="_blank" rel="noopener nofollow">European Editors</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener nofollow">CC BY-SA 4.0</a>, Wikimedia Commons.</span>
+      </figcaption>
+    </figure>
+
+
+    <h2 id="algorytmy_detekcji">2. Metody przetwarzania obrazu</h2>
+<p>Większość zadań kontrolnych można zrealizować za pomocą biblioteki OpenCV. Podstawowe operacje obejmują:</p><ul><li>Progowanie (thresholding) – separacja obiektu od tła.</li><li>Detekcja krawędzi (algorytm Canny) – weryfikacja wymiarów zewnętrznych.</li><li>Dopasowanie wzorca (template matching) – sprawdzanie obecności otworów lub gwintów.</li></ul><p>Wartości progowe dla detekcji krawędzi są orientacyjne i zależą od kontrastu oświetlenia; należy je kalibrować dla każdej partii detali osobno. Pamiętaj, że błędy w oświetleniu prowadzą do fałszywych odczytów (false negatives), co w procesach produkcyjnych jest niedopuszczalne.</p>
+
+    <h2 id="kalibracja_i_dokladnosc">3. Kalibracja układu pomiarowego</h2>
+<p>Każdy system wizyjny wymaga kalibracji geometrycznej w celu usunięcia dystorsji obiektywu. Poniżej przedstawiono kroki procedury kalibracyjnej:</p><ol><li>Wydruk lub wykonanie wzorca szachownicy o znanych wymiarach (np. 20x20 mm).</li><li>Wykonanie serii zdjęć wzorca pod różnymi kątami.</li><li>Obliczenie macierzy parametrów wewnętrznych kamery (focal length, principal point).</li><li>Korekcja obrazu wejściowego przed przystąpieniem do pomiarów.</li></ol><p>Dokładność pomiaru jest ograniczona rozdzielczością matrycy (piksele na milimetr). Wartość tę należy wyliczyć dla każdego stanowiska indywidualnie, odnosząc się do noty katalogowej obiektywu i odległości roboczej.</p>
+
+    <h2 id="bezpieczenstwo_i_bhp">4. Bezpieczeństwo pracy z systemami wizyjnymi</h2>
+<p>Prace przy instalacji systemów wizyjnych często wiążą się z ingerencją w układy zasilania maszyn. <strong>Uwaga:</strong> wszelkie prace przy instalacji elektrycznej muszą być wykonywane przy wyłączonym zasilaniu. W przypadku stosowania oświetlaczy LED dużej mocy, sprawdź ryzyko olśnienia operatora oraz emisję ciepła, która może wpływać na stabilność mechaniczną uchwytów kamery.</p><p>Nie usuwaj osłon maszyn. Otwór pod kamerę nie może pogorszyć wymaganej klasy IP. Przyczynę zatrzymania linii musi sprawdzić wykwalifikowany pracownik przed skasowaniem błędu systemu wizyjnego.</p>
+
+    <h2 id="wspolpraca_z_warsztatem">5. Wdrożenie w F.W. DRUCIK</h2>
+<p>W naszym warsztacie w Domosławiu 13A zajmujemy się wsparciem technicznym w zakresie automatyzacji i diagnostyki. Jeśli potrzebujesz pomocy w integracji systemów wizyjnych z istniejącymi maszynami lub szukasz wsparcia w zakresie <a href="/uslugi/maszyny-cnc/">obsługi maszyn CNC</a>, zapraszamy do kontaktu.</p><p>Oferujemy doradztwo techniczne oraz pomoc w programowaniu sterowników PLC, które mogą współpracować z systemami wizyjnymi. Skontaktuj się z nami pod numerem 601 726 924 lub wyślij zapytanie na fwdrucik@gmail.com. Pracujemy od poniedziałku do piątku w godzinach 8-17 oraz w soboty 9-13. Więcej informacji znajdziesz na stronie <a href="/kontakt/">kontakt</a>.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Czy do kontroli jakości wystarczy zwykła kamera internetowa?</summary>
+        <p>W prostych zastosowaniach hobbystycznych tak, ale w warunkach przemysłowych zaleca się kamery z globalną migawką (global shutter). Pozwala to uniknąć zniekształceń obrazu przy poruszających się detalach.</p>
+      </details>
+      <details>
+        <summary>Jakie środowisko programistyczne jest najlepsze do wizji komputerowej?</summary>
+        <p>Najczęściej wykorzystuje się język Python wraz z biblioteką OpenCV. Jest to standard branżowy, który posiada bogatą dokumentację i wsparcie dla większości systemów operacyjnych.</p>
+      </details>
+      <details>
+        <summary>Czy system wizyjny może zastąpić czujniki mechaniczne?</summary>
+        <p>W wielu przypadkach tak, ale system wizyjny jest wrażliwy na warunki oświetleniowe. W krytycznych układach bezpieczeństwa zawsze stosuje się redundantne czujniki mechaniczne lub indukcyjne.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

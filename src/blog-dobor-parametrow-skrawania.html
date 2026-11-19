@@ -1,0 +1,106 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Dobór parametrów skrawania: prędkość, posuw i zagłębienie",
+  "description": "Techniczne aspekty doboru prędkości skrawania, posuwu na ostrze i zagłębienia. Wskazówki dla operatorów obrabiarek CNC w warsztacie F.W. DRUCIK.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-07-31",
+  "dateModified": "2026-07-31",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/dobor-parametrow-skrawania/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-orange">Spawanie & CNC</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 8 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 15.08.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Dobór parametrów skrawania: prędkość, posuw i zagłębienie</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Jak obliczyć parametry skrawania, by chronić narzędzie i uzyskać właściwą powierzchnię.</p>
+  </header>
+  <!-- FILM:start -->
+  <div class="toc-box" style="margin-bottom:28px;"><div class="toc-title">🎬 Zobacz na filmie</div><div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin-top:12px;"><div style="flex:0 1 240px;"><video controls preload="none" playsinline poster="/wideo/2026-10-17-dobor-parametrow-skrawania.jpg" width="540" height="960" style="width:100%;max-width:320px;aspect-ratio:9/16;border-radius:12px;background:#000;display:block;margin:0 auto;"><source src="/wideo/2026-10-17-dobor-parametrow-skrawania.mp4" type="video/mp4">Twoja przeglądarka nie odtwarza wideo.</video><p style="font-size:0.9rem;margin-top:8px;text-align:center;">Rolka · <a href="https://www.instagram.com/fwdrucik/reel/DelpbbTtVkP/" target="_blank" rel="noopener">Instagram</a></p></div></div><p style="font-size:0.88rem;margin-top:10px;">Więcej filmów z warsztatu: <a href="/filmy/">wszystkie filmy</a>.</p></div>
+  <!-- FILM:end -->
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#predkosc-skrawania">Prędkość skrawania (Vc)</a></li>
+      <li><a href="#posuw-na-ostrze">Posuw na ostrze (fz)</a></li>
+      <li><a href="#zaglebienie">Głębokość skrawania (ap) i szerokość (ae)</a></li>
+      <li><a href="#tabela-doboru">Procedura doboru parametrów</a></li>
+      <li><a href="#praktyka-warsztatowa">Zastosowanie w warsztacie F.W. DRUCIK</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="predkosc-skrawania">1. Prędkość skrawania (Vc)</h2>
+<p>Prędkość skrawania <em>Vc</em> wyrażona w m/min definiuje prędkość liniową punktu ostrza narzędzia względem obrabianego materiału. Wartość ta jest bezpośrednio powiązana z prędkością obrotową wrzeciona <em>n</em> (obr/min) wzorem: <em>n = (Vc * 1000) / (pi * D)</em>, gdzie <em>D</em> to średnica narzędzia lub przedmiotu w mm.</p><p>Wartości <em>Vc</em> należy zawsze weryfikować w nocie katalogowej producenta płytki skrawającej lub frezu. Przekroczenie zalecanej prędkości prowadzi do szybkiego zużycia termicznego ostrza, natomiast zbyt niska wartość powoduje narost na ostrzu (BUE - Built-Up Edge). Pamiętaj, że parametry te są orientacyjne i wymagają korekty zależnie od sztywności układu obrabiarka-uchwyt-narzędzie-przedmiot.</p>
+
+    <figure>
+      <img src="/assets/blog/dobor-parametrow-skrawania.png" width="394" height="318" loading="lazy" alt="Dobór parametrów skrawania: prędkość, posuw i zagłębienie">
+      <figcaption>Stanowisko obróbki skrawaniem podczas pracy na frezarce CNC.
+        <span class="zrodlo">Fot. <a href="https://commons.wikimedia.org/wiki/File:CNC_Milling.png" target="_blank" rel="noopener nofollow">Cnccp5</a>, licencja <a href="http://creativecommons.org/publicdomain/zero/1.0/deed.en" target="_blank" rel="noopener nofollow">CC0</a>, Wikimedia Commons.</span>
+      </figcaption>
+    </figure>
+
+
+    <h2 id="posuw-na-ostrze">2. Posuw na ostrze (fz)</h2>
+<p>Posuw na ostrze <em>fz</em> (mm/ostrze) określa, o jaką odległość przesunie się narzędzie w trakcie jednego obrotu przypadającego na jedno ostrze. Posuw stołu <em>Vf</em> obliczamy jako: <em>Vf = fz * z * n</em>, gdzie <em>z</em> to liczba ostrzy narzędzia.</p><p>Dobór <em>fz</em> wpływa na grubość wióra. Zbyt mały posuw powoduje tarcie narzędzia o materiał zamiast skrawania, co drastycznie skraca żywotność krawędzi skrawającej. Zbyt duży posuw prowadzi do przeciążenia mechanicznego i ryzyka wykruszenia ostrza. Wartości referencyjne dla danego materiału należy odczytać z tabel producenta narzędzi, uwzględniając typ operacji (zgrubna lub wykańczająca).</p>
+
+    <h2 id="zaglebienie">3. Głębokość skrawania (ap) i szerokość (ae)</h2>
+<p>Głębokość skrawania <em>ap</em> (mm) to wymiar warstwy materiału usuwanej w jednym przejściu w kierunku osiowym. Szerokość skrawania <em>ae</em> (mm) odnosi się do kierunku promieniowego. Parametry te determinują siły skrawania działające na układ.</p><p>BHP: Praca z dużymi głębokościami skrawania generuje wysokie siły, które mogą doprowadzić do wyrwania przedmiotu z uchwytu, jeśli siła mocowania jest niewystarczająca. Zawsze sprawdzaj stabilność zamocowania przed rozpoczęciem obróbki. W przypadku obróbki zgrubnej dąży się do maksymalizacji <em>ap</em> przy zachowaniu stabilności, natomiast w wykańczającej priorytetem jest jakość powierzchni przy mniejszym <em>ap</em>.</p>
+
+    <h2 id="tabela-doboru">4. Procedura doboru parametrów</h2>
+<p>Przy doborze parametrów należy kierować się poniższą listą kontrolną:</p><ol><li>Identyfikacja materiału obrabianego (twardość, ciągliwość).</li><li>Weryfikacja zaleceń producenta narzędzia (karta katalogowa).</li><li>Obliczenie prędkości obrotowej <em>n</em> na podstawie <em>Vc</em>.</li><li>Obliczenie posuwu stołu <em>Vf</em> na podstawie <em>fz</em>.</li><li>Weryfikacja mocy silnika wrzeciona (czy obciążenie nie przekracza dopuszczalnego momentu).</li><li>Wykonanie próby na odpadzie materiału w celu oceny wióra i temperatury.</li></ol>
+
+    <h2 id="praktyka-warsztatowa">5. Zastosowanie w warsztacie F.W. DRUCIK</h2>
+<p>W naszym warsztacie w Domosławiu 13A kładziemy nacisk na precyzyjne ustawienia maszyn, co przekłada się na powtarzalność detali. Jeśli potrzebujesz wsparcia w doborze parametrów dla konkretnego procesu lub masz problem z wydajnością obróbki, zapraszamy do zapoznania się z naszą ofertą na stronie <a href="/uslugi/maszyny-cnc/">maszyny CNC</a>.</p><p>W przypadku pytań technicznych lub potrzeby serwisu obrabiarek, prosimy o bezpośredni <a href="/kontakt/">kontakt</a>. Przypominamy o konieczności stosowania środków ochrony indywidualnej przy obsłudze maszyn wirujących oraz o regularnym sprawdzaniu stanu technicznego uchwytów narzędziowych.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Jak obliczyć prędkość obrotową wrzeciona?</summary>
+        <p>Prędkość obrotową oblicza się ze wzoru n = (Vc * 1000) / (pi * D). Wartość Vc należy odczytać z dokumentacji technicznej używanego narzędzia skrawającego.</p>
+      </details>
+      <details>
+        <summary>Co oznacza zbyt niski posuw na ostrze?</summary>
+        <p>Przy zbyt małym posuwie ostrze ślizga się zamiast skrawać. Powierzchnia materiału może się utwardzić, a narzędzie szybciej stępić.</p>
+      </details>
+      <details>
+        <summary>Czy parametry skrawania są uniwersalne?</summary>
+        <p>Nie, parametry zawsze zależą od rodzaju materiału, geometrii narzędzia oraz sztywności maszyny. Należy je każdorazowo weryfikować w danych serwisowych lub katalogach producenta.</p>
+      </details>
+      <details>
+        <summary>Jakie zagrożenia wiążą się z błędnym doborem parametrów?</summary>
+        <p>Błędne parametry grożą uszkodzeniem narzędzia, detalu lub maszyny. Wyrwanie materiału z uchwytu zagraża operatorowi.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

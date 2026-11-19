@@ -1,0 +1,182 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Sprężarka klimatyzacji nie załącza się: diagnostyka techniczna",
+  "description": "Diagnostyka układu klimatyzacji: przyczyny braku załączenia sprężarki przy prawidłowym ciśnieniu czynnika. Poradnik techniczny F.W. DRUCIK.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-09-01",
+  "dateModified": "2026-09-01",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/sprezarka-klimatyzacji-nie-zalacza-sie/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-green">Klimatyzacja</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 6 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 01.09.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Sprężarka klimatyzacji nie załącza się: diagnostyka techniczna</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Ciśnienie jest prawidłowe, a sprężarka nie startuje? Sprawdź obwody elektryczne, sygnały sterujące i zabezpieczenia układu.</p>
+  </header>
+  <!-- FILM:start -->
+  <div class="toc-box" style="margin-bottom:28px;"><div class="toc-title">🎬 Zobacz na filmie</div><div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin-top:12px;"><div style="flex:0 1 240px;"><video controls preload="none" playsinline poster="/wideo/2026-10-11-sprezarka-klimatyzacji-nie-zalacza-sie.jpg" width="540" height="960" style="width:100%;max-width:320px;aspect-ratio:9/16;border-radius:12px;background:#000;display:block;margin:0 auto;"><source src="/wideo/2026-10-11-sprezarka-klimatyzacji-nie-zalacza-sie.mp4" type="video/mp4">Twoja przeglądarka nie odtwarza wideo.</video><p style="font-size:0.9rem;margin-top:8px;text-align:center;">Rolka · <a href="https://www.instagram.com/fwdrucik/reel/DeXPD0-hgaN/" target="_blank" rel="noopener">Instagram</a></p></div></div><p style="font-size:0.88rem;margin-top:10px;">Więcej filmów z warsztatu: <a href="/filmy/">wszystkie filmy</a>.</p></div>
+  <!-- FILM:end -->
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#wstep-diagnostyczny">Weryfikacja warunków pracy sprężarki</a></li>
+      <li><a href="#obwod-elektryczny">Diagnostyka obwodu zasilania sprzęgła</a></li>
+      <li><a href="#czujniki-cisnienia">Rola czujnika ciśnienia czynnika</a></li>
+      <li><a href="#procedura-kontrolna">Procedura weryfikacji krok po kroku</a></li>
+      <li><a href="#dzialania-warsztatowe">Co zrobić w warsztacie F.W. DRUCIK</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="wstep-diagnostyczny">1. Weryfikacja warunków pracy sprężarki</h2>
+<p>Sprężarką steruje ECU lub HVAC. Prawidłowe ciśnienie statyczne — orientacyjnie 4–6 barów przy 20 stopniach Celsjusza dla R134a/R1234yf — nie gwarantuje zgody na uruchomienie sprzęgła lub zaworu.</p><p>Odczytaj AC Request, AC Cut-off i temperaturę parownika. Brak żądania może oznaczać problem komunikacji panelu z ECU. Odczyt parownika poniżej 2–3 stopni lub temperatura zewnętrzna poniżej 3–5 stopni Celsjusza mogą blokować pracę. Progi sprawdź w instrukcji pojazdu. Pracuj w okularach i rękawicach; unikaj kontaktu z wyciekającym czynnikiem, który powoduje odmrożenia.</p>
+
+    <figure>
+      <img src="/assets/blog/sprezarka-klimatyzacji-nie-zalacza-sie.jpg" width="1024" height="576" loading="lazy" alt="Sprężarka klimatyzacji nie załącza się: diagnostyka techniczna">
+      <figcaption>Sprężarka klimatyzacji ze sprzęgłem elektromagnetycznym zamontowana w komorze silnika samochodu.
+        <span class="zrodlo">Fot. <a href="https://www.flickr.com/photos/194218872@N08/51577380128" target="_blank" rel="noopener nofollow">Mechanic Base</a>, <a href="https://creativecommons.org/licenses/by-nd/2.0/" target="_blank" rel="noopener nofollow">CC BY-ND 2.0</a>, Openverse.</span>
+      </figcaption>
+    </figure>
+
+
+    <h2 id="obwod-elektryczny">2. Diagnostyka obwodu zasilania sprzęgła</h2>
+<p>Jeśli sterownik zezwala na pracę, sprawdź obwód wykonawczy: sprzęgło elektromagnetyczne lub zawór wydajności, np. N280. W sprzęgle skontroluj zasilanie cewki przekaźnika, styki robocze i korozję gniazda bezpiecznika. Na wtyczce sprzęgła oczekuj nominalnie 12V. Typowa rezystancja cewki to 3–5 Ohm — potwierdź w dokumentacji; nieskończona oznacza przerwę, 0 Ohm zwarcie.</p><p>Sterowanie PWM zaworu sprawdź oscyloskopem, w tym wypełnienie. Brak PWM mimo zezwolenia wymaga kontroli wiązki i sterownika. Przed demontażem odłącz akumulator, aby uniknąć zwarcia i uszkodzenia elektroniki.</p>
+
+    <h2 id="czujniki-cisnienia">3. Rola czujnika ciśnienia czynnika</h2>
+<p>Czujnik ciśnienia chroni układ. Typowy analogowy sygnał 0.5V–4.5V poza zakresem, np. 0V lub 5V, może blokować sprężarkę. Sprawdź sygnał, zasilanie zwykle 5V, masę i korozję pinów. Przy 5 barach podano orientacyjnie 1.5V–2.0V; obowiązuje charakterystyka konkretnego czujnika.</p><p>Nie zwieraj pinów czujnika analogowego — grozi to uszkodzeniem wejścia ECU. Próby z prostym presostatem binarnym wykonuj wyłącznie według schematu i procedury serwisowej; uruchomienie po obejściu nie rozróżnia usterki czujnika od braku czynnika. Porównaj tester z manometrami. Różnica ponad 1–2 bary wymaga sprawdzenia czujnika i jego zasilania.</p>
+
+    <h2 id="procedura-kontrolna">4. Procedura weryfikacji krok po kroku</h2>
+<h3>Procedura weryfikacji krok po kroku</h3>
+
+<p>Poniższa tabela przedstawia standardową ścieżkę diagnostyczną, którą należy przyjąć w przypadku braku załączenia sprężarki. Pamiętaj, że każda procedura musi być dostosowana do specyfiki danego modelu pojazdu.</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Krok</th>
+            <th>Czynność</th>
+            <th>Oczekiwany wynik</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Odczyt błędów DTC</td>
+            <td>Brak kodów w module klimatyzacji</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Kontrola parametrów</td>
+            <td>AC Request = ON, Temp. parownika > 4°C</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Pomiar zasilania</td>
+            <td>12V na cewce sprzęgła / sygnał PWM</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>Pomiar rezystancji</td>
+            <td>3-5 Ohm (dla cewki elektromagnetycznej)</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Test presostatu</td>
+            <td>Napięcie sygnału w zakresie 0.5-4.5V</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Diagnostykę rozpocznij od weryfikacji zasilania bezpośrednio przy wtyczce sprężarki. <strong>Typowy błąd</strong> to skupienie się na bezpiecznikach bez sprawdzenia przekaźnika sterującego, który często ulega wypaleniu styków, co objawia się spadkiem napięcia pod obciążeniem. Jeśli multimetr wskazuje 12V na postoju, ale po włączeniu klimatyzacji napięcie spada do zera, przyczyną jest wysoka rezystancja na stykach przekaźnika.</p>
+
+<p>W przypadku sprężarek sterowanych zaworem elektromagnetycznym (bez sprzęgła), kluczowe jest sprawdzenie sygnału PWM. Brak wysterowania często wynika z błędnych odczytów czujnika temperatury zewnętrznej lub parownika – jeśli sterownik "widzi" temperaturę poniżej 3°C, zablokuje załączenie sprężarki, aby zapobiec oblodzeniu. <strong>Wartość rezystancji cewki</strong> poza zakresem 3-5 Ohm zazwyczaj świadczy o jej wewnętrznym zwarciu lub przerwie, co wymaga wymiany cewki lub całego kompresora.</p>
+
+<p>Jeśli po wykonaniu powyższych kroków nadal nie ma reakcji, sprawdź ciągłość wiązki elektrycznej między sterownikiem a sprężarką. Często dochodzi do przetarcia przewodów w okolicach nadkoli lub podłużnic. Warto również sprawdzić masę przyłączeniową sprężarki do bloku silnika – korozja w tym miejscu jest częstą przyczyną problemów z zasilaniem cewek o dużym poborze prądu. Pamiętaj o BHP: przy pracy z multimetrem w pobliżu pracującego silnika zachowaj szczególną ostrożność, aby uniknąć kontaktu z elementami wirującymi (paski osprzętu, wentylatory).</p>
+
+    <h2 id="dzialania-warsztatowe">5. Co zrobić w warsztacie F.W. DRUCIK</h2>
+<h3>Co zrobić w warsztacie F.W. DRUCIK</h3>
+
+<p>Jeśli domowe sposoby zawiodły, zapraszamy do warsztatu F.W. DRUCIK w Domosławiu. Nasza diagnostyka to proces wieloetapowy, w którym precyzyjnie eliminujemy przyczyny braku załączenia sprężarki mimo poprawnego ciśnienia czynnika (zazwyczaj w zakresie 2-5 barów na stronie niskiego ciśnienia). Nasza procedura serwisowa obejmuje:</p>
+
+<ul>
+    <li><strong>Diagnostykę komputerową:</strong> Odczyt błędów z modułu HVAC. Często spotykamy błędy typu <em>"Pressure Sensor Signal Implausible"</em>, co sugeruje uszkodzenie czujnika ciśnienia, nawet jeśli ciśnienie fizyczne jest w normie.</li>
+    <li><strong>Weryfikację sygnałów elektrycznych:</strong> Sprawdzamy napięcie na wtyczce cewki sprężarki. Prawidłowa wartość powinna wynosić <strong>12-14 V</strong> przy włączonym silniku i klimatyzacji. Brak napięcia wskazuje na uszkodzenie przekaźnika lub przerwanie wiązki.</li>
+    <li><strong>Testy komponentów:</strong> Sprawdzamy rezystancję cewki sprzęgła elektromagnetycznego. Typowa wartość dla sprawnej cewki to <strong>3-5 Ω</strong>. Jeśli miernik wskazuje "przerwę" (OL), cewka jest spalona.</li>
+</ul>
+
+<p>W F.W. DRUCIK często spotykamy się z typowymi błędami, takimi jak zaśniedziałe styki w kostkach przyłączeniowych (objaw: sporadyczne załączanie) czy uszkodzony czujnik temperatury zewnętrznej, który blokuje start sprężarki poniżej <strong>3-4°C</strong>. Poniżej przedstawiamy kluczowe parametry, które weryfikujemy podczas wizyty:</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Parametr</th>
+            <th>Wartość prawidłowa</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Napięcie zasilania cewki</td>
+            <td>12-14 V</td>
+        </tr>
+        <tr>
+            <td>Rezystancja cewki</td>
+            <td>3-5 Ω</td>
+        </tr>
+        <tr>
+            <td>Ciśnienie statyczne (wyłączony silnik)</td>
+            <td>ok. 5-7 bar</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Niezależnie od tego, czy problem leży w uszkodzonym czujniku, przerwanym przewodzie, czy konieczności wymiany sprężarki, nasi technicy szybko zidentyfikują usterkę. Zapraszamy do zapoznania się z naszą ofertą na stronie <a href="/uslugi/elektromechanika/">elektromechanika</a> oraz <a href="/uslugi/klimatyzacja-samochodowa/">klimatyzacja samochodowa</a>. Prosimy o kontakt pod numerem <strong>601 726 924</strong> lub mailowo na <strong>fwdrucik@gmail.com</strong>. Czekamy na Państwa w Domosławiu 13A (06-120 Winnica) od poniedziałku do piątku (8-17) oraz w soboty (9-13). Szczegóły dojazdu dostępne są na stronie <a href="/kontakt/">kontakt</a>.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Czy mogę sam zmostkować presostat, aby sprawdzić sprężarkę?</summary>
+        <p>W układach z czujnikami analogowymi jest to zabronione i może uszkodzić sterownik silnika. Mostkowanie jest dopuszczalne tylko w bardzo starych układach z czujnikami binarnymi, po uprzednim sprawdzeniu schematu elektrycznego.</p>
+      </details>
+      <details>
+        <summary>Dlaczego sprężarka nie startuje, mimo że ciśnienie jest w normie?</summary>
+        <p>Przyczyną może być brak sygnału sterującego z ECU, uszkodzona cewka sprzęgła, błąd odczytu temperatury parownika lub przerwa w wiązce elektrycznej. Sterownik może blokować start również z powodu błędów w innych modułach, np. w sterowniku silnika.</p>
+      </details>
+      <details>
+        <summary>Jak sprawdzić, czy cewka sprzęgła jest sprawna?</summary>
+        <p>Należy zmierzyć rezystancję cewki za pomocą multimetru ustawionego na zakres Ohm. Typowa wartość wynosi zazwyczaj od 3 do 5 Ohm, ale dokładną wartość należy sprawdzić w dokumentacji serwisowej konkretnego pojazdu.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

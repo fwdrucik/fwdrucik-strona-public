@@ -1,0 +1,97 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "MPU6050: Pomiar drgań i przechyłu maszyny",
+  "description": "Analiza techniczna czujnika MPU6050 w diagnostyce drgań i przechyłów maszyn. Wskazówki dla techników utrzymania ruchu i elektroników w F.W. DRUCIK.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-10-21",
+  "dateModified": "2026-10-21",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/mpu6050-pomiar-drgan-i-przechylu-maszyny/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-blue">Elektronika i magistrale</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 12 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 21.10.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">MPU6050: Pomiar drgań i przechyłu maszyny</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Układ MPU6050 integruje 3-osiowy akcelerometr oraz 3-osiowy żyroskop w jednej strukturze MEMS. W warunkach warsztatowych pozwala na wstępną diagnostykę wibracji i stabilności maszyn.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#charakterystyka">Parametry techniczne i architektura MPU6050</a></li>
+      <li><a href="#diagnostyka_drgan">Analiza wibracji i filtracja sygnału</a></li>
+      <li><a href="#pomiar_przechylu">Wyznaczanie kąta nachylenia i stabilność</a></li>
+      <li><a href="#tabela_wartosci">Procedura weryfikacji i typowe wartości</a></li>
+      <li><a href="#praktyka_warsztatowa">Wsparcie techniczne w F.W. DRUCIK</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="charakterystyka">1. Parametry techniczne i architektura MPU6050</h2>
+<p>Układ MPU6050 to zintegrowany czujnik ruchu typu MEMS, który w jednej obudowie QFN 4x4x0.9 mm mieści akcelerometr oraz żyroskop. Z punktu widzenia technika utrzymania ruchu, kluczowe jest zrozumienie zakresów pomiarowych. Akcelerometr oferuje programowalny zakres pełnej skali: +/- 2g, +/- 4g, +/- 8g oraz +/- 16g (wartości orientacyjne, należy każdorazowo weryfikować w nocie katalogowej producenta dla konkretnej rewizji układu). Żyroskop natomiast pozwala na pomiar prędkości kątowej w zakresach +/- 250, +/- 500, +/- 1000 oraz +/- 2000 stopni na sekundę. Komunikacja z jednostką nadrzędną odbywa się poprzez magistralę I2C z częstotliwością taktowania do 400 kHz. Napięcie zasilania układu wynosi zazwyczaj od 2.375V do 3.46V, co wymaga stosowania stabilizatorów napięcia w układach zasilanych z szyn 5V lub 24V. Wartości te są krytyczne dla zachowania integralności sygnału. Każde odstępstwo od zalecanych poziomów napięć może prowadzić do błędów kwantyzacji lub trwałego uszkodzenia struktury MEMS. Należy pamiętać, że MPU6050 jest czujnikiem o wysokiej czułości, co w środowisku przemysłowym, pełnym zakłóceń elektromagnetycznych, wymusza stosowanie ekranowania przewodów sygnałowych oraz kondensatorów odsprzęgających o pojemności 0.1 uF blisko pinów zasilających VDD i VLOGIC. Błędy w zasilaniu często objawiają się niestabilnym odczytem zera (offsetem) lub szumem o wysokiej amplitudzie, który jest błędnie interpretowany jako drgania maszyny. Przed przystąpieniem do pomiarów należy przeprowadzić kalibrację statyczną w spoczynku, aby wyeliminować błędy początkowe wynikające z niedoskonałości montażu mechanicznego czujnika na obudowie maszyny. Należy również zwrócić uwagę na temperaturę pracy, która wpływa na dryft żyroskopu; w dokumentacji technicznej producenta podano współczynniki temperaturowe, które powinny być uwzględnione w algorytmie kompensacji oprogramowania sterującego.</p>
+
+    <h2 id="diagnostyka_drgan">2. Analiza wibracji i filtracja sygnału</h2>
+
+<p>Diagnostyka drgań maszyn przy użyciu MPU6050 wymaga zrozumienia ograniczeń częstotliwościowych układu. Częstotliwość próbkowania (Sample Rate) jest programowalna, jednak realna użyteczność w analizie widmowej drgań jest ograniczona przez pasmo przenoszenia wewnętrznych filtrów dolnoprzepustowych (DLPF). Wartości graniczne pasma dla akcelerometru wynoszą zazwyczaj od 5 Hz do 260 Hz, co pozwala na wykrywanie drgań o niskiej i średniej częstotliwości, typowych dla niewyważenia wirników czy luzów na łożyskach ślizgowych. W celu poprawnej analizy należy zaimplementować cyfrową obróbkę sygnału, w tym szybką transformatę Fouriera (FFT). Typowym błędem podczas pomiarów jest brak uwzględnienia częstotliwości Nyquista; jeśli częstotliwość drgań maszyny przekracza połowę częstotliwości próbkowania, występuje zjawisko aliasingu, które całkowicie zafałszowuje wyniki. W warunkach warsztatowych F.W. DRUCIK zalecamy, aby częstotliwość próbkowania była co najmniej 5-krotnie wyższa od najwyższej analizowanej częstotliwości drgań w celu uzyskania odpowiedniej rozdzielczości czasowej. Ostrzeżenie BHP: podczas montażu czujnika na maszynach należy zachować szczególną ostrożność i stosować środki ochrony indywidualnej; montaż na pracujących maszynach musi odbywać się zgodnie z procedurami bezpieczeństwa danego zakładu. Nie wolno mocować czujników na elementach wirujących bez odpowiednich zabezpieczeń mechanicznych, gdyż siła odśrodkowa może doprowadzić do oderwania się modułu i spowodować uszkodzenie maszyny lub zagrożenie dla operatora. W przypadku pomiarów drgań o wysokiej amplitudzie, należy zweryfikować czy zakres pomiarowy akcelerometru nie jest przekraczany, co objawia się nasyceniem sygnału (clipping) i płaskimi wierzchołkami na wykresie przebiegu czasowego. W takich sytuacjach konieczna jest zmiana zakresu na wyższy, np. z 2g na 8g, zgodnie z dokumentacją techniczną układu. Należy również pamiętać, że sztywność mocowania czujnika do korpusu maszyny ma kluczowe znaczenie; luźne połączenie wprowadza rezonanse własne, które są błędnie interpretowane jako uszkodzenia mechaniczne urządzenia.</p>
+
+    <h2 id="pomiar_przechylu">3. Wyznaczanie kąta nachylenia i stabilność</h2>
+
+<p>Pomiar przechyłu (tilt) za pomocą MPU6050 opiera się na wykorzystaniu składowych przyspieszenia ziemskiego działających na osie X, Y i Z. W stanie statycznym, gdy maszyna nie wykonuje pracy, wektor przyspieszenia ziemskiego o wartości 1g (9.81 m/s^2, wartość orientacyjna) pozwala wyznaczyć kąty nachylenia w płaszczyznach Pitch i Roll. Obliczenia wykonuje się przy użyciu funkcji trygonometrycznych (arcus tangens). Kluczowym wyzwaniem jest odróżnienie przyspieszenia grawitacyjnego od przyspieszeń dynamicznych wynikających z pracy maszyny. W tym celu stosuje się filtry komplementarne lub filtry Kalmana, które łączą dane z akcelerometru (stabilne długoterminowo, ale zaszumione) z danymi z żyroskopu (precyzyjne krótkoterminowo, ale obarczone dryftem). W praktyce warsztatowej, przy montażu czujnika na maszynie, należy zadbać o idealne wypoziomowanie modułu względem osi maszyny. Każdy błąd montażowy o 1 stopień wprowadza stały błąd pomiarowy, który musi zostać skompensowany w kodzie programu. Należy również monitorować temperaturę układu, ponieważ dryft żyroskopu jest silnie skorelowany z temperaturą pracy. W przypadku maszyn pracujących w zmiennych warunkach termicznych, konieczne jest zastosowanie kalibracji dynamicznej. Ostrzeżenie BHP: podczas prac przy układach poziomowania maszyn, należy upewnić się, że mechanizmy wykonawcze (siłowniki hydrauliczne, śruby trapezowe) są zablokowane mechanicznie. Nie wolno polegać wyłącznie na odczytach z czujnika podczas wykonywania prac serwisowych pod obciążeniem. Jeśli czujnik wykazuje nagłe skoki wartości kąta, należy sprawdzić ciągłość połączeń na magistrali I2C oraz stan zasilania. Częstym błędem jest stosowanie zbyt długich przewodów połączeniowych bez ekranowania, co przy obecności silników elektrycznych w pobliżu prowadzi do błędów transmisji danych. W takich przypadkach zaleca się stosowanie konwerterów magistrali I2C na standard różnicowy lub skrócenie ścieżki sygnałowej do minimum.</p>
+
+    <h2 id="tabela_wartosci">4. Procedura weryfikacji i typowe wartości</h2>
+<p>Poniższa tabela przedstawia orientacyjne kroki diagnostyczne oraz parametry, które należy zweryfikować przed przystąpieniem do właściwego pomiaru. Pamiętaj, że dokładne wartości graniczne dla konkretnej maszyny muszą być zawsze sprawdzone w jej dokumentacji technicznej (DTR).</p><table><thead><tr><th>Krok</th><th>Parametr</th><th>Wartość/Działanie</th></tr></thead><tbody><tr><td>1</td><td>Zasilanie VDD</td><td>3.3V +/- 0.1V (sprawdzić miernikiem)</td></tr><tr><td>2</td><td>Magistrala I2C</td><td>Pull-up 4.7k Ohm (standardowa wartość)</td></tr><tr><td>3</td><td>Kalibracja</td><td>Odczyt w spoczynku (zero offset)</td></tr><tr><td>4</td><td>Zakres Accel</td><td>Dostosować do drgań (np. +/- 4g)</td></tr><tr><td>5</td><td>Filtracja</td><td>Ustawienie DLPF (np. 42 Hz)</td></tr><tr><td>6</td><td>Weryfikacja</td><td>Porównanie z wzorcem (np. poziomica)</td></tr></tbody></table><p>Podczas diagnostyki należy zwrócić uwagę na następujące objawy: 1. Niestabilny odczyt w spoczynku – sprawdź stabilność zasilania oraz obecność zakłóceń EMI. 2. Brak reakcji na ruch – sprawdź adres I2C urządzenia oraz czy rejestr PWR_MGMT_1 nie jest w trybie uśpienia. 3. Nasycenie sygnału przy niskich drganiach – sprawdź ustawienie rejestru ACCEL_CONFIG. 4. Dryft kąta w czasie – konieczna implementacja algorytmu fuzji danych (np. filtr komplementarny). Pamiętaj, że każda ingerencja w układ sterowania maszyny wymaga sprawdzenia, czy nie narusza to warunków gwarancji producenta. W przypadku wątpliwości co do poprawności odczytów, należy zweryfikować je za pomocą certyfikowanego przyrządu pomiarowego. Wszelkie prace przy układach elektronicznych muszą być wykonywane zgodnie z zasadami ESD (ochrona przed wyładowaniami elektrostatycznymi), aby nie uszkodzić delikatnych struktur MEMS wewnątrz układu MPU6050.</p>
+
+    <h2 id="praktyka_warsztatowa">5. Wsparcie techniczne w F.W. DRUCIK</h2>
+<p>Jeśli Twoja maszyna wykazuje niepokojące drgania, problemy z poziomowaniem lub wymagana jest integracja czujników MEMS w systemie sterowania, zapraszamy do kontaktu z naszym warsztatem. W F.W. DRUCIK zajmujemy się diagnostyką układów elektronicznych oraz wsparciem w utrzymaniu ruchu. Nasze usługi obejmują m.in. <a href="/uslugi/elektromechanika/">elektromechanikę</a>, gdzie weryfikujemy poprawność połączeń i sygnałów sterujących, oraz <a href="/uslugi/programowanie-aplikacje/">programowanie i diagnostykę systemów</a>, co jest niezbędne przy wdrażaniu czujników typu MPU6050. Pamiętaj, że samodzielne kasowanie kodów błędów bez usunięcia przyczyny mechanicznej (np. zużytego łożyska powodującego drgania) prowadzi do szybkiej awarii wtórnej. Przed wizytą prosimy o przygotowanie dokumentacji technicznej urządzenia, co znacznie przyspiesza proces diagnostyczny. Nasz warsztat znajduje się pod adresem: Domosław 13A, 06-120 Winnica. Pracujemy od poniedziałku do piątku w godzinach 8-17 oraz w soboty od 9 do 13. W sprawach technicznych prosimy o kontakt telefoniczny pod numerem 601 726 924 lub mailowo na adres fwdrucik@gmail.com. NIP firmy: 888-292-19-00. Zapraszamy również do zapoznania się z pełną ofertą na stronie <a href="/kontakt/">kontakt</a>. Nie podejmujemy się napraw bez weryfikacji technicznej, dlatego każdorazowo przeprowadzamy wstępną ocenę stanu urządzenia, aby wykluczyć błędy pomiarowe wynikające z uszkodzeń zewnętrznych, a nie z samej elektroniki.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Czy MPU6050 wymaga zewnętrznej kalibracji?</summary>
+        <p>Tak, każdy układ MPU6050 posiada indywidualne błędy offsetu dla żyroskopu i akcelerometru. Kalibrację należy przeprowadzić w spoczynku, zapisując wartości zerowe i odejmując je od bieżących odczytów w kodzie programu.</p>
+      </details>
+      <details>
+        <summary>Jakie napięcie jest bezpieczne dla MPU6050?</summary>
+        <p>Układ pracuje poprawnie w zakresie napięć od 2.375V do 3.46V. Podłączenie do szyny 5V bez stabilizatora doprowadzi do trwałego uszkodzenia struktury czujnika.</p>
+      </details>
+      <details>
+        <summary>Dlaczego odczyty drgań są niestabilne?</summary>
+        <p>Przyczyną może być zbyt wysoki poziom szumów na zasilaniu, brak kondensatorów odsprzęgających lub zakłócenia elektromagnetyczne na magistrali I2C. Należy również sprawdzić, czy czujnik jest sztywno zamocowany do korpusu maszyny.</p>
+      </details>
+      <details>
+        <summary>Czy można użyć MPU6050 do pomiaru drgań o wysokiej częstotliwości?</summary>
+        <p>MPU6050 ma ograniczone pasmo przenoszenia, zazwyczaj do około 260 Hz. Do analizy drgań o wysokiej częstotliwości wymagane są specjalistyczne akcelerometry piezoelektryczne o znacznie szerszym paśmie.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

@@ -1,0 +1,227 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Analiza logów magistrali CAN w Pythonie",
+  "description": "Praktyczny przewodnik dla techników: jak analizować ramki CAN w Pythonie. Diagnostyka błędów, struktura ramek i interpretacja danych w warsztacie.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-11-05",
+  "dateModified": "2026-11-05",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/analiza-logow-magistrali-can-python/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-blue">Elektronika i magistrale</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 6 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 05.11.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Analiza logów magistrali CAN w Pythonie</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Współczesna diagnostyka pojazdowa wymaga wyjścia poza proste skanery błędów. Analiza surowych ramek CAN pozwala na identyfikację problemów z komunikacją między modułami, których nie wykaże standardowy tester.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#podstawy_can">Struktura ramki CAN i warstwa fizyczna</a></li>
+      <li><a href="#narzedzia_python">Przygotowanie środowiska i biblioteki</a></li>
+      <li><a href="#analiza_bledow">Identyfikacja anomalii w logach</a></li>
+      <li><a href="#procedura_diagnostyczna">Procedura diagnostyczna krok po kroku</a></li>
+      <li><a href="#praktyka_warsztatowa">Diagnostyka w F.W. DRUCIK</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="podstawy_can">1. Struktura ramki CAN i warstwa fizyczna</h2>
+<p>Magistrala CAN (Controller Area Network) opiera się na różnicowej transmisji sygnałów na liniach CAN-High i CAN-Low. Zgodnie z normą ISO 11898, napięcie spoczynkowe wynosi około 2,5 V dla obu linii. W stanie dominującym, napięcie na CAN-High wzrasta do około 3,5 V, a na CAN-Low spada do 1,5 V, co daje różnicę 2 V. Wszelkie odchylenia od tych wartości, mierzone oscyloskopem, wskazują na uszkodzenie fizyczne wiązki lub terminacji magistrali. Standardowa ramka CAN (CAN 2.0A) składa się z identyfikatora (11 bitów), pola kontroli, danych (0-8 bajtów) oraz sumy kontrolnej CRC. Wersja rozszerzona (CAN 2.0B) wykorzystuje 29-bitowy identyfikator. Podczas analizy logów w Pythonie, kluczowe jest zrozumienie, że każdy bajt danych jest interpretowany przez sterownik (ECU) zgodnie z mapą sygnałów (DBC). Błędy w komunikacji często objawiają się jako ramki błędów (Error Frames), które są generowane, gdy węzeł wykryje niespójność w strukturze ramki lub brak potwierdzenia (ACK). W środowisku warsztatowym, przed przystąpieniem do analizy programowej, należy upewnić się, że rezystancja magistrali mierzona między liniami CAN-High i CAN-Low przy wyłączonym zasilaniu wynosi 60 Ohm (dla dwóch rezystorów terminujących 120 Ohm połączonych równolegle). Wartość ta jest orientacyjna i zawsze wymaga weryfikacji w dokumentacji serwisowej konkretnego pojazdu, gdyż niektóre systemy mogą stosować inne wartości terminacji.</p>
+
+    <h2 id="narzedzia_python">2. Przygotowanie środowiska i biblioteki</h2>
+<h3>Przygotowanie środowiska i biblioteki</h3>
+
+<p>Do pracy z logami CAN w Pythonie najczęściej wykorzystuje się bibliotekę <code>python-can</code>. Pozwala ona na abstrakcję sprzętową, obsługując różne interfejsy od prostych adapterów USB-CAN po profesjonalne głowice diagnostyczne. Instalację przeprowadź w odizolowanym środowisku wirtualnym, wykonując kolejno: <code>python -m venv venv</code>, aktywację środowiska oraz <code>pip install python-can</code>.</p>
+
+<p>Kluczowym elementem jest parsowanie plików logów (np. .asc lub .log). Typowa ramka zawiera znacznik czasu [s], identyfikator (ID) w formacie HEX, długość danych (DLC) [bajty] oraz payload. Podczas analizy skup się na filtrowaniu ramek po ID, co pozwala wyizolować komunikację konkretnego modułu, np. ECU lub BCM. Surowe dane wymagają dekodowania zgodnie z dokumentacją (DBC). Przykładowo, prędkość obrotowa silnika często wymaga operacji <code>(byte[0] << 8) | byte[1]</code> oraz mnożnika 0.25, co daje wynik w [obr/min].</p>
+
+<p><strong>Typowe błędy i ich objawy:</strong></p>
+<ul>
+    <li><strong>Błędna kolejność bajtów (Endianness):</strong> Objawia się skokowymi, nielogicznymi wartościami (np. prędkość pojazdu 65535 km/h). Sprawdź, czy dane są w formacie Big-Endian czy Little-Endian.</li>
+    <li><strong>Niewłaściwe skalowanie:</strong> Wynik pomiaru jest wielokrotnością lub ułamkiem rzeczywistej wartości (np. temperatura silnika 250°C zamiast 25°C). Weryfikuj współczynniki w dokumentacji.</li>
+    <li><strong>Brak obsługi ramek rozszerzonych:</strong> Jeśli skrypt nie widzi części komunikatów, upewnij się, że flaga <code>is_extended_id</code> jest poprawnie ustawiona dla ramek 29-bitowych.</li>
+</ul>
+
+<table>
+    <thead>
+        <tr>
+            <th>Parametr</th>
+            <th>Jednostka</th>
+            <th>Typowa operacja</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Prędkość obrotowa</td>
+            <td>obr/min</td>
+            <td><code>(MSB << 8 | LSB) * 0.25</code></td>
+        </tr>
+        <tr>
+            <td>Temperatura płynu</td>
+            <td>°C</td>
+            <td><code>(byte - offset) * factor</code></td>
+        </tr>
+        <tr>
+            <td>Prędkość pojazdu</td>
+            <td>km/h</td>
+            <td><code>(byte * 0.01)</code></td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Pamiętaj, że błędy w interpretacji prowadzą do błędnych wniosków diagnostycznych, dlatego zawsze weryfikuj wzory przeliczeniowe z notami technicznymi lub bazami sygnałów dla danej marki.</p>
+
+    <h2 id="analiza_bledow">3. Identyfikacja anomalii w logach</h2>
+<p>Analiza logów pozwala na wykrycie problemów, które występują sporadycznie i są trudne do uchwycenia podczas standardowej diagnostyki. Najczęstszym objawem problemów z magistralą jest wysoka częstotliwość występowania ramek błędów (Error Frames). W Pythonie można to zautomatyzować, zliczając wystąpienia flagi błędu w logu w określonym przedziale czasowym. Jeśli liczba błędów przekracza dopuszczalne normy, system przechodzi w stan 'Bus-Off', co oznacza całkowite odcięcie modułu od komunikacji. Innym częstym problemem jest tzw. 'babbling idiot', czyli sytuacja, w której uszkodzony moduł zalewa magistralę ramkami o wysokim priorytecie (niskim ID), blokując komunikację pozostałym sterownikom. W analizie logów szukamy ramek, które pojawiają się zbyt często lub w nieregularnych odstępach czasu. Należy również zwrócić uwagę na tzw. 'counter' (licznik wiadomości), który jest często implementowany w ramkach CAN dla celów bezpieczeństwa. Jeśli licznik nie inkrementuje się zgodnie z oczekiwaniami, może to świadczyć o zawieszeniu się oprogramowania sterownika lub problemach z synchronizacją czasu. Pamiętaj, że kasowanie kodów błędów (DTC) bez usunięcia przyczyny fizycznej (np. przetartej wiązki, zaśniedziałego złącza) jest działaniem doraźnym i nie rozwiązuje problemu. Zawsze sprawdzaj integralność złączy, gdyż wilgoć i korozja są najczęstszymi przyczynami wzrostu rezystancji na stykach, co prowadzi do błędów transmisji.</p>
+
+    <h2 id="procedura_diagnostyczna">4. Procedura diagnostyczna krok po kroku</h2>
+<h3>Procedura diagnostyczna krok po kroku</h3>
+
+<p>Poniższa tabela przedstawia zalecaną kolejność działań przy podejrzeniu usterki magistrali CAN. Pamiętaj, że praca przy instalacji elektrycznej pojazdu wymaga zachowania zasad BHP, szczególnie w przypadku układów hybrydowych lub wysokiego napięcia.</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Krok</th>
+            <th>Czynność</th>
+            <th>Wartości/Uwagi</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Wizualna kontrola wiązek</td>
+            <td>Szukaj przetarć, śladów wilgoci i korozji na złączach.</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Pomiar rezystancji</td>
+            <td><strong>60 Ω</strong> między CAN-H/CAN-L (wyłączony zapłon).</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Pomiar oscyloskopem</td>
+            <td>CAN-H: <strong>3,5 V</strong>, CAN-L: <strong>1,5 V</strong> (stan dominujący).</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>Rejestracja logów</td>
+            <td>Użycie adaptera CAN-USB; min. 30 sekund zapisu.</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Analiza skryptem</td>
+            <td>Wyszukiwanie ramek <code>Error Frame</code> i anomalii czasowych.</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Weryfikacja zasilania</td>
+            <td>Napięcie ECU: <strong>12,6 V – 14,4 V</strong>.</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Każdy z powyższych kroków jest kluczowy. Pominięcie pomiaru rezystancji może prowadzić do błędnej interpretacji logów, gdyż uszkodzona terminacja (np. brak rezystora 120 Ω) powoduje odbicia sygnału, które w logach objawiają się jako liczne błędy <strong>CRC</strong> lub <strong>Form Error</strong>. Typowym objawem zwarcia do masy jest stały poziom 0 V na obu liniach, natomiast zwarcie do zasilania skutkuje brakiem transmisji i błędami <em>Bus Off</em>.</p>
+
+<p>Podczas analizy programowej w Pythonie, zwróć szczególną uwagę na:</p>
+<ul>
+    <li><strong>Częstotliwość występowania ramek:</strong> nagłe przerwy sugerują niestabilne połączenie.</li>
+    <li><strong>Błędy CRC:</strong> często wynikają z zakłóceń elektromagnetycznych (EMI) lub uszkodzonej izolacji przewodu.</li>
+    <li><strong>Napięcia spoczynkowe:</strong> jeśli obie linie wykazują <strong>2,5 V</strong> w spoczynku, magistrala jest w stanie <em>Recessive</em>, co jest poprawne.</li>
+</ul>
+
+<p>Zawsze dokumentuj wyniki pomiarów i porównuj je z danymi serwisowymi dla konkretnego modelu, gdyż wartości graniczne mogą się różnić w zależności od producenta. Pamiętaj, że w przypadku magistrali CAN-FD wymagana jest wyższa częstotliwość próbkowania oscyloskopu, aby poprawnie zinterpretować szybkie zmiany stanów logicznych.</p>
+
+    <h2 id="praktyka_warsztatowa">5. Diagnostyka w F.W. DRUCIK</h2>
+<h3>Diagnostyka w F.W. DRUCIK</h3>
+
+<p>W warsztacie F.W. DRUCIK przy ul. Domosław 13A w Winnicy specjalizujemy się w zaawansowanej diagnostyce magistral CAN. Jeśli pojazd wykazuje niejasne błędy komunikacji, których nie usuwa wymiana komponentów, przeprowadzamy precyzyjną analizę sygnałów. Nasze podejście opiera się na weryfikacji fizycznych parametrów magistrali oraz interpretacji ramek danych w środowisku Python.</p>
+
+<p><strong>Kolejność czynności diagnostycznych:</strong></p>
+<ol>
+    <li>Wizualna inspekcja wiązek pod kątem przetarć i korozji.</li>
+    <li>Pomiar rezystancji magistrali (wyłączony zapłon) – prawidłowa wartość to <strong>60 Ω</strong> między liniami CAN-High i CAN-Low.</li>
+    <li>Pomiar napięć roboczych (włączony zapłon): CAN-High ok. <strong>2.5V – 3.5V</strong>, CAN-Low ok. <strong>1.5V – 2.5V</strong>.</li>
+    <li>Podpięcie analizatora i przechwycenie logów w formacie .log lub .asc.</li>
+    <li>Analiza skryptem Python w celu wykrycia błędów typu <em>Error Frame</em> lub <em>Bus Off</em>.</li>
+</ol>
+
+<p><strong>Typowe błędy i ich objawy:</strong></p>
+<table>
+    <thead>
+        <tr>
+            <th>Typ błędu</th>
+            <th>Objaw</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Przerwa w obwodzie</td>
+            <td>Brak komunikacji, rezystancja <strong>120 Ω</strong> lub nieskończoność.</td>
+        </tr>
+        <tr>
+            <td>Zwarcie do masy</td>
+            <td>Błędy typu <em>Bus Off</em>, brak transmisji, napięcie <strong>0V</strong>.</td>
+        </tr>
+        <tr>
+            <td>Zbyt wysoka impedancja</td>
+            <td>Sporadyczne błędy (tzw. <em>glitche</em>), utrata ramek przy wysokim obciążeniu.</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Przypominamy, że każda ingerencja powinna być poprzedzona rzetelną diagnostyką, a nie tylko odczytem kodów DTC. Nieprawidłowe kasowanie błędów bez usunięcia przyczyny źródłowej prowadzi do nawrotu awarii. Zapraszamy do kontaktu pod numerem <strong>601 726 924</strong> lub mailowo na <strong>fwdrucik@gmail.com</strong>. Pracujemy od poniedziałku do piątku w godzinach 8-17 oraz w soboty od 9 do 13. Więcej informacji znajdziesz na stronie <a href="/kontakt/">kontakt</a>.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Czy do analizy CAN potrzebuję drogiego sprzętu?</summary>
+        <p>Nie, do podstawowej analizy wystarczy niedrogi adapter USB-CAN oraz darmowe biblioteki w Pythonie. Profesjonalny sprzęt jest jednak niezbędny do weryfikacji warstwy fizycznej, czyli pomiarów oscyloskopowych.</p>
+      </details>
+      <details>
+        <summary>Dlaczego kasowanie błędów nie pomaga?</summary>
+        <p>Kasowanie błędów usuwa jedynie wpis w pamięci sterownika, ale nie naprawia fizycznej usterki, takiej jak przerwana wiązka czy uszkodzony moduł. Jeśli przyczyna nie zostanie usunięta, błąd powróci natychmiast po uruchomieniu systemu.</p>
+      </details>
+      <details>
+        <summary>Jakie napięcie powinno być na magistrali CAN?</summary>
+        <p>W stanie spoczynku obie linie powinny mieć około 2,5 V względem masy. W stanie aktywnym napięcie na CAN-High rośnie do około 3,5 V, a na CAN-Low spada do 1,5 V, co daje różnicę 2 V.</p>
+      </details>
+      <details>
+        <summary>Gdzie szukać wartości serwisowych dla mojego auta?</summary>
+        <p>Wartości serwisowe, takie jak rezystancja magistrali czy dopuszczalne poziomy napięć, znajdują się w dokumentacji technicznej producenta pojazdu. Zawsze korzystaj z oficjalnych instrukcji serwisowych, a nie z danych uniwersalnych.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

@@ -1,0 +1,128 @@
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Zamówienie</div>
+    <h1>Dostawa i zapłata</h1>
+    <p class="lead">Sprawdź zamówienie. Wybierz dostawę i sposób zapłaty.</p>
+  </div>
+</section>
+
+<section class="diamond-bg">
+  <div class="container">
+
+    <p class="zamowienie-konto" data-gdy="niezalogowany">
+      Zamawiasz bez konta — wystarczy. <a href="/konto/">Zaloguj się</a>, jeśli wolisz
+      mieć adres zapamiętany i historię zamówień pod ręką.
+    </p>
+
+    <div>
+      <div class="zamowienie-wynik" id="zamowienie-wynik" hidden></div>
+
+      <form id="zamowienie-form" class="zamowienie-uklad">
+        <div class="zamowienie-pola">
+          <!-- Dane kontaktowe pokazujemy tylko gościom. Zalogowany ma je
+               w koncie i przepisywanie ich drugi raz byloby praca bez powodu. -->
+          <div data-gdy="niezalogowany">
+            <h2>Dane do wysyłki</h2>
+            <div class="form-group">
+              <label for="zam-email">E-mail *</label>
+              <input type="email" id="zam-email" class="form-control"
+                     autocomplete="email" placeholder="na ten adres wyślemy potwierdzenie">
+            </div>
+            <div class="form-dwa">
+              <div class="form-group">
+                <label for="zam-imie">Imię *</label>
+                <input type="text" id="zam-imie" class="form-control"
+                       autocomplete="given-name">
+              </div>
+              <div class="form-group">
+                <label for="zam-nazwisko">Nazwisko</label>
+                <input type="text" id="zam-nazwisko" class="form-control"
+                       autocomplete="family-name">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="zam-telefon">Telefon *</label>
+              <input type="tel" id="zam-telefon" class="form-control"
+                     autocomplete="tel">
+            </div>
+            <div class="form-group">
+              <label for="zam-ulica">Ulica i numer</label>
+              <input type="text" id="zam-ulica" class="form-control"
+                     autocomplete="street-address">
+            </div>
+            <div class="form-dwa">
+              <div class="form-group">
+                <label for="zam-kod">Kod pocztowy</label>
+                <input type="text" id="zam-kod" class="form-control"
+                       autocomplete="postal-code" placeholder="00-000">
+              </div>
+              <div class="form-group">
+                <label for="zam-miasto">Miejscowość</label>
+                <input type="text" id="zam-miasto" class="form-control"
+                       autocomplete="address-level2">
+              </div>
+            </div>
+            <div class="form-dwa">
+              <div class="form-group">
+                <label for="zam-firma">Firma (jeśli na fakturę)</label>
+                <input type="text" id="zam-firma" class="form-control"
+                       autocomplete="organization">
+              </div>
+              <div class="form-group">
+                <label for="zam-nip">NIP</label>
+                <input type="text" id="zam-nip" class="form-control">
+              </div>
+            </div>
+            <p class="zamowienie-uwaga">Przy odbiorze osobistym wystarczy imię,
+              telefon i e-mail.</p>
+          </div>
+
+          <h2>Sposób dostawy</h2>
+          <div class="form-group">
+            <label for="zam-dostawa">Wybierz dostawę</label>
+            <select id="zam-dostawa" class="form-control"></select>
+          </div>
+
+          <h2>Sposób zapłaty</h2>
+          <div class="form-group">
+            <label for="zam-platnosc">Wybierz zapłatę</label>
+            <select id="zam-platnosc" class="form-control"></select>
+          </div>
+
+          <h2>Uwagi do zamówienia</h2>
+          <div class="form-group">
+            <label class="sr-only" for="zam-uwagi">Uwagi</label>
+            <textarea id="zam-uwagi" class="form-control" rows="4"
+                      placeholder="Kolor, wymiar, termin, cokolwiek, o czym powinniśmy wiedzieć."></textarea>
+          </div>
+
+          <p class="zamowienie-uwaga" data-gdy="zalogowany">Adres do wysyłki bierzemy
+            z Twojego konta. Zmienisz go w zakładce
+            <a href="/konto/#dane">Dane do wysyłki</a>.</p>
+        </div>
+
+        <aside class="zamowienie-podsumowanie">
+          <h2>Co zamawiasz</h2>
+          <ul class="zamowienie-spis" id="zamowienie-spis">
+            <li class="pusto">Wczytywanie...</li>
+          </ul>
+          <label class="checkbox-label zamowienie-zgoda">
+            <input type="checkbox" id="zam-regulamin" required>
+            <span>Zapoznałem się z <a href="/regulamin/" target="_blank" rel="noopener">regulaminem
+              sklepu</a> i <a href="/polityka-prywatnosci/" target="_blank" rel="noopener">polityką
+              prywatności</a> oraz akceptuję ich treść. Wiem, że
+              <a href="/odstapienie/" target="_blank" rel="noopener">wyroby wykonywane na zamówienie
+              nie podlegają zwrotowi</a>.</span>
+          </label>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">
+            Zamawiam i płacę
+          </button>
+          <span class="komunikat" id="zamowienie-komunikat"></span>
+        </aside>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<script src="/assets/sklep.js" defer></script>

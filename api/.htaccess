@@ -1,0 +1,43 @@
+# ---------------------------------------------------------------------------
+# fwdrucik.pl — reguły dla katalogu /api/
+# ---------------------------------------------------------------------------
+
+Options -Indexes
+
+# Wybór wersji PHP wymagany przez hosting-home.pl. Blok jest w .htaccess
+# katalogu głównego i tu powtórzony na wypadek, gdyby dziedziczenie zawiodło.
+<FilesMatch "\.php$">
+SetEnv CGI_HANDLER php84
+</FilesMatch>
+
+# Pliki, które mają być czytane wyłącznie przez inne skrypty PHP — nigdy
+# pobierane po HTTP. Dotyczy to zwłaszcza konfiguracji z hasłem do bazy.
+<FilesMatch "^(_.*\.(php|json)|konfiguracja\.php|konfiguracja\.przyklad\.php|.*\.sql|.*\.md)$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+# Odpowiedzi API nigdy nie trafiają do cache — zawierają stan sesji.
+# mod_expires z katalogu głównego dokleja tu własne Cache-Control i Expires,
+# więc najpierw wyłączamy go dla tego katalogu, a potem czyścimy nagłówki.
+<IfModule mod_expires.c>
+  ExpiresActive Off
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.php$">
+    Header always unset Expires
+    Header always set Cache-Control "no-store, no-cache, must-revalidate"
+    Header always set X-Content-Type-Options "nosniff"
+  </FilesMatch>
+</IfModule>
+
+# Katalog nie zawiera treści dla wyszukiwarek.
+<IfModule mod_headers.c>
+  Header always set X-Robots-Tag "noindex, nofollow"
+</IfModule>

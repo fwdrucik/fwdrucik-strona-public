@@ -1,0 +1,338 @@
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Nasza specjalizacja: AI-native engineering</div>
+    <h1>AI-native engineering: aplikacje, automatyzacje i sterowniki budowane z agentami AI</h1>
+    <p class="lead">Budujemy aplikacje Android, automatyzacje w Pythonie, oprogramowanie mikrokontrolerów i strony WWW. Kod piszą agenci AI (Claude Code, Codex), a my opisujemy wymagania, testujemy na sprzęcie i odbieramy tylko to, co działa. Poniżej trzy systemy używane w naszej firmie.</p>
+    <p class="lead">Szukasz konkretnej oferty z cenami — automatyzacja procesu, strona, sklep
+      albo aplikacja? Wszystko zebrane na stronie <a href="/automatyzacje/">automatyzacje
+      i oprogramowanie</a>.</p>
+    <div class="hero-cta">
+      <a href="tel:+48601726924" class="btn btn-primary">Zadzwoń: 601 726 924</a>
+      <a href="/kontakt/" class="btn btn-outline">Wyślij specyfikację do wyceny</a>
+    </div>
+  </div>
+</section>
+
+<section class="diamond-bg">
+  <div class="container">
+    <div class="layout-2col">
+      <div class="prose">
+        <h2>Dedykowane oprogramowanie i aplikacje mobilne</h2>
+        <p>W dzisiejszym przemyśle i biznesie mechanika łączy się z elektroniką i oprogramowaniem.
+          W <strong>F.W. DRUCIK</strong> budujemy oprogramowanie dopasowane do konkretnego projektu — od sterowania
+          maszynami po natywne aplikacje dla pracowników w terenie.</p>
+
+        <h3>Zakres usług programistycznych</h3>
+        <p>Budujemy oprogramowanie na zamówienie z agentami AI i prototypujemy na Arduino i ESP32. W prototypie sprawdzamy odczyty z czujników, sterowanie urządzeniami i komunikację przed wdrożeniem.</p>
+
+        <div class="duo-grid duo-grid--waska" style="margin:28px 0;">
+          <div class="blog-card card-glow" style="background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px;">
+            <span class="badge badge-blue">Android & Kotlin</span>
+            <h4 style="color:var(--text);margin:10px 0 6px;">Aplikacje mobilne Android (Kotlin)</h4>
+            <p style="font-size:0.9rem;color:var(--metal-light);margin:0;">Natywne aplikacje na smartfony i tablety. Zbieranie danych z czujników, komunikacja Bluetooth/Wi-Fi z maszynami, panele dla kierowców i serwisantów.</p>
+          </div>
+
+          <div class="blog-card card-glow" style="background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px;">
+            <span class="badge badge-orange">Python & Automatyzacja</span>
+            <h4 style="color:var(--text);margin:10px 0 6px;">Kodowanie w Pythonie</h4>
+            <p style="font-size:0.9rem;color:var(--metal-light);margin:0;">Skrypty automatyzujące, przetwarzanie danych z maszyn, integracje z API, algorytmy obliczeniowe i narzędzia wewnętrzne dla firm.</p>
+          </div>
+
+          <div class="blog-card card-glow" style="background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px;">
+            <span class="badge badge-green">C++ & Embedded</span>
+            <h4 style="color:var(--text);margin:10px 0 6px;">Programowanie C++ i mikrokontrolery</h4>
+            <p style="font-size:0.9rem;color:var(--metal-light);margin:0;">Niskopoziomowy kod w C++ dla sterowników CNC, mikrokontrolerów STM32/ESP32, modułów automatyki i systemów czasu rzeczywistego.</p>
+          </div>
+
+          <div class="blog-card card-glow" style="background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px;">
+            <span class="badge badge-metal">HTML & Web Apps</span>
+            <h4 style="color:var(--text);margin:10px 0 6px;">Strony WWW i aplikacje webowe</h4>
+            <p style="font-size:0.9rem;color:var(--metal-light);margin:0;">Wydajny, czysty kod HTML/JS/CSS zoptymalizowany pod SEO, dedykowane panele sterowania i serwisy firmowe bez zbędnego narzutu.</p>
+          </div>
+        </div>
+
+        <h2 id="realizacje-it">Trzy realizacje, które możesz sprawdzić sam</h2>
+        <p>Nie mamy portfolio ze zrzutami z cudzych projektów. Zamiast tego pokazujemy trzy systemy,
+          które zbudowaliśmy z agentami AI dla własnego warsztatu i które pracują codziennie. Pierwszy z nich właśnie
+          czytasz.</p>
+
+        <!-- ================= 1. SERWIS ================= -->
+        <h3 id="realizacja-serwis">1. Ten serwis — statyczny generator w Pythonie</h3>
+        <p>Strona, którą masz otwartą, nie działa na WordPressie ani na żadnym systemie CMS.
+          To <strong>ponad pięćdziesiąt podstron generowanych skryptem w Pythonie</strong> i wysyłanych na serwer
+          jako gotowe pliki HTML. Nie ma bazy do zapytania przy każdym wejściu, nie ma wtyczek do
+          aktualizowania i nie ma panelu, przez który ktoś mógłby się włamać.</p>
+
+        <figure class="schemat">
+          <svg viewBox="0 0 900 210" role="img" aria-labelledby="schemat-serwis-tytul schemat-serwis-opis" preserveAspectRatio="xMidYMid meet">
+            <title id="schemat-serwis-tytul">Droga zmiany od pliku źródłowego do serwera</title>
+            <desc id="schemat-serwis-opis">Metadane w pages.py i fragmenty HTML w src trafiają do build.py, który tworzy katalog dist. Kontrola jakości sprawdz.py przepuszcza go dalej albo zatrzymuje. Po przejściu kontroli wyslij.py wysyła pliki na serwer przez FTPS. Całość uruchamia GitHub Actions.</desc>
+            <g class="s-txt">
+              <rect class="s-ramka" x="8" y="52" width="150" height="76" rx="6"/>
+              <text class="s-tyt" x="83" y="80">pages.py + src/</text>
+              <text class="s-mal" x="83" y="100">metadane i treść</text>
+
+              <path class="s-strz" d="M164 90 H196"/>
+              <rect class="s-ramka s-akcent" x="202" y="52" width="140" height="76" rx="6"/>
+              <text class="s-tyt" x="272" y="80">build.py</text>
+              <text class="s-mal" x="272" y="100">HTML, schema, mapa</text>
+
+              <path class="s-strz" d="M348 90 H380"/>
+              <rect class="s-ramka" x="386" y="52" width="132" height="76" rx="6"/>
+              <text class="s-tyt" x="452" y="80">dist/</text>
+              <text class="s-mal" x="452" y="100">gotowe pliki</text>
+
+              <path class="s-strz" d="M524 90 H556"/>
+              <rect class="s-ramka s-brama" x="562" y="42" width="150" height="96" rx="6"/>
+              <text class="s-tyt" x="637" y="70">sprawdz.py</text>
+              <text class="s-mal" x="637" y="90">brama jakości</text>
+              <text class="s-mal" x="637" y="108">błąd = stop</text>
+
+              <path class="s-strz" d="M718 90 H750"/>
+              <rect class="s-ramka" x="756" y="52" width="136" height="76" rx="6"/>
+              <text class="s-tyt" x="824" y="80">wyslij.py</text>
+              <text class="s-mal" x="824" y="100">FTPS na serwer</text>
+
+              <rect class="s-obwod" x="4" y="18" width="892" height="180" rx="10"/>
+              <text class="s-etyk" x="20" y="38">GitHub Actions — całość bez dotykania serwera ręcznie</text>
+            </g>
+          </svg>
+          <figcaption>Schemat drogi zmiany: od pliku źródłowego do serwera. <span class="zrodlo">Opracowanie własne F.W. DRUCIK.</span></figcaption>
+        </figure>
+
+        <p>Co z tego wynika dla klienta zamawiającego podobny serwis:</p>
+        <ul>
+          <li><strong>Szybkość.</strong> Serwer oddaje gotowy plik. Strona główna waży po kompresji
+            8,6 kB — mieści się w jednym pakiecie sieciowym.</li>
+          <li><strong>Bezpieczeństwo.</strong> Nie ma panelu administracyjnego pod publicznym adresem
+            ani wtyczek z cudzym kodem. Backend to kilka własnych plików PHP obsługujących konta,
+            forum i komentarze — reszta serwisu jest statyczna.</li>
+          <li><strong>Kontrola jakości przed wysyłką.</strong> Skrypt <code>sprawdz.py</code> sprawdza
+            długości tytułów i opisów, duplikaty, hierarchię nagłówków, brakujące opisy obrazów,
+            poprawność danych strukturalnych i zgodność z mapą serwisu. Jeden błąd zatrzymuje wysyłkę.</li>
+          <li><strong>Dane strukturalne od początku.</strong> Każda podstrona niesie opis firmy,
+            okruszki nawigacyjne i — tam, gdzie są pytania — sekcję FAQ w formacie, który rozumie Google.</li>
+        </ul>
+
+        <!-- ================= 2. AUTOMATYZACJA ================= -->
+        <h3 id="realizacja-automatyzacja">2. Serwis, który sam się pilnuje i sam się naprawia</h3>
+        <p>Druga realizacja jest niewidoczna z zewnątrz, a to ona decyduje o tym, że pierwsza działa.
+          Cała droga od zmiany w pliku do gotowej strony na serwerze jest zautomatyzowana i — co
+          ważniejsze — <strong>obwarowana bramkami, przez które zła wersja nie przejdzie</strong>.</p>
+        <p>Zasada jest prosta: automat wykonuje robotę, ale nie ma prawa niczego zepsuć po cichu.
+          Każdy krok albo kończy się poprawnie, albo zatrzymuje całość i zgłasza problem.</p>
+
+        <figure class="schemat">
+          <svg viewBox="0 0 900 250" role="img" aria-labelledby="schemat-nadzor-tytul schemat-nadzor-opis" preserveAspectRatio="xMidYMid meet">
+            <title id="schemat-nadzor-tytul">Codzienny cykl nadzoru nad serwisem</title>
+            <desc id="schemat-nadzor-opis">Codzienny przegląd sprawdza sześć rzeczy: zgodność wygenerowanych plików ze źródłami, kontrolę jakości, aktualność serwera, dostępność każdego adresu z mapy serwisu, ukrycie materiałów nieopublikowanych oraz zapas tematów. To, co da się naprawić bez decyzji człowieka, naprawiane jest automatycznie; reszta trafia do zgłoszenia.</desc>
+            <g class="s-txt">
+              <rect class="s-ramka" x="8" y="34" width="164" height="70" rx="6"/>
+              <text class="s-tyt" x="90" y="62">codzienny przegląd</text>
+              <text class="s-mal" x="90" y="82">sześć kontroli</text>
+
+              <path class="s-strz" d="M178 69 H210"/>
+              <rect class="s-ramka s-akcent" x="216" y="34" width="164" height="70" rx="6"/>
+              <text class="s-tyt" x="298" y="62">zgodność plików</text>
+              <text class="s-mal" x="298" y="82">źródła kontra wynik</text>
+
+              <path class="s-strz" d="M386 69 H418"/>
+              <rect class="s-ramka s-brama" x="424" y="26" width="176" height="86" rx="6"/>
+              <text class="s-tyt" x="512" y="54">kontrola jakości</text>
+              <text class="s-mal" x="512" y="74">tytuły, nagłówki, mapa</text>
+              <text class="s-mal" x="512" y="92">błąd = stop</text>
+
+              <path class="s-strz" d="M606 69 H638"/>
+              <rect class="s-ramka" x="644" y="34" width="164" height="70" rx="6"/>
+              <text class="s-tyt" x="726" y="62">stan serwera</text>
+              <text class="s-mal" x="726" y="82">wersja zasobów</text>
+
+              <path class="s-strz" d="M726 110 V138"/>
+              <rect class="s-ramka s-stop" x="600" y="144" width="240" height="76" rx="6"/>
+              <text class="s-tyt s-stop-txt" x="720" y="167">naprawa albo zgłoszenie</text>
+              <text class="s-mal" x="720" y="187">nic nie ginie po cichu</text>
+
+              <path class="s-strz" d="M594 182 H500"/>
+              <rect class="s-ramka" x="300" y="144" width="196" height="76" rx="6"/>
+              <text class="s-tyt" x="398" y="172">wysyłka na serwer</text>
+              <text class="s-mal" x="398" y="192">FTPS, tylko zmienione pliki</text>
+
+              <path class="s-strz" d="M294 182 H208"/>
+              <rect class="s-ramka" x="30" y="144" width="172" height="76" rx="6"/>
+              <text class="s-tyt" x="116" y="172">serwis aktualny</text>
+              <text class="s-mal" x="116" y="192">bez ręcznego wgrywania</text>
+            </g>
+          </svg>
+          <figcaption>Codzienny cykl nadzoru. Pomarańczowe bloki to miejsca, w których proces sam się
+            zatrzymuje, zamiast brnąć dalej. <span class="zrodlo">Opracowanie własne F.W. DRUCIK.</span></figcaption>
+        </figure>
+
+        <p>Na cały mechanizm składają się cztery elementy:</p>
+        <ul>
+          <li><strong>Bramka jakości przed wysyłką.</strong> Zanim cokolwiek trafi na serwer, skrypt
+            sprawdza długości tytułów i opisów, duplikaty, hierarchię nagłówków, brakujące opisy obrazów,
+            poprawność danych strukturalnych i zgodność z mapą serwisu. Jeden błąd zatrzymuje wysyłkę.</li>
+          <li><strong>Codzienny przegląd serwisu.</strong> Raz dziennie sprawdzanych jest sześć rzeczy:
+            czy wygenerowane pliki odpowiadają źródłom, czy kontrola jakości przechodzi, czy serwer ma
+            aktualną wersję, czy każdy adres z mapy serwisu odpowiada, czy materiały jeszcze
+            nieopublikowane są ukryte przed wyszukiwarkami i czy nie kończy się zapas tematów.
+            Co da się naprawić bez decyzji człowieka — naprawiane jest samo.</li>
+          <li><strong>Siatka bezpieczeństwa dla publikacji.</strong> System kolejkowania potrafi zgubić
+            zlecenie, gdy dwa przyjdą jedno po drugim. Osobny przebieg porównuje więc stan bazy ze stanem
+            plików i dopublikowuje to, co zostało w tyle — zamiast liczyć, że ktoś zauważy brak.</li>
+          <li><strong>Wysyłka różnicowa.</strong> Na serwer idą wyłącznie pliki, które faktycznie się
+            zmieniły. Wgranie poprawki trwa sekundy, a nie kwadrans.</li>
+        </ul>
+        <p>Ten sam wzorzec — automat robi robotę, człowiek trzyma bramkę, a system sam zgłasza,
+          gdy coś odstaje od normy — przenosimy do systemów klienckich: raportów, powiadomień,
+          nadzoru nad maszynami i obiegu dokumentów.</p>
+
+        <!-- ================= 3. APLIKACJA ================= -->
+        <h3 id="realizacja-aplikacja">3. FW Drucik Panel — aplikacja Android prowadząca cały warsztat</h3>
+        <p>Najbardziej rozbudowany z trzech projektów. <strong>Aplikacja napisana w Kotlinie
+          z interfejsem Jetpack Compose</strong>, która prowadzi jednoosobową firmę: czas pracy,
+          finanse i podatki, klientów, zlecenia, magazyn, pojazdy, dokumenty PDF i pocztę.
+          Powstała, bo żaden gotowy program nie robił tego wszystkiego naraz, a przepisywanie danych
+          między pięcioma aplikacjami zjadało wieczory.</p>
+
+        <figure class="schemat">
+          <svg viewBox="0 0 900 300" role="img" aria-labelledby="schemat-app-tytul schemat-app-opis" preserveAspectRatio="xMidYMid meet">
+            <title id="schemat-app-tytul">Warstwy aplikacji FW Drucik Panel</title>
+            <desc id="schemat-app-opis">Interfejs w Jetpack Compose korzysta z warstwy danych na telefonie. Agent z narzędziami sięga do tych danych i do peryferiów: poczty IMAP i SMTP, KSeF, GPS, aparatu i plików PDF. Model językowy działa na telefonie bez internetu albo w chmurze jako opcja.</desc>
+            <g class="s-txt">
+              <rect class="s-ramka" x="8" y="24" width="884" height="58" rx="6"/>
+              <text class="s-tyt" x="450" y="48">Interfejs — Jetpack Compose, 7 skórek, widget na pulpicie</text>
+              <text class="s-mal" x="450" y="68">statystyki, czas pracy, kartoteki, skanery, rysownik, linijka AR</text>
+
+              <path class="s-strz" d="M450 88 V110"/>
+
+              <rect class="s-ramka s-akcent" x="8" y="116" width="430" height="70" rx="6"/>
+              <text class="s-tyt" x="223" y="144">Dane na telefonie</text>
+              <text class="s-mal" x="223" y="164">klienci, pojazdy, zlecenia, magazyn, finanse, dokumentacja dnia</text>
+
+              <rect class="s-ramka s-brama" x="462" y="116" width="430" height="70" rx="6"/>
+              <text class="s-tyt" x="677" y="144">Agent z narzędziami</text>
+              <text class="s-mal" x="677" y="164">czyta kartoteki, przygotowuje treść — wysyłkę zatwierdza użytkownik</text>
+
+              <path class="s-strz" d="M223 192 V214"/>
+              <path class="s-strz" d="M677 192 V214"/>
+
+              <rect class="s-ramka" x="8" y="220" width="430" height="70" rx="6"/>
+              <text class="s-tyt" x="223" y="248">Silniki modelu</text>
+              <text class="s-mal" x="223" y="268">model na telefonie bez internetu (LiteRT-LM) albo chmura</text>
+
+              <rect class="s-ramka" x="462" y="220" width="430" height="70" rx="6"/>
+              <text class="s-tyt" x="677" y="248">Peryferia i integracje</text>
+              <text class="s-mal" x="677" y="268">IMAP/POP3, SMTP, KSeF 2.0, GPS, aparat, PDF, widget</text>
+            </g>
+          </svg>
+          <figcaption>Warstwy aplikacji FW Drucik Panel. <span class="zrodlo">Opracowanie własne F.W. DRUCIK.</span></figcaption>
+        </figure>
+
+        <figure class="zrzuty">
+          <div class="zrzuty-para">
+            <img src="/assets/app/ekran-dzis.webp" width="600" height="749" loading="lazy"
+                 alt="Ekran Dziś aplikacji FW Drucik Panel: logo, licznik czasu pracy, kafle z godzinami, kwotą netto i pogodą oraz przycisk Rozpocznij pracę">
+            <img src="/assets/app/ekran-panel.webp" width="600" height="749" loading="lazy"
+                 alt="Panel nawigacyjny aplikacji z kaflami Dziś, AI i Kalendarz w sekcji Codziennie">
+            <img src="/assets/app/ekran-panel2.webp" width="600" height="749" loading="lazy"
+                 alt="Dalsza część panelu z kaflami Klienci, Części, Magazyn, Finanse, Koszty, Dokumenty, ZUS i ulgi, KSeF oraz Rejestr">
+          </div>
+          <figcaption>Ekran startowy z licznikiem czasu pracy oraz panel nawigacyjny — kafle układa się
+            przytrzymaniem, więc każdy ustawia aplikację pod swoją robotę.
+            <span class="zrodlo">Zrzuty z działającej aplikacji, F.W. DRUCIK.</span></figcaption>
+        </figure>
+
+        <h4>Co aplikacja potrafi</h4>
+        <ul>
+          <li><strong>Czas pracy i pieniądze</strong> — licznik z widgetem na pulpicie, historia dni,
+            trasa GPS i krokomierz, wyliczanie ZUS, zaliczki na podatek i realnego zysku, koszty
+            z podziałem na kategorie, wykresy w oknie 7/30/90 dni i roku, eksport do arkusza.</li>
+          <li><strong>ZUS i ulgi</strong> — symulacja wszystkich wariantów (ulga na start,
+            preferencyjny, Mały ZUS Plus, pełny ZUS) i odpowiedź, ile realnie oszczędza obecna ulga.</li>
+          <li><strong>Narzędzia warsztatowe</strong> — przelicznik jednostek, rysownik notatek na
+            zdjęciu, linijka AR mierząca odległość na fotografii po wzorcu o znanym wymiarze,
+            podręcznik kodów błędów OBD-II działający bez internetu, kalkulator wyceny naprawy,
+            książki serwisowe przypinane do konkretnego pojazdu.</li>
+          <li><strong>Poczta i dokumenty</strong> — agent pocztowy pobiera wiadomości, rozpoznaje
+            faktury w załącznikach, odczytuje datę sprzedaży, numer, NIP i kwoty, po czym
+            <em>proponuje</em> zaksięgowanie. Nic niepewnego nie wchodzi do kosztów bez ptaszka
+            użytkownika. Do tego KSeF 2.0 po API oraz skanery paragonów, tablic rejestracyjnych,
+            numerów katalogowych i kodu kolorów rezystora.</li>
+          <li><strong>Model językowy na telefonie</strong> — czat z pamięcią rozmowy, pytania
+            o zdjęcie tabliczki znamionowej czy rozdzielnicy, notatki dyktowane głosem. Wszystko
+            liczone lokalnie, bez wysyłania danych firmy do chmury. Chmura jest opcją, nie wymogiem.</li>
+        </ul>
+
+        <div class="apk-box">
+          <p class="eyebrow">Aplikacja w testach</p>
+          <h4>Po testach udostępnimy plik APK — bezpłatnie na trzy miesiące</h4>
+          <p>FW Drucik Panel jest w tej chwili testowany w codziennej pracy warsztatu. Po zakończeniu
+            testów udostępnimy go jako <strong>plik APK do samodzielnej instalacji</strong> —
+            <strong>bezpłatnie przez trzy miesiące dla każdego zalogowanego użytkownika tego serwisu</strong>.
+            Bez opłat wstępnych i bez podpinania karty.</p>
+          <p>Załóż konto już teraz, żeby dostać powiadomienie w dniu udostępnienia. Konto daje też
+            dostęp do <a href="/narzedzia/">narzędzi online</a> — webowych wersji kilku funkcji
+            z aplikacji, notatnika i kalendarza.</p>
+          <div class="hero-cta">
+            <a href="/konto/" class="btn btn-primary" data-gdy="niezalogowany">Załóż konto i zapisz się po APK</a>
+            <a href="/narzedzia/" class="btn btn-primary" data-gdy="zalogowany" hidden>Otwórz narzędzia online</a>
+            <a href="/narzedzia/" class="btn btn-outline" data-gdy="niezalogowany">Zobacz, co daje konto</a>
+          </div>
+        </div>
+
+        <div class="apk-box">
+          <p class="eyebrow">Baza wiedzy</p>
+          <h3>Kompendium wiedzy AI — udostępnione w całości</h3>
+          <p>Przy budowie tych systemów powstała obszerna baza wiedzy o modelach uruchamianych
+            lokalnie: ComfyUI i Flux.1, dobór plików GGUF, parametry samplingu, Fooocus, Forge
+            oraz agenci z dostępem do narzędzi. Jedenaście opracowań, słownik i gotowe schematy
+            węzłów — bez logowania i bez opłat.</p>
+          <div class="hero-cta">
+            <a class="btn btn-outline" href="/kompendium-ai/">Otwórz kompendium</a>
+          </div>
+        </div>
+
+        <h2>Dlaczego programowanie u mechaników i elektryków</h2>
+        <p>W przeciwieństwie do typowej agencji programistycznej rozumiemy, jak kod współpracuje
+          z fizycznym sprzętem: napięciem 12 V i 24 V, silnikami krokowymi, magistralą CAN
+          i czujnikami przemysłowymi. Kiedy sterownik zachowuje się dziwnie, potrafimy sprawdzić
+          oscyloskopem, czy problem jest w oprogramowaniu, czy w zasilaniu — a to zwykle rozstrzyga
+          sprawę szybciej niż tydzień analizowania logów.</p>
+        <p>Druga rzecz to skala. Nie budujemy systemów na tysiące użytkowników. Budujemy narzędzia,
+          które mają zdjąć konkretną robotę z konkretnych ludzi — i takie właśnie są trzy projekty
+          opisane wyżej.</p>
+
+        <h2 id="faq">Najczęstsze pytania</h2>
+        <div class="faq">
+          <details>
+            <summary>Czy dostanę kod źródłowy zamówionego programu?</summary>
+            <p>Tak. Kod przekazujemy razem z projektem, wraz z opisem, jak go zbudować i uruchomić. Nie stosujemy rozwiązań, które wiążą klienta z jednym wykonawcą.</p>
+          </details>
+          <details>
+            <summary>Aplikacja z modelem językowym działa bez internetu — jak to możliwe?</summary>
+            <p>Model jest pobierany raz i uruchamiany bezpośrednio na telefonie silnikiem LiteRT-LM. Odpowiedzi liczy procesor urządzenia, więc dane firmy nie wychodzą na zewnątrz. Kosztem jest rozmiar pliku modelu i wolniejsza praca niż w chmurze.</p>
+          </details>
+          <details>
+            <summary>Ile trwa napisanie aplikacji albo sterownika?</summary>
+            <p>Zależy od zakresu. Prosty skrypt automatyzujący albo panel webowy to zwykle kilka dni. Aplikacja mobilna z kartotekami i synchronizacją to tygodnie. Po opisie działania systemu podajemy termin i cenę przed rozpoczęciem pracy.</p>
+          </details>
+          <details>
+            <summary>Czy APK będzie dostępny w sklepie Google Play?</summary>
+            <p>Na start nie. Aplikacja powstała na własny użytek warsztatu i po testach zostanie udostępniona jako plik APK do samodzielnej instalacji, bezpłatnie na trzy miesiące dla zalogowanych użytkowników serwisu. Instalacja z pliku wymaga jednorazowego zezwolenia w ustawieniach telefonu.</p>
+          </details>
+        </div>
+
+        <div style="margin-top:36px;padding:24px;background:var(--panel);border:1px solid var(--blue);border-radius:var(--radius);">
+          <h3 style="color:var(--blue);margin:0 0 10px;">Masz pomysł na aplikację lub sterownik?</h3>
+          <p style="color:var(--metal-light);margin-bottom:16px;">Opisz działanie systemu — przygotujemy bezpłatną wycenę i architekturę oprogramowania.</p>
+          <a href="/kontakt/" class="btn btn-primary">Darmowa wycena projektu IT →</a>
+        </div>
+      </div>
+
+      {{ASIDE}}
+    </div>
+  </div>
+</section>
+
+{{CTA}}

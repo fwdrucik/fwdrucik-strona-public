@@ -1,0 +1,245 @@
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Narzędzia online</div>
+    <h1>Narzędzia warsztatowe i notatnik dla zalogowanych</h1>
+    <p class="lead">Przeliczaj jednostki, odczytuj kolory rezystorów i kody OBD-II, szacuj koszt naprawy. Notatnik i kalendarz zapisują dane na koncie, dostępnym z każdego urządzenia.</p>
+    <div class="hero-cta">
+      <a href="/konto/" class="btn btn-primary" data-gdy="niezalogowany">Załóż darmowe konto</a>
+      <a href="/uslugi/programowanie-aplikacje/" class="btn btn-outline">Jak to zbudowaliśmy</a>
+      <a href="/kompendium-ai/" class="btn btn-outline">Kompendium wiedzy AI</a>
+      <a href="/pracownia/" class="btn btn-outline">Pracownia Drucika</a>
+    </div>
+  </div>
+</section>
+
+<section class="diamond-bg">
+  <div class="container">
+
+    <div class="apk-box" data-gdy="niezalogowany">
+      <p class="eyebrow">Co daje konto</p>
+      <h2>Konto jest darmowe i daje trzy rzeczy</h2>
+      <ul class="check-list">
+        <li><strong>Narzędzia warsztatowe w przeglądarce</strong> — te same obliczenia, które mamy w aplikacji na telefonie, bez instalowania czegokolwiek.</li>
+        <li><strong>Notatnik i kalendarz na koncie</strong> — wpisy zostają na serwerze, więc otworzysz je z telefonu i z komputera.</li>
+        <li><strong>Aplikacja FW Drucik Panel po testach</strong> — udostępnimy ją jako plik APK do samodzielnej instalacji, <strong>bezpłatnie na trzy miesiące dla każdego zalogowanego użytkownika</strong>. Bez opłat wstępnych i bez podpinania karty.</li>
+      </ul>
+      <div class="hero-cta">
+        <a href="/konto/" class="btn btn-primary">Załóż konto — 30 sekund</a>
+      </div>
+    </div>
+
+    <div class="apk-box" data-gdy="zalogowany" hidden>
+      <p class="eyebrow">Aplikacja w testach</p>
+      <h2>Cześć, <span data-pole="nick"></span> — APK czeka na koniec testów</h2>
+      <p>FW Drucik Panel jest testowany w codziennej pracy warsztatu. Po zakończeniu testów dostaniesz
+        plik APK do samodzielnej instalacji — <strong>bezpłatnie przez trzy miesiące</strong>, bo masz konto.
+        Powiadomimy Cię na adres podany przy rejestracji.</p>
+    </div>
+
+    <div class="narzedzia-paski">
+      <button class="tab-btn active" type="button" data-narzedzie="szukaj">🔍 Wyszukiwarka</button>
+      <button class="tab-btn" type="button" data-narzedzie="notatnik">📝 Notatnik</button>
+      <button class="tab-btn" type="button" data-narzedzie="kalendarz">📅 Kalendarz</button>
+      <button class="tab-btn" type="button" data-narzedzie="przelicznik">📐 Przelicznik jednostek</button>
+      <button class="tab-btn" type="button" data-narzedzie="rezystor">🎨 Kod rezystora</button>
+      <button class="tab-btn" type="button" data-narzedzie="obd">🚗 Kody OBD-II</button>
+      <button class="tab-btn" type="button" data-narzedzie="wycena">💰 Wycena naprawy</button>
+    </div>
+
+    <!-- ===================================================== WYSZUKIWARKA -->
+    <div class="narzedzie" data-panel="szukaj">
+      <h2>Wyszukiwarka serwisu</h2>
+      <p class="narzedzie-opis">Przeszukuje tytuły, opisy i treść wszystkich podstron oraz wpisów bloga.
+        Działa w przeglądarce — nic nie wysyłamy na serwer.</p>
+      <div class="pole-szukania">
+        <label class="sr-only" for="szukaj-fraza">Szukana fraza</label>
+        <input type="search" id="szukaj-fraza" class="form-control" placeholder="np. magistrala CAN, spawanie aluminium, R1234yf" autocomplete="off">
+      </div>
+      <p class="szukaj-status" id="szukaj-status">Wpisz co najmniej dwa znaki.</p>
+      <ol class="szukaj-wyniki" id="szukaj-wyniki"></ol>
+    </div>
+
+    <!-- ========================================================= NOTATNIK -->
+    <div class="narzedzie" data-panel="notatnik" hidden>
+      <h2>Notatnik</h2>
+      <div class="brama" data-gdy="niezalogowany">
+        <p>Notatnik zapisuje wpisy na Twoim koncie. <a href="/konto/">Zaloguj się albo załóż konto</a> — jest darmowe.</p>
+      </div>
+      <div data-gdy="zalogowany" hidden>
+        <p class="narzedzie-opis">Notatki zapisują się na serwerze, więc otworzysz je z każdego urządzenia.
+          Widzisz wyłącznie własne wpisy.</p>
+        <div class="notatnik-uklad">
+          <div class="notatnik-lista">
+            <button type="button" class="btn btn-outline" id="notatka-nowa">+ Nowa notatka</button>
+            <ul id="notatki-spis"></ul>
+          </div>
+          <form class="notatnik-edytor" id="notatka-form">
+            <label class="sr-only" for="notatka-tytul">Tytuł notatki</label>
+            <input type="text" id="notatka-tytul" class="form-control" placeholder="Tytuł notatki" maxlength="160" required>
+            <label class="sr-only" for="notatka-tresc">Treść notatki</label>
+            <textarea id="notatka-tresc" class="form-control" rows="12" placeholder="Treść — pomiary, numery części, ustalenia z klientem…"></textarea>
+            <div class="notatnik-akcje">
+              <button type="submit" class="btn btn-primary">Zapisz</button>
+              <button type="button" class="btn btn-outline" id="notatka-usun" hidden>Usuń</button>
+              <span class="komunikat" id="notatka-komunikat"></span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================================== KALENDARZ -->
+    <div class="narzedzie" data-panel="kalendarz" hidden>
+      <h2>Kalendarz</h2>
+      <div class="brama" data-gdy="niezalogowany">
+        <p>Kalendarz zapisuje wydarzenia na Twoim koncie. <a href="/konto/">Zaloguj się albo załóż konto</a> — jest darmowe.</p>
+      </div>
+      <div data-gdy="zalogowany" hidden>
+        <p class="narzedzie-opis">Terminy przeglądów, wizyt i odbiorów. Dotknij dnia, żeby dodać wydarzenie.</p>
+        <div class="kal-pasek">
+          <button type="button" class="btn btn-outline" id="kal-poprzedni" aria-label="Poprzedni miesiąc">‹</button>
+          <strong id="kal-etykieta">—</strong>
+          <button type="button" class="btn btn-outline" id="kal-nastepny" aria-label="Następny miesiąc">›</button>
+          <button type="button" class="btn btn-outline" id="kal-dzis">Dziś</button>
+        </div>
+        <div class="kal-siatka" id="kal-siatka" role="grid" aria-label="Kalendarz miesięczny"></div>
+        <form class="kal-form" id="kal-form" hidden>
+          <h3 id="kal-form-tytul">Nowe wydarzenie</h3>
+          <div class="kal-pola">
+            <div>
+              <label for="kal-dzien">Data</label>
+              <input type="date" id="kal-dzien" class="form-control" required>
+            </div>
+            <div>
+              <label for="kal-godzina">Godzina (opcjonalnie)</label>
+              <input type="time" id="kal-godzina" class="form-control">
+            </div>
+          </div>
+          <label for="kal-tytul">Tytuł</label>
+          <input type="text" id="kal-tytul" class="form-control" maxlength="160" placeholder="np. Przegląd sprężarki u klienta" required>
+          <label for="kal-opis">Opis</label>
+          <textarea id="kal-opis" class="form-control" rows="3" placeholder="Szczegóły, adres, numer telefonu"></textarea>
+          <div class="notatnik-akcje">
+            <button type="submit" class="btn btn-primary">Zapisz</button>
+            <button type="button" class="btn btn-outline" id="kal-usun" hidden>Usuń</button>
+            <button type="button" class="btn btn-outline" id="kal-anuluj">Anuluj</button>
+            <span class="komunikat" id="kal-komunikat"></span>
+          </div>
+        </form>
+        <ul class="kal-lista" id="kal-lista"></ul>
+      </div>
+    </div>
+
+    <!-- ======================================================= PRZELICZNIK -->
+    <div class="narzedzie" data-panel="przelicznik" hidden>
+      <h2>Przelicznik jednostek</h2>
+      <div class="brama" data-gdy="niezalogowany">
+        <p>To narzędzie jest dla zalogowanych. <a href="/konto/">Zaloguj się albo załóż konto</a> — jest darmowe.</p>
+      </div>
+      <div data-gdy="zalogowany" hidden>
+        <p class="narzedzie-opis">Te same przeliczniki, których używamy w warsztacie: ciśnienie, moment
+          dokręcania, długość, moc, przepływ, temperatura i objętość.</p>
+        <div class="przel-uklad">
+          <div>
+            <label for="przel-grupa">Wielkość</label>
+            <select id="przel-grupa" class="form-control"></select>
+          </div>
+          <div>
+            <label for="przel-wartosc">Wartość</label>
+            <input type="number" id="przel-wartosc" class="form-control" value="1" step="any">
+          </div>
+          <div>
+            <label for="przel-z">Z jednostki</label>
+            <select id="przel-z" class="form-control"></select>
+          </div>
+          <div>
+            <label for="przel-na">Na jednostkę</label>
+            <select id="przel-na" class="form-control"></select>
+          </div>
+        </div>
+        <p class="wynik-duzy" id="przel-wynik">—</p>
+        <div class="przewin">
+          <table class="przel-tabela">
+            <caption class="sr-only">Przeliczenie na wszystkie jednostki w wybranej grupie</caption>
+            <thead><tr><th>Jednostka</th><th>Wartość</th></tr></thead>
+            <tbody id="przel-wszystkie"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================== REZYSTOR -->
+    <div class="narzedzie" data-panel="rezystor" hidden>
+      <h2>Kod kolorów rezystora</h2>
+      <div class="brama" data-gdy="niezalogowany">
+        <p>To narzędzie jest dla zalogowanych. <a href="/konto/">Zaloguj się albo załóż konto</a> — jest darmowe.</p>
+      </div>
+      <div data-gdy="zalogowany" hidden>
+        <p class="narzedzie-opis">Odczyt wartości z pasków. Wybierz liczbę pasków i kolory — wynik liczy się
+          na bieżąco.</p>
+        <div class="rez-uklad">
+          <div>
+            <label for="rez-paski">Liczba pasków</label>
+            <select id="rez-paski" class="form-control">
+              <option value="4">4 paski</option>
+              <option value="5" selected>5 pasków</option>
+              <option value="6">6 pasków</option>
+            </select>
+          </div>
+          <div id="rez-selecty" class="rez-selecty"></div>
+        </div>
+        <div class="rez-podglad" id="rez-podglad" aria-hidden="true"></div>
+        <p class="wynik-duzy" id="rez-wynik">—</p>
+      </div>
+    </div>
+
+    <!-- =============================================================== OBD -->
+    <div class="narzedzie" data-panel="obd" hidden>
+      <h2>Kody błędów OBD-II</h2>
+      <div class="brama" data-gdy="niezalogowany">
+        <p>To narzędzie jest dla zalogowanych. <a href="/konto/">Zaloguj się albo załóż konto</a> — jest darmowe.</p>
+      </div>
+      <div data-gdy="zalogowany" hidden>
+        <p class="narzedzie-opis">Podręcznik kodów uniwersalnych (grupa P0). Kody producenta z grup P1, P2
+          i P3 znaczą co innego w każdej marce — tych nie zgadujemy.</p>
+        <label class="sr-only" for="obd-fraza">Kod błędu albo objaw</label>
+        <input type="search" id="obd-fraza" class="form-control" placeholder="np. P0300, sonda lambda, EGR" autocomplete="off">
+        <p class="szukaj-status" id="obd-status"></p>
+        <ul class="obd-wyniki" id="obd-wyniki"></ul>
+      </div>
+    </div>
+
+    <!-- ============================================================ WYCENA -->
+    <div class="narzedzie" data-panel="wycena" hidden>
+      <h2>Kalkulator wyceny naprawy</h2>
+      <div class="brama" data-gdy="niezalogowany">
+        <p>To narzędzie jest dla zalogowanych. <a href="/konto/">Zaloguj się albo załóż konto</a> — jest darmowe.</p>
+      </div>
+      <div data-gdy="zalogowany" hidden>
+        <p class="narzedzie-opis">Szybkie oszacowanie dla siebie — robocizna, części, dojazd i podatek.
+          To kalkulator pomocniczy, nie oferta warsztatu.</p>
+        <div class="wyc-uklad">
+          <div><label for="wyc-godziny">Robocizna (h)</label><input type="number" id="wyc-godziny" class="form-control" value="2" min="0" step="0.25"></div>
+          <div><label for="wyc-stawka">Stawka (zł/h)</label><input type="number" id="wyc-stawka" class="form-control" value="150" min="0" step="10"></div>
+          <div><label for="wyc-czesci">Części netto (zł)</label><input type="number" id="wyc-czesci" class="form-control" value="0" min="0" step="10"></div>
+          <div><label for="wyc-marza">Marża na częściach (%)</label><input type="number" id="wyc-marza" class="form-control" value="15" min="0" step="5"></div>
+          <div><label for="wyc-km">Dojazd (km, w obie strony)</label><input type="number" id="wyc-km" class="form-control" value="0" min="0" step="5"></div>
+          <div><label for="wyc-kmstawka">Stawka za km (zł)</label><input type="number" id="wyc-kmstawka" class="form-control" value="2" min="0" step="0.5"></div>
+          <div><label for="wyc-vat">VAT (%)</label><input type="number" id="wyc-vat" class="form-control" value="23" min="0" step="1"></div>
+        </div>
+        <div class="przewin">
+          <table class="wyc-tabela">
+            <caption class="sr-only">Rozbicie wyceny</caption>
+            <tbody id="wyc-rozbicie"></tbody>
+          </table>
+        </div>
+        <p class="wynik-duzy" id="wyc-suma">—</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{{CTA}}
+
+<script src="/assets/narzedzia.js" defer></script>

@@ -1,0 +1,742 @@
+/* stl.js - Przeglądarka STL w czystym WebGL | FWStl.pokaz(canvas, adresPliku) */
+(function(globalny) {
+  "use strict";
+
+  // Limit wprowadzony, aby telefon z małą pamięcią nie zawiesił się przy gigantycznym modelu
+  var LIMIT_TROJKATOW = 400000;
+  // Szary metaliczny - neutralny dla warsztatowych detali, dobrze reaguje na światło kierunkowe
+  var KOLOR_METALICZNY = [0.71, 0.72, 0.745];
+  // Pamięć per-canvas, żeby kilka podglądów na jednej stronie nie nadpisywało sobie stanu
+  var stanyPlotna = new WeakMap();
+
+  // -- Komunikat w canvasie (działa też gdy WebGL nie istnieje) --
+  function pokazKomunikat(plotno, tekst, spokojny) {
+    // Komunikaty rysujemy WYLACZNIE nakladka HTML. Kontekst 2D na tym samym
+    // plotnie zablokowalby WebGL na stale — to byl powod, dla ktorego kazdy
+    // model konczyl sie napisem „brak wsparcia WebGL".
+    try {
+      var szer = plotno.clientWidth || plotno.width || 300;
+      var wys = plotno.clientHeight || plotno.height || 150;
+      // Ustawiamy rozmiar bufora zgodnie z CSS, inaczej tekst będzie rozmyty
+      var dpr = globalny.devicePixelRatio || 1;
+      // Jeśli plotno ma WebGL, getContext('2d') może zwrócić null - wtedy tworzymy nakładkę tekstową
+      // NIE bierzemy kontekstu 2D z tego plotna.
+      //
+      // PO CO TA ZMIANA: plotno moze miec tylko JEDEN rodzaj kontekstu. Napis
+      // „Wczytywanie modelu..." rysowany przez 2D zabieral miejsce WebGL-owi
+      // i kazdy model konczyl sie komunikatem „brak wsparcia WebGL" — takze
+      // na przegladarkach, ktore WebGL maja. Komunikaty ida wiec nakladka HTML.
+      var ctx = null;
+      if (!ctx) {
+        // Fallback DOM - pokazujemy komunikat nad canvasem, bo kontekst 2D jest zablokowany przez WebGL
+        var etykieta = plotno._fwEtykietaBledu;
+        if (!etykieta) {
+          etykieta = document.createElement("div");
+          etykieta.style.position = "absolute";
+          etykieta.style.boxSizing = "border-box";
+          etykieta.style.padding = "12px";
+          etykieta.style.fontFamily = "system-ui, sans-serif";
+          etykieta.style.fontSize = "13px";
+          etykieta.style.lineHeight = "1.4";
+          etykieta.style.background = "rgba(19,28,38,0.92)";
+          etykieta.style.border = "1px solid rgba(120,144,156,0.4)";
+          etykieta.style.borderRadius = "8px";
+          etykieta.style.maxWidth = "90%";
+          etykieta.style.wordBreak = "break-word";
+          etykieta.style.pointerEvents = "none";
+          plotno._fwEtykietaBledu = etykieta;
+          var rodzic = plotno.parentElement;
+          if (rodzic) {
+            var stylRodzica = globalny.getComputedStyle ? getComputedStyle(rodzic).position : "";
+            if (stylRodzica === "static") rodzic.style.position = "relative";
+            etykieta.style.left = "50%";
+            etykieta.style.top = "50%";
+            etykieta.style.transform = "translate(-50%,-50%)";
+            rodzic.appendChild(etykieta);
+          } else {
+            plotno.insertAdjacentElement("afterend", etykieta);
+          }
+        }
+        // Spokojny komunikat (np. „wczytywanie") ma inny kolor niz awaria —
+        // czerwony napis przy normalnym ladowaniu straszy bez powodu.
+        etykieta.style.color = spokojny ? "#8fa3b8" : "#ff8a80";
+        etykieta.textContent = tekst;
+        etykieta.style.display = "block";
+        return;
+      }
+      // Ukryj ewentualną poprzednią etykietę DOM
+      if (plotno._fwEtykietaBledu) plotno._fwEtykietaBledu.style.display = "none";
+
+      plotno.width = Math.max(1, Math.floor(szer * dpr));
+      plotno.height = Math.max(1, Math.floor(wys * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, szer, wys);
+      ctx.fillStyle = "rgba(255,255,255,0.92)";
+      ctx.fillRect(0, 0, szer, wys);
+      ctx.strokeStyle = "#fecaca";
+      ctx.lineWidth = 1;
+      ctx.strokeRect(0.5, 0.5, szer - 1, wys - 1);
+      ctx.fillStyle = "#b91c1c";
+      ctx.font = "13px system-ui, sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      // Dzielimy na linie, żeby długi komunikat nie uciekł poza canvas
+      var slowa = tekst.split(" ");
+      var linie = [];
+      var linia = "";
+      var maxSzer = szer - 24;
+      for (var i = 0; i < slowa.length; i++) {
+        var proba = linia ? linia + " " + slowa[i] : slowa[i];
+        if (ctx.measureText(proba).width > maxSzer && linia) {
+          linie.push(linia);
+          linia = slowa[i];
+        } else {
+          linia = proba;
+        }
+      }
+      if (linia) linie.push(linia);
+      var wysLinii = 18;
+      var startY = (wys - linie.length * wysLinii) / 2 + 8;
+      for (var j = 0; j < linie.length; j++) {
+        ctx.fillText(linie[j], szer / 2, startY + j * wysLinii);
+      }
+    } catch (e) {
+      // Ostateczny fallback - przynajmniej w konsoli
+      try { console.error(tekst); } catch (_) {}
+    }
+  }
+
+  function ukryjKomunikat(plotno) {
+    if (plotno._fwEtykietaBledu) plotno._fwEtykietaBledu.style.display = "none";
+  }
+
+  // -- Wykrywanie formatu STL --
+  function wykryjCzyBinarny(bufor) {
+    // Rozróżnienie po rozmiarze jest najpewniejsze - binarny ma ścisły wzór 84 + n*50
+    if (bufor.byteLength < 84) return false;
+    var widok = new DataView(bufor);
+    var liczba = widok.getUint32(80, true);
+    var oczekiwany = 84 + liczba * 50;
+    if (oczekiwany === bufor.byteLength) return true;
+    // Pliki binarne czasem zaczynają się od "solid" - wtedy sam nagłówek myli, więc sprawdzamy zawartość
+    var naglowek = new Uint8Array(bufor, 0, Math.min(80, bufor.byteLength));
+    var czySolid = naglowek.length >= 5 &&
+      naglowek[0] === 115 && naglowek[1] === 111 && naglowek[2] === 108 && naglowek[3] === 105 && naglowek[4] === 100;
+    if (!czySolid) return true; // brak "solid" -> na pewno binarny (nagłówek binarny to losowe bajty)
+    // Jeśli "solid" ale w pierwszych bajtach są zera/bajty spoza ASCII -> binarny
+    for (var i = 0; i < naglowek.length; i++) {
+      if (naglowek[i] === 0) return true;
+      if (naglowek[i] > 127) return true;
+    }
+    // Dla "solid" zaglądamy w treść - ASCII zawsze ma słowo "facet"
+    var probkaDlugosc = Math.min(bufor.byteLength, 2048);
+    var probka = "";
+    try { probka = new TextDecoder("utf-8").decode(bufor.slice(0, probkaDlugosc)); } catch (e) { return true; }
+    if (probka.indexOf("facet") !== -1 && probka.indexOf("vertex") !== -1) return false;
+    // Domyślnie, gdy brak wskazówek, ufamy rozmiarowi
+    return oczekiwany === bufor.byteLength;
+  }
+
+  // -- Parsowanie binarne --
+  function parsujBinarny(bufor) {
+    var widok = new DataView(bufor);
+    var liczbaTrojkatow = widok.getUint32(80, true);
+    // Weryfikujemy limit zanim zaalokujemy pamięć - telefon padnie przy setkach MB
+    if (liczbaTrojkatow > LIMIT_TROJKATOW) {
+      var blad = new Error("LIMIT_TROJKATOW");
+      blad.liczba = liczbaTrojkatow;
+      throw blad;
+    }
+    if (84 + liczbaTrojkatow * 50 > bufor.byteLength) throw new Error("Plik STL jest uszkodzony (niekompletny bufor binarny).");
+    var pozycje = new Float32Array(liczbaTrojkatow * 9);
+    var normalne = new Float32Array(liczbaTrojkatow * 9);
+    var offset = 84;
+    var idx = 0;
+    for (var t = 0; t < liczbaTrojkatow; t++) {
+      var nx = widok.getFloat32(offset, true);
+      var ny = widok.getFloat32(offset + 4, true);
+      var nz = widok.getFloat32(offset + 8, true);
+      offset += 12;
+      // Normalna bywa zerowa w uszkodzonych eksporcie - wtedy policzymy ją później z geometrii
+      var dlugoscN = Math.sqrt(nx * nx + ny * ny + nz * nz);
+      var unx = dlugoscN > 1e-8 ? nx / dlugoscN : 0;
+      var uny = dlugoscN > 1e-8 ? ny / dlugoscN : 0;
+      var unz = dlugoscN > 1e-8 ? nz / dlugoscN : 0;
+      for (var w = 0; w < 3; w++) {
+        var x = widok.getFloat32(offset, true);
+        var y = widok.getFloat32(offset + 4, true);
+        var z = widok.getFloat32(offset + 8, true);
+        offset += 12;
+        if (!isFinite(x) || !isFinite(y) || !isFinite(z)) throw new Error("Plik STL jest uszkodzony (nieprawidłowe współrzędne).");
+        pozycje[idx] = x; pozycje[idx + 1] = y; pozycje[idx + 2] = z;
+        normalne[idx] = unx; normalne[idx + 1] = uny; normalne[idx + 2] = unz;
+        idx += 3;
+      }
+      offset += 2; // atrybuty
+      // Gdy normalna zerowa, liczymy ją z trójkąta (zabezpieczenie przed czarnym modelem)
+      if (dlugoscN <= 1e-8) {
+        var ax = pozycje[idx - 9], ay = pozycje[idx - 8], az = pozycje[idx - 7];
+        var bx = pozycje[idx - 6], by = pozycje[idx - 5], bz = pozycje[idx - 4];
+        var cx = pozycje[idx - 3], cy = pozycje[idx - 2], cz = pozycje[idx - 1];
+        var ux = bx - ax, uy = by - ay, uz = bz - az;
+        var vx = cx - ax, vy = cy - ay, vz = cz - az;
+        var rx = uy * vz - uz * vy, ry = uz * vx - ux * vz, rz = ux * vy - uy * vx;
+        var dl = Math.sqrt(rx * rx + ry * ry + rz * rz);
+        if (dl > 1e-10) { rx /= dl; ry /= dl; rz /= dl; }
+        normalne[idx - 9] = rx; normalne[idx - 8] = ry; normalne[idx - 7] = rz;
+        normalne[idx - 6] = rx; normalne[idx - 5] = ry; normalne[idx - 4] = rz;
+        normalne[idx - 3] = rx; normalne[idx - 2] = ry; normalne[idx - 1] = rz;
+      }
+    }
+    return { pozycje: pozycje, normalne: normalne, liczbaTrojkatow: liczbaTrojkatow };
+  }
+
+  // -- Parsowanie ASCII --
+  function parsujAscii(bufor) {
+    var tekst;
+    try { tekst = new TextDecoder("utf-8").decode(bufor); } catch (e) { throw new Error("Plik STL jest uszkodzony (nie można odczytać tekstu)."); }
+    // Szybkie sprawdzenie liczby facetów dla limitu - bez budowania tablic
+    var licznik = 0;
+    var pos = 0;
+    while (true) {
+      var p = tekst.indexOf("facet", pos);
+      if (p === -1) break;
+      licznik++;
+      pos = p + 5;
+      if (licznik > LIMIT_TROJKATOW) {
+        var err = new Error("LIMIT_TROJKATOW");
+        err.liczba = licznik;
+        throw err;
+      }
+    }
+    if (licznik === 0) throw new Error("Plik STL jest uszkodzony (nie znaleziono trójkątów).");
+
+    var pozycje = new Float32Array(licznik * 9);
+    var normalne = new Float32Array(licznik * 9);
+    // Wyrażenie zbiera normalną i 3 wierzchołki - odporne na różne białe znaki i nowe linie
+    var wzorzec = /facet\s+normal\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+outer\s+loop\s+vertex\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+vertex\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+vertex\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+endloop\s+endfacet/gi;
+    var dopasowanie;
+    var idx2 = 0;
+    var znalezione = 0;
+    while ((dopasowanie = wzorzec.exec(tekst)) !== null) {
+      var nx = parseFloat(dopasowanie[1]), ny = parseFloat(dopasowanie[2]), nz = parseFloat(dopasowanie[3]);
+      var ax = parseFloat(dopasowanie[4]), ay = parseFloat(dopasowanie[5]), az = parseFloat(dopasowanie[6]);
+      var bx = parseFloat(dopasowanie[7]), by = parseFloat(dopasowanie[8]), bz = parseFloat(dopasowanie[9]);
+      var cx = parseFloat(dopasowanie[10]), cy = parseFloat(dopasowanie[11]), cz = parseFloat(dopasowanie[12]);
+      if (!isFinite(nx) || !isFinite(ny) || !isFinite(nz) || !isFinite(ax) || !isFinite(ay) || !isFinite(az) || !isFinite(bx) || !isFinite(by) || !isFinite(bz) || !isFinite(cx) || !isFinite(cy) || !isFinite(cz)) {
+        throw new Error("Plik STL jest uszkodzony (nieprawidłowe liczby w ASCII).");
+      }
+      var dln = Math.sqrt(nx * nx + ny * ny + nz * nz);
+      var unx = dln > 1e-8 ? nx / dln : 0, uny = dln > 1e-8 ? ny / dln : 0, unz = dln > 1e-8 ? nz / dln : 0;
+      if (dln <= 1e-8) {
+        var ux = bx - ax, uy = by - ay, uz = bz - az;
+        var vx = cx - ax, vy = cy - ay, vz = cz - az;
+        var rx = uy * vz - uz * vy, ry = uz * vx - ux * vz, rz = ux * vy - uy * vx;
+        var dl = Math.sqrt(rx * rx + ry * ry + rz * rz);
+        if (dl > 1e-10) { rx /= dl; ry /= dl; rz /= dl; } else { rx = 0; ry = 0; rz = 1; }
+        unx = rx; uny = ry; unz = rz;
+      }
+      pozycje[idx2] = ax; pozycje[idx2 + 1] = ay; pozycje[idx2 + 2] = az;
+      normalne[idx2] = unx; normalne[idx2 + 1] = uny; normalne[idx2 + 2] = unz; idx2 += 3;
+      pozycje[idx2] = bx; pozycje[idx2 + 1] = by; pozycje[idx2 + 2] = bz;
+      normalne[idx2] = unx; normalne[idx2 + 1] = uny; normalne[idx2 + 2] = unz; idx2 += 3;
+      pozycje[idx2] = cx; pozycje[idx2 + 1] = cy; pozycje[idx2 + 2] = cz;
+      normalne[idx2] = unx; normalne[idx2 + 1] = uny; normalne[idx2 + 2] = unz; idx2 += 3;
+      znalezione++;
+    }
+    if (znalezione === 0) throw new Error("Plik STL jest uszkodzony (nie udało się sparsować trójkątów ASCII).");
+    if (znalezione !== licznik) {
+      // Przycinamy jeśli regex pominął uszkodzone facet-y - lepiej pokazać część niż wywalić cały model
+      pozycje = pozycje.subarray(0, znalezione * 9);
+      normalne = normalne.subarray(0, znalezione * 9);
+    }
+    return { pozycje: pozycje, normalne: normalne, liczbaTrojkatow: znalezione };
+  }
+
+  // -- Matematyka macierzy (column-major dla WebGL) --
+  function macierzIdentyczna() {
+    return new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
+  }
+  function macierzPerspektywy(fovRad, proporcje, bliski, daleki) {
+    // Perspektywa daje naturalne poczucie głębi przy orbitowaniu myszką
+    var f = 1.0 / Math.tan(fovRad / 2);
+    var nf = 1 / (bliski - daleki);
+    var m = new Float32Array(16);
+    m[0] = f / proporcje; m[1] = 0; m[2] = 0; m[3] = 0;
+    m[4] = 0; m[5] = f; m[6] = 0; m[7] = 0;
+    m[8] = 0; m[9] = 0; m[10] = (daleki + bliski) * nf; m[11] = -1;
+    m[12] = 0; m[13] = 0; m[14] = 2 * daleki * bliski * nf; m[15] = 0;
+    return m;
+  }
+  function macierzTranslacji(tx, ty, tz) {
+    var m = macierzIdentyczna();
+    m[12] = tx; m[13] = ty; m[14] = tz;
+    return m;
+  }
+  function macierzSkali(s) {
+    var m = macierzIdentyczna();
+    m[0] = s; m[5] = s; m[10] = s;
+    return m;
+  }
+  function macierzObrotuX(kat) {
+    var c = Math.cos(kat), s = Math.sin(kat);
+    return new Float32Array([1, 0, 0, 0, 0, c, s, 0, 0, -s, c, 0, 0, 0, 0, 1]);
+  }
+  function macierzObrotuY(kat) {
+    var c = Math.cos(kat), s = Math.sin(kat);
+    return new Float32Array([c, 0, -s, 0, 0, 1, 0, 0, s, 0, c, 0, 0, 0, 0, 1]);
+  }
+  function pomnozMacierze(a, b) {
+    // Wynik = a * b (kolejność ważna dla rotacji po skali)
+    var w = new Float32Array(16);
+    for (var r = 0; r < 4; r++) {
+      for (var c = 0; c < 4; c++) {
+        var sum = 0;
+        for (var k = 0; k < 4; k++) sum += a[k * 4 + r] * b[c * 4 + k];
+        w[c * 4 + r] = sum;
+      }
+    }
+    return w;
+  }
+  function macierzNormalnychZModelu(model) {
+    // Macierz 3x3 = inverse-transpose górnego 3x3 modelu - potrzebna by światło nie zniekształcało się przy skali
+    var m00 = model[0], m01 = model[4], m02 = model[8];
+    var m10 = model[1], m11 = model[5], m12 = model[9];
+    var m20 = model[2], m21 = model[6], m22 = model[10];
+    var det = m00 * (m11 * m22 - m12 * m21) - m01 * (m10 * m22 - m12 * m20) + m02 * (m10 * m21 - m11 * m20);
+    if (Math.abs(det) < 1e-12) return new Float32Array([1, 0, 0, 0, 1, 0, 0, 0, 1]);
+    var inv = 1 / det;
+    return new Float32Array([
+      (m11 * m22 - m12 * m21) * inv,
+      (m12 * m20 - m10 * m22) * inv,
+      (m10 * m21 - m11 * m20) * inv,
+      (m02 * m21 - m01 * m22) * inv,
+      (m00 * m22 - m02 * m20) * inv,
+      (m01 * m20 - m00 * m21) * inv,
+      (m01 * m12 - m02 * m11) * inv,
+      (m02 * m10 - m00 * m12) * inv,
+      (m00 * m11 - m01 * m10) * inv
+    ]);
+  }
+
+  // -- Shadery --
+  var KOD_WIERZCHOLKA = [
+    "attribute vec3 aPozycja;",
+    "attribute vec3 aNormalna;",
+    "uniform mat4 uModel;",
+    "uniform mat4 uWidok;",
+    "uniform mat4 uProjekcja;",
+    "uniform mat3 uNormalna;",
+    "varying vec3 vNormalna;",
+    "varying vec3 vPozycjaSwiat;",
+    "void main(){",
+    "  vec4 pSwiat = uModel * vec4(aPozycja, 1.0);",
+    "  vPozycjaSwiat = pSwiat.xyz;",
+    "  vNormalna = normalize(uNormalna * aNormalna);",
+    "  gl_Position = uProjekcja * uWidok * pSwiat;",
+    "}"
+  ].join("\n");
+
+  var KOD_FRAGMENTU = [
+    "precision mediump float;",
+    "varying vec3 vNormalna;",
+    "varying vec3 vPozycjaSwiat;",
+    "uniform vec3 uKolor;",
+    "uniform vec3 uKierunekSwiatla;",
+    "void main(){",
+    "  vec3 n = normalize(vNormalna);",
+    "  float dwustronnosc = gl_FrontFacing ? 1.0 : -1.0;",
+    "  n *= dwustronnosc;",
+    "  vec3 l = normalize(uKierunekSwiatla);",
+    "  float rozproszenie = max(dot(n, l), 0.0);",
+    "  vec3 odblaskKier = reflect(-l, n);",
+    "  vec3 oko = normalize(-vPozycjaSwiat);",
+    "  float blask = pow(max(dot(odblaskKier, oko), 0.0), 28.0) * 0.55;",
+    "  vec3 otoczenie = uKolor * 0.38;",
+    "  vec3 kolor = otoczenie + uKolor * rozproszenie * 0.62 + vec3(blask);",
+    "  kolor = pow(kolor, vec3(0.4545));",
+    "  gl_FragColor = vec4(kolor, 1.0);",
+    "}"
+  ].join("\n");
+
+  function kompilujShader(gl, typ, kod) {
+    var shader = gl.createShader(typ);
+    gl.shaderSource(shader, kod);
+    gl.compileShader(shader);
+    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+      var log = gl.getShaderInfoLog(shader);
+      gl.deleteShader(shader);
+      throw new Error("Błąd shadera: " + log);
+    }
+    return shader;
+  }
+  function stworzProgram(gl, vsKod, fsKod) {
+    var vs = kompilujShader(gl, gl.VERTEX_SHADER, vsKod);
+    var fs = kompilujShader(gl, gl.FRAGMENT_SHADER, fsKod);
+    var prog = gl.createProgram();
+    gl.attachShader(prog, vs);
+    gl.attachShader(prog, fs);
+    gl.linkProgram(prog);
+    gl.deleteShader(vs);
+    gl.deleteShader(fs);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+      var log = gl.getProgramInfoLog(prog);
+      gl.deleteProgram(prog);
+      throw new Error("Błąd linkowania programu: " + log);
+    }
+    return prog;
+  }
+
+  // -- Centrowanie i skala --
+  function wycentrujIskaluj(pozycje) {
+    // Wycentrowanie i normalizacja skali - model z CAD bywa w mm lub m, musi wyglądać tak samo
+    var minX = Infinity, minY = Infinity, minZ = Infinity;
+    var maxX = -Infinity, maxY = -Infinity, maxZ = -Infinity;
+    for (var i = 0; i < pozycje.length; i += 3) {
+      var x = pozycje[i], y = pozycje[i + 1], z = pozycje[i + 2];
+      if (x < minX) minX = x; if (x > maxX) maxX = x;
+      if (y < minY) minY = y; if (y > maxY) maxY = y;
+      if (z < minZ) minZ = z; if (z > maxZ) maxZ = z;
+    }
+    if (!isFinite(minX) || !isFinite(maxX)) throw new Error("Plik STL jest uszkodzony (pusty model).");
+    var srodekX = (minX + maxX) * 0.5;
+    var srodekY = (minY + maxY) * 0.5;
+    var srodekZ = (minZ + maxZ) * 0.5;
+    var rozX = maxX - minX, rozY = maxY - minY, rozZ = maxZ - minZ;
+    var maxRozmiar = Math.max(rozX, rozY, rozZ);
+    if (maxRozmiar < 1e-9) maxRozmiar = 1;
+    // Docelowo mieścimy model w sześcianie ~1.6, żeby zostawić margines na obrót
+    var skala = 1.6 / maxRozmiar;
+    for (var j = 0; j < pozycje.length; j += 3) {
+      pozycje[j] = (pozycje[j] - srodekX) * skala;
+      pozycje[j + 1] = (pozycje[j + 1] - srodekY) * skala;
+      pozycje[j + 2] = (pozycje[j + 2] - srodekZ) * skala;
+    }
+    return skala;
+  }
+
+  // -- Główny inicjalizator WebGL dla jednego canvasu --
+  function uruchomPodglad(plotno, dane) {
+    // Sprzątamy poprzedni podgląd na tym samym canvasie (brak wycieków przy wielu wywołaniach)
+    var poprzedni = stanyPlotna.get(plotno);
+    if (poprzedni) {
+      try { cancelAnimationFrame(poprzedni.ramkaId); } catch (e) {}
+      try {
+        if (poprzedni.obslugaMyszy) {
+          plotno.removeEventListener("mousedown", poprzedni.obslugaMyszy.mousedown);
+          globalny.removeEventListener("mousemove", poprzedni.obslugaMyszy.mousemove);
+          globalny.removeEventListener("mouseup", poprzedni.obslugaMyszy.mouseup);
+          plotno.removeEventListener("wheel", poprzedni.obslugaMyszy.wheel);
+          plotno.removeEventListener("touchstart", poprzedni.obslugaMyszy.touchstart);
+          globalny.removeEventListener("touchmove", poprzedni.obslugaMyszy.touchmove);
+          globalny.removeEventListener("touchend", poprzedni.obslugaMyszy.touchend);
+        }
+      } catch (e) {}
+      try { if (poprzedni.gl) { var ext = poprzedni.gl.getExtension("WEBGL_lose_context"); if (ext) {} } } catch (e) {}
+    }
+    ukryjKomunikat(plotno);
+
+    var gl = null;
+    try {
+      // Kolejnosc ma znaczenie: sa przegladarki (i wbudowane widoki), ktore
+      // wystawiaja WYLACZNIE webgl2 — proszenie tylko o "webgl" konczy sie
+      // tam komunikatem „brak wsparcia" mimo dzialajacej akceleracji.
+      // Nasze shadery sa w GLSL ES 1.00, wiec chodza w obu kontekstach.
+      var ustawienia = { alpha: true, antialias: true, depth: true, premultipliedAlpha: false, preserveDrawingBuffer: false };
+      gl = plotno.getContext("webgl2", ustawienia) ||
+           plotno.getContext("webgl", ustawienia) ||
+           plotno.getContext("experimental-webgl", { alpha: true, antialias: true });
+    } catch (e) { gl = null; }
+    if (!gl) {
+      pokazKomunikat(plotno, "Brak wsparcia WebGL w tej przeglądarce. Zaktualizuj przeglądarkę lub włącz akcelerację grafiki.");
+      return;
+    }
+
+    // Przezroczyste tło - canvas wtapia się w stronę, nie zasłania layoutu
+    gl.clearColor(0, 0, 0, 0);
+    gl.enable(gl.DEPTH_TEST);
+    gl.depthFunc(gl.LEQUAL);
+    gl.enable(gl.CULL_FACE);
+    gl.cullFace(gl.BACK);
+    // Mieszanie dla przezroczystego tła (gdy strona ma tło, canvas nie robi czarnego prostokąta)
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+    var program;
+    try {
+      program = stworzProgram(gl, KOD_WIERZCHOLKA, KOD_FRAGMENTU);
+    } catch (e) {
+      pokazKomunikat(plotno, "Nie udało się uruchomić WebGL: " + e.message);
+      return;
+    }
+    gl.useProgram(program);
+
+    // Atrybuty i uniformy
+    var attrPozycja = gl.getAttribLocation(program, "aPozycja");
+    var attrNormalna = gl.getAttribLocation(program, "aNormalna");
+    var uniModel = gl.getUniformLocation(program, "uModel");
+    var uniWidok = gl.getUniformLocation(program, "uWidok");
+    var uniProjekcja = gl.getUniformLocation(program, "uProjekcja");
+    var uniNormalna = gl.getUniformLocation(program, "uNormalna");
+    var uniKolor = gl.getUniformLocation(program, "uKolor");
+    var uniSwiatlo = gl.getUniformLocation(program, "uSwiatlo") || gl.getUniformLocation(program, "uKierunekSwiatla");
+
+    // Bufory
+    var buforPozycji = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buforPozycji);
+    gl.bufferData(gl.ARRAY_BUFFER, dane.pozycje, gl.STATIC_DRAW);
+    var buforNormalnych = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buforNormalnych);
+    gl.bufferData(gl.ARRAY_BUFFER, dane.normalne, gl.STATIC_DRAW);
+
+    // Stan interakcji - per canvas, więc wiele podglądów nie koliduje
+    var stan = {
+      gl: gl,
+      program: program,
+      buforPozycji: buforPozycji,
+      buforNormalnych: buforNormalnych,
+      liczbaWierzcholkow: dane.pozycje.length / 3,
+      katX: -0.35, // lekki kąt startowy, żeby od razu widać było bryłę 3D
+      katY: 0.6,
+      przyblizenie: 2.4, // odległość kamery - dobrana by model 1.6 mieścił się w kadrze
+      docelowyKatX: -0.35,
+      docelowyKatY: 0.6,
+      docelowePrzyblizenie: 2.4,
+      przeciaganie: false,
+      ostatniX: 0,
+      ostatniY: 0,
+      dotykOdleglosc: 0,
+      ramkaId: 0,
+      obslugaMyszy: null
+    };
+
+    // Interakcje
+    function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
+
+    function naMousedown(e) {
+      stan.przeciaganie = true;
+      stan.ostatniX = e.clientX;
+      stan.ostatniY = e.clientY;
+      e.preventDefault();
+    }
+    function naMousemove(e) {
+      if (!stan.przeciaganie) return;
+      var dx = e.clientX - stan.ostatniX;
+      var dy = e.clientY - stan.ostatniY;
+      // Czułość dobrana by obrót był płynny na desktopie i nie za szybki
+      stan.docelowyKatY += dx * 0.006;
+      stan.docelowyKatX += dy * 0.006;
+      stan.docelowyKatX = clamp(stan.docelowyKatX, -Math.PI / 2 + 0.05, Math.PI / 2 - 0.05);
+      stan.ostatniX = e.clientX;
+      stan.ostatniY = e.clientY;
+    }
+    function naMouseup() { stan.przeciaganie = false; }
+    function naWheel(e) {
+      // Zoom kółkiem - wygładzamy przez docelowe przybliżenie
+      var delta = e.deltaY || e.wheelDelta || 0;
+      // Normalizujemy deltaMode (0 piksele, 1 linie, 2 strony)
+      if (e.deltaMode === 1) delta *= 16;
+      else if (e.deltaMode === 2) delta *= 400;
+      var faktor = Math.exp(delta * 0.0012);
+      stan.docelowePrzyblizenie = clamp(stan.docelowePrzyblizenie * faktor, 0.7, 12);
+      e.preventDefault();
+    }
+    // Touch
+    function odlegloscDotykow(t1, t2) {
+      var dx = t1.clientX - t2.clientX, dy = t1.clientY - t2.clientY;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+    function naTouchstart(e) {
+      if (e.touches.length === 1) {
+        stan.przeciaganie = true;
+        stan.ostatniX = e.touches[0].clientX;
+        stan.ostatniY = e.touches[0].clientY;
+      } else if (e.touches.length === 2) {
+        stan.przeciaganie = false;
+        stan.dotykOdleglosc = odlegloscDotykow(e.touches[0], e.touches[1]);
+      }
+      e.preventDefault();
+    }
+    function naTouchmove(e) {
+      if (e.touches.length === 1 && stan.przeciaganie) {
+        var dx = e.touches[0].clientX - stan.ostatniX;
+        var dy = e.touches[0].clientY - stan.ostatniY;
+        stan.docelowyKatY += dx * 0.007;
+        stan.docelowyKatX += dy * 0.007;
+        stan.docelowyKatX = clamp(stan.docelowyKatX, -Math.PI / 2 + 0.05, Math.PI / 2 - 0.05);
+        stan.ostatniX = e.touches[0].clientX;
+        stan.ostatniY = e.touches[0].clientY;
+      } else if (e.touches.length === 2) {
+        var odl = odlegloscDotykow(e.touches[0], e.touches[1]);
+        if (stan.dotykOdleglosc > 0) {
+          var skalaDotyk = stan.dotykOdleglosc / Math.max(odl, 1);
+          stan.docelowePrzyblizenie = clamp(stan.docelowePrzyblizenie * skalaDotyk, 0.7, 12);
+        }
+        stan.dotykOdleglosc = odl;
+      }
+      e.preventDefault();
+    }
+    function naTouchend(e) {
+      if (e.touches.length === 0) { stan.przeciaganie = false; stan.dotykOdleglosc = 0; }
+      else if (e.touches.length === 1) {
+        stan.przeciaganie = true;
+        stan.ostatniX = e.touches[0].clientX;
+        stan.ostatniY = e.touches[0].clientY;
+        stan.dotykOdleglosc = 0;
+      }
+    }
+
+    plotno.addEventListener("mousedown", naMousedown, { passive: false });
+    globalny.addEventListener("mousemove", naMousemove, { passive: false });
+    globalny.addEventListener("mouseup", naMouseup, { passive: false });
+    plotno.addEventListener("wheel", naWheel, { passive: false });
+    plotno.addEventListener("touchstart", naTouchstart, { passive: false });
+    globalny.addEventListener("touchmove", naTouchmove, { passive: false });
+    globalny.addEventListener("touchend", naTouchend, { passive: false });
+    stan.obslugaMyszy = { mousedown: naMousedown, mousemove: naMousemove, mouseup: naMouseup, wheel: naWheel, touchstart: naTouchstart, touchmove: naTouchmove, touchend: naTouchend };
+
+    // Dopasowanie rozmiaru bufora do CSS + DPR - bez tego obraz jest rozmyty na Retinie
+    function dopasujRozmiar() {
+      var dpr = globalny.devicePixelRatio || 1;
+      var szerCSS = plotno.clientWidth || 300;
+      var wysCSS = plotno.clientHeight || 150;
+      // Gdy canvas nie ma rozmiaru CSS, nadajemy sensowny domyślny
+      if (szerCSS < 8) szerCSS = 300;
+      if (wysCSS < 8) wysCSS = 300;
+      var szer = Math.max(1, Math.floor(szerCSS * dpr));
+      var wys = Math.max(1, Math.floor(wysCSS * dpr));
+      if (plotno.width !== szer || plotno.height !== wys) {
+        plotno.width = szer;
+        plotno.height = wys;
+      }
+      gl.viewport(0, 0, plotno.width, plotno.height);
+      return { szer: plotno.width, wys: plotno.height };
+    }
+
+    // Pętla renderująca
+    function ramka() {
+      stan.ramkaId = requestAnimationFrame(ramka);
+      // Wygładzanie ruchu (lerp) - orbitowanie wygląda profesjonalnie zamiast skokowo
+      stan.katX += (stan.docelowyKatX - stan.katX) * 0.18;
+      stan.katY += (stan.docelowyKatY - stan.katY) * 0.18;
+      stan.przyblizenie += (stan.docelowePrzyblizenie - stan.przyblizenie) * 0.18;
+
+      var rozmiar = dopasujRozmiar();
+      var proporcje = rozmiar.szer / Math.max(1, rozmiar.wys);
+
+      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+      gl.useProgram(program);
+
+      // Budujemy macierze - kolejność: skala w modelu, potem obrót X i Y
+      var mSkali = macierzSkali(1);
+      var mRotX = macierzObrotuX(stan.katX);
+      var mRotY = macierzObrotuY(stan.katY);
+      var mModel = pomnozMacierze(mRotY, pomnozMacierze(mRotX, mSkali));
+      var mWidok = macierzTranslacji(0, 0, -stan.przyblizenie);
+      var mProj = macierzPerspektywy(45 * Math.PI / 180, proporcje, 0.1, 100);
+
+      var mNormalna = macierzNormalnychZModelu(mModel);
+
+      gl.uniformMatrix4fv(uniModel, false, mModel);
+      gl.uniformMatrix4fv(uniWidok, false, mWidok);
+      gl.uniformMatrix4fv(uniProjekcja, false, mProj);
+      gl.uniformMatrix3fv(uniNormalna, false, mNormalna);
+      gl.uniform3fv(uniKolor, KOLOR_METALICZNY);
+      // Światło z prawej góry przodu - najlepiej eksponuje detale druku 3D
+      if (uniSwiatlo) gl.uniform3f(uniSwiatlo, 0.6, 0.9, 0.8);
+
+      gl.bindBuffer(gl.ARRAY_BUFFER, buforPozycji);
+      gl.enableVertexAttribArray(attrPozycja);
+      gl.vertexAttribPointer(attrPozycja, 3, gl.FLOAT, false, 0, 0);
+
+      gl.bindBuffer(gl.ARRAY_BUFFER, buforNormalnych);
+      gl.enableVertexAttribArray(attrNormalna);
+      gl.vertexAttribPointer(attrNormalna, 3, gl.FLOAT, false, 0, 0);
+
+      gl.drawArrays(gl.TRIANGLES, 0, stan.liczbaWierzcholkow);
+    }
+    stanyPlotna.set(plotno, stan);
+    // Pierwsze dopasowanie rozmiaru przed startem animacji
+    dopasujRozmiar();
+    ramka();
+  }
+
+  // -- Publiczne API --
+  var FWStl = {
+    pokaz: function(plotno, adresPliku) {
+      // Walidacja wejścia - komunikat od razu w canvasie, zamiast cichego błędu w konsoli
+      if (!plotno || typeof plotno.getContext !== "function") {
+        try { console.error("FWStl.pokaz: pierwszy argument musi być elementem <canvas>."); } catch (e) {}
+        return;
+      }
+      if (typeof adresPliku !== "string" || !adresPliku) {
+        pokazKomunikat(plotno, "Nie podano adresu pliku STL.");
+        return;
+      }
+      ukryjKomunikat(plotno);
+      // Napis „wczytywanie" idzie NAKLADKA, nie kontekstem 2D.
+      //
+      // Plotno moze miec tylko jeden rodzaj kontekstu: raz pobrany „2d" na zawsze
+      // odbiera miejsce WebGL-owi i model nigdy sie nie narysuje. Wczesniej bylo
+      // tu zalozenie, ze „2D zostanie zastapione przez WebGL po fetchu" — tak sie
+      // w przegladarce nie da.
+      pokazKomunikat(plotno, "Wczytywanie modelu…", true);
+
+      // Pobieranie pliku - używamy fetch, bo działa z CORS i jest lekki na mobile
+      var doFetch = globalny.fetch ? globalny.fetch(adresPliku) : Promise.reject(new Error("Brak fetch"));
+      doFetch.then(function(odpowiedz) {
+        if (!odpowiedz.ok) throw new Error("Nie udało się pobrać pliku STL (HTTP " + odpowiedz.status + "). Sprawdź adres: " + adresPliku);
+        return odpowiedz.arrayBuffer();
+      }).then(function(bufor) {
+        if (!bufor || bufor.byteLength === 0) throw new Error("Plik STL jest pusty.");
+        // Decyzja binarny/ascii musi być przed parsowaniem, bo każdy wymaga innej ścieżki
+        var czyBinarny = wykryjCzyBinarny(bufor);
+        var dane;
+        if (czyBinarny) {
+          dane = parsujBinarny(bufor);
+        } else {
+          try {
+            dane = parsujAscii(bufor);
+          } catch (eAscii) {
+            // Fallback: jeśli ASCII zawiedzie, próbujemy binarny (niektóre eksporty mają mylący nagłówek)
+            try { dane = parsujBinarny(bufor); } catch (eBin) { throw eAscii; }
+          }
+        }
+        // Centrowanie wykonujemy na kopii pozycji przed wysłaniem do GPU
+        wycentrujIskaluj(dane.pozycje);
+        // Pozytywna weryfikacja liczby trójkątów przed WebGL
+        if (dane.liczbaTrojkatow > LIMIT_TROJKATOW) {
+          var eLim = new Error("LIMIT_TROJKATOW");
+          eLim.liczba = dane.liczbaTrojkatow;
+          throw eLim;
+        }
+        // Dopiero teraz inicjalizujemy WebGL, żeby w razie błędu pliku móc pokazać komunikat 2D bez konfliktu kontekstów
+        // Reset canvas do stanu WebGL - czyścimy ewentualny placeholder 2D
+        try {
+          // Zmiana rozmiaru wymusi nowy bufor, a WebGL przejmie kontekst
+          plotno.width = plotno.width;
+        } catch (e) {}
+        uruchomPodglad(plotno, dane);
+      }).catch(function(blad) {
+        // Reset bufora po nieudanym fetch/parsowaniu, żeby 2D znów działało
+        try { plotno.width = plotno.width; } catch (e) {}
+        var wiadomosc = blad && blad.message ? blad.message : "Nieznany błąd wczytywania STL.";
+        if (blad && blad.message === "LIMIT_TROJKATOW") {
+          var n = blad.liczba || "?";
+          wiadomosc = "Model ma zbyt wiele trójkątów (" + n + ", limit " + LIMIT_TROJKATOW + "). Zmniejsz model w programie CAD.";
+        } else if (/Failed to fetch|NetworkError|Load failed/i.test(wiadomosc)) {
+          wiadomosc = "Nie udało się pobrać pliku STL. Sprawdź adres i połączenie internetowe.";
+        } else if (/uszkodzony|pusty|Brak wsparcia/i.test(wiadomosc) === false && wiadomosc.indexOf("HTTP") === -1) {
+          // Nie nadpisujemy precyzyjnych komunikatów o uszkodzeniu, ale zapewniamy polską wersję dla niespodziewanych błędów
+          if (wiadomosc === "Brak fetch") wiadomosc = "Przeglądarka nie wspiera pobierania plików (fetch).";
+        }
+        pokazKomunikat(plotno, wiadomosc);
+        try { console.error("FWStl:", blad); } catch (e) {}
+      });
+    }
+  };
+
+  // Jedyny globalny stan - reszta żyje w WeakMap per canvas
+  globalny.FWStl = FWStl;
+
+})(typeof window !== "undefined" ? window : this);

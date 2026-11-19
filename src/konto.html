@@ -1,0 +1,110 @@
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Panel Użytkownika</div>
+    <h1>Moje Konto F.W. DRUCIK</h1>
+    <p class="lead">Zaloguj się, aby komentować blog i pisać na forum. Artykuły przeczytasz bez konta.</p>
+    <a href="/pracownia/#twoj-drucik">Zaprogramuj swojego Drucika</a>
+  </div>
+</section>
+
+<section class="diamond-bg">
+  <div class="container" style="text-align:center;">
+    <div class="auth-box">
+      <div class="auth-tabs">
+        <div class="auth-tab active" id="tab-login">LOGOWANIE</div>
+        <div class="auth-tab" id="tab-register">REJESTRACJA</div>
+      </div>
+
+      <h2 id="auth-title" style="font-size:1.3rem;color:#fff;margin-bottom:20px;">Zaloguj się do konta</h2>
+      <div id="auth-note" style="margin-bottom:16px;font-size:0.9rem;font-weight:600;"></div>
+
+      <form id="fw-auth-form">
+        <div class="form-group" id="group-name" style="display:none;">
+          <label for="auth-name">Twoje imię lub nick:</label>
+          <input type="text" id="auth-name" class="form-control" placeholder="np. Jan_Mechanik" autocomplete="nickname">
+        </div>
+        <div class="form-group">
+          <label for="auth-email">Adres e-mail:</label>
+          <input type="text" id="auth-email" class="form-control" placeholder="jan@example.com" autocomplete="username" required>
+        </div>
+        <div class="form-group">
+          <label for="auth-password">Hasło:</label>
+          <input type="password" id="auth-password" class="form-control" placeholder="••••••••" autocomplete="current-password" required>
+        </div>
+
+        <div class="form-group" id="group-captcha" style="display:none;">
+          <label for="auth-captcha">Przepisz kod z obrazka:</label>
+          <div class="captcha-blok">
+            <img id="captcha-obraz" alt="Kod do przepisania" width="200" height="70">
+            <button type="button" class="btn btn-outline" id="captcha-odswiez"
+                    aria-label="Pokaż inny kod">↻</button>
+          </div>
+          <input type="text" id="auth-captcha" class="form-control" autocomplete="off"
+                 maxlength="8" placeholder="np. A7KMP">
+          <input type="hidden" id="auth-captcha-id">
+        </div>
+
+        <!-- Pole-pułapka na boty: człowiek go nie widzi, więc zostaje puste. -->
+        <div class="form-group" aria-hidden="true" style="position:absolute;left:-9999px;">
+          <label for="auth-firma">Nazwa firmy (nie wypełniaj):</label>
+          <input type="text" id="auth-firma" tabindex="-1" autocomplete="off">
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:10px;">Zaloguj się →</button>
+      </form>
+
+      <div data-gdy="zalogowany" hidden style="margin-top:20px;">
+        <div id="potwierdz-email-prosba" hidden class="brama">
+          <p>Twój adres e-mail nie jest jeszcze potwierdzony. Bez tego nie złożysz zamówienia.</p>
+          <button type="button" class="btn btn-outline" id="wyslij-potwierdzenie">Wyślij link jeszcze raz</button>
+          <span class="komunikat" id="potwierdzenie-komunikat"></span>
+        </div>
+        <a href="/forum/" class="btn btn-primary" style="width:100%;justify-content:center;">Przejdź na forum →</a>
+        <button class="btn btn-outline btn-logout" style="width:100%;justify-content:center;margin-top:10px;">Wyloguj się</button>
+      </div>
+
+      <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--line);font-size:0.85rem;color:var(--muted);text-align:left;">
+        <p style="margin:0 0 8px;"><b>Jak działa moderacja:</b> pierwszy wątek lub komentarz nowego konta czeka na zatwierdzenie przez moderatora. Po jego akceptacji kolejne wpisy pojawiają się od razu.</p>
+        <p style="margin:0;">Zakładając konto podajesz wyłącznie nick, adres e-mail i hasło. Zasady przetwarzania opisuje <a href="/polityka-prywatnosci/" style="color:var(--orange);">polityka prywatności</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="diamond-bg" data-gdy="zalogowany" hidden>
+  <div class="container">
+    <div class="konto-sekcje">
+      <div class="konto-blok" id="dane">
+        <h2>Dane do wysyłki</h2>
+        <p class="narzedzie-opis">Wpisz raz — przy zamówieniu wystarczy wybrać sposób dostawy.</p>
+        <form id="profil-form">
+          <div class="kreator-siatka">
+            <div class="form-group"><label for="profil-imie">Imię</label><input type="text" id="profil-imie" class="form-control" maxlength="80" autocomplete="given-name"></div>
+            <div class="form-group"><label for="profil-nazwisko">Nazwisko</label><input type="text" id="profil-nazwisko" class="form-control" maxlength="80" autocomplete="family-name"></div>
+            <div class="form-group"><label for="profil-telefon">Telefon</label><input type="tel" id="profil-telefon" class="form-control" maxlength="30" autocomplete="tel"></div>
+            <div class="form-group"><label for="profil-ulica">Ulica</label><input type="text" id="profil-ulica" class="form-control" maxlength="120" autocomplete="address-line1"></div>
+            <div class="form-group"><label for="profil-nr_domu">Numer domu</label><input type="text" id="profil-nr_domu" class="form-control" maxlength="20"></div>
+            <div class="form-group"><label for="profil-nr_lokalu">Numer lokalu</label><input type="text" id="profil-nr_lokalu" class="form-control" maxlength="20"></div>
+            <div class="form-group"><label for="profil-kod">Kod pocztowy</label><input type="text" id="profil-kod" class="form-control" maxlength="10" placeholder="00-000" autocomplete="postal-code"></div>
+            <div class="form-group"><label for="profil-miasto">Miejscowość</label><input type="text" id="profil-miasto" class="form-control" maxlength="90" autocomplete="address-level2"></div>
+            <div class="form-group"><label for="profil-firma">Firma (do faktury)</label><input type="text" id="profil-firma" class="form-control" maxlength="160"></div>
+            <div class="form-group"><label for="profil-nip">NIP</label><input type="text" id="profil-nip" class="form-control" maxlength="20"></div>
+          </div>
+          <div class="notatnik-akcje">
+            <button type="submit" class="btn btn-primary">Zapisz dane</button>
+            <span class="komunikat" id="profil-komunikat"></span>
+          </div>
+        </form>
+      </div>
+
+      <div class="konto-blok" id="zamowienia">
+        <h2>Moje zamówienia</h2>
+        <ul class="zamowienia-spis" id="moje-zamowienia">
+          <li class="pusto">Wczytywanie...</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="/assets/sklep.js" defer></script>

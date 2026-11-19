@@ -1,0 +1,21 @@
+  <p>Odsłoń warstwy podstawki. Kliknij tę, która dotyka stołu drukarki.</p>
+  <div class="lab-panel" data-lekcja-warstwy>
+    <div class="lekcja-uklad">
+      <div class="lekcja-przyrzad">
+        <div class="lekcja-warstwy" role="group" aria-label="Przekrój podstawki">
+          <button type="button" data-warstwa="4" aria-pressed="false">Pas A</button>
+          <button type="button" data-warstwa="3" aria-pressed="false">Pas B</button>
+          <button type="button" data-warstwa="2" aria-pressed="false">Pas C</button>
+          <button type="button" data-warstwa="1" aria-pressed="false">Pas D</button>
+        </div>
+        <div class="lekcja-stol">Stół drukarki</div>
+      </div>
+      <div class="lekcja-opis">
+        <label for="druk-warstwy">Widoczne warstwy <output id="druk-liczba" for="druk-warstwy">4</output></label>
+        <input id="druk-warstwy" type="range" min="1" max="4" step="1" value="4">
+        <p id="druk-wynik" role="status">Wskaż warstwę przy stole.</p>
+        <p>Tak działa suwak podglądu w slicerze, czyli programie przygotowującym wydruk. Na planszy widać poglądowy przekrój podstawki.</p>
+      </div>
+    </div>
+  </div>
+  <p><a class="btn btn-outline" href="/assets/karta-drucika-warstwy.pdf" download>Pobierz kartę warstw (PDF)</a></p>

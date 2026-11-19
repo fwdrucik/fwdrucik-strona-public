@@ -1,0 +1,172 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "BME280 — temperatura, wilgotność i ciśnienie w jednym module",
+  "description": "Analiza techniczna modułu BME280. Sprawdź parametry pracy, interfejsy komunikacyjne i zastosowania w diagnostyce środowiskowej w warsztacie F.W. DRUCIK.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-08-26",
+  "dateModified": "2026-08-26",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/bme280-czujnik-temperatury-wilgotnosci-cisnienia/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-blue">Elektronika i magistrale</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 6 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 26.08.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">BME280 — temperatura, wilgotność i ciśnienie w jednym module</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">BME280 mierzy temperaturę, wilgotność i ciśnienie. Poznaj jego parametry, interfejsy i zasady podłączenia w warsztacie.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#specyfikacja">Parametry techniczne i zakresy pomiarowe</a></li>
+      <li><a href="#komunikacja">Interfejsy komunikacyjne I2C oraz SPI</a></li>
+      <li><a href="#tryby">Tryby pracy i pobór energii</a></li>
+      <li><a href="#procedura">Procedura weryfikacji i tabela połączeń</a></li>
+      <li><a href="#warsztat">Zastosowanie w warsztacie F.W. DRUCIK</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="specyfikacja">1. Parametry techniczne i zakresy pomiarowe</h2>
+<p>BME280 mierzy ciśnienie, wilgotność i temperaturę. Zakres ciśnienia: 300–1100 hPa, dokładność +/- 1 hPa przy 0–65 stopniach Celsjusza. Wilgotność: 0–100% RH, dokładność +/- 3% RH, czas odpowiedzi tau 63% około 1 sekundy. Temperatura: -40 do +85 stopni Celsjusza, dokładność +/- 0.5 stopnia przy 25 stopniach Celsjusza. Zasilanie: 1.71V–3.6V. Sprawdź parametry w dokumentacji producenta modułu — płytka PCB i warunki pracy wpływają na odczyty.</p><p>Wentyluj obudowę, by ograniczyć samonagrzewanie i wpływ pobliskiej elektroniki. Po zmianie zasilania zweryfikuj offsety lub kalibrację. Odczyty poza zakresem mogą wskazywać uszkodzenie MEMS albo błędy magistrali; sprawdź transmisję oscyloskopem.</p>
+
+    <h2 id="komunikacja">2. Interfejsy komunikacyjne I2C oraz SPI</h2>
+<p>BME280 obsługuje I2C i SPI; interfejs wybiera konfiguracja pinów. Sprawdź adres I2C: zwykle 0x76 lub 0x77. Układ obsługuje do 3.4 MHz, ale przy dłuższych przewodach stosuj Standard 100 kHz lub Fast 400 kHz. SPI pracuje w trybach 0 i 3, z zegarem do 10 MHz.</p><p>Linie SDA i SCL wymagają pull-upów, zwykle 4.7 kOhm — potwierdź to w schemacie modułu. Przy NACK lub stałych odczytach 0x00/0xFF najpierw sprawdź ciągłość przewodów i poziomy logiczne. BME280 pracuje w logice 3.3V: magistrala 5V bez konwertera grozi trwałym uszkodzeniem. W otoczeniu CNC i spawarek rozważ ekranowane przewody oraz dławiki ferrytowe ograniczające zakłócenia.</p>
+
+    <h2 id="tryby">3. Tryby pracy i pobór energii</h2>
+<p>BME280 ma tryby Sleep, Forced i Normal. Sleep, domyślny po starcie, pobiera około 0.1 uA. Forced wykonuje jeden pomiar i usypia układ, Normal mierzy cyklicznie z ustawionym odstępem. Podany pobór przy 1 Hz to około 3.6 uA.</p><p>Filtr IIR wygładza odczyty, ale opóźnia reakcję. Większy oversampling poprawia rozdzielczość kosztem czasu i energii. Dobierz ustawienia do dynamiki pomiaru i dokumentacji aplikacji. Przy niestabilnych wynikach sprawdź filtrację zasilania: ceramiczny kondensator 100 nF powinien być blisko VDD i GND.</p>
+
+    <h2 id="procedura">4. Procedura weryfikacji i tabela połączeń</h2>
+<h3>Procedura weryfikacji i tabela połączeń</h3>
+
+<p>Przed przystąpieniem do montażu lub diagnostyki modułu BME280, należy wykonać szereg czynności sprawdzających, aby wykluczyć uszkodzenia mechaniczne lub błędy w okablowaniu. Poniższa tabela przedstawia standardowe wyprowadzenia modułu, które należy zweryfikować z dokumentacją konkretnego dostawcy płytki:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Pin</th>
+      <th>Funkcja</th>
+      <th>Uwagi techniczne</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>VCC</td>
+      <td>Zasilanie</td>
+      <td>1.71V - 3.6V (sprawdź stabilizator)</td>
+    </tr>
+    <tr>
+      <td>GND</td>
+      <td>Masa</td>
+      <td>Wspólny punkt odniesienia</td>
+    </tr>
+    <tr>
+      <td>SCL</td>
+      <td>Zegar I2C</td>
+      <td>Wymaga pull-up 4.7kΩ</td>
+    </tr>
+    <tr>
+      <td>SDA</td>
+      <td>Dane I2C</td>
+      <td>Wymaga pull-up 4.7kΩ</td>
+    </tr>
+    <tr>
+      <td>CSB</td>
+      <td>Chip Select</td>
+      <td>Wysoki stan dla I2C</td>
+    </tr>
+    <tr>
+      <td>SDO</td>
+      <td>Adres I2C</td>
+      <td>0x76 (GND) lub 0x77 (VCC)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Procedura diagnostyczna krok po kroku:</strong></p>
+<ol>
+  <li><strong>Weryfikacja zasilania:</strong> Użyj multimetru, aby sprawdzić napięcie na pinach VCC i GND. Prawidłowa wartość powinna mieścić się w zakresie 3.3V.</li>
+  <li><strong>Skanowanie magistrali:</strong> Uruchom skaner I2C w środowisku Arduino/ESP32. Prawidłowy odczyt to adres <code>0x76</code> lub <code>0x77</code>.</li>
+  <li><strong>Weryfikacja trybu pracy:</strong> Jeśli skaner nie widzi urządzenia, upewnij się, że pin CSB jest w stanie wysokim (podciągnięty do VCC).</li>
+  <li><strong>Test ciągłości:</strong> Sprawdź przewody pod kątem zimnych lutów lub przerw w obwodzie.</li>
+  <li><strong>Analiza odczytów:</strong> Jeśli wartości są niestabilne, sprawdź, czy nie występuje samonagrzewanie. Zbyt częste odczyty (np. co 10ms) podnoszą temperaturę czujnika o 1-2°C powyżej otoczenia.</li>
+</ol>
+
+<p><strong>Typowe błędy i ich objawy:</strong></p>
+<ul>
+  <li><strong>Brak urządzenia na magistrali:</strong> Najczęściej wynika z błędnego podłączenia SDA/SCL lub braku rezystorów pull-up.</li>
+  <li><strong>Odczyty typu 0.00 lub 255:</strong> Oznaczają brak komunikacji z rejestrami czujnika; sprawdź zasilanie i stan pinu CSB.</li>
+  <li><strong>Nierealistyczna temperatura:</strong> Często spowodowana zbyt szybkim próbkowaniem lub umieszczeniem modułu zbyt blisko źródła ciepła (np. mikrokontrolera).</li>
+</ul>
+
+<p>Pamiętaj, że wszelkie prace przy układach zasilanych wymagają zachowania zasad BHP. Nigdy nie odłączaj modułów pod obciążeniem, jeśli nie masz pewności co do izolacji magistrali. W razie problemów z inicjalizacją, wykonaj reset programowy poprzez zapisanie wartości <code>0xB6</code> do rejestru <code>0xE0</code>.</p>
+
+    <h2 id="warsztat">5. Zastosowanie w warsztacie F.W. DRUCIK</h2>
+<h3>Zastosowanie w warsztacie F.W. DRUCIK</h3>
+
+<p>W warsztacie F.W. DRUCIK moduły BME280 znajdują zastosowanie w monitorowaniu warunków środowiskowych w strefach pracy precyzyjnej oraz przy diagnostyce układów klimatyzacji. Precyzyjny pomiar wilgotności (zakres 0–100% RH) i temperatury (od -40°C do +85°C) pozwala na ocenę wydajności osuszaczy powietrza oraz kontrolę warunków podczas prac z żywicami epoksydowymi, gdzie wilgotność powyżej 60% RH może drastycznie wydłużyć proces utwardzania lub spowodować zmętnienie powłoki.</p>
+
+<p>Wdrożenie systemu pomiarowego w naszym warsztacie przebiega według ustalonej procedury:</p>
+<ol>
+    <li>Weryfikacja napięcia zasilania (3.3V) oraz stabilności magistrali I2C.</li>
+    <li>Montaż modułu w obudowie z otworami wentylacyjnymi, zapewniającymi swobodny przepływ powietrza.</li>
+    <li>Kalibracja programowa względem wzorcowego higrometru psychrometrycznego.</li>
+    <li>Uruchomienie logowania danych z częstotliwością próbkowania 1 Hz.</li>
+</ol>
+
+<p>Podczas eksploatacji często spotykamy się z typowymi błędami, które mogą prowadzić do błędnych decyzji sterownika:</p>
+<ul>
+    <li><strong>Błąd "zastygania" odczytów:</strong> Objawia się stałą wartością ciśnienia (np. 1013.25 hPa) mimo zmian atmosferycznych. Przyczyną jest zazwyczaj błąd w obsłudze rejestrów konfiguracyjnych lub zawieszenie magistrali I2C.</li>
+    <li><strong>Dryft temperaturowy:</strong> Wskazania wyższe o 3-5°C od rzeczywistych wynikają z umieszczenia czujnika zbyt blisko źródeł ciepła (np. radiatorów sterowników).</li>
+    <li><strong>Błędne sumy kontrolne:</strong> Wynikają z zakłóceń elektromagnetycznych na przewodach sygnałowych, co objawia się nagłymi skokami wilgotności do wartości nierealnych (np. 120% RH).</li>
+</ul>
+
+<p>Jeśli potrzebujesz wsparcia w integracji czujników w swoich systemach utrzymania ruchu, zapraszamy do kontaktu. Nasz zespół specjalizuje się w szerokim zakresie usług, obejmujących zarówno <a href="/uslugi/elektromechanika/">elektromechanikę</a>, jak i zaawansowane systemy sterowania. W przypadku problemów z elektroniką przemysłową lub koniecznością kalibracji systemów pomiarowych, oferujemy profesjonalne doradztwo. Wszelkie zapytania prosimy kierować do warsztatu w miejscowości Domosław 13A, 06-120 Winnica, pod numerem 601 726 924 lub adresem fwdrucik@gmail.com. Zapraszamy od poniedziałku do piątku w godzinach 8-17 oraz w soboty od 9-13. Szczegóły znajdziesz na stronie <a href="/kontakt/">kontakt</a>.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Czy BME280 może pracować w logice 5V?</summary>
+        <p>Nie, BME280 jest zaprojektowany do pracy z napięciem zasilania i poziomami logicznymi w zakresie 1.71V - 3.6V. Podłączenie do magistrali 5V bez konwertera poziomów logicznych spowoduje trwałe uszkodzenie układu.</p>
+      </details>
+      <details>
+        <summary>Dlaczego odczyty temperatury są zawyżone?</summary>
+        <p>Najczęstszą przyczyną jest zjawisko samonagrzewania się układu przy zbyt częstym próbkowaniu lub bliskość źródeł ciepła na płytce PCB. Należy sprawdzić częstotliwość odczytów oraz zapewnić odpowiednią wentylację obudowy czujnika.</p>
+      </details>
+      <details>
+        <summary>Jaki jest adres I2C dla tego czujnika?</summary>
+        <p>Standardowo adres I2C dla BME280 to 0x76 lub 0x77, zależnie od stanu pinu SDO. Wartość tę należy zweryfikować w dokumentacji technicznej konkretnego modułu, który posiadasz.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

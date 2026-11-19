@@ -1,0 +1,103 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Kurs ESP32 część 2 — Wi-Fi, MQTT i wysyłanie pomiarów",
+  "description": "Druga część kursu ESP32. Konfiguracja Wi-Fi, protokół MQTT i przesyłanie danych z czujników w warsztacie. Praktyczne wskazówki dla automatyków.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-07-21",
+  "dateModified": "2026-07-21",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/kurs-esp32-czesc-2-wifi-mqtt/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-orange">Programowanie i kursy</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 8 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 15.08.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Kurs ESP32 część 2 — Wi-Fi, MQTT i wysyłanie pomiarów</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Połącz ESP32 z Wi-Fi i wysyłaj pomiary przez MQTT. Druga część kursu dotyczy stabilnej komunikacji sieciowej.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#wifi_stack">Konfiguracja stosu Wi-Fi w ESP32</a></li>
+      <li><a href="#mqtt_basics">Protokół MQTT w automatyce</a></li>
+      <li><a href="#data_transmission">Formatowanie danych i częstotliwość wysyłania</a></li>
+      <li><a href="#error_handling">Obsługa błędów i watchdog</a></li>
+      <li><a href="#warsztat_praktyka">Zastosowanie w F.W. DRUCIK</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="wifi_stack">1. Konfiguracja stosu Wi-Fi w ESP32</h2>
+<p>ESP32 posiada wbudowany moduł radiowy obsługujący standard IEEE 802.11 b/g/n. W środowisku Arduino IDE lub ESP-IDF, zarządzanie połączeniem wymaga obsługi zdarzeń (event handler). Nie należy używać funkcji blokujących w głównej pętli <code>loop()</code>, ponieważ powoduje to niestabilność stosu TCP/IP.</p><p>SSID i hasło zapisuj w NVS lub konfiguracji, nie na stałe w kodzie. ESP32 pracuje domyślnie w paśmie 2.4 GHz. Dla ETSI EN 300 328 podano limit 20 dBm; sprawdź specyfikację modułu.</p>
+
+    <figure>
+      <img src="/assets/blog/kurs-esp32-czesc-2-wifi-mqtt.jpg" width="1280" height="1707" loading="lazy" alt="Kurs ESP32 część 2 — Wi-Fi, MQTT i wysyłanie pomiarów">
+      <figcaption>Moduł ESP32 przygotowany do testów komunikacji w warunkach laboratoryjnych warsztatu.
+        <span class="zrodlo">Fot. <a href="https://commons.wikimedia.org/wiki/File:ESP32_Dev_Board.jpg" target="_blank" rel="noopener nofollow">Edwiyanto</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener nofollow">CC BY-SA 4.0</a>, Wikimedia Commons.</span>
+      </figcaption>
+    </figure>
+
+
+    <h2 id="mqtt_basics">2. Protokół MQTT w automatyce</h2>
+<p>MQTT (Message Queuing Telemetry Transport) to protokół typu publish/subscribe, idealny dla urządzeń o ograniczonej mocy obliczeniowej. W przeciwieństwie do HTTP, MQTT utrzymuje stałe połączenie TCP, co minimalizuje narzut nagłówków przy częstym wysyłaniu danych.</p><p>W warunkach warsztatowych kluczowe jest zachowanie mechanizmu <em>Keep Alive</em>. Jeśli połączenie zostanie zerwane, klient musi automatycznie podjąć próbę rekonfiguracji. Warto zaimplementować tzw. <em>Last Will and Testament</em> (LWT), który informuje serwer o nagłym rozłączeniu urządzenia, co pozwala na szybką diagnostykę awarii sieci w hali.</p>
+
+    <h2 id="data_transmission">3. Formatowanie danych i częstotliwość wysyłania</h2>
+<p>Przesyłanie surowych danych binarnych jest najbardziej efektywne, jednak w systemach diagnostycznych często stosuje się format JSON. Poniższa tabela przedstawia orientacyjne parametry transmisji, które należy dostosować do specyfiki monitorowanego urządzenia:</p><table><thead><tr><th>Parametr</th><th>Zalecenie</th><th>Uwagi</th></tr></thead><tbody><tr><td>Interwał wysyłania</td><td>1 - 5 sekund</td><td>Zależne od dynamiki zmian</td></tr><tr><td>QoS (Quality of Service)</td><td>0 lub 1</td><td>QoS 2 zwiększa narzut sieciowy</td></tr><tr><td>Format danych</td><td>JSON</td><td>Ułatwia parsowanie przez serwer</td></tr><tr><td>Czas odpowiedzi</td><td>&lt; 500 ms</td><td>Wartość orientacyjna dla sieci lokalnej</td></tr></tbody></table><p>Przy testach z zasilaniem 230V odseparuj galwanicznie część pomiarową od sieci. Nie podłączaj programatora USB do ESP32 połączonego z obwodami siłowymi bez właściwej izolacji.</p>
+
+    <h2 id="error_handling">4. Obsługa błędów i watchdog</h2>
+<p>W środowisku przemysłowym urządzenie musi być odporne na zawieszenia. ESP32 posiada wbudowany <em>Task Watchdog Timer</em> (TWDT). Jeśli kod utknie w pętli obsługi Wi-Fi, watchdog zrestartuje procesor. Należy unikać funkcji <code>delay()</code> w kodzie produkcyjnym na rzecz przerwań sprzętowych lub timerów systemowych.</p><p>Pamiętaj, że kasowanie kodów błędów w sterownikach maszyn bez usunięcia przyczyny źródłowej (np. uszkodzonego czujnika lub zwarcia w wiązce) prowadzi do eskalacji awarii. Monitorowanie parametrów przez MQTT pozwala na wczesne wykrycie anomalii, zanim system przejdzie w tryb awaryjny.</p>
+
+    <h2 id="warsztat_praktyka">5. Zastosowanie w F.W. DRUCIK</h2>
+<p>W naszym warsztacie wykorzystujemy ESP32 do monitorowania temperatury pracy urządzeń spawalniczych oraz obciążenia maszyn CNC. Dzięki temu możemy przewidzieć konieczność konserwacji przed wystąpieniem przestoju.</p><p>Jeśli potrzebujesz pomocy w integracji systemów pomiarowych z Twoim parkiem maszynowym lub masz problem z diagnostyką elektroniki sterującej, zapoznaj się z naszą ofertą w sekcji <a href="/uslugi/elektromechanika/">elektromechanika</a> lub <a href="/uslugi/maszyny-cnc/">maszyny-cnc</a>. W przypadku pytań technicznych zapraszamy do kontaktu: <a href="/kontakt/">formularz kontaktowy</a>.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Czy ESP32 może pracować w sieciach 5 GHz?</summary>
+        <p>Standardowe moduły ESP32 obsługują wyłącznie pasmo 2.4 GHz. Nie ma możliwości połączenia ich z sieciami działającymi wyłącznie na częstotliwości 5 GHz.</p>
+      </details>
+      <details>
+        <summary>Jaki jest zasięg Wi-Fi dla ESP32 w warunkach warsztatowych?</summary>
+        <p>Zasięg zależy od konstrukcji obudowy i przeszkód metalowych. W otwartej przestrzeni jest to kilkadziesiąt metrów, ale w warsztacie z maszynami metalowymi należy liczyć się z silnym tłumieniem sygnału.</p>
+      </details>
+      <details>
+        <summary>Czy protokół MQTT jest bezpieczny?</summary>
+        <p>Sam protokół MQTT nie zapewnia szyfrowania. W środowisku warsztatowym zaleca się stosowanie MQTT z TLS (MQTTS) oraz izolację sieci IoT od sieci biurowej za pomocą VLAN.</p>
+      </details>
+      <details>
+        <summary>Jak często powinienem wysyłać dane z czujników?</summary>
+        <p>Częstotliwość zależy od dynamiki procesu. Dla temperatury wystarczy odczyt co kilka sekund, natomiast dla parametrów elektrycznych silnika może być wymagana znacznie wyższa częstotliwość próbkowania.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

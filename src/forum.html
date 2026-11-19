@@ -1,0 +1,125 @@
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Społeczność & Dyskusje Techniczne</div>
+    <h1>Forum Dyskusyjne F.W. DRUCIK</h1>
+    <p class="lead">Pytaj i dziel się doświadczeniem w elektromechanice, diagnostyce, spawaniu MIG/TIG, CNC i mechanice maszyn.</p>
+  </div>
+</section>
+
+<section class="diamond-bg" id="forum-app">
+  <div class="container">
+
+    <!-- Widok pojedynczego wątku — wypełniany przez script.js dla /forum/?watek=ID -->
+    <div id="forum-watek" hidden></div>
+
+    <!-- Widok listy wątków -->
+    <div id="forum-lista">
+      <div class="forum-header">
+        <div>
+          <h2 style="margin:0;">Kategorie Tematyczne</h2>
+          <p style="color:var(--muted);margin:4px 0 0;">Wybierz dział, aby wyświetlić wątki, albo załóż nowy temat niżej.</p>
+        </div>
+        <a href="/konto/" class="btn btn-primary auth-nav-link">🔑 Zaloguj / Konto</a>
+      </div>
+
+      <!-- Kafelki kategorii -->
+      <div class="forum-categories">
+        <div class="forum-cat-card card-glow active" data-cat="all">
+          <div class="forum-cat-icon">📋</div>
+          <h3 class="forum-cat-title">Wszystkie Wątki</h3>
+          <p class="forum-cat-desc">Wszystkie ostatnie dyskusje, poradniki i zapytania.</p>
+        </div>
+        <div class="forum-cat-card card-glow" data-cat="regulamin">
+          <div class="forum-cat-icon">📜</div>
+          <h3 class="forum-cat-title">Regulamin</h3>
+          <p class="forum-cat-desc">Zasady społeczności, format zgłaszania awarii i BHP.</p>
+        </div>
+        <div class="forum-cat-card card-glow" data-cat="witam">
+          <div class="forum-cat-icon">🤝</div>
+          <h3 class="forum-cat-title">Przywitaj się!</h3>
+          <p class="forum-cat-desc">Onboarding: przedstaw swój warsztat i maszyny.</p>
+        </div>
+        <div class="forum-cat-card card-glow" data-cat="faq">
+          <div class="forum-cat-icon">❓</div>
+          <h3 class="forum-cat-title">FAQ</h3>
+          <p class="forum-cat-desc">Częste pytania: CAN 60Ω, pomiary, dobór tworzyw.</p>
+        </div>
+        <div class="forum-cat-card card-glow" data-cat="instrukcje">
+          <div class="forum-cat-icon">🛠️</div>
+          <h3 class="forum-cat-title">Instrukcje & Porady</h3>
+          <p class="forum-cat-desc">Poradniki napraw krok po kroku i oscylogramy.</p>
+        </div>
+        <div class="forum-cat-card card-glow" data-cat="ksiazkiserwisowe">
+          <div class="forum-cat-icon">📚</div>
+          <h3 class="forum-cat-title">Książki Serwisowe / DTR</h3>
+          <p class="forum-cat-desc">Dokumentacje DTR, schematy ciągników i maszyn.</p>
+        </div>
+        <div class="forum-cat-card card-glow" data-cat="elektro">
+          <div class="forum-cat-icon">⚡</div>
+          <h3 class="forum-cat-title">Elektromechanika</h3>
+          <p class="forum-cat-desc">Alternatory, rozruszniki, magistrale CAN/LIN 24V.</p>
+        </div>
+        <div class="forum-cat-card card-glow" data-cat="spawanie">
+          <div class="forum-cat-icon">🔥</div>
+          <h3 class="forum-cat-title">Spawanie & CNC</h3>
+          <p class="forum-cat-desc">MIG/MAG, TIG aluminium, frezowanie i druk 3D.</p>
+        </div>
+        <div class="forum-cat-card card-glow" data-cat="klimatyzacja">
+          <div class="forum-cat-icon">❄️</div>
+          <h3 class="forum-cat-title">Klimatyzacja</h3>
+          <p class="forum-cat-desc">R134a/R1234yf, szczelność azotem, sprężarki.</p>
+        </div>
+        <div class="forum-cat-card card-glow" data-cat="poczekalnia">
+          <div class="forum-cat-icon">☕</div>
+          <h3 class="forum-cat-title">Poczekalnia</h3>
+          <p class="forum-cat-desc">Warsztatowy Hyde Park, luźne rozmowy o narzędziach.</p>
+        </div>
+        <div class="forum-cat-card card-glow" data-cat="general">
+          <div class="forum-cat-icon">📢</div>
+          <h3 class="forum-cat-title">Dyskusje Ogólne</h3>
+          <p class="forum-cat-desc">Aktualności z warsztatu F.W. DRUCIK i rozwój serwisu.</p>
+        </div>
+      </div>
+
+      <!-- Lista wątków -->
+      <h2 style="font-size:1.4rem;color:#fff;margin-bottom:16px;">Ostatnie Dyskusje na Forum</h2>
+      <div class="forum-threads" id="threads-list">
+        <p style="color:var(--muted);">Wczytywanie wątków...</p>
+      </div>
+
+      <!-- Formularz nowego wątku -->
+      <div style="margin-top:40px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:30px;">
+        <h2 style="color:#fff;margin-bottom:12px;font-size:1.25rem;">➕ Dodaj nowy temat na forum</h2>
+        <p style="color:var(--muted);font-size:0.9rem;margin-bottom:20px;">Masz problem z instalacją, naprawą albo szukasz porady sprzętowej? Opisz go możliwie konkretnie — model urządzenia, objaw, co już sprawdziłeś.</p>
+
+        <form id="new-thread-form">
+          <div class="forum-thread-fields">
+            <div>
+              <label for="thread-title" style="display:block;margin-bottom:6px;font-size:0.85rem;color:var(--metal-light);">Tytuł pytania / wątku:</label>
+              <input type="text" id="thread-title" class="form-control" placeholder="np. Brak ładowania w Ursusie C-360 — co sprawdzić?" required>
+            </div>
+            <div>
+              <label for="thread-cat" style="display:block;margin-bottom:6px;font-size:0.85rem;color:var(--metal-light);">Kategoria:</label>
+              <select id="thread-cat" class="form-control">
+                <option value="witam">🤝 Przywitaj się (Witam)</option>
+                <option value="elektro" selected>⚡ Elektromechanika &amp; CAN</option>
+                <option value="spawanie">🔥 Spawanie &amp; CNC &amp; 3D</option>
+                <option value="klimatyzacja">❄️ Klimatyzacja</option>
+                <option value="instrukcje">🛠️ Instrukcje &amp; Poradniki</option>
+                <option value="ksiazkiserwisowe">📚 Książki Serwisowe / DTR</option>
+                <option value="poczekalnia">☕ Poczekalnia / Hyde Park</option>
+                <option value="general">📢 Dyskusje Ogólne</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin-bottom:16px;">
+            <label for="thread-text" style="display:block;margin-bottom:6px;font-size:0.85rem;color:var(--metal-light);">Opis problemu:</label>
+            <textarea id="thread-text" class="form-control" rows="5" placeholder="Opisz maszynę, objaw i wykonane pomiary..." required></textarea>
+          </div>
+          <div id="forum-note" style="font-size:0.9rem;font-weight:600;margin-bottom:12px;"></div>
+          <button type="submit" class="btn btn-primary">🚀 Opublikuj wątek na forum</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

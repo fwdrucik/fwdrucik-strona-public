@@ -1,0 +1,452 @@
+[
+  {
+    "id": "E-S01E01",
+    "title": "Kiedy zaświeci dioda?",
+    "home": "Narysujcie pętlę z przerwą, potem po kolei dorysujcie styk i uzasadnijcie wynik."
+  },
+  {
+    "id": "E-S01E02",
+    "title": "Po co diodzie rezystor?",
+    "home": "Zapiszcie dwa odczyty z symulatora, zamieńcie się rolami i powtórzcie z inną parą wartości."
+  },
+  {
+    "id": "E-S01E03",
+    "title": "Co łączy się pod płytką stykową?",
+    "home": "Odrysujcie grupy otworów z mapy płytki i zgadujcie, które pary łączy wspólny pasek."
+  },
+  {
+    "id": "E-S01E04",
+    "title": "Jedna droga czy dwie?",
+    "home": "Rozrysujcie pętlę i dwie gałęzie, a ruchomą karteczką oznaczajcie przerwę."
+  },
+  {
+    "id": "E-S01E05",
+    "title": "Dioda ma przód i tył",
+    "home": "Zagrajcie w obracanie kartonowej diody i dobierajcie znak plusa do anody."
+  },
+  {
+    "id": "E-S01E06",
+    "title": "Przycisk czy przełącznik?",
+    "home": "Zbudujcie z kartki dwa rekwizyty: kartę trzymaną i suwak zostający w położeniu."
+  },
+  {
+    "id": "E-S01E07",
+    "title": "Miernik pyta o dwa punkty",
+    "home": "Przesuwajcie papierowe sondy po dwóch oznaczonych punktach i odwracajcie kartę znaku."
+  },
+  {
+    "id": "E-S01E08",
+    "title": "Co znaczy pik miernika?",
+    "home": "Narysujcie przewód z ukrytą przerwą i wybierzcie miejsca wirtualnych sond."
+  },
+  {
+    "id": "E-S01E09",
+    "title": "Metal i jego plastikowa kurtka",
+    "home": "Rozrysujcie przekrój przewodu na kartce i oznaczcie część, która łączy zaciski."
+  },
+  {
+    "id": "E-S01E10",
+    "title": "Warsztat zgubionego światła",
+    "home": "Przygotujcie zagadkę z jedną usterką w symulatorze, uzasadnijcie kolejność sprawdzeń i zamieńcie role."
+  },
+  {
+    "id": "E-S02E01",
+    "title": "Napięcie przed i po podłączeniu",
+    "home": "Zapiszcie na kartce dwie kolumny „bez obciążenia” i „z lampką” i przyporządkujcie pokazane odczyty."
+  },
+  {
+    "id": "E-S02E02",
+    "title": "Którędy płynie ten sam prąd?",
+    "home": "Zaznaczcie na rysunku dwa miejsca pomiaru i zamieńcie etykiety, aby sprawdzić, co zostaje takie samo."
+  },
+  {
+    "id": "E-S02E03",
+    "title": "Dwa rezystory w jednej drodze",
+    "home": "Ułóżcie kartę źródła i dwie karty rezystorów; narysujcie obie wersje i wskażcie tę z mniejszym prądem."
+  },
+  {
+    "id": "E-S02E04",
+    "title": "Prąd spotyka rozwidlenie",
+    "home": "Narysujcie rozwidlenie i oznaczcie dwie gałęzie A i B. Zgadnijcie, którą popłynie większy prąd po zamianie rezystorów."
+  },
+  {
+    "id": "E-S02E05",
+    "title": "Połowa napięcia?",
+    "home": "Zróbcie dwie równe części papierowego paska, zaznaczcie zero i górę, a potem wskażcie punkt połowy."
+  },
+  {
+    "id": "E-S02E06",
+    "title": "Gdy miernik dołącza gościa",
+    "home": "Na schemacie znajdźcie parę elementów między tymi samymi punktami i zakreślcie miejsce pomiaru."
+  },
+  {
+    "id": "E-S02E07",
+    "title": "Czy każda dioda świeci przy tym samym napięciu?",
+    "home": "Poszukajcie na dwóch kartach katalogowych rubryki napięcia przewodzenia i sprawdźcie, przy jakim prądzie ją podano."
+  },
+  {
+    "id": "E-S02E08",
+    "title": "Po co kondensatorowi chwila?",
+    "home": "Narysujcie szybciej i wolniej rosnącą krzywą i wskażcie, która będzie wyżej we wspólnej chwili."
+  },
+  {
+    "id": "E-S02E09",
+    "title": "Dlaczego rezystor się grzeje?",
+    "home": "Przyporządkujcie karty „wat”, „wolt” i „amper” do trzech podpisów na planszy."
+  },
+  {
+    "id": "E-S02E10",
+    "title": "Odczyt zanim zmienisz układ",
+    "home": "Jedna osoba zaznacza przerwę na szkicu, druga proponuje dwa punkty odczytu i uzasadnia wybór."
+  },
+  {
+    "id": "E-S03E01",
+    "title": "Zasilanie robota i drogi sygnału",
+    "home": "Na kartce narysujcie źródło, sterownik, płytkę i silnik. Użyjcie dwóch typów strzałek dla energii i polecenia."
+  },
+  {
+    "id": "E-S03E02",
+    "title": "Punkt odniesienia sygnału",
+    "home": "Zróbcie dwa znaczniki sond i połóżcie je w różnych parach na narysowanej osi potencjałów."
+  },
+  {
+    "id": "E-S03E03",
+    "title": "Światło zamienia się w liczbę",
+    "home": "Wypiszcie trzy odczyty z planszy i wspólnie nazwijcie warunek „ciemno” w waszym modelu."
+  },
+  {
+    "id": "E-S03E04",
+    "title": "Kliknięcie na wykresie",
+    "home": "Jedna osoba odgrywa szybkie zmiany kartami, druga uzgadnia, kiedy zaczyna liczyć stabilny stan."
+  },
+  {
+    "id": "E-S03E05",
+    "title": "Impulsy i jasność",
+    "home": "Pokolorujcie dwa papierowe paski w jednej czwartej i połowie. Porównajcie udział koloru w każdym."
+  },
+  {
+    "id": "E-S03E06",
+    "title": "Cewka chce ciągłości",
+    "home": "Na dwóch rysunkach oznaczcie chwilę przed i po rozłączeniu polecenia oraz miejsce przewidziane na ochronę w dokumentacji."
+  },
+  {
+    "id": "E-S03E07",
+    "title": "Co oznacza bezpieczne STOP?",
+    "home": "Narysujcie dwa ślady do zatrzymania i oznaczcie miejsce polecenia STOP oraz miejsce faktycznego postoju."
+  },
+  {
+    "id": "E-S03E08",
+    "title": "Czujnik zniknął z układu",
+    "home": "Zróbcie tabelę z trzema prawidłowymi wynikami i jednym brakiem. Wymyślcie znak i decyzję dla brakującego wyniku."
+  },
+  {
+    "id": "E-S03E09",
+    "title": "Zestaw kontrolny przed próbą",
+    "home": "Razem wymyślcie trzy rubryki kontroli papierowego projektu. Zaznaczcie jedną rzecz do zmiany i jedną do pomiaru."
+  },
+  {
+    "id": "E-S03E10",
+    "title": "Pokaż, co zdradził układ",
+    "home": "Wymyślcie swój papierowy test dla drugiej osoby. Poproście o typ, pokażcie zmianę i porównajcie wynik."
+  },
+  {
+    "id": "A-S01E01",
+    "title": "Pierwsze mrugnięcie robota",
+    "home": "Ułóżcie cztery kartoniki, zamieńcie pierwszy i drugi czas i pokażcie oba rytmy dłonią."
+  },
+  {
+    "id": "A-S01E02",
+    "title": "Przycisk budzi lampkę",
+    "home": "Jedno z was odgrywa przycisk, a drugie zapala lub zasłania papierową lampkę według ustalonej reguły."
+  },
+  {
+    "id": "A-S01E03",
+    "title": "Robocik macha na sygnał",
+    "home": "Narysujcie dwa położenia papierowej ręki i zamieńcie kolejność kart; druga osoba ma odegrać ruch."
+  },
+  {
+    "id": "A-S01E04",
+    "title": "Robot jedzie i staje",
+    "home": "Zróbcie papierową drogę i kartę STOP. Sprawdźcie reakcję przy dwóch miejscach na tej samej trasie."
+  },
+  {
+    "id": "A-S01E05",
+    "title": "Zegar dla robota",
+    "home": "Jedno z was liczy rytm dłonią, drugie podaje kartę zadania. Porównajcie, kiedy pierwsza osoba zauważy kartę."
+  },
+  {
+    "id": "A-S01E06",
+    "title": "Trzy kolory w jednej lampce",
+    "home": "Wybierzcie dwa kolory światła w symulatorze i wymyślcie znaczenie dla otrzymanego sygnału robota."
+  },
+  {
+    "id": "A-S01E07",
+    "title": "Pokrętło z wieloma pozycjami",
+    "home": "Narysujcie pokrętło, zaznaczcie trzy pozycje i dajcie drugiej osobie trzy różne polecenia obrotu."
+  },
+  {
+    "id": "A-S01E08",
+    "title": "Dźwięk jako wiadomość",
+    "home": "Umówcie się, co znaczą dwa klaśnięcia i jedno. Zagrajcie po kolei oba sygnały i odgadnijcie ich znaczenie."
+  },
+  {
+    "id": "A-S01E09",
+    "title": "Robot zapisuje, co widzi",
+    "home": "Zapiszcie trzy stany wybranej próby jako krótką tabelę i przeczytajcie ją sobie następnego dnia."
+  },
+  {
+    "id": "A-S01E10",
+    "title": "Dzwonek robota na umówiony gest",
+    "home": "Zaprojektujcie jeden sygnał dla papierowego robota. Zapiszcie warunek i odegrajcie próbę przed przekazaniem sygnału."
+  },
+  {
+    "id": "A-S02E01",
+    "title": "Jeden klik, jedna wiadomość",
+    "home": "Dajcie sobie szereg karteczek z szybkim przełączeniem i wspólnie ustalcie, kiedy uznać stan za stabilny."
+  },
+  {
+    "id": "A-S02E02",
+    "title": "Zdarzenie to zmiana",
+    "home": "Jedno z was pokazuje kartę stanu przez kilka ruchów, drugie podnosi licznik tylko przy umówionej zmianie."
+  },
+  {
+    "id": "A-S02E03",
+    "title": "Trzy tryby robocika",
+    "home": "Ułóżcie trzy kartoniki i odegrajcie przejście od CZEKA przez DZIAŁA do STOP."
+  },
+  {
+    "id": "A-S02E04",
+    "title": "Robot rozpoznaje ciemniejszy kąt",
+    "home": "Przygotujcie trzy fikcyjne odczyty, wybierzcie linię progu i zgadnijcie, które uruchomią sygnał."
+  },
+  {
+    "id": "A-S02E05",
+    "title": "Dwa progi zamiast migotania",
+    "home": "Ułóżcie karteczki z liczbami po obu stronach progu, potem porównajcie jedną i dwie granice."
+  },
+  {
+    "id": "A-S02E06",
+    "title": "Zderzak robota",
+    "home": "Narysujcie trasę, przestawcie papierową przeszkodę i porównajcie miejsce reakcji na kontakt."
+  },
+  {
+    "id": "A-S02E07",
+    "title": "Echo wraca do robota",
+    "home": "Narysujcie drogę do ściany i powrót. Zaznaczcie oba odcinki innym kolorem i porównajcie z samą odległością."
+  },
+  {
+    "id": "A-S02E08",
+    "title": "Zasięg ruchu serwa",
+    "home": "Wytnijcie papierowe ramiona i umocujcie je pod innym kątem do dwóch papierowych osi. Porównajcie te same przesunięcia."
+  },
+  {
+    "id": "A-S02E09",
+    "title": "Jedno koło szybciej",
+    "home": "Narysujcie dwa ślady kół i zróbcie model zakrętu na papierze. Porównajcie, które koło przebywa dłuższą drogę."
+  },
+  {
+    "id": "A-S02E10",
+    "title": "Robot, który nie panikuje po przeszkodzie",
+    "home": "Wymyślcie na kartce, kiedy robot może ruszyć po zatrzymaniu. Odegrajcie próbę z dwoma położeniami przeszkody."
+  },
+  {
+    "id": "A-S03E01",
+    "title": "Jedno wymaganie, jeden test",
+    "home": "Wybierzcie jedną funkcję robota i zapiszcie obok, co trzeba zobaczyć, żeby uznać ją za działającą."
+  },
+  {
+    "id": "A-S03E02",
+    "title": "Co jeśli sygnał zniknie?",
+    "home": "Zróbcie kartę brak danych i wstawcie ją w środek papierowego programu. Ustalcie zachowanie robota."
+  },
+  {
+    "id": "A-S03E03",
+    "title": "Polecenie, które się starzeje",
+    "home": "Rozłóżcie trzy polecenia na osi czasu. Wskażcie, przy którym znaczniku robot ma przejść do STOP."
+  },
+  {
+    "id": "A-S03E04",
+    "title": "Powolny start kół",
+    "home": "Zaprojektujcie dwa papierowe sposoby startu, jeden ze skokiem i drugi ze schodkami. Porównajcie je na osi."
+  },
+  {
+    "id": "A-S03E05",
+    "title": "Trzy próby na tej samej trasie",
+    "home": "Zróbcie trzy przejścia papierowego robota z tymi samymi regułami i zaznaczcie trzy wyniki."
+  },
+  {
+    "id": "A-S03E06",
+    "title": "Zapis, który da się przeczytać",
+    "home": "Ułóżcie trzy zdarzenia na osi i zapiszcie czas, nazwę zdarzenia oraz wynik po każdej zmianie."
+  },
+  {
+    "id": "A-S03E07",
+    "title": "Jedna zmiana naraz",
+    "home": "Porównajcie dwa ustawienia czasu w papierowym programie. Jeden zapis zostawcie w obu wersjach identyczny."
+  },
+  {
+    "id": "A-S03E08",
+    "title": "Plan przed ruszeniem",
+    "home": "Zróbcie listę trzech prób modelu. Niech druga osoba czyta, a pierwsza odhacza dopiero po pokazaniu wyniku."
+  },
+  {
+    "id": "A-S03E09",
+    "title": "Wróć do działającej wersji",
+    "home": "Zróbcie kopię kart programu, zmieńcie jedną rzecz i zaplanujcie powrót, gdy próba nie wyjdzie."
+  },
+  {
+    "id": "A-S03E10",
+    "title": "Pokaz dla kogoś przy stole",
+    "home": "Pokażcie komuś papierowego robota. Niech wybierze jeden warunek, a wy porównajcie jego przewidywanie z wynikiem."
+  },
+  {
+    "id": "D-S01E01",
+    "title": "Która warstwa jest pierwsza?",
+    "home": "Ułóżcie cztery kartki i dopiszcie numery od dołu."
+  },
+  {
+    "id": "D-S01E02",
+    "title": "Płasko czy na boku?",
+    "home": "Obrysujcie gumkę płasko i na boku."
+  },
+  {
+    "id": "D-S01E03",
+    "title": "Podstawka, do której da się wpiąć kabel",
+    "home": "Zaznaczcie na szablonie osobno płytkę i tor wtyczki."
+  },
+  {
+    "id": "D-S01E04",
+    "title": "Zamknij obudowę, oszczędź przewód",
+    "home": "Przeprowadźcie nitkę przez pudełko i porównajcie dwie trasy."
+  },
+  {
+    "id": "D-S01E05",
+    "title": "Model rośnie na ekranie",
+    "home": "Zróbcie dwa szkice w różnej skali i porównajcie wymiar na kratkach."
+  },
+  {
+    "id": "D-S01E06",
+    "title": "Ściana i wnętrze robota",
+    "home": "Narysujcie po obwodzie dwa obrysy i porównajcie je z kratką w środku."
+  },
+  {
+    "id": "D-S01E07",
+    "title": "Dlaczego środek wygląda jak kratka?",
+    "home": "Porównajcie kartkę nad dwoma i nad trzema klockami."
+  },
+  {
+    "id": "D-S01E08",
+    "title": "Tymczasowa noga pod daszkiem",
+    "home": "Zbudujcie z papieru daszek i przestawianą podpórkę z klocka."
+  },
+  {
+    "id": "D-S01E09",
+    "title": "Most między dwoma słupkami",
+    "home": "Przyłóżcie pasek papieru do dwóch podpór, potem zabierzcie jedną."
+  },
+  {
+    "id": "D-S01E10",
+    "title": "Mała podstawka i duży ślad",
+    "home": "Porównajcie dwa obrysy podstawki, z obrzeżem i bez."
+  },
+  {
+    "id": "D-S02E01",
+    "title": "Po co zostawiać luz?",
+    "home": "Przesuwajcie papierowy klocek między dwiema parami znaczników."
+  },
+  {
+    "id": "D-S02E02",
+    "title": "Gdy szeroki jest tylko dół",
+    "home": "Przesuwajcie papierowy profil z szerszym dołem w kartonowym otworze."
+  },
+  {
+    "id": "D-S02E03",
+    "title": "Suwak czy ciasna nakładka?",
+    "home": "Zróbcie papierową prowadnicę i porównajcie dwa zachowania."
+  },
+  {
+    "id": "D-S02E04",
+    "title": "Otwór z daszkiem",
+    "home": "Narysujcie dwa otwory i zacieniujcie miejsca oparcia kolejnego paska."
+  },
+  {
+    "id": "D-S02E05",
+    "title": "Za wysoko czy za blisko stołu?",
+    "home": "Posegregujcie rysunki pierwszej warstwy według zaobserwowanego śladu."
+  },
+  {
+    "id": "D-S02E06",
+    "title": "Czemu na boku jest pionowa kreska?",
+    "home": "Na trzech rysunkach obrysu zaznaczcie starty w tym samym miejscu i w różnych miejscach."
+  },
+  {
+    "id": "D-S02E07",
+    "title": "Cienkie czy grube warstwy?",
+    "home": "Ułóżcie schody z kartek o dwóch wysokościach stopnia."
+  },
+  {
+    "id": "D-S02E08",
+    "title": "Tworzywo dobieramy do pracy części",
+    "home": "Zapiszcie wymaganie dla dwóch elementów i ułóżcie papierową próbę."
+  },
+  {
+    "id": "D-S02E09",
+    "title": "Mała próbka przed całą obudową",
+    "home": "Zróbcie trzy papierowe kupony i tabelę wyników A, B, C."
+  },
+  {
+    "id": "D-S02E10",
+    "title": "Filament i jego instrukcja",
+    "home": "Ułóżcie trzy papierowe karty: maszyna, materiał, zadanie."
+  },
+  {
+    "id": "D-S03E01",
+    "title": "Od zadania do papierowego projektu",
+    "home": "Narysujcie obrys płytki, miejsce na kabel i dwa kryteria, które sprawdzicie w gotowym modelu."
+  },
+  {
+    "id": "D-S03E02",
+    "title": "Złącze potrzebuje miejsca",
+    "home": "Narysujcie ścianę i papierową wtyczkę. Jedno z was ustawia ścianę, drugie próbuje wsunąć prostokąt."
+  },
+  {
+    "id": "D-S03E03",
+    "title": "Dwa uchwyty, ten sam rozstaw",
+    "home": "Odrysujcie dwie krawędzie kartonowej płytki i zaznaczcie punkty podpór na przeźroczystej kartce."
+  },
+  {
+    "id": "D-S03E04",
+    "title": "Jak cienka może być ścianka?",
+    "home": "Narysujcie dwie ściany różnej grubości i spróbujcie zmieścić w nich paski papieru o tej samej szerokości."
+  },
+  {
+    "id": "D-S03E05",
+    "title": "Którą stronę obudowy obciąży dłoń?",
+    "home": "Ułóżcie paski papieru w dwóch kierunkach. Wskażcie na obu modelach, z której strony działałaby dłoń na obudowę."
+  },
+  {
+    "id": "D-S03E06",
+    "title": "Otwory w pokrywce i miejsce dla przewodu",
+    "home": "Przeprowadźcie nitkę dwiema drogami przez kartonowe pudełko. Zaznaczcie tę, przy której wieczko się domyka."
+  },
+  {
+    "id": "D-S03E07",
+    "title": "Pomiar przed poprawką",
+    "home": "Porównajcie dwa pomiary papierowej próbki tą samą linijką i zapiszcie wspólną metodę przyłożenia."
+  },
+  {
+    "id": "D-S03E08",
+    "title": "Cztery kroki zanim dorosły uruchomi druk",
+    "home": "Ułóżcie cztery karty kontroli w kolejności i pokażcie na podglądzie, gdzie zobaczycie pierwszą warstwę."
+  },
+  {
+    "id": "D-S03E09",
+    "title": "Mały element, duża poprawka",
+    "home": "Wytnijcie dwa papierowe otwory o różnej szerokości i porównajcie, który zostawia dostęp do narysowanego kabla."
+  },
+  {
+    "id": "D-S03E10",
+    "title": "Pokaz obudowy robocika",
+    "home": "Pokażcie komuś własny papierowy model. Niech wybierze jedną próbę dopasowania, a wy opowiedzcie, co odkryliście."
+  }
+]

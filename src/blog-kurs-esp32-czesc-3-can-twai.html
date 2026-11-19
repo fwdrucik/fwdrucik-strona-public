@@ -1,0 +1,116 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Kurs ESP32 część 3: CAN (TWAI) i podsłuchiwanie magistrali",
+  "description": "Analiza magistrali CAN w pojazdach przy użyciu ESP32. Techniczne aspekty protokołu TWAI, podłączenie fizyczne i diagnostyka sygnałów w warsztacie.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-10-09",
+  "dateModified": "2026-10-09",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/kurs-esp32-czesc-3-can-twai/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-blue">Elektronika i magistrale</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 6 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 09.10.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Kurs ESP32 część 3: CAN (TWAI) i podsłuchiwanie magistrali</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">W trzeciej części kursu ESP32 skupiamy się na obsłudze magistrali CAN, znanej w środowisku ESP32 jako TWAI (Two-Wire Automotive Interface). Omówimy fizyczną warstwę transmisji, niezbędne konwertery poziomów oraz metody bezpiecznego wpięcia się w instalację pojazdu.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#warstwa-fizyczna">Warstwa fizyczna magistrali CAN</a></li>
+      <li><a href="#konfiguracja-twai">Konfiguracja interfejsu TWAI w ESP32</a></li>
+      <li><a href="#struktura-ramki">Struktura ramki danych i identyfikacja</a></li>
+      <li><a href="#bhp-i-bezpieczenstwo">Ostrzeżenia BHP i dobre praktyki</a></li>
+      <li><a href="#praktyka-warsztatowa">Zastosowanie w warsztacie F.W. DRUCIK</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="warstwa-fizyczna">1. Warstwa fizyczna magistrali CAN</h2>
+<p>Magistrala CAN (Controller Area Network) opiera się na różnicowej transmisji sygnału, co zapewnia wysoką odporność na zakłócenia elektromagnetyczne, kluczową w środowisku pracy silnika spalinowego. W układzie tym wykorzystujemy dwie linie: CAN_High (CANH) oraz CAN_Low (CANL). Zgodnie z normą ISO 11898, w stanie spoczynku (recesywnym) obie linie utrzymują napięcie około 2,5 V względem masy. W stanie dominującym, napięcie na CANH wzrasta do około 3,5 V, a na CANL spada do około 1,5 V, co daje różnicę potencjałów rzędu 2 V. ESP32 nie posiada wbudowanego transceivera CAN, dlatego konieczne jest zastosowanie zewnętrznego układu, takiego jak SN65HVD230 lub MCP2551. Układ ten tłumaczy poziomy logiczne TTL (3,3 V) mikrokontrolera na poziomy różnicowe magistrali. Należy pamiętać, że magistrala musi być zakończona rezystorami terminującymi o wartości 120 omów na obu końcach, zgodnie z wymogami standardu ISO 11898-2. Brak terminacji lub niewłaściwa wartość rezystancji prowadzi do odbić sygnału, co objawia się błędami typu 'Error Passive' lub 'Bus Off' w sterownikach. Podczas pomiarów oscyloskopowych należy zachować ostrożność, aby nie zewrzeć linii CAN do masy lub zasilania, co może doprowadzić do uszkodzenia sterowników ECU. Zawsze weryfikuj rezystancję magistrali przy wyłączonym zapłonie i odłączonym akumulatorze, mierząc oporność między CANH a CANL – prawidłowy wynik to około 60 omów przy dwóch aktywnych rezystorach 120 omów wpiętych równolegle. Wszelkie odstępstwa od tej wartości sugerują uszkodzenie okablowania lub jednego z modułów wpiętych w sieć.</p>
+
+    <h2 id="konfiguracja-twai">2. Konfiguracja interfejsu TWAI w ESP32</h2>
+<p>W środowisku ESP-IDF interfejs CAN określany jest jako TWAI. Aby poprawnie zainicjować komunikację, należy zdefiniować piny TX i RX oraz prędkość transmisji (baud rate). Najczęściej spotykane prędkości w motoryzacji to 500 kbps dla magistrali napędowej oraz 250 kbps dla magistrali komfortu, jednak wartości te są orientacyjne i zawsze wymagają weryfikacji w dokumentacji serwisowej konkretnego pojazdu. Inicjalizacja wymaga wypełnienia struktury <code>twai_general_config_t</code> oraz <code>twai_timing_config_t</code>. Kluczowym parametrem jest tryb pracy: <code>TWAI_MODE_NORMAL</code> pozwala na odbiór i nadawanie, natomiast <code>TWAI_MODE_LISTEN_ONLY</code> jest bezpieczniejszy podczas diagnostyki, ponieważ blokuje wysyłanie ramek potwierdzenia (ACK), co zapobiega zakłóceniu pracy sieci pojazdu. Podczas konfiguracji timingu należy uwzględnić parametry takie jak BRP (Baud Rate Prescaler), TSEG1 i TSEG2, które determinują punkt próbkowania bitu. Zbyt wczesne lub zbyt późne próbkowanie prowadzi do błędów synchronizacji, szczególnie przy długich przewodach. Warto pamiętać, że ESP32 pracuje na logice 3,3 V, więc użycie transceivera zasilanego napięciem 5 V wymaga sprawdzenia kompatybilności poziomów logicznych. W przypadku wykrycia błędów, rejestr stanu TWAI pozwala na odczytanie liczników błędów (TEC - Transmit Error Counter oraz REC - Receive Error Counter). Jeśli wartość TEC przekroczy 255, kontroler przechodzi w stan 'Bus Off', co oznacza całkowite odcięcie od magistrali. W takim przypadku konieczna jest programowa procedura resetu kontrolera, ale należy to robić z dużą rozwagą, gdyż ciągłe próby powrotu do sieci przy trwałym zwarciu mogą negatywnie wpływać na pracę innych modułów.</p>
+
+    <h2 id="struktura-ramki">3. Struktura ramki danych i identyfikacja</h2>
+<p>Ramka standardowa CAN (CAN 2.0A) składa się z identyfikatora (11 bitów), pola kontrolnego, danych (0-8 bajtów) oraz sumy kontrolnej CRC. W diagnostyce warsztatowej najistotniejszy jest identyfikator (ID), który określa priorytet wiadomości oraz jej zawartość. Wartości ID są unikalne dla każdego typu komunikatu w sieci. Podczas podsłuchiwania magistrali, ESP32 odbiera strumień ramek, które należy filtrować. Filtrowanie sprzętowe, realizowane przez kontroler TWAI, pozwala na odrzucenie nieistotnych danych jeszcze przed ich przetworzeniem przez procesor, co oszczędza zasoby systemowe. Wartości danych w ramkach są często zakodowane w formacie Little Endian lub Big Endian, co wymaga precyzyjnego rozbicia bajtów na sygnały fizyczne (np. prędkość obrotowa silnika, temperatura cieczy chłodzącej). Częstym błędem jest błędna interpretacja bajtów, wynikająca z nieznajomości mapy pamięci (DBC file) danego producenta. Wartości surowe (raw) muszą zostać przeliczone zgodnie z wzorem: <code>Wartość_Rzeczywista = (Raw * Skalowanie) + Offset</code>. Przykładowo, temperatura może być przesyłana jako wartość 0-255, gdzie 0 oznacza -40 stopni Celsjusza, a każdy kolejny krok to 1 stopień. Należy pamiętać, że bez dostępu do dokumentacji producenta, inżynieria wsteczna (reverse engineering) magistrali jest procesem czasochłonnym i obarczonym ryzykiem błędnej interpretacji danych. Zawsze weryfikuj odczytane wartości z danymi z testera diagnostycznego, aby upewnić się, że zdekodowane parametry są poprawne. Wszelkie zmiany w konfiguracji filtrów powinny być testowane w warunkach laboratoryjnych przed podłączeniem do sprawnego pojazdu.</p>
+
+    <h2 id="bhp-i-bezpieczenstwo">4. Ostrzeżenia BHP i dobre praktyki</h2>
+<p>Praca z magistralami danych w pojeździe wymaga przestrzegania rygorystycznych zasad bezpieczeństwa. Magistrala CAN jest bezpośrednio połączona z krytycznymi sterownikami, takimi jak ECU silnika, moduł ABS czy poduszki powietrzne (SRS). Przypadkowe zwarcie linii CAN do zasilania 12 V może trwale uszkodzić elektronikę pojazdu. <strong>Bezwzględnie zakazuje się wpinania się w instalację przy włączonym zapłonie, jeśli nie mamy pewności co do poprawności połączeń.</strong> Przed przystąpieniem do prac należy odłączyć akumulator, a po podłączeniu układu pomiarowego wykonać test rezystancji magistrali. Podczas diagnostyki 'na żywo' należy stosować izolowane przewody i upewnić się, że masa układu ESP32 jest wspólna z masą pojazdu, aby uniknąć różnic potencjałów, które mogą prowadzić do przepływu prądów wyrównawczych przez interfejs komunikacyjny. W przypadku pracy przy układach SRS lub systemach bezpieczeństwa, należy zachować szczególną ostrożność, gdyż nieprawidłowa komunikacja może wywołać błędy w sterownikach, których nie da się usunąć bez specjalistycznego sprzętu. Jeśli podczas testów zauważysz kontrolki błędów na desce rozdzielczej, natychmiast przerwij pracę i sprawdź, czy magistrala nie jest przeciążona przez błędne ramki wysyłane przez ESP32. Pamiętaj, że kasowanie błędów bez usunięcia przyczyny (np. uszkodzonego przewodu) jest działaniem doraźnym i niebezpiecznym. Wszelkie prace związane z ingerencją w wiązki elektryczne powinny być wykonywane zgodnie z zasadami sztuki, używając lutowania lub profesjonalnych złączy, aby uniknąć spadków napięcia i utleniania się styków w przyszłości.</p>
+
+    <h2 id="praktyka-warsztatowa">5. Zastosowanie w warsztacie F.W. DRUCIK</h2>
+<h3>Zastosowanie w warsztacie F.W. DRUCIK</h3>
+
+<p>W codziennej praktyce warsztatowej umiejętność analizy magistrali CAN pozwala na szybką diagnostykę usterek komunikacji między sterownikami, których nie wykaże standardowy skaner OBD-II. Jeśli masz problem z diagnostyką nietypowych usterek elektronicznych, zapraszamy do zapoznania się z naszymi usługami w zakresie <a href="/uslugi/elektromechanika/">elektromechaniki</a>.</p>
+
+<p>Podczas diagnostyki magistrali CAN w naszym warsztacie w Domosławiu 13A, kluczowe jest wykonanie pomiarów fizycznych przed podłączeniem ESP32. Prawidłowe napięcia na magistrali CAN High i CAN Low względem masy (GND) powinny wynosić odpowiednio ok. <strong>2,5 V</strong> w stanie spoczynku. W trakcie transmisji napięcie na CAN High wzrasta do ok. <strong>3,5 V</strong>, a na CAN Low spada do ok. <strong>1,5 V</strong>. Rezystancja terminująca mierzona przy wyłączonym zapłonie powinna wynosić dokładnie <strong>60 Ω</strong> (dwa rezystory 120 Ω równolegle).</p>
+
+<p><strong>Kolejność czynności diagnostycznych:</strong></p>
+<ol>
+    <li>Weryfikacja napięć spoczynkowych multimetrem.</li>
+    <li>Pomiar rezystancji magistrali przy odłączonym akumulatorze.</li>
+    <li>Podłączenie analizatora opartego na ESP32 w trybie <em>Listen Only</em>, aby nie zakłócać pracy sieci.</li>
+    <li>Analiza ramek pod kątem błędów (Error Frames) i częstotliwości występowania komunikatów.</li>
+</ol>
+
+<p><strong>Typowe błędy i ich objawy:</strong></p>
+<ul>
+    <li><strong>Przerwa w obwodzie:</strong> Rezystancja 120 Ω zamiast 60 Ω, brak komunikacji z częścią modułów.</li>
+    <li><strong>Zwarcie do masy/zasilania:</strong> Brak transmisji, błędy typu <em>Bus-Off</em> w sterownikach.</li>
+    <li><strong>Zbyt duża liczba błędów (Error Passive):</strong> Często spowodowana zakłóceniami elektromagnetycznymi lub uszkodzonym transceiverem.</li>
+</ul>
+
+<p>Jeśli Twoje ESP32 nie radzi sobie z odczytem danych lub potrzebujesz profesjonalnego wsparcia, skontaktuj się z nami pod numerem 601 726 924 lub wyślij zapytanie na adres fwdrucik@gmail.com. Zapraszamy w godzinach Pon-Pt 8-17 oraz Sob 9-13. Nasi technicy pomogą Ci zidentyfikować przyczynę problemów, unikając kosztownej wymiany sprawnych podzespołów. Oferujemy również wsparcie w zakresie <a href="/uslugi/programowanie-aplikacje/">programowania i aplikacji</a>. Więcej informacji znajdziesz na stronie <a href="/kontakt/">kontakt</a>.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Czy ESP32 może bezpośrednio połączyć się z magistralą CAN w aucie?</summary>
+        <p>Nie, ESP32 wymaga zewnętrznego układu transceivera CAN, takiego jak SN65HVD230. Mikrokontroler operuje na poziomach logicznych TTL, podczas gdy magistrala CAN wykorzystuje sygnały różnicowe.</p>
+      </details>
+      <details>
+        <summary>Jakie są typowe objawy uszkodzenia magistrali CAN?</summary>
+        <p>Typowe objawy to zapalenie się wielu kontrolek błędów na desce rozdzielczej, brak komunikacji z niektórymi sterownikami lub całkowity paraliż sieci. Często przyczyną jest zwarcie linii CANH do masy lub przerwa w obwodzie.</p>
+      </details>
+      <details>
+        <summary>Czy podsłuchiwanie magistrali CAN jest bezpieczne dla pojazdu?</summary>
+        <p>Jest bezpieczne, jeśli użyjesz trybu Listen Only w kontrolerze TWAI. W tym trybie ESP32 nie wysyła żadnych ramek potwierdzenia, więc nie zakłóca pracy oryginalnych sterowników w sieci.</p>
+      </details>
+      <details>
+        <summary>Jak sprawdzić rezystancję magistrali CAN?</summary>
+        <p>Należy zmierzyć rezystancję między liniami CANH i CANL przy odłączonym akumulatorze. Prawidłowa wartość dla sprawnej magistrali z dwoma rezystorami terminującymi wynosi około 60 omów.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

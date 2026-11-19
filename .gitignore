@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+.claude/
+*.tmp
+.DS_Store
+Thumbs.db
+backup-serwer-*/
+backup-fwdrucik-*/
+api/konfiguracja.php
+.impeccable/
+.playwright-cli/
+
+# Robocze pliki agenta bloga: raport o ostatnim wpisie i lista plikow
+# do skasowania z serwera po odrzuceniu szkicu.
+.ostatni-wpis.json
+.do-skasowania.txt
+.ostatnia-recenzja.json

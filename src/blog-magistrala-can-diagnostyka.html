@@ -1,0 +1,214 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Magistrala CAN w pojeździe — jak działa i jak ją zdiagnozować",
+  "description": "Warstwa fizyczna CAN, ramka, arbitraż i pomiary warsztatowe: 60 Ω na złączu OBD, napięcia CAN_H/CAN_L, typowe usterki magistrali.",
+  "author": {"@type": "Organization", "name": "F.W. DRUCIK"},
+  "publisher": {"@type": "Organization", "name": "F.W. DRUCIK", "logo": {"@type": "ImageObject", "url": "https://fwdrucik.pl/assets/favicon.png"}},
+  "datePublished": "2026-07-17",
+  "dateModified": "2026-07-17",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/magistrala-can-diagnostyka/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-blue">Elektronika i magistrale</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 11 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 08.08.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Magistrala CAN w pojeździe — jak działa i jak ją zdiagnozować</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Brak komunikacji ze sterownikami może oznaczać usterkę CAN. Sprawdź dwa przewody magistrali multimetrem i oscyloskopem.</p>
+  </header>
+  <!-- FILM:start -->
+  <div class="toc-box" style="margin-bottom:28px;"><div class="toc-title">🎬 Zobacz na filmie</div><div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin-top:12px;"><div style="flex:1 1 420px;min-width:280px;"><div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden;"><iframe src="https://www.youtube-nocookie.com/embed/FyOj8Kv9mHQ" title="Magistrala CAN: pomiary krok po kroku" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;border:0;" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe></div><p style="font-size:0.9rem;margin-top:8px;">Film: Magistrala CAN: pomiary krok po kroku</p></div><div style="flex:0 1 240px;"><video controls preload="none" playsinline poster="/wideo/2026-10-16-magistrala-can-diagnostyka.jpg" width="540" height="960" style="width:100%;max-width:320px;aspect-ratio:9/16;border-radius:12px;background:#000;display:block;margin:0 auto;"><source src="/wideo/2026-10-16-magistrala-can-diagnostyka.mp4" type="video/mp4">Twoja przeglądarka nie odtwarza wideo.</video><p style="font-size:0.9rem;margin-top:8px;text-align:center;">Rolka · <a href="https://www.instagram.com/fwdrucik/reel/DejMEJONNbH/" target="_blank" rel="noopener">Instagram</a></p></div></div><p style="font-size:0.88rem;margin-top:10px;">Więcej filmów z warsztatu: <a href="/filmy/">wszystkie filmy</a>.</p></div>
+  <!-- FILM:end -->
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#czym-jest">Czym jest CAN i po co powstał</a></li>
+      <li><a href="#warstwa-fizyczna">Warstwa fizyczna — dwa przewody i dwa rezystory</a></li>
+      <li><a href="#predkosci">Odmiany i prędkości: high-speed, low-speed, CAN FD, J1939</a></li>
+      <li><a href="#ramka">Ramka i arbitraż — dlaczego nikt nikomu nie przerywa</a></li>
+      <li><a href="#pomiary">Pomiary warsztatowe — co, czym i jakiej wartości oczekiwać</a></li>
+      <li><a href="#usterki">Typowe usterki i ich obraz na przyrządzie</a></li>
+      <li><a href="#bhp">Czego nie robić przy magistrali</a></li>
+      <li><a href="#warsztat">Diagnostyka CAN w warsztacie w Winnicy</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="czym-jest">1. Czym jest CAN i po co powstał</h2>
+    <p>CAN (Controller Area Network) to szeregowa magistrala danych opracowana w firmie Bosch w latach 80. i opisana normą <strong>ISO 11898</strong>. Powód powstania był czysto praktyczny: kiedy w pojeździe pojawiło się kilkanaście sterowników, łączenie każdego z każdym osobnym przewodem dawało wiązki o absurdalnej masie i liczbie połączeń. CAN zastępuje to jedną wspólną parą przewodów.</p>
+    <p>Dwie cechy odróżniają CAN od typowego łącza szeregowego i są kluczowe dla diagnostyki:</p>
+    <ul>
+      <li><strong>Multi-master</strong> — nie ma jednego urządzenia nadrzędnego. Każdy sterownik może zacząć nadawać, gdy magistrala jest wolna.</li>
+      <li><strong>Adresowanie komunikatu, nie odbiorcy</strong> — ramka nie zawiera adresu urządzenia docelowego. Zawiera identyfikator <em>treści</em> (np. „obroty silnika"). Każdy sterownik sam filtruje, co go interesuje. Dlatego dołożenie kolejnego modułu nie wymaga zmian w pozostałych.</li>
+    </ul>
+    <p>Konsekwencja dla warsztatu: uszkodzenie jednego przewodu nie psuje „jednego czujnika", tylko potrafi wyłączyć wymianę danych między wszystkimi sterownikami w danym segmencie.</p>
+
+    <h2 id="warstwa-fizyczna">2. Warstwa fizyczna — dwa przewody i dwa rezystory</h2>
+    <p>W wariancie high-speed (ISO 11898-2), spotykanym w napędzie i podwoziu, sygnał jest <strong>różnicowy</strong>. Biegnie po skręconej parze: CAN_H i CAN_L. Odbiornik nie patrzy na napięcie względem masy, tylko na <em>różnicę</em> między żyłami — dzięki temu zakłócenie, które wskoczy na obie żyły jednocześnie, się znosi. Stąd skrętka: obie żyły łapią to samo.</p>
+    <p>Magistrala ma dwa stany:</p>
+    <ul>
+      <li><strong>Recesywny</strong> (logiczna 1) — obie żyły podciągnięte do mniej więcej połowy zasilania transceivera, różnica bliska 0 V.</li>
+      <li><strong>Dominujący</strong> (logiczne 0) — nadajnik rozsuwa żyły: CAN_H w górę, CAN_L w dół, różnica rzędu 2 V.</li>
+    </ul>
+    <p>Dla typowego transceivera zasilanego z 5 V wygląda to tak (wartości orientacyjne — dokładne progi są w nocie katalogowej układu i w danych serwisowych pojazdu):</p>
+    <div class="tabela-wrap">
+      <table>
+        <thead>
+          <tr><th>Stan magistrali</th><th>CAN_H</th><th>CAN_L</th><th>Różnica CAN_H − CAN_L</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Recesywny (bity „1")</td><td>ok. 2,5 V</td><td>ok. 2,5 V</td><td>ok. 0 V</td></tr>
+          <tr><td>Dominujący (bity „0")</td><td>ok. 3,5 V</td><td>ok. 1,5 V</td><td>ok. 2 V</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Multimetr pokazuje średnie napięcie pracującego CAN: zwykle 2,6–2,7 V na CAN_H i 2,3–2,4 V na CAN_L. Nie potwierdzi samodzielnie poprawnej transmisji ani nie odróżni wszystkich stanów zablokowania — potrzebny jest oscyloskop.</p>
+    <figure>
+      <img src="/assets/blog/can-zlacze-obd2.jpg" width="1280" height="853" loading="lazy"
+           alt="Gniazdo diagnostyczne OBD-II zamontowane pod deską rozdzielczą samochodu">
+      <figcaption>Gniazdo diagnostyczne OBD-II. Styki 6 i 14 to CAN_H i CAN_L magistrali napędowej — między nimi wykonuje się pomiar rezystancji terminacji.
+        <span class="zrodlo">Fot. <a href="https://commons.wikimedia.org/wiki/File:2016-07_ODB-II_connector_01.JPG" target="_blank" rel="noopener nofollow">0x010C</a>, licencja <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener nofollow">CC BY-SA 4.0</a>, Wikimedia Commons.</span>
+      </figcaption>
+    </figure>
+
+    <p><strong>Terminacja.</strong> Odcinek magistrali high-speed musi mieć na obu <em>końcach</em> rezystor 120 Ω, dopasowany do impedancji falowej przewodu. Bez niego sygnał odbija się od końca wiązki i nakłada na kolejne bity. Dwa rezystory 120 Ω połączone przez magistralę równolegle dają <strong>ok. 60 Ω</strong> — i to jest najprostszy pomiar diagnostyczny, jaki można wykonać.</p>
+
+    <h2 id="predkosci">3. Odmiany i prędkości: high-speed, low-speed, CAN FD, J1939</h2>
+    <p>W jednym pojeździe pracuje zwykle kilka fizycznie oddzielnych magistral, spiętych bramką (gateway). Segmenty różnią się prędkością i wymaganiami — dlatego zwarcie w sieci komfortu potrafi nie ruszyć napędu, i odwrotnie.</p>
+    <div class="tabela-wrap">
+      <table>
+        <thead>
+          <tr><th>Odmiana</th><th>Norma</th><th>Prędkość</th><th>Gdzie spotykana</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>CAN high-speed</td><td>ISO 11898-2</td><td>do 1 Mbit/s</td><td>silnik, skrzynia, ABS, podwozie</td></tr>
+          <tr><td>CAN low-speed / fault tolerant</td><td>ISO 11898-3</td><td>do 125 kbit/s</td><td>komfort, nadwozie, drzwi, oświetlenie</td></tr>
+          <tr><td>CAN FD</td><td>ISO 11898-1:2015</td><td>faza danych szybsza niż arbitrażu, ładunek do 64 bajtów</td><td>nowsze pojazdy, aktualizacje oprogramowania</td></tr>
+          <tr><td>SAE J1939</td><td>SAE J1939 (na bazie CAN 2.0B)</td><td>250 kbit/s, w nowszych wariantach 500 kbit/s</td><td>pojazdy ciężarowe, maszyny rolnicze i budowlane</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Praktyczne prędkości spotykane w samochodach osobowych to najczęściej 500 kbit/s dla magistrali napędowej i 100 lub 125 kbit/s dla magistrali komfortu — ale to jest wybór producenta, a nie wartość wymuszona normą. Zawsze sprawdzaj w danych serwisowych modelu.</p>
+    <p>Ważna różnica: magistrala low-speed fault tolerant jest zaprojektowana tak, by <strong>działać dalej po utracie jednej żyły</strong>, przechodząc na tryb jednoprzewodowy. Dlatego w sieci komfortu przetarcie przewodu bywa niewidoczne dla użytkownika przez wiele miesięcy — do momentu, aż padnie druga żyła. Sterownik zwykle zapisuje wtedy kod usterki, mimo że nic nie przestało działać.</p>
+
+    <h2 id="ramka">4. Ramka i arbitraż — dlaczego nikt nikomu nie przerywa</h2>
+    <p>Ramka danych CAN zawiera m.in.: identyfikator (11 bitów w CAN 2.0A, 29 bitów w CAN 2.0B), pole długości danych (DLC), od 0 do 8 bajtów danych (do 64 w CAN FD), sumę kontrolną CRC oraz pole potwierdzenia ACK.</p>
+    <p><strong>Arbitraż</strong> rozwiązuje sytuację, w której dwa sterowniki zaczynają nadawać jednocześnie. Stan dominujący zawsze „wygrywa" z recesywnym — jak wyjście typu open-collector. Każdy nadajnik w trakcie nadawania identyfikatora nasłuchuje magistrali. Jeśli wystawił bit recesywny, a na magistrali widzi dominujący, natychmiast się wycofuje i czeka. Efekt: <strong>wygrywa ramka o niższej wartości liczbowej identyfikatora</strong>, a przegrany nie traci danych — powtórzy transmisję po zwolnieniu magistrali. Dlatego krytyczne komunikaty (hamulce, silnik) dostają niskie identyfikatory.</p>
+    <p>Do tego dochodzi rozbudowana obsługa błędów. Każdy węzeł prowadzi liczniki błędów nadawania i odbioru. Po przekroczeniu progów węzeł przechodzi w stan <em>error passive</em>, a przy dalszych błędach w <strong>bus-off</strong> — całkowicie odłącza się od magistrali. To jest ważne diagnostycznie: uszkodzony sterownik potrafi sam się wyciszyć, ale zanim to zrobi, zasypuje magistralę ramkami błędu i realnie ją zapycha.</p>
+    <p>Do transmisji ramki potrzebne jest jeszcze potwierdzenie: nadawca zostawia w polu ACK bit recesywny, a <em>dowolny</em> poprawnie odbierający węzeł nadpisuje go bitem dominującym. Jeśli w segmencie zostanie jeden aktywny sterownik, nie ma go komu potwierdzić — ramki będą powtarzane w kółko, a magistrala wygląda na „żywą", choć nic się nie komunikuje.</p>
+
+    <h2 id="pomiary">5. Pomiary warsztatowe — co, czym i jakiej wartości oczekiwać</h2>
+    <p>Kolejność ma znaczenie: najpierw rezystancja przy odłączonym zasilaniu, potem napięcia, na końcu oscyloskop.</p>
+    <div class="tabela-wrap">
+      <table>
+        <thead>
+          <tr><th>Pomiar</th><th>Warunki</th><th>Wartość oczekiwana</th><th>Co oznacza odchyłka</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Rezystancja CAN_H–CAN_L (na złączu OBD-II piny 6 i 14)</td>
+            <td>Zapłon wyłączony, akumulator odłączony</td>
+            <td>ok. 60 Ω</td>
+            <td>~120 Ω → brak jednego rezystora terminującego lub przerwa w magistrali; ~40 Ω → dodatkowy rezystor / dopięty moduł; 0 Ω → zwarcie żył; ∞ → przerwa</td>
+          </tr>
+          <tr>
+            <td>Rezystancja CAN_H do masy i CAN_L do masy</td>
+            <td>Jak wyżej</td>
+            <td>bardzo wysoka (megaomy)</td>
+            <td>Niska wartość → przetarcie izolacji do masy</td>
+          </tr>
+          <tr>
+            <td>Napięcie CAN_H i CAN_L do masy</td>
+            <td>Zapłon włączony, magistrala pracuje</td>
+            <td>CAN_H ok. 2,5–2,7 V, CAN_L ok. 2,3–2,5 V</td>
+            <td>Oba równe zasilaniu lub 0 V → zwarcie do plusa lub masy; obydwa równe 2,5 V bez zmian → magistrala milczy</td>
+          </tr>
+          <tr>
+            <td>Oscyloskop, oba kanały jednocześnie</td>
+            <td>Zapłon włączony</td>
+            <td>Przebiegi lustrzane wokół 2,5 V, amplituda ok. 1 V na żyłę</td>
+            <td>Zaokrąglone zbocza → brak terminacji lub zbyt długa odnoga; jedna żyła płaska → przerwa; oscylacje po zboczu → odbicia</td>
+          </tr>
+          <tr>
+            <td>Prąd spoczynkowy pojazdu</td>
+            <td>Po uśpieniu sterowników</td>
+            <td>zgodnie z danymi producenta</td>
+            <td>Podwyższony → moduł nie zasypia i utrzymuje magistralę w ruchu</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="uwaga"><strong>Uwaga.</strong> Pomiar rezystancji wykonuje się wyłącznie przy odłączonym zasilaniu. Omomierz sam podaje napięcie na badany obwód — przy włączonym zapłonie odczyt będzie bez sensu, a w skrajnym przypadku można uszkodzić transceiver.</p>
+    <p>Jeśli pomiar rezystancji da 60 Ω, a mimo to komunikacji nie ma, warto sprawdzić, czy oba rezystory faktycznie są na <em>końcach</em> magistrali. Dwa rezystory zamontowane obok siebie w środku wiązki dadzą prawidłowe 60 Ω i całkowicie niepoprawną warstwę fizyczną.</p>
+
+    <h2 id="usterki">6. Typowe usterki i ich obraz na przyrządzie</h2>
+    <ul>
+      <li><strong>Przetarcie izolacji do masy nadwozia.</strong> Klasyk w miejscach przegięcia wiązki: przy drzwiach, klapie, w przepustach i pod dywanem. Objaw: magistrala pada przy określonym położeniu elementu.</li>
+      <li><strong>Korozja w złączu.</strong> Rezystancja przejścia rośnie stopniowo. Multimetr pokazuje wartości „prawie dobre", a oscyloskop — zniekształcone zbocza. Częste po zalaniu i po nieszczelnych przepustach.</li>
+      <li><strong>Brak jednej terminacji.</strong> Zwykle po wymianie sterownika na inny wariant albo po wymontowaniu modułu, który zawierał rezystor. Pomiar: 120 Ω zamiast 60 Ω.</li>
+      <li><strong>Uszkodzony sterownik zapychający magistralę.</strong> Metoda: odłączać po jednym module i obserwować, czy komunikacja wraca. Odłączanie modułu, który zawiera terminację, zmienia obraz pomiaru — warto o tym pamiętać przy interpretacji.</li>
+      <li><strong>Zbyt długie odnogi (stubs).</strong> Efekt dorabianych instalacji, doposażeń i alarmów wpiętych „na chwilę". Odbicia rosną wraz z prędkością magistrali.</li>
+      <li><strong>Zła masa lub słabe zasilanie sterownika.</strong> Spadek napięcia na masie przesuwa poziomy odniesienia. Objawy potrafią przypominać uszkodzenie magistrali, a przyczyną jest skorodowana śruba masy.</li>
+      <li><strong>Rozładowany lub zasiarczony akumulator.</strong> Przy rozruchu napięcie zapada się na tyle, że sterowniki resetują się i wpisują lawinę kodów komunikacyjnych U-xxxx. Zawsze najpierw sprawdź układ zasilania — inaczej będziesz gonić usterkę, której nie ma.</li>
+    </ul>
+    <p>Warto zapamiętać zasadę: <strong>kody U (komunikacja) czyta się na końcu, nie na początku</strong>. Jeden zwarty przewód generuje ich kilkadziesiąt w kilku sterownikach jednocześnie i żaden z nich nie wskazuje przyczyny.</p>
+
+    <h2 id="bhp">7. Czego nie robić przy magistrali</h2>
+    <ul>
+      <li><strong>Nie wbijać się szpilką w izolację przewodu.</strong> Punkt nakłucia to gotowe miejsce korozji, która wróci jako usterka za rok. Do pomiarów używa się złączy rozgałęźnych i adapterów.</li>
+      <li><strong>Nie kasować kodów przed usunięciem przyczyny.</strong> Skasowana pamięć usterek to utrata najlepszej informacji, jaką masz — momentu i warunków wystąpienia.</li>
+      <li><strong>Nie zostawiać obcych urządzeń w gnieździe OBD.</strong> Tanie moduły telemetryczne i „lokalizatory" potrafią nie zasypiać razem z pojazdem, obciążać magistralę i rozładowywać akumulator.</li>
+      <li><strong>Nie spawać przy podłączonym akumulatorze i sterownikach.</strong> Prąd spawania szukający drogi powrotnej przez masy elektroniki niszczy sterowniki. Masę spawarki mocuje się możliwie blisko miejsca spawania — o samym spawaniu piszemy w dziale <a href="/uslugi/spawanie/">usług spawalniczych</a>.</li>
+      <li><strong>Nie odłączać modułów przy włączonym zapłonie.</strong> Przepięcia przy rozłączaniu potrafią uszkodzić wejścia transceivera.</li>
+    </ul>
+
+    <h2 id="warsztat">8. Diagnostyka CAN w warsztacie w Winnicy</h2>
+    <p>W praktyce diagnostyka magistrali to trzy etapy: sprawdzenie zasilania i mas, pomiar warstwy fizycznej (rezystancja, napięcia, oscyloskop), a dopiero potem analiza ruchu na magistrali i kodów usterek. Pomijanie pierwszego etapu jest najczęstszą przyczyną wielogodzinnych, bezowocnych poszukiwań.</p>
+    <p>Zajmujemy się instalacjami elektrycznymi w samochodach, ciągnikach, kombajnach i maszynach stacjonarnych — od przetartych wiązek po sterowniki i czujniki. Szczegóły zakresu: <a href="/uslugi/elektromechanika/">elektromechanika pojazdowa i przemysłowa</a>. Piszemy też oprogramowanie łączące elektronikę z aplikacjami — patrz <a href="/uslugi/programowanie-aplikacje/">programowanie i aplikacje</a>.</p>
+    <p>Warsztat: Domosław 13A, 06-120 Winnica (powiat pułtuski). Telefon 601 726 924, e-mail fwdrucik@gmail.com, pon.–pt. 8:00–17:00, sob. 9:00–13:00. Opis usterki i wstępna wycena — przez <a href="/kontakt/">formularz kontaktowy</a>.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Dlaczego na złączu OBD mierzy się właśnie 60 Ω?</summary>
+        <p>Bo magistrala high-speed ma na obu końcach rezystor 120 Ω, a mierzone przez przewody magistrali są one połączone równolegle. Dwa równoległe rezystory 120 Ω dają 60 Ω. Pomiar wykonuje się przy odłączonym zasilaniu, między pinami 6 i 14 złącza OBD-II.</p>
+      </details>
+      <details>
+        <summary>Multimetr pokazuje 2,5 V na obu żyłach i nic się nie dzieje. Co to znaczy?</summary>
+        <p>To poziom stanu recesywnego, czyli magistrala jest zasilana, ale nikt na niej nie nadaje. Przyczyną bywa uśpienie sterowników, brak zasilania modułu nadrzędnego albo węzeł, który przeszedł w stan bus-off. Rozstrzygnie oscyloskop lub rejestrator ramek.</p>
+      </details>
+      <details>
+        <summary>Czy CAN można naprawić przez wymianę odcinka przewodu?</summary>
+        <p>Można, ale odcinek musi zachować parametry pary skręconej i nie może tworzyć długiej odnogi. Skrętkę odtwarza się na całej długości naprawy, a połączenia wykonuje lutowane lub zaciskane i szczelnie zaizolowane — nie na kostkach.</p>
+      </details>
+      <details>
+        <summary>Skąd wiadomo, którą magistralę w pojeździe badam?</summary>
+        <p>Ze schematu elektrycznego modelu. Jedno gniazdo OBD zwykle udostępnia tylko wybrane magistrale, resztę widać dopiero przy sterownikach lub w bramce. Bez schematu pomiar wartości „nie tych" pinów prowadzi do fałszywych wniosków.</p>
+      </details>
+      <details>
+        <summary>Czy CAN FD zastąpi zwykły CAN?</summary>
+        <p>CAN FD zapewnia większą przepustowość przy aktualizacjach i systemach wspomagania. Klasyczny CAN nadal obsługuje mniej wymagające segmenty i pojazdy użytkowe; oba rozwiązania współistnieją.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <div id="comment-note" style="font-size:0.9rem;font-weight:600;margin-bottom:10px;"></div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

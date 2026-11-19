@@ -1,0 +1,95 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Skanowanie 3D uszkodzonej części — od chmury punktów do gotowego modelu",
+  "description": "Techniczne aspekty skanowania 3D uszkodzonych elementów maszyn. Od chmury punktów do modelu CAD. Dowiedz się jak odtworzyć geometrię w F.W. DRUCIK.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-06-19",
+  "dateModified": "2026-06-19",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/skanowanie-3d-uszkodzonej-czesci/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-green">Druk 3D</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 8 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 15.08.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Skanowanie 3D uszkodzonej części — od chmury punktów do gotowego modelu</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Od uszkodzonej części do modelu CAD: skanowanie, obróbka chmury punktów i przygotowanie do produkcji.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#przygotowanie">Przygotowanie powierzchni do skanowania</a></li>
+      <li><a href="#akwizycja">Akwizycja danych i chmura punktów</a></li>
+      <li><a href="#obrobka">Obróbka chmury punktów i tworzenie siatki</a></li>
+      <li><a href="#etapy">Procedura inżynierii odwrotnej</a></li>
+      <li><a href="#modelowanie">Modelowanie parametryczne na podstawie siatki</a></li>
+      <li><a href="#praktyka">Co z tym zrobić w warsztacie?</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="przygotowanie">1. Przygotowanie powierzchni do skanowania</h2>
+<p>Skanowanie 3D obiektów o skomplikowanej geometrii wymaga odpowiedniego przygotowania powierzchni. W przypadku części metalowych, kluczowym problemem jest połysk i przezroczystość (w przypadku tworzyw). Zgodnie z dobrymi praktykami metrologicznymi, powierzchnie odbijające światło należy zmatowić, aby uniknąć błędów w triangulacji.</p><p>Spray matujący tworzy warstwę zwykle 5–20 mikrometrów, zależnie od preparatu. Uwzględnij ją w dokładności skanu i sprawdź, czy nie zmienia istotnie wymiarów pasowań.</p>
+
+    <h2 id="akwizycja">2. Akwizycja danych i chmura punktów</h2>
+<p>Proces skanowania generuje surową chmurę punktów (point cloud). Każdy punkt posiada współrzędne X, Y, Z oraz opcjonalnie informacje o kolorze lub natężeniu odbitego światła. W systemach optycznych kluczowe jest zachowanie stabilności urządzenia względem obiektu.</p><p>Chroń stanowisko przed drganiami i kontroluj RMS łączenia skanów. Orientacyjny cel poniżej 0,05 mm zależy od tolerancji części i możliwości skanera; sprawdź dokumentację urządzenia.</p>
+
+    <h2 id="obrobka">3. Obróbka chmury punktów i tworzenie siatki</h2>
+<p>Surowa chmura punktów wymaga oczyszczenia z szumu (punktów błędnych powstałych w wyniku odbić od kurzu lub niepożądanych obiektów w tle). Następnie przeprowadza się proces triangulacji, czyli tworzenia siatki trójkątów (mesh). W tym etapie kluczowe jest zachowanie gęstości siatki w miejscach o dużej krzywiźnie.</p><p>Warto pamiętać o BHP: praca z oprogramowaniem do obróbki danych 3D często wymaga długotrwałego skupienia przed monitorem. Należy zadbać o ergonomię stanowiska pracy. Ponadto, przy obróbce plików o dużej objętości (miliony wielokątów), systemy komputerowe mogą ulegać przeciążeniu, co wymaga odpowiedniej konfiguracji sprzętowej.</p>
+
+    <h2 id="etapy">4. Procedura inżynierii odwrotnej</h2>
+<p>Poniższa tabela przedstawia standardowy przebieg prac przy odtwarzaniu uszkodzonego elementu:</p><table><thead><tr><th>Etap</th><th>Działanie</th><th>Uwagi</th></tr></thead><tbody><tr><td>1</td><td>Weryfikacja uszkodzeń</td><td>Ocena czy część nadaje się do skanowania</td></tr><tr><td>2</td><td>Matowienie</td><td>Aplikacja sprayu matującego</td></tr><tr><td>3</td><td>Skanowanie</td><td>Pozyskanie surowej chmury punktów</td></tr><tr><td>4</td><td>Rejestracja</td><td>Łączenie skanów w jeden układ współrzędnych</td></tr><tr><td>5</td><td>Modelowanie CAD</td><td>Odtworzenie geometrii na podstawie siatki</td></tr></tbody></table>
+
+    <h2 id="modelowanie">5. Modelowanie parametryczne na podstawie siatki</h2>
+<p>Siatka trójkątów (STL/OBJ) nie jest modelem edytowalnym w sensie inżynierskim. Aby uzyskać plik gotowy do obróbki CNC lub druku 3D, należy przeprowadzić modelowanie parametryczne. Polega ono na dopasowaniu prymitywów geometrycznych (płaszczyzn, walców, otworów) do zeskanowanej siatki.</p><p>Bardzo ważne jest uwzględnienie naddatków na obróbkę skrawaniem, jeśli część ma być wykonana metodą ubytkową. W przypadku części zużytych, skan pokazuje stan faktyczny (zużyty), a nie nominalny. Projektant musi zdecydować, czy odtwarzamy stan zużyty, czy przywracamy wymiary nominalne zgodnie z dokumentacją techniczną producenta maszyny.</p>
+
+    <h2 id="praktyka">6. Co z tym zrobić w warsztacie?</h2>
+<p>Jeśli posiadasz uszkodzony element, którego nie można kupić jako część zamienna, skanowanie 3D jest skuteczną drogą do jego odtworzenia. W F.W. DRUCIK (Domosław 13A, 06-120 Winnica) zajmujemy się wsparciem technicznym w zakresie produkcji i naprawy części.</p><p>Zapraszamy do kontaktu pod numerem <strong>601 726 924</strong> lub adresem e-mail <strong>fwdrucik@gmail.com</strong>. Przed wysyłką lub wizytą warto zapoznać się z naszymi usługami w zakresie <a href="/uslugi/druk-3d/">druku 3D</a> oraz <a href="/uslugi/maszyny-cnc/">obróbki maszynowej</a>. Pamiętaj, aby zawsze dostarczać elementy oczyszczone z olejów i smarów, co znacząco przyspiesza proces przygotowania do skanowania.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Czy skanowanie 3D usunie błędy zużycia części?</summary>
+        <p>Skanowanie 3D odwzorowuje stan faktyczny obiektu, czyli również jego zużycie. Aby przywrócić wymiary nominalne, konieczne jest wykonanie modelowania parametrycznego na podstawie skanu i naniesienie poprawek projektowych.</p>
+      </details>
+      <details>
+        <summary>Czy każdą część można zeskanować?</summary>
+        <p>Większość części mechanicznych nadaje się do skanowania, jednak elementy z głębokimi, niedostępnymi otworami lub bardzo cienkimi żebrami mogą być problematyczne. W takich przypadkach stosujemy metody hybrydowe, łącząc skanowanie z pomiarami ręcznymi przy użyciu suwmiarki lub mikromierza.</p>
+      </details>
+      <details>
+        <summary>Jakie pliki otrzymam po zakończeniu procesu?</summary>
+        <p>Standardowo dostarczamy plik siatki w formacie STL oraz, zależnie od ustaleń, gotowy model parametryczny w formacie STEP lub IGES. Są to formaty uniwersalne, obsługiwane przez większość oprogramowania CAD i maszyn CNC.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

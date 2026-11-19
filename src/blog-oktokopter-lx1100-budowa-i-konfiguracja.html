@@ -1,0 +1,747 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Oktokopter LX1100 od zera: budowa, okablowanie i konfiguracja ArduPilot",
+  "description": "Instrukcja budowy oktokoptera 12S LX1100: montaż ramy, zasilanie 12S, Pixhawk 6X, czujniki co 45°, druk 3D, parametry ArduPilot, film i rysunki techniczne.",
+  "image": "https://fwdrucik.pl/assets/blog/lx1100/kadr-wizja.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Dawid Tutak"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-10-26",
+  "dateModified": "2026-10-26",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/oktokopter-lx1100-budowa-i-konfiguracja/",
+  "video": {
+    "@type": "VideoObject",
+    "name": "Oktokopter LX1100 od zera: budowa, okablowanie i konfiguracja ArduPilot",
+    "description": "Instrukcja budowy oktokoptera 12S LX1100: montaż ramy, zasilanie 12S, Pixhawk 6X, czujniki co 45°, druk 3D, parametry ArduPilot, film i rysunki techniczne.",
+    "uploadDate": "2026-10-26",
+    "thumbnailUrl": "https://i.ytimg.com/vi/5WZQ5e1GnAM/hqdefault.jpg",
+    "embedUrl": "https://www.youtube-nocookie.com/embed/5WZQ5e1GnAM",
+    "contentUrl": "https://www.youtube.com/watch?v=5WZQ5e1GnAM"
+  }
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-orange">Drony i projekty</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 33 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 26.10.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Oktokopter LX1100 od zera: budowa, okablowanie i konfiguracja ArduPilot</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Ciężki oktokopter przemysłowy 12S na ramie DroneHub LX1100: osiem silników, Pixhawk 6X, czujniki co 45°, obudowy z druku 3D i moduły na szybkozłączu. Pełna instrukcja od pustego stołu do pierwszego lotu, z filmem, rysunkami technicznymi i kadrami z animacji.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list"><li><a href="#film">Film: budowa krok po kroku</a></li><li><a href="#r0">0. Zanim zaczniesz</a></li><li><a href="#r1">1. Co budujemy</a></li><li><a href="#r2">2. Bezpieczeństwo</a></li><li><a href="#r3">3. Słowniczek</a></li><li><a href="#r4">4. Narzędzia i materiały</a></li><li><a href="#r5">5. Lista części</a></li><li><a href="#r6">6. Zasady warsztatowe</a></li><li><a href="#r7">7. Montaż krok po kroku</a></li><li><a href="#r8">8. Okablowanie</a></li><li><a href="#r9">9. Konfiguracja ArduPilot</a></li><li><a href="#r10">10. Stanowisko naziemne</a></li><li><a href="#r11">11. Pierwsze uruchomienie i pierwszy lot</a></li><li><a href="#r12">12. Przeglądy i konserwacja</a></li><li><a href="#r13">13. Masa i środek ciężkości</a></li><li><a href="#r14">14. Rozbudowa: druk 3D i moduły</a></li><li><a href="#r15">15. Przepisy w skrócie</a></li><li><a href="#r16">16. Załączniki: rysunki techniczne</a></li></ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+<h2 id="film">Film: budowa krok po kroku</h2>
+<div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden;margin:0 0 18px;"><iframe src="https://www.youtube-nocookie.com/embed/5WZQ5e1GnAM" title="Oktokopter LX1100 od zera: budowa, okablowanie i konfiguracja ArduPilot" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;border:0;" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
+<p>Dwanaście minut animacji z lektorem: maszyna warstwa po warstwie. Rozdziały:</p>
+<ol><li><a href="https://www.youtube.com/watch?v=5WZQ5e1GnAM&amp;t=0s" target="_blank" rel="noopener">0:00</a> Wizja i architektura</li><li><a href="https://www.youtube.com/watch?v=5WZQ5e1GnAM&amp;t=71s" target="_blank" rel="noopener">1:11</a> Szkielet i montaż</li><li><a href="https://www.youtube.com/watch?v=5WZQ5e1GnAM&amp;t=131s" target="_blank" rel="noopener">2:11</a> Zasilanie 12S</li><li><a href="https://www.youtube.com/watch?v=5WZQ5e1GnAM&amp;t=196s" target="_blank" rel="noopener">3:16</a> Awionika Pixhawk 6X</li><li><a href="https://www.youtube.com/watch?v=5WZQ5e1GnAM&amp;t=276s" target="_blank" rel="noopener">4:36</a> Bezpieczeństwo: czujniki co 45°, lidary, spadochron</li><li><a href="https://www.youtube.com/watch?v=5WZQ5e1GnAM&amp;t=373s" target="_blank" rel="noopener">6:13</a> Obudowy z druku 3D i światła</li><li><a href="https://www.youtube.com/watch?v=5WZQ5e1GnAM&amp;t=427s" target="_blank" rel="noopener">7:07</a> Kamera FPV i moduły</li><li><a href="https://www.youtube.com/watch?v=5WZQ5e1GnAM&amp;t=495s" target="_blank" rel="noopener">8:15</a> Fotogrametria, skan 3D, poszukiwania</li><li><a href="https://www.youtube.com/watch?v=5WZQ5e1GnAM&amp;t=570s" target="_blank" rel="noopener">9:30</a> Stanowisko naziemne</li><li><a href="https://www.youtube.com/watch?v=5WZQ5e1GnAM&amp;t=642s" target="_blank" rel="noopener">10:42</a> Lot testowy i plan</li></ol>
+<p>Krótkie rolki z poszczególnych etapów są na <a href="/filmy/">stronie z filmami</a>. Pytania o części, okablowanie albo parametry: <a href="/forum/watek/8-instrukcja-oktokopter-12s-lx1100-od-zera-budowa-okablowanie-ardupilot-film-i-rysunki/">wątek na forum</a>.</p>
+
+
+<h2 id="r0">0. Zanim zaczniesz</h2>
+<p>Ta instrukcja jest pisana dla osoby, która nie zbudowała jeszcze dużego drona. Nie musisz znać fachowych słów: każde z nich wyjaśnia słowniczek w rozdziale 3. Jeśli coś jest dla Ciebie oczywiste, przeskocz dalej.</p>
+<p>Każdy krok montażu ma trzy części:</p>
+<div>
+  <div class="uwaga"><strong>🔧 Co robisz</strong><p>Konkretne czynności, po kolei.</p></div>
+  <div class="uwaga"><strong>💡 Dlaczego</strong><p>Powód. Gdy wiesz, po co coś jest, trudniej to zepsuć i łatwiej poradzić sobie, gdy część wygląda inaczej niż na rysunku.</p></div>
+  <div class="uwaga"><strong>✅ Sprawdź</strong><p>Jak upewnić się, że krok jest zrobiony dobrze, zanim przejdziesz dalej.</p></div>
+  <div class="uwaga"><strong>⚠️ Uwaga</strong><p>Rzeczy, które mogą zrobić krzywdę Tobie albo sprzętowi.</p></div>
+</div>
+<p>Pracuj etapami. Nie skracaj kroków „Sprawdź”. Błąd znaleziony na stole kosztuje kilka minut, a ten sam błąd w powietrzu kosztuje drona.</p>
+
+
+
+<h2 id="r1">1. Co budujemy</h2>
+<p>LX1100 to dron z ośmioma silnikami ułożonymi w płaską gwiazdę. Każdy silnik siedzi na końcu własnego ramienia, a ramiona rozchodzą się co 45°. Taki układ ma dwie zalety. Każde śmigło pracuje w czystym powietrzu, więc nic nie traci na sprawności. A gdy jeden silnik zawiedzie, pozostałe siedem ma zapas, żeby bezpiecznie wylądować.</p>
+<p>Dron niesie na spodzie wymienny moduł: kamerę termowizyjną, aparat do pomiarów z powietrza (fotogrametrii), zaczep na ładunek albo zestaw oświetlenia. Moduły zmienia się w kilka minut, bez lutowania.</p>
+<div class="tabela-wrap"><table>
+<thead><tr><th>Parametr</th><th>Wartość</th><th>Co to znaczy w praktyce</th></tr></thead>
+<tbody>
+<tr><td>Rozstaw osi silników</td><td>1100 mm</td><td>Odległość między osiami dwóch przeciwległych silników.</td></tr>
+<tr><td>Obrys ze śmigłami</td><td>1397 mm (1481 po przekątnej)</td><td>Tyle miejsca potrzebujesz do startu, plus margines.</td></tr>
+<tr><td>Wysokość</td><td>583 mm</td><td>Od ziemi do wierzchołka anteny GPS.</td></tr>
+<tr><td>Ramiona</td><td>8 × rura węglowa Ø 25 mm, składane</td><td>Po złożeniu dron mieści się w bagażniku.</td></tr>
+<tr><td>Silniki</td><td>8 × Sunnysky V5208 340 KV</td><td>KV = obroty na wolt bez obciążenia.</td></tr>
+<tr><td>Śmigła</td><td>8 × węglowe 1555 (15 × 5,5″)</td><td>Średnica 381 mm. Między końcówkami sąsiednich śmigieł zostaje 39,9 mm luzu.</td></tr>
+<tr><td>Zasilanie</td><td>12S: 2 × LiPo 6S 22 000 mAh w szeregu</td><td>44,4 V nominalnie, 50,4 V po naładowaniu.</td></tr>
+<tr><td>Autopilot</td><td>Pixhawk 6X z ArduCopter</td><td>Komputer, który utrzymuje drona w powietrzu.</td></tr>
+<tr><td>Łączność</td><td>SIYI HM30 (5,8 GHz, obraz i telemetria)</td><td>Producent podaje do 30 km w otwartym terenie.</td></tr>
+<tr><td>Masa startowa (cel)</td><td>poniżej 25 kg</td><td>Granica kategorii otwartej A3 dla konstrukcji własnej (rozdział 15).</td></tr>
+<tr><td>Ładunek (cel projektowy)</td><td>do 8 kg</td><td>Do potwierdzenia pomiarem ciągu i pierwszymi lotami.</td></tr>
+</tbody></table></div>
+<figure><img loading="lazy" decoding="async" src="/assets/blog/lx1100/A_rozstrzelony_opis.jpg" alt="Widok rozstrzelony drona z ponumerowanymi częściami od 1 do 19." width="1477" height="1269">
+<figcaption>Rys. A. Widok rozstrzelony. Numery części objaśnia tabela poniżej.</figcaption></figure>
+<div class="tabela-wrap"><table>
+<thead><tr><th>Nr</th><th>Część</th><th>Nr</th><th>Część</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Skorupa korpusu (druk 3D, przód i tył)</td><td>10</td><td>Gondola silnika z diodą (druk 3D); w gondolach M1, M5, M2, M4 także TF-Luna</td></tr>
+<tr><td>2</td><td>Spadochron ratowniczy w osi środka ciężkości</td><td>11</td><td>Regulator obrotów ESC 80 A</td></tr>
+<tr><td>3</td><td>Antena GNSS RTK z kompasem na maszcie</td><td>12</td><td>Płyta dolna korpusu</td></tr>
+<tr><td>4</td><td>Lidar 360° górny na maszcie</td><td>13</td><td>2 × akumulator LiPo 6S 22 Ah w koszu</td></tr>
+<tr><td>5</td><td>Pokład awioniki z Pixhawk 6X</td><td>14</td><td>Szybkozłącze Arca-Swiss z gniazdem GX16</td></tr>
+<tr><td>6</td><td>Płyta rozdzielcza PDB, kondensatory, czujnik prądu</td><td>15</td><td>Moduł: gimbal 4K + termowizja</td></tr>
+<tr><td>7</td><td>Płyta górna korpusu</td><td>16</td><td>Kamera FPV SIYI A8 mini (na stałe)</td></tr>
+<tr><td>8</td><td>Zawias składanego ramienia</td><td>17</td><td>Reflektory: biały LED i podczerwień 850 nm</td></tr>
+<tr><td>9</td><td>Silnik V5208 ze śmigłem 1555</td><td>18</td><td>Podwozie z płozami</td></tr>
+<tr><td></td><td></td><td>19</td><td>Wieniec dalmierzy co 45° (uchwyty z druku 3D pod dolną płytą)</td></tr>
+</tbody></table></div>
+
+
+
+<h2 id="r2">2. Bezpieczeństwo</h2>
+<p>Ten dron jest ciężki, ma ostre śmigła i duży akumulator. Poniższe zasady obowiązują przez całą budowę.</p>
+<div class="uwaga"><strong>⚠️ Śmigła zakładasz na samym końcu</strong><p>Wszystkie testy na stole robisz bez śmigieł. Śmigło węglowe 15″ przy kilku tysiącach obrotów na minutę tnie jak nóż. Nawet „tylko sprawdzam kierunek” robisz bez śmigieł.</p></div>
+<div class="uwaga"><strong>⚠️ Akumulatory LiPo</strong>
+<ul>
+<li>Ładuj tylko ładowarką z balanserem, w worku lub skrzynce ognioodpornej, nigdy bez nadzoru.</li>
+<li>Pakiet spuchnięty, przebity albo gorący po uderzeniu odstaw na zewnątrz, w bezpieczne miejsce. Nie ładuj go.</li>
+<li>Do przechowywania ładuj albo rozładowuj do napięcia przechowywania, czyli ok. 3,8 V na celę.</li>
+<li>12S to ok. 50 V i bardzo duże prądy. Zwarcie przewodów spawa metal i parzy. Nigdy nie zbliżaj plusa i minusa gołymi końcówkami.</li>
+</ul></div>
+<div class="uwaga"><strong>⚠️ Lutowanie</strong><p>Grot ma ok. 400 °C i nie świeci, więc nie widać, że jest gorący. Pracuj z wentylacją, bo dym z topnika drażni drogi oddechowe. Cyna z ołowiem: po pracy umyj ręce i nie jedz przy stole.</p></div>
+<div class="uwaga"><strong>⚠️ Pierwsze podłączenie zasilania</strong><p>Pierwszy raz podłączasz elektronikę przez zasilacz laboratoryjny z ograniczeniem prądu albo przez „smoke stopper” (bezpiecznik z żarówką). Jeśli gdzieś jest zwarcie, ogranicznik nie pozwoli niczemu się spalić.</p></div>
+
+
+
+<h2 id="r3">3. Słowniczek</h2>
+<ul>
+<li><strong>ArduPilot / ArduCopter</strong> — Darmowe oprogramowanie autopilota. ArduCopter to jego wersja dla wielowirnikowców.</li>
+<li><strong>Mission Planner</strong> — Program na laptopa do konfiguracji, planowania misji i obserwowania lotu.</li>
+<li><strong>Pixhawk 6X</strong> — Komputer pokładowy (autopilot). Ma w środku czujniki ruchu, ciśnienia i porty do podłączenia reszty.</li>
+<li><strong>ESC (regulator)</strong> — Moduł, który zamienia prąd z akumulatora na trzy fazy zasilające silnik i ustala jego obroty według poleceń autopilota.</li>
+<li><strong>PDB</strong> — Płyta rozdzielcza zasilania. Rozdziela prąd z akumulatora na osiem regulatorów.</li>
+<li><strong>BEC</strong> — Przetwornica obniżająca napięcie, np. z 50 V na 5,3 V albo 12 V dla elektroniki.</li>
+<li><strong>LiPo, 6S, 12S</strong> — Akumulator litowo-polimerowy. „S” to liczba ogniw połączonych szeregowo. Jedno ogniwo ma 3,7 V nominalnie i 4,2 V naładowane. 6S to 22,2 V, a dwa pakiety 6S połączone szeregowo dają 12S, czyli 44,4 V.</li>
+<li><strong>AWG</strong> — Amerykańska miara grubości przewodu: im mniejsza liczba, tym grubszy przewód. 10 AWG to ok. 5,3 mm², a 12 AWG ok. 3,3 mm².</li>
+<li><strong>PWM, DShot</strong> — Dwa sposoby przekazywania regulatorom polecenia „kręć tak szybko”. PWM to szerokość impulsu, a DShot to liczba wysyłana cyfrowo. DShot nie wymaga kalibracji, ale regulator musi go obsługiwać.</li>
+<li><strong>MAVLink</strong> — Język, którym autopilot rozmawia z laptopem: telemetria w jedną stronę, polecenia w drugą.</li>
+<li><strong>GNSS, RTK</strong> — GNSS to satelitarne określanie pozycji (GPS, Galileo i inne). RTK to poprawki, które zmniejszają błąd pozycji z metrów do centymetrów.</li>
+<li><strong>TF-Luna</strong> — Mały laserowy dalmierz (0,2–8 m). Mierzy odległość do przeszkody w jednym kierunku.</li>
+<li><strong>TFS20-L, dToF</strong> — Dalmierz laserowy Benewake wielkości paznokcia (21 × 15 mm), do 20 m. dToF oznacza bezpośredni pomiar czasu lotu: czujnik mierzy, ile trwa droga impulsu światła do przeszkody i z powrotem. Zasilanie 3,3 V.</li>
+<li><strong>Sektor</strong> — ArduPilot dzieli otoczenie drona na 8 wycinków po 45°: przód, przód-prawo, prawo i tak dalej, zgodnie z ruchem wskazówek zegara. Dalmierz ustawiony dokładnie w środku wycinka podaje autopilotowi prawdziwy kierunek przeszkody.</li>
+<li><strong>Lidar 360°</strong> — Obrotowy dalmierz laserowy, który mierzy odległości dookoła drona.</li>
+<li><strong>I²C, UART (TELEM)</strong> — Dwa rodzaje połączeń między urządzeniami. I²C to wspólna linia dla wielu czujników, a UART to połączenie jeden do jednego (porty TELEM, GPS).</li>
+<li><strong>JST-GH</strong> — Typ małych wtyczek z zatrzaskiem używany w Pixhawku. Wyciągasz je za obudowę, nigdy za przewody.</li>
+<li><strong>CoG</strong> — Środek ciężkości. Musi wypadać w osi drona, inaczej silniki z jednej strony pracują ciężej.</li>
+<li><strong>MTOM</strong> — Maksymalna masa startowa: dron, akumulatory, moduł i ładunek razem.</li>
+<li><strong>Failsafe</strong> — Zachowanie awaryjne, np. automatyczny powrót, gdy zginie łącze albo akumulator jest prawie pusty.</li>
+<li><strong>Loiter, AltHold, RTL, Brake</strong> — Tryby lotu. Loiter trzyma pozycję i wysokość według GPS. AltHold trzyma tylko wysokość. RTL to powrót do punktu startu i lądowanie. Brake to natychmiastowe zatrzymanie w miejscu.</li>
+<li><strong>Loctite 243</strong> — Niebieski klej do gwintów o średniej sile. Śruba nie odkręca się od drgań, ale da się ją odkręcić kluczem.</li>
+<li><strong>Wkładka wtapiana</strong> — Mosiężna tuleja z gwintem M3, którą wciska się na gorąco w plastikowy wydruk, żeby można było wielokrotnie wkręcać śrubę.</li>
+<li><strong>Antyiskra</strong> — Złącze z rezystorem, który najpierw powoli ładuje kondensatory, a dopiero potem zwiera główny styk. Dzięki temu przy podłączaniu akumulatora nie strzela iskra.</li>
+<li><strong>Low-ESR</strong> — Kondensator o bardzo małej rezystancji wewnętrznej. Dobrze tłumi szybkie skoki napięcia.</li>
+</ul>
+
+
+
+<h2 id="r4">4. Narzędzia i materiały</h2>
+<div class="tabela-wrap"><table>
+<thead><tr><th>Narzędzie</th><th>Do czego</th></tr></thead>
+<tbody>
+<tr><td>Wkrętak dynamometryczny (np. Wera Kraftform, zakres obejmujący 1,2 N·m) + groty sześciokątne 1,5 / 2 / 2,5 / 3 mm</td><td>Dokręcanie śrub z kontrolą momentu. Gdy osiągniesz ustawiony moment, sprzęgło przeskakuje.</td></tr>
+<tr><td>Stacja lub kolba lutownicza (np. TS101) z dużym grotem dłutowym</td><td>Lutowanie przewodów. Do 10 AWG na grubej miedzi PDB pomaga mocniejsza stacja (ok. 100 W) albo podgrzanie płytki.</td></tr>
+<tr><td>Cyna Sn60Pb40 Ø 1 mm z topnikiem + topnik w żelu</td><td>Połączenia lutowane.</td></tr>
+<tr><td>Koszulki termokurczliwe, opalarka</td><td>Izolacja i odciążenie lutów.</td></tr>
+<tr><td>Multimetr</td><td>Sprawdzanie zwarć, napięć i ciągłości przewodów.</td></tr>
+<tr><td>Zasilacz laboratoryjny z ograniczeniem prądu albo „smoke stopper”</td><td>Bezpieczne pierwsze uruchomienie.</td></tr>
+<tr><td>Ładowarka balansująca 6S (lub 2 × 6S) + worek ognioodporny</td><td>Ładowanie pakietów.</td></tr>
+<tr><td>Wyważarka śmigieł</td><td>Wyważenie każdego śmigła przed montażem.</td></tr>
+<tr><td>Grot do wtapiania wkładek M3</td><td>Wkładki w częściach z drukarki.</td></tr>
+<tr><td>Suwmiarka, opaski zaciskowe, rzepy, izopropanol, Loctite 243</td><td>Pomiary, porządek w kablach, czyszczenie, zabezpieczenie gwintów.</td></tr>
+</tbody></table></div>
+
+
+
+<h2 id="r5">5. Lista części</h2>
+<h3>Maszyna bazowa</h3>
+<div class="tabela-wrap"><table>
+<thead><tr><th>Część</th><th>Szt.</th><th>Uwagi</th></tr></thead>
+<tbody>
+<tr><td>Rama DroneHub LX1100 (8 ramion Ø 25 mm, składane)</td><td>1</td><td>Producent podaje maksymalne śmigło 15″.</td></tr>
+<tr><td>Silnik Sunnysky V5208 340 KV</td><td>8</td><td>4 z gwintem do śmigieł CW, 4 do CCW, jeśli producent je rozróżnia.</td></tr>
+<tr><td>Regulator Hobbywing XRotor Pro 80 A HV</td><td>8</td><td>Przed zakupem sprawdź, czy wersja obsługuje DShot. Jeśli nie, będzie PWM.</td></tr>
+<tr><td>Śmigło węglowe składane 1555 (15 × 5,5″)</td><td>4 CW + 4 CCW</td><td>Plus zapas: co najmniej 1 para.</td></tr>
+<tr><td>Pixhawk 6X (ze standardową płytą bazową)</td><td>1</td><td>ArduCopter 4.7 lub nowszy (od tej wersji jest sterownik dalmierza TFS20-L).</td></tr>
+<tr><td>Odbiornik GNSS RTK z kompasem i wyłącznikiem bezpieczeństwa</td><td>1</td><td>Na maszcie, możliwie daleko od przewodów mocy.</td></tr>
+<tr><td>SIYI HM30 (jednostka powietrzna i naziemna)</td><td>1 kpl.</td><td>Telemetria, obraz i opcjonalnie zapasowe RC.</td></tr>
+<tr><td>Płyta rozdzielcza PDB 200 A (masa w gwieździe)</td><td>1</td><td>—</td></tr>
+<tr><td>Kondensator elektrolityczny Low-ESR 1000 µF / 63 V</td><td>4</td><td>Napięcie znamionowe co najmniej 25 % powyżej 50,4 V.</td></tr>
+<tr><td>Czujnik prądu Mauch HS-200-HV z płytką BEC</td><td>1</td><td>Zasila Pixhawka i mierzy napięcie oraz prąd.</td></tr>
+<tr><td>Złącze AS150 z antyiskrą</td><td>1 para + na pakiety</td><td>Do 150 A. XT90 jest za słabe na prądy tego drona.</td></tr>
+<tr><td>Złącze XT90 (mostek szeregowy)</td><td>1 para</td><td>Łączy dwa pakiety w 12S.</td></tr>
+<tr><td>BEC 5,3 V / 5 A, BEC 12 V / 4 A, BEC 12 V / 5 A</td><td>po 1</td><td>Czujniki, łączność, oświetlenie (rozdział 8).</td></tr>
+<tr><td>Akumulator LiPo 6S 22 000 mAh</td><td>2 (najlepiej 2 komplety)</td><td>Pakiety w parze zawsze z tej samej serii, ładowane razem.</td></tr>
+<tr><td>Dalmierz Benewake TFS20-L (dToF, 0,2–20 m)</td><td>4</td><td>Wieniec: przód, prawo, tył, lewo. Firmware co najmniej 1.4.6 (tryb I²C).</td></tr>
+<tr><td>Dalmierz Benewake TF-Luna (0,2–8 m)</td><td>10</td><td>4 w wieńcu na skosach, 1 w górę, 1 w dół, 4 w gondolach M1, M5, M2, M4.</td></tr>
+<tr><td>Stabilizator 3,3 V (LDO, co najmniej 0,6 A)</td><td>1</td><td>Zasila cztery TFS20-L (każdy do 130 mA w szczycie).</td></tr>
+<tr><td>Aktywny rozdzielacz I²C</td><td>1–2</td><td>10 czujników na jednej magistrali: rozdzielacz z buforem trzyma czyste zbocza sygnału.</td></tr>
+<tr><td>Mikrokontroler z UART i I²C (np. Arduino Nano ESP32 albo Raspberry Pi Pico)</td><td>1</td><td>Strażnik śmigieł: czyta 4 TF-Luny z gondoli i wysyła odległości do Pixhawka (MAVLink, port GPS 2).</td></tr>
+<tr><td>Wkładka M3 × 4 wtapiana, śruba M3 × 10, śruba M2 z nakrętką (30 i 45 mm)</td><td>8, 8, 4 + 4</td><td>Uchwyty wieńca: M3 trzyma uchwyt pod płytą, M2 blokuje czujnik w kieszeni.</td></tr>
+<tr><td>Lidar 360° zgodny z ArduPilot (np. LDROBOT LD06)</td><td>2</td><td>Górny i dolny.</td></tr>
+<tr><td>Spadochron ratowniczy dobrany do MTOM 25 kg</td><td>1</td><td>Najlepiej z certyfikacją ASTM F3322, z własnym zasilaniem.</td></tr>
+<tr><td>Przewody silikonowe 10 AWG i 12 AWG (czerwony i niebieski), sygnałowe (biały, żółty, zielony)</td><td>wg potrzeb</td><td>Zgodnie z zasadą kolorów (rozdział 6).</td></tr>
+</tbody></table></div>
+<h3>Rozbudowa</h3>
+<p>Pełna lista z wymiarami i ustawieniami druku jest w pliku <code>druk3d/README_druk3d.md</code>. W skrócie: części drukowane (skorupa, 8 gondoli, 8 uchwytów dalmierzy, oprawy reflektorów, światło błyskowe, obudowy modułów), kamera FPV SIYI A8 mini, GoPro HERO13 Black, zacisk Arca-Swiss z płytkami, złącza GX16-8, serwo do zaczepu cargo z hakiem stalowym, diody pozycyjne (np. WS2812B), zielone światło błyskowe, reflektor LED biały i podczerwony 850 nm z zasilaczami.</p>
+
+
+
+<h2 id="r6">6. Zasady warsztatowe</h2>
+<h3>Kolory przewodów</h3>
+<p>W tym projekcie kolor zawsze mówi, co płynie przewodem. Dzięki temu po roku, z latarką w ręku, od razu wiesz, co jest czym.</p>
+<div class="tabela-wrap"><table>
+<thead><tr><th>Kolor</th><th>Znaczenie</th><th>Przykłady</th></tr></thead>
+<tbody>
+<tr><td>Czerwony</td><td>Plus, zasilanie</td><td>+ akumulatora, + ESC, 5,3 V, 12 V</td></tr>
+<tr><td>Niebieski</td><td>Minus, masa (GND)</td><td>− akumulatora, masa ESC, masa sygnałów</td></tr>
+<tr><td>Biały</td><td>Sygnał sterujący</td><td>PWM i DShot do ESC, serwa, dane diod</td></tr>
+<tr><td>Żółty</td><td>Nadawanie lub dane</td><td>UART TX, I²C SDA, pomiar napięcia</td></tr>
+<tr><td>Zielony</td><td>Odbiór lub zegar</td><td>UART RX, I²C SCL, pomiar prądu</td></tr>
+</tbody></table></div>
+<div class="uwaga"><strong>⚠️ Uwaga</strong><p>Fabryczne przewody bywają w innych kolorach (np. czarny minus). Przy przedłużaniu lub przerabianiu przejdź na kolory z tabeli, a fabryczne końcówki oznacz koszulką w kolorze zasady.</p></div>
+
+<h3>Momenty dokręcania i kleje</h3>
+<div class="tabela-wrap"><table>
+<thead><tr><th>Połączenie</th><th>Moment</th><th>Zabezpieczenie</th><th>Dlaczego</th></tr></thead>
+<tbody>
+<tr><td>M3 (DIN 912, 10.9) w gwincie aluminiowym: zaciski, zawiasy, płyta silnika</td><td>1,2 N·m</td><td>Loctite 243</td><td>Aluminium jest miękkie, więc większy moment zrywa gwint.</td></tr>
+<tr><td>M3 w stalowej nakrętce</td><td>wg tabeli producenta śrub (dla 10.9 ok. 1,6–1,8 N·m)</td><td>nakrętka z wkładką nylonową lub Loctite 243</td><td>Stal przenosi większy moment.</td></tr>
+<tr><td>M3 w mosiężnej wkładce w druku 3D</td><td>z wyczuciem, do ok. 0,5 N·m</td><td>podkładka sprężysta, <b>bez</b> Loctite</td><td>Klej może uszkodzić plastik ASA, a za duży moment wyrywa wkładkę.</td></tr>
+<tr><td>Śmigło na adapterze silnika</td><td>wg producenta śmigieł</td><td>wg producenta</td><td>Śmigło przenosi duże siły.</td></tr>
+</tbody></table></div>
+<div class="uwaga"><strong>💡 Dlaczego klej do gwintów</strong><p>Osiem silników wytwarza drgania. Śruba bez kleju po kilku lotach sama się luzuje. Niebieski Loctite 243 trzyma, ale da się go odkręcić zwykłym kluczem. Czerwonego (stałego) nie używaj.</p></div>
+
+<h3>Jak zrobić dobry lut</h3>
+<ol>
+<li>Oczyść końcówkę przewodu i pole lutownicze izopropanolem.</li>
+<li>Pocynuj osobno przewód i pole: nałóż cienką warstwę cyny z topnikiem.</li>
+<li>Przyłóż przewód do pola i grzej oba naraz. Cyna sama się rozpłynie i połączy.</li>
+<li>Trzymaj nieruchomo, aż cyna zastygnie (kilka sekund). Ruch w tej chwili daje „zimny lut”.</li>
+<li>Załóż koszulkę termokurczliwą i obkurcz ją.</li>
+</ol>
+<div class="uwaga"><strong>✅ Sprawdź</strong><p>Dobry lut jest gładki, błyszczący i lekko wklęsły jak menisk. Matowa, ziarnista kulka to zimny lut: rozgrzej go jeszcze raz, z odrobiną topnika. Pociągnij przewód. Nie może się ruszać.</p></div>
+
+
+
+<h2 id="r7">7. Montaż krok po kroku</h2>
+<p>Kolejność etapów nie jest przypadkowa: najpierw mechanika, potem zasilanie, elektronika, czujniki, wyposażenie, a na końcu śmigła. Numery części w nawiasach odnoszą się do rys. A.</p>
+
+<h3>Etap 1. Przygotowanie części</h3>
+<div>
+<div class="uwaga"><strong>🔧 Co robisz</strong><ul>
+<li>Rozłóż wszystkie części i odhacz je na liście z rozdziału 5.</li>
+<li>Obejrzyj rury węglowe: bez pęknięć, rozwarstwień i wgnieceń.</li>
+<li>Zważ większe części i wpisz masy do tabeli w rozdziale 13.</li>
+<li>Wyważ każde śmigło na wyważarce. Lżejszą łopatę dociąż cienką warstwą lakieru bezbarwnego na końcówce.</li>
+<li>Naładuj akumulatory do napięcia przechowywania. Pełne będą potrzebne dopiero do lotu.</li>
+</ul></div>
+<div class="uwaga"><strong>💡 Dlaczego</strong><p>Niewyważone śmigło trzęsie całą ramą, a drgania psują odczyty czujników autopilota. Uszkodzona rura może pęknąć w locie.</p></div>
+</div>
+
+<h3>Etap 2. Szkielet: płyty, zaciski, ramiona (7, 8, 12)</h3>
+<figure><picture><source srcset="/assets/blog/lx1100/kadr-szkielet.webp" type="image/webp"><img loading="lazy" decoding="async" src="/assets/blog/lx1100/kadr-szkielet.jpg" alt="płyty węglowe i dokręcanie wkrętakiem dynamometrycznym" width="1280" height="720"></picture><figcaption>Kadr z filmu: płyty węglowe i dokręcanie wkrętakiem dynamometrycznym</figcaption></figure>
+<div>
+<div class="uwaga"><strong>🔧 Co robisz</strong><ul>
+<li>Włóż osiem ramion w zaciski między płytą dolną a górną. Zawiasy składania są około 185 mm od środka (rys. 03).</li>
+<li>Na każdą śrubę M3 nałóż kroplę Loctite 243.</li>
+<li>Dokręcaj śruby płyt „na krzyż”: najpierw wszystkie lekko, potem po przekątnej do 1,2 N·m.</li>
+<li>Złóż i rozłóż każde ramię. Zaryglowane ramię nie może mieć luzu.</li>
+</ul></div>
+<div class="uwaga"><strong>💡 Dlaczego na krzyż</strong><p>Płyty dociągane po kolei po obwodzie wypaczają się. Dokręcanie po przekątnej rozkłada nacisk równo.</p></div>
+<div class="uwaga"><strong>✅ Sprawdź</strong><p>Połóż ramę na płaskim stole. Wszystkie końce ramion leżą na tej samej wysokości (różnica poniżej 1 mm). Ramię zaryglowane nie stuka przy poruszaniu końcem w górę i w dół.</p></div>
+</div>
+
+<h3>Etap 3. Silniki (9)</h3>
+<div>
+<div class="uwaga"><strong>🔧 Co robisz</strong><ul>
+<li>Przykręć każdy silnik do płyty silnika czterema śrubami M3 (1,2 N·m, Loctite 243). Przewody fazowe kieruj w stronę ramienia.</li>
+<li>Oznacz silniki numerami M1–M8 zgodnie z rys. 07 (numeracja ArduPilot dla układu Octo X).</li>
+</ul></div>
+<div class="uwaga"><strong>⚠️ Uwaga: długość śrub silnika</strong><p>Za długa śruba wchodzi do środka silnika i przecina izolację uzwojenia, a to zwarcie. Przed wkręceniem zmierz głębokość gwintu w podstawie silnika. Śruba może wchodzić najwyżej na tę głębokość.</p></div>
+<div class="uwaga"><strong>✅ Sprawdź</strong><p>Obróć każdy dzwon ręką. Kręci się lekko, równo i nic nie ociera.</p></div>
+</div>
+
+<h3>Etap 4. Regulatory ESC (11)</h3>
+<div>
+<div class="uwaga"><strong>🔧 Co robisz</strong><ul>
+<li>Przymocuj regulator pod każdym ramieniem dwiema opaskami, radiatorem w dół, w strumieniu powietrza od śmigła.</li>
+<li>Połącz trzy przewody fazowe silnika z trzema wyjściami regulatora. Kolejność jest na razie dowolna, kierunek obrotów ustawisz później.</li>
+<li>Przewody zasilania (12 AWG, czerwony i niebieski) oraz sygnałowy (biały z niebieską masą) przeprowadź wewnątrz ramienia do środka ramy.</li>
+<li>Oznacz każdy regulator numerem silnika.</li>
+</ul></div>
+<div class="uwaga"><strong>💡 Dlaczego pod ramieniem</strong><p>Regulator grzeje się przy dużym prądzie. Pod ramieniem chłodzi go powietrze od śmigła. Przewody w środku ramienia są chronione przed śmigłami i słońcem.</p></div>
+</div>
+
+<h3>Etap 5. Płyta rozdzielcza, kondensatory, czujnik prądu (6)</h3>
+<figure><picture><source srcset="/assets/blog/lx1100/kadr-zasilanie.webp" type="image/webp"><img loading="lazy" decoding="async" src="/assets/blog/lx1100/kadr-zasilanie.jpg" alt="złącza mocy i przewody 10 AWG" width="1280" height="720"></picture><figcaption>Kadr z filmu: złącza mocy i przewody 10 AWG</figcaption></figure>
+<div>
+<div class="uwaga"><strong>🔧 Co robisz</strong><ul>
+<li>Przylutuj przewody ośmiu regulatorów do PDB: czerwone do pól plusa, niebieskie do pól minusa (rys. 04).</li>
+<li>Przylutuj cztery kondensatory 1000 µF / 63 V jak najbliżej wejścia zasilania PDB.</li>
+<li>Poprowadź przewód główny 10 AWG plus przez czujnik Mauch zgodnie z jego instrukcją, a dalej do PDB.</li>
+<li>Na końcu przewodów głównych zamontuj złącze AS150 od strony drona.</li>
+</ul></div>
+<div class="uwaga"><strong>⚠️ Uwaga: biegunowość kondensatorów</strong><p>Kondensator elektrolityczny ma biegunowość. Pasek z minusami na obudowie oznacza nóżkę minus. Odwrotnie podłączony kondensator przy 50 V może wybuchnąć.</p></div>
+<div class="uwaga"><strong>💡 Dlaczego kondensatory i masa w gwieździe</strong><p>Gdy regulator gwałtownie hamuje silnik, oddaje energię z powrotem do przewodów. Na długich przewodach powstają wtedy szpilki napięcia, które kondensatory pochłaniają. Masa w gwieździe oznacza, że każda masa wraca do jednego punktu PDB. Nie powstają pętle, które zbierają zakłócenia.</p></div>
+<div class="uwaga"><strong>✅ Sprawdź</strong><ul>
+<li>Multimetrem w trybie ciągłości: między plusem a minusem AS150 nie ma zwarcia. Kondensatory przez chwilę piszczą przy ładowaniu, a potem cisza.</li>
+<li>Każdy czerwony przewód ESC ma ciągłość z plusem AS150, a każdy niebieski z minusem.</li>
+</ul></div>
+</div>
+
+<h3>Etap 6. Pierwsze zasilenie (bez autopilota i odbiorników)</h3>
+<div>
+<div class="uwaga"><strong>🔧 Co robisz</strong><ul>
+<li>Podłącz zasilacz laboratoryjny (np. 24–30 V, ograniczenie prądu 0,5 A) albo pakiet przez „smoke stopper”.</li>
+<li>Zmierz napięcia na wyjściach przetwornic: 5,3 V i 12 V.</li>
+<li>Dopiero gdy napięcia się zgadzają, podłączaj kolejne urządzenia.</li>
+</ul></div>
+<div class="uwaga"><strong>💡 Dlaczego</strong><p>Jeśli gdzieś jest zwarcie albo pomyłka biegunowości, ogranicznik prądu zatrzyma problem, zanim cokolwiek się spali.</p></div>
+</div>
+
+<h3>Etap 7. Kosz akumulatorów i połączenie 12S (13)</h3>
+<div>
+<div class="uwaga"><strong>🔧 Co robisz</strong><ul>
+<li>Połóż dwa pakiety 6S w koszu i spnij je dwoma pasami.</li>
+<li>Połącz pakiety szeregowo mostkiem XT90: minus pierwszego pakietu z plusem drugiego. Wolny plus pierwszego i wolny minus drugiego idą do AS150 (rys. 04).</li>
+<li>Złącza balansujące zostaw wolne. Służą tylko do ładowania, każdy pakiet ładujesz osobno.</li>
+</ul></div>
+<div class="uwaga"><strong>⚠️ Uwaga: szeregowo, nie równolegle</strong><p>Szeregowo znaczy plus do minusa, a wtedy napięcia się dodają. Połączenie plusa z plusem i minusa z minusem to połączenie równoległe. Przy pakietach o różnym napięciu płyną wtedy ogromne prądy wyrównawcze.</p></div>
+<div class="uwaga"><strong>✅ Sprawdź</strong><p>Multimetr na AS150 pokazuje sumę napięć obu pakietów, np. 2 × 22,8 V = 45,6 V.</p></div>
+</div>
+
+<h3>Etap 8. Pokład awioniki (5)</h3>
+<figure><picture><source srcset="/assets/blog/lx1100/kadr-awionika.webp" type="image/webp"><img loading="lazy" decoding="async" src="/assets/blog/lx1100/kadr-awionika.jpg" alt="Pixhawk 6X i wtyczki JST-GH" width="1280" height="720"></picture><figcaption>Kadr z filmu: Pixhawk 6X i wtyczki JST-GH</figcaption></figure>
+<div>
+<div class="uwaga"><strong>🔧 Co robisz</strong><ul>
+<li>Przyklej Pixhawka 6X podkładkami z zestawu w osi drona, strzałką do przodu (rys. 01).</li>
+<li>Przymocuj rozdzielacz I²C i jednostkę powietrzną HM30.</li>
+<li>Podłącz wtyczki JST-GH zgodnie z rys. 05: POWER 1, TELEM 1, TELEM 2, TELEM 3, I²C, GPS 1, GPS 2 (mikrokontroler, etap 10), wyjścia MAIN i AUX.</li>
+<li>Przewody prowadź łukiem, bez naprężeń, z dala od przewodów mocy 10 AWG.</li>
+</ul></div>
+<div class="uwaga"><strong>💡 Dlaczego strzałka do przodu</strong><p>Autopilot musi wiedzieć, gdzie jest przód. Pixhawk 6X ma czujniki na wewnętrznym tłumieniu drgań, więc mocuje się go podkładkami producenta, bez dodatkowych gumowych amortyzatorów.</p></div>
+<div class="uwaga"><strong>⚠️ Uwaga</strong><p>Wtyczkę JST-GH wyciągasz za plastikową obudowę. Ciągnięcie za przewody wyrywa je z zacisków.</p></div>
+</div>
+
+<h3>Etap 9. Maszty: GNSS RTK i lidar górny (3, 4)</h3>
+<div>
+<div class="uwaga"><strong>🔧 Co robisz</strong><ul>
+<li>Zamontuj maszt GNSS z tyłu pokładu. Strzałka na kopułce wskazuje przód.</li>
+<li>Na drugim maszcie zamontuj lidar 360° górny, strzałką do przodu. Podłącz go do TELEM 2 (tylko przewód TX lidara, zasilanie 5 V z BEC).</li>
+</ul></div>
+<div class="uwaga"><strong>💡 Dlaczego maszt</strong><p>Kompas mierzy pole magnetyczne Ziemi. Prąd 100 A w przewodach mocy wytwarza własne pole, które przekłamuje kompas. Kilkanaście centymetrów odstępu wystarczy. Lidar nad śmigłami widzi dookoła bez przeszkód.</p></div>
+</div>
+
+<h3>Etap 10. Czujniki odległości: wieniec co 45°, góra, dół, gondole (10, 19)</h3>
+<figure><img loading="lazy" decoding="async" src="/assets/blog/lx1100/D_czujniki.jpg" alt="Układ czujników: widok z góry z ośmioma sektorami ArduPilot i wiązkami, uchwyt czujnika TFS20-L pod narożnikiem płyty, TF-Luna w gnieździe na skorupie patrząca w górę." width="2400" height="1586">
+<figcaption>Rys. D. Układ czujników. Pomarańczowe wiązki: TFS20-L, czerwone: TF-Luna w wieńcu, fioletowe: strażnicy śmigieł w gondolach, niebieskie: góra i dół. Na podłodze osiem sektorów ArduPilot. Długości wiązek są umowne.</figcaption></figure>
+<div>
+<div class="uwaga"><strong>🔧 Co robisz</strong><ul>
+<li>Wydrukuj 4 × <code>uchwyt_czujnika_dtof.stl</code> i 4 × <code>uchwyt_czujnika_tfluna.stl</code> (ASA, kołnierzem do stołu). W każdy uchwyt wtop dwie wkładki M3.</li>
+<li>W każdym narożniku dolnej płyty wywierć dwa otwory Ø 3,2 mm, na linii narożnika, 119 mm i 135 mm od środka drona (rys. 08). Uchwyt możesz przyłożyć jako szablon. Pył węglowy szkodzi płucom: wierć na mokro albo z odkurzaczem, w masce.</li>
+<li>Przykręć uchwyty od góry śrubami M3 × 10 przez płytę. Uchwyty TFS20-L idą w narożniki przód, prawo, tył i lewo, uchwyty TF-Luny w narożniki skośne.</li>
+<li>Ustaw tryb I²C. TF-Luna: styk 5 (konfiguracja) połącz z masą. TFS20-L: styk INT zostaw wolny albo podciągnij rezystorem 4,7 kΩ do 3,3 V. Uwaga, to odwrotnie niż w TF-Lunie. TFS20-L potrzebuje firmware 1.4.6 lub nowszego.</li>
+<li>Nadaj każdemu czujnikowi adres z tabeli w rozdziale 9.6 (od 0x11 do 0x1A). Podłączaj po jednym, bo fabrycznie wszystkie mają 0x10. Adres zmieniasz komendą z karty Benewake albo programem producenta i zapisujesz ustawienia w czujniku.</li>
+<li>Wsuń czujnik od tyłu do kieszeni, aż czoło oprze się o ramkę. Za czujnikiem przełóż przez ścianki śrubę M2 (30 mm przy TFS20-L, 45 mm przy TF-Lunie) i dokręć nakrętkę z wyczuciem.</li>
+<li>Zasilanie: TF-Luny 5 V z BEC 5,3 V, TFS20-L 3,3 V ze stabilizatora LDO. Przewody: czerwony plus, niebieski masa, żółty SDA, zielony SCL, do rozdzielacza I²C.</li>
+<li>TF-Lunę „w górę” wciśnij czołem do góry w gniazdo na tylnej połowie skorupy. Przewód przechodzi przez otwór w dnie gniazda. TF-Luna „w dół” zostaje pod koszem akumulatorów.</li>
+<li>Cztery TF-Luny włóż do gondoli z oknem na ramionach M1 i M5 (przód) oraz M2 i M4 (tył). Te czujniki podłączasz do mikrokontrolera, nie do Pixhawka: osobna magistrala I²C, adresy 0x11–0x14, rezystory podciągające 2,2 kΩ. Mikrokontroler łączysz z portem GPS 2 Pixhawka: TX mikrokontrolera do RX Pixhawka, RX do TX, masa i 5 V.</li>
+<li>Naklej na każdy czujnik etykietę z adresem.</li>
+</ul></div>
+<div class="uwaga"><strong>💡 Dlaczego co 45°</strong><p>ArduPilot przyjmuje kierunki dalmierzy tylko co 45° i tak samo dzieli otoczenie na osiem sektorów. Narożniki dolnej płyty wypadają dokładnie w środku tych sektorów, między ramionami. Każdy czujnik patrzy więc tam, gdzie autopilot się go spodziewa, i podaje prawdziwy kierunek przeszkody. Wiązki idą 70 mm pod osią ramion, czyli pod śmigłami i nad akumulatorami. Mocniejsze TFS20-L stoją na osiach przód–tył i lewo–prawo, bo w tych kierunkach dron leci najczęściej.</p></div>
+<div class="uwaga"><strong>💡 Dlaczego strażnicy w gondolach osobno</strong><p>ArduPilot obsługuje najwyżej 10 dalmierzy, a wieniec z górą i dołem zajmuje wszystkie miejsca. Cztery TF-Luny z gondoli czyta więc mikrokontroler. Wysyła on do Pixhawka komunikat MAVLink OBSTACLE_DISTANCE z kierunkami 22,5°, 157,5°, 202,5° i 337,5°, a autopilot dokłada te odległości do mapy przeszkód. Limit dalmierzy zostaje nienaruszony.</p></div>
+<div class="uwaga"><strong>✅ Sprawdź</strong><p>W Mission Planner, w zakładce <i>Status</i>, widać odczyty <code>rangefinder1</code> do <code>rangefinder10</code>. Zbliżaj dłoń kolejno do każdego czujnika: zmienia się dokładnie ta odległość, której się spodziewasz. W oknie <i>Proximity</i> (Ctrl+F) dłoń przy uchwycie skośnym pojawia się w sektorze skośnym, a dłoń przed gondolą M1 przy przednim prawym ramieniu.</p></div>
+</div>
+
+<h3>Etap 11. Spadochron (2)</h3>
+<figure><picture><source srcset="/assets/blog/lx1100/kadr-spadochron.webp" type="image/webp"><img loading="lazy" decoding="async" src="/assets/blog/lx1100/kadr-spadochron.jpg" alt="kontener spadochronu w osi środka ciężkości" width="1280" height="720"></picture><figcaption>Kadr z filmu: kontener spadochronu w osi środka ciężkości</figcaption></figure>
+<div>
+<div class="uwaga"><strong>🔧 Co robisz</strong><ul>
+<li>Zamontuj kontener spadochronu na środku górnego pokładu, w osi środka ciężkości.</li>
+<li>Podłącz wejście wyzwalania do AUX 1. Zasilanie spadochronu jest własne, niezależne od 12S.</li>
+<li>Zabezpieczenie (zawleczkę) wyjmuj tylko tuż przed lotem, według instrukcji producenta.</li>
+</ul></div>
+<div class="uwaga"><strong>💡 Dlaczego w osi środka ciężkości</strong><p>Czasza ciągnie drona w górę. Gdy punkt zaczepienia jest z boku, dron obraca się przy otwarciu i może zaplątać linki w ramiona.</p></div>
+<div class="uwaga"><strong>✅ Sprawdź</strong><p>Test wyzwolenia robisz według instrukcji producenta, z zaślepką zamiast ładunku wyrzucającego. Sprawdź też, czy autopilot wysyła sygnał wyzwolenia (rozdział 9).</p></div>
+</div>
+
+<h3>Etap 12. Podwozie, lidar dolny, anteny (18)</h3>
+<div>
+<div class="uwaga"><strong>🔧 Co robisz</strong><ul>
+<li>Przykręć nogi podwozia z płozami. Rozstaw płóz to 430 mm, długość 560 mm.</li>
+<li>Pod koszem akumulatorów zamontuj lidar 360° dolny, do góry nogami. Podłącz go do TELEM 3.</li>
+<li>Anteny jednostki powietrznej HM30 zamocuj na tylnych nogach, skierowane w dół.</li>
+</ul></div>
+<div class="uwaga"><strong>💡 Dlaczego anteny w dół</strong><p>Stacja naziemna jest zwykle pod dronem i z boku. Anteny skierowane w dół mają do niej prostą drogę, bez zasłaniania przez akumulatory i ramę.</p></div>
+</div>
+
+<h3>Etap 13. Szybkozłącze, moduły, kamera FPV, reflektory (14–17)</h3>
+<figure><picture><source srcset="/assets/blog/lx1100/kadr-moduly.webp" type="image/webp"><img loading="lazy" decoding="async" src="/assets/blog/lx1100/kadr-moduly.jpg" alt="moduł termowizji na szybkozłączu i kamera FPV" width="1280" height="720"></picture><figcaption>Kadr z filmu: moduł termowizji na szybkozłączu i kamera FPV</figcaption></figure>
+<div>
+<div class="uwaga"><strong>🔧 Co robisz</strong><ul>
+<li>Przykręć zacisk Arca-Swiss pod koszem, dokładnie w osi drona. Obok zamocuj gniazdo GX16-8.</li>
+<li>Każdy moduł dostaje swoją płytkę Arca-Swiss i wtyk GX16. Moduł wsuwasz, dokręcasz zacisk, wkładasz zawleczkę i zakręcasz wtyk.</li>
+<li>Kamerę FPV SIYI A8 mini zamocuj pod dziobem i połącz przewodem Ethernet z jednostką powietrzną HM30. Przewód sterowania gimbalem podłącz do UART4.</li>
+<li>Reflektory (biały i IR 850 nm) zasilaj z osobnej przetwornicy 12 V przez przekaźnik sterowany z AUX 4.</li>
+</ul></div>
+<div class="tabela-wrap"><table>
+<thead><tr><th>Styk GX16-8</th><th>Funkcja</th><th>Kolor</th></tr></thead>
+<tbody>
+<tr><td>1, 2</td><td>+12 V (dwa styki równolegle, większy prąd)</td><td>czerwony</td></tr>
+<tr><td>3, 4</td><td>masa</td><td>niebieski</td></tr>
+<tr><td>5</td><td>sygnał 1 (PWM: serwo zaczepu lub pochylenie gimbala)</td><td>biały</td></tr>
+<tr><td>6</td><td>sygnał 2 (PWM: obrót gimbala)</td><td>biały</td></tr>
+<tr><td>7</td><td>UART TX</td><td>żółty</td></tr>
+<tr><td>8</td><td>UART RX</td><td>zielony</td></tr>
+</tbody></table></div>
+<p><em>To proponowany przydział styków. Ważne, żeby wszystkie moduły miały ten sam.</em></p>
+<div class="uwaga"><strong>💡 Dlaczego szybkozłącze w osi drona</strong><p>Moduły ważą od kilkuset gramów do kilku kilogramów. Pod środkiem drona zmiana modułu nie przesuwa środka ciężkości na boki.</p></div>
+<div class="uwaga"><strong>⚠️ Uwaga</strong><p>SIYI A8 mini i konwerter wideo SIYI mają fabrycznie ten sam adres 192.168.144.25. Jeśli używasz obu, zmień adres jednego z nich.</p></div>
+</div>
+
+<h3>Etap 14. Obudowy z drukarki 3D (1, 10)</h3>
+<figure><picture><source srcset="/assets/blog/lx1100/kadr-gondole.webp" type="image/webp"><img loading="lazy" decoding="async" src="/assets/blog/lx1100/kadr-gondole.jpg" alt="gondole przednie z TF-Luną, strażnikiem końcówek śmigieł" width="1280" height="720"></picture><figcaption>Kadr z filmu: gondole przednie z TF-Luną, strażnikiem końcówek śmigieł</figcaption></figure>
+<div>
+<div class="uwaga"><strong>🔧 Co robisz</strong><ul>
+<li>Wydrukuj części z ASA według <code>druk3d/README_druk3d.md</code> i wtop wkładki M3.</li>
+<li>Gondole: dwie połówki obejmują rurę ramienia, a łączą je 4 śruby M3 przez ucha. Dolne połówki z oknem idą na ramiona M1, M5, M2 i M4, a okno musi stać naprzeciw TF-Luny. Na boczne ramiona M3, M8, M6 i M7 idą dolne połówki bez okna.</li>
+<li>Uchwyty dalmierzy i gniazdo TF-Luny w skorupie montujesz już w etapie 10.</li>
+<li>Diody pozycyjne: lewa strona czerwone, prawa zielone, tył białe (rys. 01). Przewody: czerwony 5 V, niebieski masa, biały dane.</li>
+<li>Skorupa: każdą połówkę przykręcasz osobno dwiema śrubami do płyty awioniki. Spadochron i maszty wychodzą przez otwory.</li>
+</ul></div>
+<div class="uwaga"><strong>✅ Sprawdź</strong><p>Obróć każdy silnik ręką: dzwon nie ociera o gondolę (luz 2,25 mm na stronę). Skorupa nie dotyka przewodów ani wtyczek Pixhawka.</p></div>
+</div>
+
+<h3>Etap 15. Środek ciężkości</h3>
+<div>
+<div class="uwaga"><strong>🔧 Co robisz</strong><ul>
+<li>Złóż drona w pełnej konfiguracji: akumulatory i najcięższy moduł.</li>
+<li>Podnieś go za środek górnej płyty (np. na linkach w osi spadochronu) albo podeprzyj dwoma palcami pod płytą dolną w dwóch prostopadłych kierunkach.</li>
+<li>Dron ma wisieć poziomo. Jeśli przechyla się, przesuń akumulatory w koszu.</li>
+</ul></div>
+<div class="uwaga"><strong>💡 Dlaczego</strong><p>Przy przesuniętym środku ciężkości silniki po jednej stronie muszą stale kręcić szybciej. Tracisz zapas mocy i czas lotu, a w porywie wiatru autopilotowi brakuje rezerwy.</p></div>
+</div>
+
+<h3>Etap 16. Śmigła (na końcu)</h3>
+<div>
+<div class="uwaga"><strong>🔧 Co robisz</strong><ul>
+<li>Dopiero po teście silników z rozdziału 9 załóż śmigła: CW na silniki CW, CCW na silniki CCW (rys. 07).</li>
+<li>Dokręć wg producenta śmigieł. Rozłóż łopaty składane do pozycji pracy.</li>
+</ul></div>
+<div class="uwaga"><strong>✅ Sprawdź</strong><p>Przekręć wszystkie śmigła ręką: końcówki sąsiednich śmigieł mijają się z ok. 40 mm luzu. Krawędź natarcia, czyli grubsza krawędź łopaty, idzie w kierunku obrotu.</p></div>
+</div>
+
+
+
+<h2 id="r8">8. Okablowanie</h2>
+<p>Trzy schematy pokazują, jak płynie prąd, jak płyną sygnały i jak dron łączy się z laptopem. Kolory linii odpowiadają kolorom przewodów.</p>
+<figure><img loading="lazy" decoding="async" src="/assets/blog/lx1100/rys04_schemat_zasilania.svg" alt="Schemat zasilania 12S: dwa pakiety 6S, mostek XT90, AS150, czujnik Mauch, PDB z kondensatorami, osiem regulatorów i silników, przetwornice." width="1700" height="1000">
+<figcaption>Rys. 04. Zasilanie. Grube linie to przewody 10 AWG, cieńsze 12 AWG i przewody przetwornic.</figcaption></figure>
+<figure><img loading="lazy" decoding="async" src="/assets/blog/lx1100/rys05_schemat_sygnalow.svg" alt="Schemat sygnałów Pixhawk 6X: porty POWER, TELEM, I2C, GPS, AUX i MAIN z podłączonymi urządzeniami." width="1700" height="1060">
+<figcaption>Rys. 05. Sygnały. Numery SERIAL to nazwy portów w parametrach ArduPilot.</figcaption></figure>
+<div class="tabela-wrap"><table>
+<thead><tr><th>Port Pixhawka</th><th>Urządzenie</th><th>Ustawienie</th></tr></thead>
+<tbody>
+<tr><td>POWER 1</td><td>Mauch HS-200-HV</td><td>zasilanie 5,3 V, pomiar napięcia i prądu</td></tr>
+<tr><td>TELEM 1 (SERIAL1)</td><td>SIYI HM30 jednostka powietrzna</td><td>MAVLink2, 115 200 bd</td></tr>
+<tr><td>TELEM 2 (SERIAL2)</td><td>lidar 360° górny</td><td>Lidar360, 230 400 bd</td></tr>
+<tr><td>TELEM 3 (SERIAL5)</td><td>lidar 360° dolny</td><td>Lidar360, 230 400 bd</td></tr>
+<tr><td>UART4 (SERIAL6)</td><td>SIYI A8 mini</td><td>gimbal SIYI</td></tr>
+<tr><td>GPS 1 (SERIAL3)</td><td>GNSS RTK + kompas</td><td>automatycznie</td></tr>
+<tr><td>GPS 2 (SERIAL4)</td><td>mikrokontroler strażnika śmigieł (4 × TF-Luna w gondolach)</td><td>MAVLink2, 115 200 bd</td></tr>
+<tr><td>I²C 1</td><td>rozdzielacz I²C → 4 × TFS20-L + 6 × TF-Luna</td><td>adresy 0x11–0x1A</td></tr>
+<tr><td>MAIN 1–8</td><td>ESC 1–8</td><td>DShot600 lub PWM</td></tr>
+<tr><td>AUX 1 / 2 / 3 / 4 / 5–6</td><td>spadochron / zaczep / diody / przekaźnik reflektorów / gimbal modułu</td><td>funkcje serw w rozdziale 9</td></tr>
+</tbody></table></div>
+<figure><img loading="lazy" decoding="async" src="/assets/blog/lx1100/rys06_lacznosc_gcs.svg" alt="Schemat łączności: laptop, jednostka naziemna i powietrzna HM30, kamera A8 mini, Pixhawk, pad Xbox, adresy IP." width="1700" height="760">
+<figcaption>Rys. 06. Łączność i adresy sieciowe.</figcaption></figure>
+
+
+
+<h2 id="r9">9. Konfiguracja ArduPilot</h2>
+<p>Parametry wpisujesz w Mission Planner: <i>Config → Full Parameter List</i>. Po zmianach kliknij <i>Write Params</i>, a przy niektórych zmianach uruchom autopilota ponownie. Przed pierwszą zmianą zapisz kopię parametrów do pliku.</p>
+<div class="uwaga"><strong>⚠️ Bez śmigieł</strong><p>Cały ten rozdział robisz bez śmigieł.</p></div>
+
+<h3>9.1 Oprogramowanie i rama</h3>
+<ol>
+<li>Zainstaluj Mission Planner i wgraj do Pixhawka stabilną wersję ArduCopter (4.7 lub nowszą, bo dopiero ona ma sterownik TFS20-L).</li>
+<li>Ustaw typ ramy: <code>FRAME_CLASS = 3</code> (oktokopter) i <code>FRAME_TYPE = 1</code> (X).</li>
+<li>W kreatorze <i>Initial Parameters</i> podaj śmigło 15″ i akumulator 12S. Kreator dobierze bezpieczne filtry na start.</li>
+</ol>
+<figure><img loading="lazy" decoding="async" src="/assets/blog/lx1100/rys07_kolejnosc_silnikow.svg" alt="Kolejność silników Octo X: M1 do M8 z kierunkami obrotu CW i CCW oraz literami testu A do H." width="1600" height="1600">
+<figcaption>Rys. 07. Numery silników, kierunki obrotu i litery testu silników w Mission Planner.</figcaption></figure>
+
+<h3>9.2 Kalibracje</h3>
+<ul>
+<li><b>Akcelerometr:</b> <i>Accel Calibration</i>, dron ustawiany kolejno w sześciu położeniach.</li>
+<li><b>Poziom:</b> <i>Calibrate Level</i> na równej powierzchni.</li>
+<li><b>Kompas:</b> <i>Compass → Onboard Mag Calibration</i>, obracanie drona we wszystkich osiach, z dala od samochodu i stali.</li>
+</ul>
+
+<h3>9.3 Akumulator i failsafe baterii</h3>
+<div class="tabela-wrap"><table>
+<thead><tr><th>Parametr</th><th>Wartość</th><th>Po co</th></tr></thead>
+<tbody>
+<tr><td><code>BATT_MONITOR</code></td><td>4</td><td>Pomiar analogowy napięcia i prądu z czujnika Mauch.</td></tr>
+<tr><td><code>BATT_VOLT_MULT</code>, <code>BATT_AMP_PERVLT</code></td><td>z karty czujnika Mauch</td><td>Przeliczniki, żeby odczyt zgadzał się z multimetrem.</td></tr>
+<tr><td><code>BATT_CAPACITY</code></td><td>22000</td><td>Pojemność w mAh (pakiety w szeregu nie sumują pojemności).</td></tr>
+<tr><td><code>BATT_LOW_VOLT</code> / <code>BATT_FS_LOW_ACT</code></td><td>42,0 / 2</td><td>Przy 3,5 V na celę dron sam wraca (RTL).</td></tr>
+<tr><td><code>BATT_CRT_VOLT</code> / <code>BATT_FS_CRT_ACT</code></td><td>40,8 / 1</td><td>Przy 3,4 V na celę ląduje tam, gdzie jest.</td></tr>
+<tr><td><code>MOT_BAT_VOLT_MAX</code> / <code>MOT_BAT_VOLT_MIN</code></td><td>50,4 / 42,0</td><td>Autopilot wyrównuje ciąg, gdy napięcie spada w trakcie lotu.</td></tr>
+</tbody></table></div>
+<div class="uwaga"><strong>✅ Sprawdź</strong><p>Napięcie w Mission Planner zgadza się z multimetrem z dokładnością do 0,1 V.</p></div>
+
+<h3>9.4 Silniki i regulatory</h3>
+<div class="tabela-wrap"><table>
+<thead><tr><th>Parametr</th><th>Wartość</th><th>Po co</th></tr></thead>
+<tbody>
+<tr><td><code>MOT_PWM_TYPE</code></td><td>6 (DShot600) albo 0 (PWM)</td><td>DShot tylko, gdy firmware regulatorów go obsługuje.</td></tr>
+<tr><td><code>BRD_IO_DSHOT</code></td><td>1</td><td>Przy DShot na wyjściach MAIN Pixhawka 6X (koprocesor IO, ArduPilot 4.5+). Alternatywa: regulatory na AUX 1–8.</td></tr>
+<tr><td><code>MOT_SPIN_ARM</code>, <code>MOT_SPIN_MIN</code></td><td>ustal w teście silników</td><td>Najniższe obroty po uzbrojeniu i w locie. Wszystkie silniki muszą ruszać pewnie.</td></tr>
+</tbody></table></div>
+<p>Przy PWM wykonaj kalibrację zakresu gazu regulatorów według instrukcji ArduPilot (<i>ESC calibration</i>). Przy DShot kalibracja nie jest potrzebna.</p>
+<h4>Test silników (bez śmigieł)</h4>
+<ol>
+<li><i>Optional Hardware → Motor Test</i>. Ustaw ok. 5–8 % gazu.</li>
+<li>Kliknij kolejno A, B, C … H. Litery idą zgodnie z ruchem wskazówek zegara, od przedniego prawego silnika (rys. 07).</li>
+<li>Jeśli kręci się nie ten silnik, którego się spodziewasz: zamień wtyczki sygnałowe na wyjściach MAIN.</li>
+<li>Jeśli silnik kręci się w złą stronę: zamień dowolne dwa z trzech przewodów fazowych (albo odwróć kierunek w ustawieniach regulatora).</li>
+</ol>
+<div class="uwaga"><strong>✅ Sprawdź</strong><p>Kierunek najłatwiej sprawdzić kawałkiem taśmy na dzwonie albo dotykając go lekko pasemkiem papieru. Wszystkie 8 silników kręci się według rys. 07.</p></div>
+
+<h3>9.5 Porty szeregowe</h3>
+<div class="tabela-wrap"><table>
+<thead><tr><th>Parametr</th><th>Wartość</th><th>Urządzenie</th></tr></thead>
+<tbody>
+<tr><td><code>SERIAL1_PROTOCOL</code> / <code>SERIAL1_BAUD</code></td><td>2 / 115</td><td>HM30, MAVLink2</td></tr>
+<tr><td><code>SERIAL2_PROTOCOL</code> / <code>SERIAL2_BAUD</code></td><td>11 / 230</td><td>lidar górny</td></tr>
+<tr><td><code>SERIAL5_PROTOCOL</code> / <code>SERIAL5_BAUD</code></td><td>11 / 230</td><td>lidar dolny</td></tr>
+<tr><td><code>SERIAL6_PROTOCOL</code></td><td>8</td><td>gimbal SIYI A8 mini</td></tr>
+<tr><td><code>SERIAL4_PROTOCOL</code> / <code>SERIAL4_BAUD</code></td><td>2 / 115</td><td>mikrokontroler strażnika śmigieł (port GPS 2), MAVLink2</td></tr>
+<tr><td><code>BRD_SER2_RTSCTS</code></td><td>0</td><td>wyłącza kontrolę przepływu na TELEM 2, której lidar nie używa</td></tr>
+</tbody></table></div>
+
+<h3>9.6 Dalmierze i lidary</h3>
+<p>Każdy dalmierz ma swój zestaw parametrów: <code>RNGFND1_…</code> do <code>RNGFND9_…</code>, a dziesiąty <code>RNGFNDA_…</code>. Numery idą zgodnie z ruchem wskazówek zegara, od przodu (rys. 08). Adres wpisujesz dziesiętnie.</p>
+<div class="tabela-wrap"><table>
+<thead><tr><th>Dalmierz</th><th>Kierunek</th><th>Czujnik</th><th><code>_TYPE</code></th><th><code>_ORIENT</code></th><th><code>_ADDR</code></th><th><code>_MAX</code> [m]</th></tr></thead>
+<tbody>
+<tr><td>RNGFND1</td><td>przód</td><td>TFS20-L</td><td>46</td><td>0</td><td>17 (0x11)</td><td>20</td></tr>
+<tr><td>RNGFND2</td><td>przód-prawo</td><td>TF-Luna</td><td>25</td><td>1</td><td>18 (0x12)</td><td>8</td></tr>
+<tr><td>RNGFND3</td><td>prawo</td><td>TFS20-L</td><td>46</td><td>2</td><td>19 (0x13)</td><td>20</td></tr>
+<tr><td>RNGFND4</td><td>tył-prawo</td><td>TF-Luna</td><td>25</td><td>3</td><td>20 (0x14)</td><td>8</td></tr>
+<tr><td>RNGFND5</td><td>tył</td><td>TFS20-L</td><td>46</td><td>4</td><td>21 (0x15)</td><td>20</td></tr>
+<tr><td>RNGFND6</td><td>tył-lewo</td><td>TF-Luna</td><td>25</td><td>5</td><td>22 (0x16)</td><td>8</td></tr>
+<tr><td>RNGFND7</td><td>lewo</td><td>TFS20-L</td><td>46</td><td>6</td><td>23 (0x17)</td><td>20</td></tr>
+<tr><td>RNGFND8</td><td>przód-lewo</td><td>TF-Luna</td><td>25</td><td>7</td><td>24 (0x18)</td><td>8</td></tr>
+<tr><td>RNGFND9</td><td>góra</td><td>TF-Luna</td><td>25</td><td>24</td><td>25 (0x19)</td><td>8</td></tr>
+<tr><td>RNGFNDA</td><td>dół</td><td>TF-Luna</td><td>25</td><td>25</td><td>26 (0x1A)</td><td>8</td></tr>
+</tbody></table></div>
+<p><em>Dla wszystkich dalmierzy <code>_MIN</code> = 0,2. W ArduCopter 4.7 parametry <code>_MIN</code> i <code>_MAX</code> są w metrach. Typ 46 to sterownik TFS20-L, typ 25 to Benewake przez I²C (obsługuje TF-Lunę).</em></p>
+<div class="tabela-wrap"><table>
+<thead><tr><th>Parametr</th><th>Wartość</th><th>Po co</th></tr></thead>
+<tbody>
+<tr><td><code>PRX1_TYPE</code> / <code>PRX1_ORIENT</code></td><td>16 / 0</td><td>Lidar górny (LD06), normalnie.</td></tr>
+<tr><td><code>PRX2_TYPE</code> / <code>PRX2_ORIENT</code></td><td>16 / 1</td><td>Lidar dolny, do góry nogami.</td></tr>
+<tr><td><code>PRX3_TYPE</code></td><td>4</td><td>Wieniec i dalmierz w górę stają się czujnikiem przeszkód (dalmierze z tabeli wyżej).</td></tr>
+<tr><td><code>PRX4_TYPE</code></td><td>2</td><td>Strażnicy śmigieł: odległości z mikrokontrolera przez MAVLink (port GPS 2).</td></tr>
+</tbody></table></div>
+<div class="uwaga"><strong>💡 Dlaczego wieniec trafia w sektory</strong><p>ArduPilot przyjmuje kierunki dalmierzy co 45°. W układzie Octo X ramiona są obrócone o 22,5° względem przodu, dlatego czujniki nie siedzą na ramionach, tylko pod narożnikami dolnej płyty, między ramionami. Tam wypada dokładnie środek każdego sektora, więc kierunek przeszkody na mapie autopilota jest prawdziwy. Lidary 360° i strażnicy śmigieł uzupełniają wieniec tam, gdzie wiązki go nie obejmują.</p></div>
+<div class="uwaga"><strong>🔧 Mikrokontroler strażnika śmigieł</strong><ul>
+<li>Co ok. 20 ms odczytuje 4 TF-Luny z gondoli (I²C 100 kHz, adresy 0x11–0x14).</li>
+<li>10 razy na sekundę wysyła MAVLink2 <code>OBSTACLE_DISTANCE</code>: <code>frame</code> = MAV_FRAME_BODY_FRD, <code>increment_f</code> = 22,5, <code>angle_offset</code> = 0, <code>min_distance</code> = 20, <code>max_distance</code> = 800 (cm).</li>
+<li>W tablicy <code>distances</code> wypełnia pozycje 1 (M1, 22,5°), 7 (M4, 157,5°), 9 (M2, 202,5°) i 15 (M5, 337,5°). Pozostałe pozycje to 65535, czyli „brak pomiaru”.</li>
+<li>Raz na sekundę wysyła <code>HEARTBEAT</code> z tym samym numerem systemu co dron (zwykle 1) i komponentem 196.</li>
+</ul></div>
+
+<h3>9.7 Unikanie przeszkód i strefa lotu</h3>
+<div class="tabela-wrap"><table>
+<thead><tr><th>Parametr</th><th>Wartość</th><th>Po co</th></tr></thead>
+<tbody>
+<tr><td><code>AVOID_ENABLE</code></td><td>7</td><td>Unikanie z użyciem wszystkich źródeł.</td></tr>
+<tr><td><code>AVOID_MARGIN</code></td><td>2</td><td>Dron zatrzymuje się 2 m przed przeszkodą (Loiter, AltHold).</td></tr>
+<tr><td><code>AVOID_BEHAVE</code></td><td>1</td><td>Zatrzymanie zamiast ślizgania się wzdłuż przeszkody.</td></tr>
+<tr><td><code>FENCE_ENABLE</code>, <code>FENCE_ALT_MAX</code></td><td>1, 120</td><td>Wirtualne ogrodzenie i limit 120 m (kategoria otwarta).</td></tr>
+<tr><td><code>RTL_ALT</code>, <code>LAND_SPEED</code></td><td>np. 1500, 30</td><td>Wysokość powrotu w cm i prędkość lądowania 30 cm/s.</td></tr>
+</tbody></table></div>
+
+<h3>9.8 Spadochron, zaczep, światła, gimbale</h3>
+<div class="tabela-wrap"><table>
+<thead><tr><th>Parametr</th><th>Wartość</th><th>Po co</th></tr></thead>
+<tbody>
+<tr><td><code>CHUTE_ENABLED</code>, <code>CHUTE_TYPE</code></td><td>1, 10</td><td>Spadochron wyzwalany sygnałem serwa.</td></tr>
+<tr><td><code>SERVO9_FUNCTION</code></td><td>27</td><td>AUX 1 = wyzwalanie spadochronu.</td></tr>
+<tr><td><code>CHUTE_ALT_MIN</code>, <code>CHUTE_CRT_SINK</code></td><td>wg instrukcji spadochronu</td><td>Minimalna wysokość i próg opadania, przy którym autopilot sam otwiera czaszę.</td></tr>
+<tr><td><code>GRIP_ENABLE</code>, <code>GRIP_TYPE</code>, <code>SERVO10_FUNCTION</code></td><td>1, 1, 28</td><td>Zaczep cargo na serwie (AUX 2). Położenia ustaw w <code>GRIP_GRAB</code> i <code>GRIP_RELEASE</code>.</td></tr>
+<tr><td><code>SERVO11_FUNCTION</code>, <code>NTF_LED_TYPES</code>, <code>NTF_LED_LEN</code></td><td>120, z NeoPixel, liczba diod</td><td>Diody pozycyjne na AUX 3.</td></tr>
+<tr><td><code>RELAY1_FUNCTION</code>, <code>RELAY1_PIN</code></td><td>1, numer GPIO wyjścia AUX 4</td><td>Przekaźnik reflektorów. Wyjście AUX 4 ustaw jako GPIO (<code>SERVO12_FUNCTION = -1</code>).</td></tr>
+<tr><td><code>MNT1_TYPE</code> i <code>SERVO13/14_FUNCTION</code></td><td>1 i 7 / 6</td><td>Gimbal modułu sterowany PWM (pochylenie / obrót).</td></tr>
+<tr><td><code>MNT2_TYPE</code></td><td>8</td><td>Gimbal SIYI A8 mini przez UART4.</td></tr>
+</tbody></table></div>
+
+<h3>9.9 Failsafe łącza i pad</h3>
+<p>Dron sterujesz padem Xbox przez Mission Planner. Ruchy drążków lecą do drona przez MAVLink, jak kanały aparatury RC. Gdy łącze zginie, znika też sterowanie, dlatego:</p>
+<div class="tabela-wrap"><table>
+<thead><tr><th>Parametr</th><th>Wartość</th><th>Po co</th></tr></thead>
+<tbody>
+<tr><td><code>FS_GCS_ENABLE</code></td><td>1</td><td>Utrata łącza ze stacją = powrót do startu (RTL). Obowiązkowe przy sterowaniu padem.</td></tr>
+<tr><td><code>FS_THR_ENABLE</code></td><td>1 (gdy jest zapasowy odbiornik RC)</td><td>Zgubienie sygnału RC = RTL.</td></tr>
+</tbody></table></div>
+<p>Pad konfigurujesz w Mission Planner: <i>Flight Data → zakładka Actions → Joystick</i>. Przypisz osie: lewy drążek pion = gaz, poziom = obrót. Prawy drążek pion = pochylenie, poziom = przechylenie. Krzyżak: w górę Loiter, w dół RTL, w lewo AltHold, w prawo Brake. Martwa strefa 8 %, expo 25 %.</p>
+
+<h3>9.10 Drgania i strojenie</h3>
+<ol>
+<li>Po pierwszym krótkim zawisie otwórz log i sprawdź drgania (wykres VIBE). Wartości poniżej 30 m/s² są dobre.</li>
+<li>Włącz filtr harmoniczny (<code>INS_HNTCH_ENABLE = 1</code>) według poradnika ArduPilot „Harmonic Notch”.</li>
+<li>Strojenie automatyczne (AutoTune) rób w AltHold, przy słabym wietrze, na bezpiecznej wysokości.</li>
+</ol>
+
+
+
+<h2 id="r10">10. Stanowisko naziemne</h2>
+<figure><picture><source srcset="/assets/blog/lx1100/kadr-stanowisko.webp" type="image/webp"><img loading="lazy" decoding="async" src="/assets/blog/lx1100/kadr-stanowisko.jpg" alt="stanowisko naziemne: laptop, Mission Planner, łącze HM30" width="1280" height="720"></picture><figcaption>Kadr z filmu: stanowisko naziemne: laptop, Mission Planner, łącze HM30</figcaption></figure>
+<ol>
+<li>Połącz laptop z jednostką naziemną HM30 przewodem Ethernet.</li>
+<li>W Windows ustaw stały adres karty sieciowej: <code>192.168.144.20</code>, maska <code>255.255.255.0</code>.</li>
+<li>W Mission Planner wybierz połączenie <code>UDP</code>, port <code>14550</code>.</li>
+<li>Obraz z kamery FPV: w HUD Mission Planner lub w VLC otwórz <code>rtsp://192.168.144.25:8554/main.264</code>.</li>
+<li>Podłącz pad Xbox przez USB-C i włącz go w <i>Flight Data → Actions → Joystick</i>, zawsze przed uzbrojeniem silników.</li>
+</ol>
+<div class="tabela-wrap"><table>
+<thead><tr><th>Urządzenie</th><th>Adres</th></tr></thead>
+<tbody>
+<tr><td>Jednostka powietrzna HM30</td><td><code>192.168.144.11</code></td></tr>
+<tr><td>Jednostka naziemna HM30</td><td><code>192.168.144.12</code></td></tr>
+<tr><td>Laptop GCS</td><td><code>192.168.144.20</code></td></tr>
+<tr><td>Kamera SIYI A8 mini</td><td><code>192.168.144.25</code></td></tr>
+</tbody></table></div>
+
+
+
+<h2 id="r11">11. Pierwsze uruchomienie i pierwszy lot</h2>
+<figure><picture><source srcset="/assets/blog/lx1100/kadr-lot.webp" type="image/webp"><img loading="lazy" decoding="async" src="/assets/blog/lx1100/kadr-lot.jpg" alt="plan pierwszego lotu: zawis, obrót i hamowanie przed przeszkodą" width="1280" height="720"></picture><figcaption>Kadr z filmu: plan pierwszego lotu: zawis, obrót i hamowanie przed przeszkodą</figcaption></figure>
+<h3>Lista przed każdym lotem</h3>
+<ul>
+<li>Ramiona rozłożone i zaryglowane, śruby i zawiasy bez luzu.</li>
+<li>Śmigła całe, dokręcone, właściwe strony (CW i CCW).</li>
+<li>Akumulatory naładowane, spięte pasami, mostek XT90 wpięty.</li>
+<li>Moduł zablokowany zawleczką, wtyk GX16 dokręcony.</li>
+<li>Zabezpieczenie spadochronu wyjęte.</li>
+<li>Łącze OK, telemetria i obraz w Mission Planner.</li>
+<li>GNSS: poprawka RTK, ponad 15 satelitów. Kompas bez błędów.</li>
+<li>Napięcie pakietu powyżej 49 V. Pre-arm bez komunikatów.</li>
+<li>Strefa startu wolna, 10 m od ludzi. Pogoda i przepisy pozwalają na lot.</li>
+</ul>
+<h3>Pierwszy lot (krok po kroku)</h3>
+<ol>
+<li>Tryb Loiter. Uzbrój silniki i sprawdź, czy wszystkie kręcą się równo na biegu jałowym.</li>
+<li>Podnieś drona na ok. 2 m i zostaw go w zawisie na 30–60 s. Dron ma stać spokojnie, bez kołysania i bez dryfu.</li>
+<li>Delikatnie sprawdź każdy kierunek drążków, potem obrót wokół osi pionowej.</li>
+<li>Przełącz na AltHold i sprawdź, czy dron trzyma wysokość.</li>
+<li>Wyląduj, rozbrój i dotknij silników i regulatorów. Mogą być ciepłe, ale nie gorące. Wszystkie mają podobną temperaturę.</li>
+<li>Pobierz log i obejrzyj drgania i prąd zawisu. Dopiero potem kolejny, dłuższy lot.</li>
+</ol>
+<div class="uwaga"><strong>💡 Dlaczego tak ostrożnie</strong><p>Pierwszy lot sprawdza wszystko naraz: montaż, okablowanie, kalibracje i strojenie. Niski i krótki zawis pozwala przerwać lot w każdej chwili, zanim mały błąd zrobi się duży.</p></div>
+
+
+
+<h2 id="r12">12. Przeglądy i konserwacja</h2>
+<div class="tabela-wrap"><table>
+<thead><tr><th>Kiedy</th><th>Co sprawdzić</th></tr></thead>
+<tbody>
+<tr><td>Po każdym locie</td><td>Śmigła (pęknięcia, odpryski), śruby śmigieł, temperatura silników, stan pakietów (puchnięcie), zapis napięć i czasu lotu.</td></tr>
+<tr><td>Co 10 h lotu</td><td>Dokręcenie śrub ramion i silników kluczem dynamometrycznym, luz zawiasów, stan przewodów w miejscach zgięć, złącza AS150 i XT90 (przypalenia).</td></tr>
+<tr><td>Co 50 h lotu</td><td>Łożyska silników (szum, luz), wyważenie śmigieł, pomiar ciągu na stanowisku, przegląd logów drgań w czasie.</td></tr>
+<tr><td>Przed przerwą w lotach</td><td>Pakiety na 3,8 V na celę, przechowywanie w chłodnym i suchym miejscu, w skrzynce ognioodpornej.</td></tr>
+</tbody></table></div>
+
+
+
+<h2 id="r13">13. Masa i środek ciężkości</h2>
+<p>Limit masy startowej to mniej niż 25 kg. Zważ każdą grupę części i uzupełnij tabelę. Z tej tabeli wynika, jaki ładunek możesz zabrać.</p>
+<div class="tabela-wrap"><table>
+<thead><tr><th>Grupa</th><th>Masa zmierzona [g]</th><th>Uwagi</th></tr></thead>
+<tbody>
+<tr><td>Rama z ramionami i podwoziem</td><td></td><td></td></tr>
+<tr><td>8 × silnik + śmigło</td><td></td><td></td></tr>
+<tr><td>8 × ESC z przewodami</td><td></td><td></td></tr>
+<tr><td>PDB, Mauch, przetwornice, przewody</td><td></td><td></td></tr>
+<tr><td>Awionika: Pixhawk, GNSS, HM30, lidary, dalmierze, mikrokontroler</td><td></td><td></td></tr>
+<tr><td>Spadochron</td><td></td><td></td></tr>
+<tr><td>Obudowy z druku 3D (z obliczeń: ok. 1180 g)</td><td></td><td>skorupa ok. 394 g, gondole ok. 543 g, uchwyty dalmierzy ok. 132 g</td></tr>
+<tr><td>Kamera FPV + reflektory</td><td></td><td></td></tr>
+<tr><td>2 × akumulator 6S 22 Ah</td><td></td><td></td></tr>
+<tr><td><b>Dron gotowy do lotu, bez modułu</b></td><td></td><td></td></tr>
+<tr><td>Moduł (termowizja / GoPro / cargo / oświetlenie)</td><td></td><td>osobny wiersz dla każdego</td></tr>
+<tr><td><b>Zostaje do 25 kg na ładunek</b></td><td></td><td>25 000 − suma powyżej, z zapasem</td></tr>
+</tbody></table></div>
+
+
+
+<h2 id="r14">14. Rozbudowa: druk 3D i moduły</h2>
+<figure><img loading="lazy" decoding="async" src="/assets/blog/lx1100/B_druk3d_opis.jpg" alt="Części do druku 3D ułożone na stole: skorupa przód i tył, gondole, uchwyty dalmierzy, obudowy modułów, oprawy reflektora, światło błyskowe." width="2000" height="1400">
+<figcaption>Rys. B. Części do druku 3D (pliki STL w folderze <code>druk3d</code>): 1 skorupa przód, 2 skorupa tył z gniazdem TF-Luny, 3 gondola góra (8 szt.), 4 gondola dół z oknem (4 szt.), 5 gondola dół bez okna (4 szt.), 6 uchwyt TFS20-L (4 szt.), 7 uchwyt TF-Luny (4 szt.), 8 obudowa modułu oświetlenia, 9 uchwyt GoPro, 10 obudowa serwa zaczepu, 11 oprawa reflektora (2 szt.), 12 uchwyt reflektora (2 szt.), 13 podstawa światła błyskowego, 14 klosz (PETG przezroczysty).</figcaption></figure>
+<figure><img loading="lazy" decoding="async" src="/assets/blog/lx1100/C_moduly.jpg" alt="Cztery moduły na szybkozłączu: gimbal z termowizją, GoPro HERO13 Black, zaczep cargo z paczką, moduł oświetlenia." width="1800" height="1590">
+<figcaption>Rys. C. Moduły na szybkozłączu. Każdy ma własny plik parametrów i zważoną masę.</figcaption></figure>
+<h3>Fotogrametria z GoPro HERO13 Black</h3>
+<figure><picture><source srcset="/assets/blog/lx1100/kadr-fotogrametria.webp" type="image/webp"><img loading="lazy" decoding="async" src="/assets/blog/lx1100/kadr-fotogrametria.jpg" alt="nalot fotogrametryczny po siatce Survey" width="1280" height="720"></picture><figcaption>Kadr z filmu: nalot fotogrametryczny po siatce Survey</figcaption></figure>
+<ul>
+<li>W kamerze ustaw zdjęcia interwałowe co 2 s, tryb obiektywu „liniowy” (bez rybiego oka) i włączony GPS w zdjęciach.</li>
+<li>W Mission Planner narzędziem <i>Survey (Grid)</i> zaznacz obszar. Ustaw pokrycie 80 % wzdłuż i 70 % w poprzek, a wysokość dobierz do potrzebnej dokładności.</li>
+<li>Rozłóż na ziemi kilka fotopunktów i zmierz je odbiornikiem RTK.</li>
+<li>Przy wysokich obiektach dodaj przeloty po okręgu z kamerą pochyloną, żeby model 3D miał też ściany.</li>
+</ul>
+<h3>Poszukiwania z termowizją</h3>
+<figure><picture><source srcset="/assets/blog/lx1100/kadr-poszukiwania.webp" type="image/webp"><img loading="lazy" decoding="async" src="/assets/blog/lx1100/kadr-poszukiwania.jpg" alt="nocne poszukiwania z termowizją i reflektorem" width="1280" height="720"></picture><figcaption>Kadr z filmu: nocne poszukiwania z termowizją i reflektorem</figcaption></figure>
+<ul>
+<li>Termowizja widzi ciepło ciała w dzień i w nocy, także przez prześwity w rzadkich zaroślach. Przez gęste korony drzew nie widzi.</li>
+<li>Siatkę przeszukania planujesz jak nalot fotogrametryczny, tylko gęściej.</li>
+<li>Po wykryciu podlatujesz bliżej, włączasz podczerwień dla kamery nocnej, a białym reflektorem wskazujesz miejsce ratownikom.</li>
+</ul>
+
+
+
+<h2 id="r15">15. Przepisy w skrócie</h2>
+<p>To nie jest porada prawna. Przed każdym zleceniem sprawdź aktualne przepisy na stronie Urzędu Lotnictwa Cywilnego (ulc.gov.pl).</p>
+<ul>
+<li><b>Masa startowa poniżej 25 kg, konstrukcja własna:</b> kategoria otwarta, podkategoria A3. Loty w zasięgu wzroku, do 120 m, z dala od ludzi i co najmniej 150 m od terenów zabudowanych i przemysłowych. Potrzebujesz rejestracji operatora i certyfikatu A1/A3.</li>
+<li><b>25 kg i więcej albo loty bliżej ludzi czy poza zasięgiem wzroku:</b> kategoria szczególna, czyli zezwolenie Prezesa ULC na podstawie analizy ryzyka SORA.</li>
+<li><b>Ubezpieczenie OC operatora</b> jest obowiązkowe.</li>
+<li><b>Loty nocne:</b> włączone światła pozycyjne i zielone światło błyskowe.</li>
+</ul>
+
+
+
+<h2 id="r16">16. Załączniki: rysunki techniczne</h2>
+<figure><img loading="lazy" decoding="async" src="/assets/blog/lx1100/rys01_widok_z_gory.svg" alt="Rysunek techniczny widoku z góry z wymiarami: okrąg osi 1100 mm, odstęp osi 420,9 mm, śmigło 381 mm, luz 39,9 mm, kąt 45 stopni." width="1800" height="1760">
+<figcaption>Rys. 01. Widok z góry, skala 1:10.</figcaption></figure>
+<figure><img loading="lazy" decoding="async" src="/assets/blog/lx1100/rys02_widok_z_boku.svg" alt="Rysunek techniczny widoku z boku: wysokość 583 mm, płaszczyzna śmigieł 391 mm, oś ramion 330 mm, prześwit 99 mm." width="1920" height="900">
+<figcaption>Rys. 02. Widok z boku, skala 1:7.</figcaption></figure>
+<figure><img loading="lazy" decoding="async" src="/assets/blog/lx1100/rys03_ramie_gondola.svg" alt="Rysunek ramienia z zawiasem i gondolą: zawias 185 mm od środka, oś silnika 550 mm, gondola 136 × 80 × 68 mm." width="760" height="840">
+<figcaption>Rys. 03. Ramię, zawias i gondola, skala 1:3.</figcaption></figure>
+<figure><img loading="lazy" decoding="async" src="/assets/blog/lx1100/rys08_czujniki_45.svg" alt="Układ czujników co 45 stopni: osiem sektorów ArduPilot, cztery TFS20-L na osiach, cztery TF-Luny na skosach, czujniki w górę i w dół, strażnicy śmigieł w gondolach M1, M5, M2, M4, tabela parametrów RNGFND z adresami I2C." width="2400" height="1552">
+<figcaption>Rys. 08. Układ czujników co 45° z tabelą parametrów, skala 1:10.</figcaption></figure>
+<p><em>Wszystkie rysunki są w folderze <code>dokumentacja_v2/rysunki</code> jako pliki SVG (do druku w dowolnej skali) i PNG.</em></p>
+
+
+  </div>
+</article>

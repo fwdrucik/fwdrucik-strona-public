@@ -1,0 +1,195 @@
+{
+ "kategorie": [
+  {
+   "id": "drony",
+   "nazwa": "Drony i projekty",
+   "opis": "Budowa ciężkiego oktokoptera LX1100: od ramy i zasilania 12S po czujniki co 45°, druk 3D i plan lotów.",
+   "filmy": [
+    {
+     "typ": "youtube",
+     "yt": "5WZQ5e1GnAM",
+     "artykul": "oktokopter-lx1100-budowa-i-konfiguracja",
+     "bez_wstawki": true,
+     "tytul": "Oktokopter 12S do 25 kg od zera: budowa i rozbudowa LX1100",
+     "opis": "Dwanaście minut animacji z lektorem: szkielet, zasilanie 12S, Pixhawk 6X, czujniki co 45°, druk 3D, moduły i plan lotów."
+    }
+   ]
+  },
+  {
+   "id": "klimatyzacja",
+   "nazwa": "Klimatyzacja samochodowa",
+   "opis": "Sprężarka, czynniki R134a i R1234yf, wycieki i usterki po wymianie akumulatora.",
+   "filmy": [
+    {
+     "typ": "rolka",
+     "plik": "2026-10-11-sprezarka-klimatyzacji-nie-zalacza-sie",
+     "artykul": "sprezarka-klimatyzacji-nie-zalacza-sie",
+     "ig": "https://www.instagram.com/fwdrucik/reel/DeXPD0-hgaN/",
+     "fb": "https://www.facebook.com/reel/2897235157322524/"
+    },
+    {
+     "typ": "rolka",
+     "plik": "2026-10-15-klimatyzacja-r134a-vs-r1234yf",
+     "artykul": "klimatyzacja-samochodowa-r134a-vs-r1234yf",
+     "ig": "https://www.instagram.com/fwdrucik/reel/DegtAABvIVh/",
+     "fb": "https://www.facebook.com/reel/3037359753133343"
+    },
+    {
+     "typ": "rolka",
+     "plik": "2026-10-19-sprezarka-klimatyzacji-wyciek-na-wale",
+     "artykul": "regeneracja-sprezarki-klimatyzacji-wyciek-na-wale",
+     "ig": "https://www.instagram.com/fwdrucik/reel/DeqviNGh3J0/",
+     "fb": "https://www.facebook.com/reel/1128860249724810/"
+    },
+    {
+     "typ": "rolka",
+     "plik": "2026-10-20-klimatyzacja-po-wymianie-akumulatora",
+     "artykul": "klimatyzacja-po-wymianie-akumulatora",
+     "ig": "https://www.instagram.com/fwdrucik/reel/DeuSbDihzhf/",
+     "fb": "https://www.facebook.com/reel/1679700013586051"
+    }
+   ]
+  },
+  {
+   "id": "spawanie",
+   "nazwa": "Spawanie",
+   "opis": "Diagnostyka spawarek inwertorowych, cienkie blachy, MIG/MAG, TIG AC i elektrody wolframowe.",
+   "filmy": [
+    {
+     "typ": "rolka",
+     "plik": "2026-10-12-spawarka-inwertorowa-diagnostyka",
+     "artykul": "spawarka-inwertorowa-diagnostyka",
+     "ig": "https://www.instagram.com/fwdrucik/reel/DeY7VjcvqRE/",
+     "fb": "https://www.facebook.com/reel/927337173543548"
+    },
+    {
+     "typ": "rolka",
+     "plik": "2026-10-14-spawanie-cienkie-blachy",
+     "artykul": "spawanie-cienkie-blachy-metody-techniczne",
+     "ig": "https://www.instagram.com/fwdrucik/reel/DeeydL3hPbe/",
+     "fb": "https://www.facebook.com/reel/28629735673385143"
+    },
+    {
+     "typ": "rolka",
+     "plik": "2026-10-18-mig-mag-pchanie-ciagniecie",
+     "artykul": "technika-spawania-mig-mag-pchanie-ciagniecie-pozycje",
+     "ig": "https://www.instagram.com/fwdrucik/reel/DepZuP-Npoy/",
+     "fb": "https://www.facebook.com/reel/1127720576856834"
+    },
+    {
+     "typ": "rolka",
+     "plik": "2026-10-19-tig-ac-balans-czestotliwosc",
+     "artykul": "tig-ac-balans-i-czestotliwosc-aluminium",
+     "ig": "https://www.instagram.com/fwdrucik/reel/DeruFbpvnla/",
+     "fb": "https://www.facebook.com/reel/1627496662404436/"
+    },
+    {
+     "typ": "rolka",
+     "plik": "2026-10-16-elektrody-wolframowe-szlifowanie",
+     "artykul": "elektrody-wolframowe-dobor-szlifowanie",
+     "ig": "https://www.instagram.com/fwdrucik/reel/DejJDELtWGv/",
+     "fb": "https://www.facebook.com/reel/2249895479260972"
+    }
+   ]
+  },
+  {
+   "id": "elektronika",
+   "nazwa": "Elektronika, czujniki i magistrale",
+   "opis": "PT100 i MAX31865, DS18B20, magistrale CAN i LIN w praktyce warsztatowej.",
+   "filmy": [
+    {
+     "typ": "youtube",
+     "yt": "YrOygxhVZrQ",
+     "artykul": "pt100-z-max31865-pomiar-precyzyjny",
+     "tytul": "PT100 zawyża o 4 °C? Winny kabel, nie czujnik",
+     "opis": "Połączenia 2, 3 i 4-przewodowe, MAX31865 i pomiar, który pokazuje, skąd bierze się błąd."
+    },
+    {
+     "typ": "rolka",
+     "plik": "2026-10-15-pt100-max31865",
+     "artykul": "pt100-z-max31865-pomiar-precyzyjny",
+     "ig": "https://www.instagram.com/fwdrucik/reel/DegvOxyBDiH/",
+     "fb": "https://www.facebook.com/reel/1418441203106580"
+    },
+    {
+     "typ": "rolka",
+     "plik": "2026-10-18-ds18b20-jeden-przewod",
+     "artykul": "ds18b20-wiele-czujnikow-na-jednym-przewodzie",
+     "ig": "https://www.instagram.com/reel/DepaYIcxoZu/",
+     "fb": "https://www.facebook.com/reel/1380815563851497"
+    },
+    {
+     "typ": "youtube",
+     "yt": "FyOj8Kv9mHQ",
+     "artykul": "magistrala-can-diagnostyka",
+     "tytul": "Magistrala CAN: pomiary krok po kroku",
+     "opis": "Rezystancja terminatorów, napięcia linii i oscylogram: jak sprawdzić CAN multimetrem i oscyloskopem."
+    },
+    {
+     "typ": "rolka",
+     "plik": "2026-10-16-magistrala-can-diagnostyka",
+     "artykul": "magistrala-can-diagnostyka",
+     "ig": "https://www.instagram.com/fwdrucik/reel/DejMEJONNbH/",
+     "fb": "https://www.facebook.com/reel/1842711090395548"
+    },
+    {
+     "typ": "rolka",
+     "plik": "2026-10-20-magistrala-lin-diagnostyka",
+     "artykul": "magistrala-lin-w-pojazdach-diagnostyka",
+     "ig": "https://www.instagram.com/fwdrucik/reel/DetXfbaM1_3/",
+     "fb": "https://www.facebook.com/reel/1419951846392772"
+    }
+   ]
+  },
+  {
+   "id": "mechanika",
+   "nazwa": "Mechanika, CNC i motoryzacja",
+   "opis": "Prowadnice liniowe, parametry skrawania i regeneracja alternatora.",
+   "filmy": [
+    {
+     "typ": "rolka",
+     "plik": "2026-10-12-prowadnice-liniowe-kontra-tuleje",
+     "artykul": "prowadnice-liniowe-kontra-tuleje",
+     "ig": "https://www.instagram.com/fwdrucik/reel/DeY4g4GuMdY/",
+     "fb": "https://www.facebook.com/reel/1850107923109394"
+    },
+    {
+     "typ": "rolka",
+     "plik": "2026-10-13-dwie-prowadnice-zacinanie",
+     "artykul": "prowadnice-liniowe-kontra-tuleje",
+     "ig": "https://www.instagram.com/fwdrucik/reel/DecMvxdOjqy/",
+     "fb": "https://www.facebook.com/reel/2172714349998677/",
+     "tytul": "Dwie prowadnice się zacinają: równoległość i luz"
+    },
+    {
+     "typ": "rolka",
+     "plik": "2026-10-17-dobor-parametrow-skrawania",
+     "artykul": "dobor-parametrow-skrawania",
+     "ig": "https://www.instagram.com/fwdrucik/reel/DelpbbTtVkP/",
+     "fb": "https://www.facebook.com/reel/1108353795460289"
+    },
+    {
+     "typ": "rolka",
+     "plik": "2026-10-13-regeneracja-alternatora-krok-po-kroku",
+     "artykul": "regeneracja-alternatora-krok-po-kroku",
+     "ig": "https://www.instagram.com/fwdrucik/reel/DecOtT0xSqr/",
+     "fb": "https://www.facebook.com/reel/1423256263112533"
+    }
+   ]
+  },
+  {
+   "id": "druk3d",
+   "nazwa": "Druk 3D",
+   "opis": "Warping, odklejanie wydruków i materiały do części warsztatowych.",
+   "filmy": [
+    {
+     "typ": "rolka",
+     "plik": "2026-10-14-warping-wydrukow-3d",
+     "artykul": "warping-i-odklejanie-wydrukow-3d",
+     "ig": "https://www.instagram.com/fwdrucik/reel/Dee2HzjRZni/",
+     "fb": "https://www.facebook.com/reel/1830291351329873"
+    }
+   ]
+  }
+ ]
+}

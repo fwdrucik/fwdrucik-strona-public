@@ -1,0 +1,98 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Spawarka inwertorowa: schemat blokowy i kolejność diagnozy",
+  "description": "Techniczny przewodnik diagnostyki spawarek inwertorowych. Analiza blokowa, pomiary napięć i procedura serwisowa dla elektroników i mechaników.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-10-07",
+  "dateModified": "2026-10-07",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/spawarka-inwertorowa-diagnostyka/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-blue">Elektronika i magistrale</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 5 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 07.10.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Spawarka inwertorowa: schemat blokowy i kolejność diagnozy</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Diagnostyka spawarek inwertorowych wymaga zrozumienia topologii układu mocy. Poniżej przedstawiamy techniczną analizę blokową oraz procedurę weryfikacji uszkodzeń w warunkach warsztatowych.</p>
+  </header>
+  <!-- FILM:start -->
+  <div class="toc-box" style="margin-bottom:28px;"><div class="toc-title">🎬 Zobacz na filmie</div><div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin-top:12px;"><div style="flex:0 1 240px;"><video controls preload="none" playsinline poster="/wideo/2026-10-12-spawarka-inwertorowa-diagnostyka.jpg" width="540" height="960" style="width:100%;max-width:320px;aspect-ratio:9/16;border-radius:12px;background:#000;display:block;margin:0 auto;"><source src="/wideo/2026-10-12-spawarka-inwertorowa-diagnostyka.mp4" type="video/mp4">Twoja przeglądarka nie odtwarza wideo.</video><p style="font-size:0.9rem;margin-top:8px;text-align:center;">Rolka · <a href="https://www.instagram.com/fwdrucik/reel/DeY7VjcvqRE/" target="_blank" rel="noopener">Instagram</a></p></div></div><p style="font-size:0.88rem;margin-top:10px;">Więcej filmów z warsztatu: <a href="/filmy/">wszystkie filmy</a>.</p></div>
+  <!-- FILM:end -->
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#architektura">Architektura blokowa spawarki inwertorowej</a></li>
+      <li><a href="#zasilanie">Diagnostyka sekcji zasilania i filtracji</a></li>
+      <li><a href="#sterowanie">Analiza układu sterowania PWM</a></li>
+      <li><a href="#procedura">Tabela procedury diagnostycznej</a></li>
+      <li><a href="#warsztat">Działania serwisowe w F.W. DRUCIK</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="architektura">1. Architektura blokowa spawarki inwertorowej</h2>
+<p>Typowa spawarka inwertorowa składa się z kilku kluczowych bloków funkcjonalnych, które muszą współpracować w określonej sekwencji. Pierwszym etapem jest filtracja wejściowa i prostownik mostkowy, który zamienia napięcie sieciowe 230V AC na napięcie stałe DC. Kolejnym elementem jest układ łagodnego startu (soft-start), realizowany zazwyczaj przez przekaźnik bocznikujący rezystor ograniczający prąd ładowania kondensatorów elektrolitycznych. Brak załączenia przekaźnika często prowadzi do jego uszkodzenia lub uszkodzenia termistora NTC.</p><p>Następny blok to sekcja mocy, w której tranzystory IGBT lub MOSFET pracują w układzie półmostka lub pełnego mostka. Kluczowe jest tutaj sterowanie bramkami, realizowane przez układ PWM. Sygnał sterujący musi być odseparowany galwanicznie za pomocą transformatorów impulsowych lub transoptorów. Wartości napięć sterujących bramkami (Vge) są specyficzne dla danego typu tranzystora i należy je weryfikować w nocie katalogowej producenta komponentu. Zazwyczaj jest to zakres 15V-18V, jednak należy pamiętać, że są to wartości orientacyjne i wymagają weryfikacji oscyloskopem przy odłączonym zasilaniu wysokiego napięcia.</p><p>Ostatnim etapem jest transformator główny, który obniża napięcie do poziomu roboczego (zazwyczaj 50V-100V biegu jałowego, zależnie od normy EN 60974-1), oraz prostownik wyjściowy z dławikiem wygładzającym prąd spawania. Każdy z tych bloków posiada punkty pomiarowe, które pozwalają na szybką izolację usterki. Pamiętaj, że praca wewnątrz obudowy urządzenia podłączonego do sieci jest niebezpieczna. Zawsze rozładowuj kondensatory magistrali DC przed przystąpieniem do pomiarów rezystancji czy wymiany elementów.</p>
+
+    <h2 id="zasilanie">2. Diagnostyka sekcji zasilania i filtracji</h2>
+<p>Pierwszym krokiem w diagnostyce jest sprawdzenie toru zasilania. Częstym objawem uszkodzenia jest brak reakcji urządzenia po włączeniu zasilania. Należy sprawdzić bezpiecznik wejściowy oraz mostek prostowniczy. W przypadku zwarcia w mostku, bezpiecznik ulegnie natychmiastowemu przepaleniu. Pomiary rezystancji mostka wykonujemy multimetrem w trybie testu diody. Spadek napięcia na sprawnym złączu powinien wynosić około 0.4V-0.6V (wartość orientacyjna).</p><p>Kolejnym punktem jest magistrala DC. Napięcie na kondensatorach filtrujących powinno wynosić około 310V-325V DC przy zasilaniu 230V AC. Jeśli napięcie jest znacznie niższe lub występuje duże tętnienie, należy sprawdzić kondensatory elektrolityczne pod kątem utraty pojemności (ESR). Wzrost ESR powyżej wartości katalogowych dla danej serii kondensatorów jest częstą przyczyną niestabilnej pracy inwertera.</p><p>Ostrzeżenie BHP: Kondensatory w sekcji mocy mogą utrzymywać wysokie napięcie przez długi czas po odłączeniu zasilania. Przed dotknięciem jakiegokolwiek elementu, należy zmierzyć napięcie na zaciskach kondensatorów i w razie potrzeby rozładować je przez rezystor o odpowiedniej mocy (np. 1kΩ/10W). Nigdy nie zwieraj kondensatorów bezpośrednio śrubokrętem, gdyż może to doprowadzić do uszkodzenia ścieżek na płytce PCB lub eksplozji elektrolitu. Sprawdzaj również stan lutów na elementach mocy, gdyż wibracje podczas pracy często prowadzą do powstawania tzw. zimnych lutów, które zwiększają rezystancję połączenia i powodują lokalne przegrzewanie się laminatu.</p>
+
+    <h2 id="sterowanie">3. Analiza układu sterowania PWM</h2>
+<p>Sekcja sterowania odpowiada za generowanie przebiegu prostokątnego o zmiennym wypełnieniu, który steruje kluczami mocy. Najczęstszym układem scalonym spotykanym w tej sekcji jest sterownik PWM (np. serii UC384x lub dedykowane układy DSP). Diagnostykę należy rozpocząć od sprawdzenia napięcia zasilania układu sterującego (Vcc), które zazwyczaj wynosi 12V-15V (wartość orientacyjna, sprawdź w dokumentacji układu). Próg załączenia zależy od wersji: UC3845 startuje przy ok. 8,4V, a UC3844 dopiero przy ok. 16V.</p><p>Używając oscyloskopu, należy sprawdzić przebieg na wyjściu układu PWM. Sygnał powinien być czysty, bez oscylacji i o odpowiedniej częstotliwości (zazwyczaj od 20kHz do 100kHz, zależnie od konstrukcji). Brak sygnału może wynikać z zadziałania zabezpieczeń nadprądowych lub termicznych. Wiele spawarek posiada pętlę sprzężenia zwrotnego, która monitoruje prąd wyjściowy za pomocą przekładnika prądowego. Uszkodzenie przekładnika lub układu przetwarzającego sygnał z niego może powodować natychmiastowe wyłączenie inwertera po próbie zajarzenia łuku.</p><p>Podczas pomiarów sygnałów sterujących bramkami tranzystorów IGBT, należy zwrócić szczególną uwagę na tzw. efekt Millera oraz stromość zboczy sygnału. Zbyt wolne narastanie zbocza powoduje, że tranzystor przez dłuższy czas znajduje się w stanie aktywnym (liniowym), co prowadzi do jego nadmiernego nagrzewania się i ostatecznego przebicia. Jeśli obserwujesz zniekształcony sygnał, sprawdź elementy w obwodzie bramki: rezystory szeregowe (często ulegają spaleniu przy awarii tranzystora) oraz diody zabezpieczające. Pamiętaj, że wymiana tranzystorów mocy bez weryfikacji toru sterowania prawie zawsze kończy się ponowną awarią po włączeniu zasilania.</p>
+
+    <h2 id="procedura">4. Tabela procedury diagnostycznej</h2>
+<p>Poniższa tabela przedstawia standardową kolejność czynności serwisowych. Pamiętaj, że każda wartość jest orientacyjna i musi być odniesiona do dokumentacji serwisowej konkretnego urządzenia.</p><table><thead><tr><th>Etap</th><th>Punkt pomiarowy</th><th>Oczekiwany wynik</th><th>Uwagi</th></tr></thead><tbody><tr><td>Zasilanie wejściowe</td><td>Wyjście mostka prostowniczego</td><td>310V-325V DC</td><td>Pomiar przy wyłączonym obciążeniu</td></tr><tr><td>Zasilanie sterownika</td><td>Pin Vcc układu PWM</td><td>12V-15V DC</td><td>Wartość wg noty katalogowej</td></tr><tr><td>Sygnał bramki</td><td>Bramka tranzystora IGBT</td><td>Przebieg prostokątny</td><td>Wymagany oscyloskop</td></tr><tr><td>Wyjście spawarki</td><td>Zaciski prądowe</td><td>50V-100V DC</td><td>Napięcie biegu jałowego</td></tr></tbody></table><p>Po wykonaniu powyższych pomiarów, jeśli wszystkie wartości mieszczą się w normie, należy przejść do testu pod obciążeniem. Użyj sztucznego obciążenia (rezystorów dużej mocy) zamiast łuku spawalniczego, aby uniknąć zakłóceń elektromagnetycznych wpływających na pomiary oscyloskopem. Monitoruj temperaturę radiatorów oraz stabilność napięcia wyjściowego. Jeśli urządzenie wyłącza się pod obciążeniem, przyczyną może być uszkodzony czujnik temperatury (termistor) lub zbyt wysoka rezystancja w torze prądowym, wynikająca z utlenionych styków lub poluzowanych połączeń śrubowych.</p>
+
+    <h2 id="warsztat">5. Działania serwisowe w F.W. DRUCIK</h2>
+<p>W naszym warsztacie w Domosławiu 13A zajmujemy się diagnostyką i naprawą układów elektronicznych w urządzeniach spawalniczych. Jeśli Twoja spawarka wykazuje objawy takie jak brak zajarzenia łuku, błędy na wyświetlaczu lub przepalanie bezpieczników, zapraszamy do kontaktu. Nasza praca opiera się na weryfikacji blokowej, co pozwala na precyzyjne zlokalizowanie uszkodzonego komponentu bez konieczności wymiany całych modułów, o ile jest to technicznie uzasadnione.</p><p>Oferujemy wsparcie w zakresie <a href="/uslugi/elektromechanika/">elektromechaniki</a> oraz naprawy elektroniki sterującej. W przypadku uszkodzeń mechanicznych obudowy lub konstrukcji nośnej, wykonujemy również prace w ramach <a href="/uslugi/spawanie/">spawania</a>. Pamiętaj, aby przed dostarczeniem urządzenia do serwisu, opisać objawy usterki – czy wystąpiła podczas pracy, czy po włączeniu urządzenia. Pozwoli to na szybsze przygotowanie stanowiska diagnostycznego.</p><p>Zapraszamy do kontaktu pod numerem 601 726 924 lub adresem e-mail fwdrucik@gmail.com w godzinach Pon-Pt 8-17 oraz Sob 9-13. Nasz adres to Domosław 13A, 06-120 Winnica. Przed przyjazdem prosimy o upewnienie się, że urządzenie jest zabezpieczone na czas transportu, szczególnie w przypadku uszkodzeń mechanicznych obudowy, które mogą wpływać na stabilność wewnętrznych komponentów elektronicznych.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Dlaczego spawarka wyłącza się podczas pracy?</summary>
+        <p>Najczęstszą przyczyną jest zadziałanie zabezpieczenia termicznego lub przeciążeniowego. Może to wynikać z zanieczyszczenia wnętrza urządzenia pyłem metalicznym, co utrudnia chłodzenie, lub z uszkodzenia czujnika temperatury.</p>
+      </details>
+      <details>
+        <summary>Czy mogę samodzielnie wymienić tranzystory IGBT?</summary>
+        <p>Wymiana tranzystorów jest możliwa, ale wymaga doświadczenia w lutowaniu komponentów mocy i weryfikacji układu sterowania. Bez sprawdzenia sygnału bramki oscyloskopem, nowe tranzystory mogą ulec natychmiastowemu uszkodzeniu.</p>
+      </details>
+      <details>
+        <summary>Jakie napięcie powinno być na wyjściu spawarki?</summary>
+        <p>Napięcie biegu jałowego wynosi zazwyczaj od ok. 50V do 100V DC, zależnie od modelu (w kartach katalogowych producentów spotyka się m.in. 59V, 88V i 100V). Dokładną wartość dla swojego urządzenia znajdziesz na tabliczce znamionowej lub w dokumentacji technicznej.</p>
+      </details>
+      <details>
+        <summary>Co oznacza błąd na wyświetlaczu spawarki?</summary>
+        <p>Kody błędów są specyficzne dla danego producenta i modelu urządzenia. Należy odnieść się do instrukcji obsługi, aby sprawdzić, co dokładnie oznacza dany kod, gdyż może on dotyczyć zarówno zasilania, jak i układu sterowania.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

@@ -1,0 +1,122 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "MLX90614: Bezdotykowy pomiar temperatury łożyska w diagnostyce",
+  "description": "Analiza techniczna czujnika MLX90614 w diagnostyce łożysk. Jak poprawnie mierzyć temperaturę, na co uważać i jak interpretować dane w utrzymaniu ruchu.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-09-11",
+  "dateModified": "2026-09-11",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/mlx90614-bezdotykowy-pomiar-temperatury-lozyska/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-blue">Elektronika i magistrale</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 6 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 11.09.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">MLX90614: Bezdotykowy pomiar temperatury łożyska w diagnostyce</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Jak mierzyć temperaturę łożyska bezdotykowo czujnikiem MLX90614 i ograniczyć błędy pomiaru w warsztacie.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#specyfikacja">Parametry techniczne i zasada działania MLX90614</a></li>
+      <li><a href="#montaz">Wymagania montażowe i wpływ otoczenia</a></li>
+      <li><a href="#diagnostyka">Interpretacja danych i typowe objawy usterek</a></li>
+      <li><a href="#tabela">Procedura weryfikacji poprawności odczytów</a></li>
+      <li><a href="#praktyka">Co zrobić w warsztacie F.W. DRUCIK?</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="specyfikacja">1. Parametry techniczne i zasada działania MLX90614</h2>
+<p>MLX90614 łączy optykę, termopilę i układ ASIC do bezdotykowego pomiaru temperatury. Rozdzielczość wynosi 0,02 stopnia Celsjusza, a zakres temperatury obiektu orientacyjnie -70 do +380 stopni — sprawdź konkretną wersję. Czujnik komunikuje się przez SMBus zgodny z I2C; współpracuje m.in. z Arduino, ESP32 i odpowiednio wyposażonym PLC. Zasilanie wynosi 3,3V lub 5V, zależnie od wariantu.</p><p>Wynik zależy od emisyjności powierzchni. Dla stalowej bieżni przyjmuje się orientacyjnie 0,7–0,8, lecz polerowanie i smar zmieniają tę wartość. Zweryfikuj emisyjność, zapewnij stabilne zasilanie i ochronę ESD podczas montażu.</p>
+
+    <figure>
+      <img src="/assets/blog/mlx90614-bezdotykowy-pomiar-temperatury-lozyska.jpg" width="1280" height="1707" loading="lazy" alt="MLX90614: Bezdotykowy pomiar temperatury łożyska w diagnostyce">
+      <figcaption>Czujnik MLX90614 zamontowany w układzie pomiarowym do monitorowania temperatury podzespołów mechanicznych.
+        <span class="zrodlo">Fot. <a href="https://commons.wikimedia.org/wiki/File:An_infrared_thermometer.JPG" target="_blank" rel="noopener nofollow">Jobsarayutw</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener nofollow">CC BY-SA 4.0</a>, Wikimedia Commons.</span>
+      </figcaption>
+    </figure>
+
+
+    <h2 id="montaz">2. Wymagania montażowe i wpływ otoczenia</h2>
+<p>Dobierz odległość tak, by całe pole pomiaru obejmowało bieżnię lub obudowę łożyska. Standardowy FOV około 90 stopni łatwo obejmuje też tło, które zafałszowuje wynik. Chroń okienko IR przed pyłem i mgłą olejową; w trudnych warunkach stosuj obudowę z przedmuchem.</p><p>Czujnik kompensuje temperaturę otoczenia, lecz montaż na gorącym korpusie może przekroczyć jego limit, zwykle +85 stopni Celsjusza. Użyj dystansu lub przekładki izolacyjnej. Przed montażem odłącz zasilanie maszyny i zablokuj ruch. Pomiary przy pracy wymagają osłon chroniących przed wciągnięciem odzieży i narzędzi.</p>
+
+    <h2 id="diagnostyka">3. Interpretacja danych i typowe objawy usterek</h2>
+<p>Porównuj trend temperatury z wartością ustaloną po rozruchu oraz z dokumentacją maszyny. Nagły skok może oznaczać brak smaru lub zatarcie, powolny wzrost — zużycie albo degradację smaru. Sprawdzaj też wahania związane z obciążeniem.</p><p>Granica temperatury zależy od smaru i luzu łożyska. Orientacyjne 80–90 stopni Celsjusza może przyspieszać degradację smaru; obowiązują dane producenta. Gwałtowny wzrost różnicy względem otoczenia przy stałym obciążeniu wymaga inspekcji. MLX90614 nie wykryje uszkodzeń bieżni bez wzrostu tarcia — uzupełnij pomiar analizą drgań.</p><p>Nie kasuj alarmu w PLC bez sprawdzenia temperatury i smarowania. Zignorowanie przegrzania grozi zatarciem wału, pożarem lub pęknięciem obudowy i zagraża obsłudze.</p>
+
+    <h2 id="tabela">4. Procedura weryfikacji poprawności odczytów</h2>
+<p>Aby upewnić się, że system pomiarowy działa poprawnie, należy przeprowadzić procedurę walidacji. Poniższa tabela przedstawia kroki, które należy wykonać w warsztacie przy uruchamianiu układu pomiarowego opartego na MLX90614.</p><table><thead><tr><th>Krok</th><th>Czynność</th><th>Cel</th></tr></thead><tbody><tr><td>1</td><td>Weryfikacja zasilania</td><td>Sprawdzenie napięcia 3,3V/5V na pinach VCC/GND.</td></tr><tr><td>2</td><td>Test magistrali</td><td>Odczyt rejestru ID urządzenia przez I2C/SMBus.</td></tr><tr><td>3</td><td>Pomiar referencyjny</td><td>Porównanie odczytu z pirometrem kalibrowanym.</td></tr><tr><td>4</td><td>Sprawdzenie emisyjności</td><td>Ustawienie parametru emisyjności w kodzie sterownika.</td></tr><tr><td>5</td><td>Test stabilności</td><td>Obserwacja odczytów przez 15 minut w stanie spoczynku.</td></tr></tbody></table><p>Podczas wykonywania kroku trzeciego, pamiętaj, że pirometry ręczne również posiadają własne błędy pomiarowe. Należy upewnić się, że oba urządzenia mierzą ten sam punkt na obudowie łożyska. Jeśli odczyty różnią się o więcej niż 2-3 stopnie Celsjusza (wartość orientacyjna), należy sprawdzić, czy soczewka MLX90614 nie jest zabrudzona lub czy nie występuje błąd w przeliczeniu surowych danych z rejestrów RAM czujnika na jednostki temperatury. W przypadku problemów z komunikacją, najczęstszą przyczyną są zbyt długie przewody magistrali I2C (powyżej 0,5-1 metra bez odpowiedniego buforowania) lub brak rezystorów podciągających (pull-up) na liniach SDA i SCL. Wartość rezystorów powinna być dobrana zgodnie z notą katalogową, zazwyczaj jest to 4,7 kOhm, jednak przy dłuższych liniach może wymagać korekty. Pamiętaj, że każda modyfikacja w układzie elektronicznym musi być zgodna z dokumentacją techniczną urządzenia.</p>
+
+    <h2 id="praktyka">5. Co zrobić w warsztacie F.W. DRUCIK?</h2>
+<h3>Co zrobić w warsztacie F.W. DRUCIK?</h3>
+
+<p>Jeśli Twoja maszyna wykazuje niepokojące objawy przegrzewania się łożysk, zapraszamy do kontaktu z warsztatem F.W. DRUCIK. Nasz zespół specjalizuje się w diagnostyce elektromechanicznej oraz utrzymaniu ruchu. W procesie diagnostycznym wykorzystujemy czujniki MLX90614, które pozwalają na precyzyjny pomiar bezdotykowy w zakresie od -40°C do +125°C dla obiektu, przy zachowaniu dokładności rzędu ±0,5°C w warunkach przemysłowych.</p>
+
+<p><strong>Kolejność czynności diagnostycznych w naszym warsztacie:</strong></p>
+<ol>
+    <li>Wstępna analiza termowizyjna w celu lokalizacji punktów o podwyższonej temperaturze.</li>
+    <li>Montaż czujnika MLX90614 w odległości 1–3 cm od obudowy łożyska, aby uniknąć wpływu temperatury otoczenia.</li>
+    <li>Kalibracja logiki alarmowej w sterowniku PLC (np. ustawienie progu ostrzegawczego na 75°C oraz krytycznego na 90°C).</li>
+    <li>Testy obciążeniowe maszyny z monitorowaniem trendu wzrostu temperatury w czasie rzeczywistym.</li>
+</ol>
+
+<p>Podczas prac często spotykamy się z błędami, które prowadzą do fałszywych odczytów lub awarii:</p>
+<ul>
+    <li><strong>Zbyt duża odległość od obiektu:</strong> Powoduje uśrednienie temperatury z otoczenia, co zaniża wynik o nawet 15–20°C.</li>
+    <li><strong>Zanieczyszczona soczewka czujnika:</strong> Osad pyłu lub smaru na optyce MLX90614 skutkuje błędami pomiarowymi rzędu 5–10°C.</li>
+    <li><strong>Brak ekranowania przewodów:</strong> Prowadzi do zakłóceń sygnału I2C, co objawia się "skokami" temperatury na wyświetlaczu sterownika.</li>
+</ul>
+
+<p>Oferujemy wsparcie w doborze czujników, ich montażu oraz integracji z systemami sterowania. Jeśli problem dotyczy układów sterowania, pomożemy w <a href="/uslugi/programowanie-aplikacje/">programowaniu sterowników</a> PLC, które będą obsługiwać logikę alarmową. Nasze usługi obejmują również <a href="/uslugi/elektromechanika/">elektromechanikę</a>. Zapraszamy do kontaktu pod numerem 601 726 924 lub adresem fwdrucik@gmail.com. Znajdziesz nas w miejscowości Domosław 13A, 06-120 Winnica. Pracujemy od poniedziałku do piątku w godzinach 8–17 oraz w soboty od 9–13. Przed wizytą prosimy o przygotowanie dokumentacji technicznej maszyny. Nie czekaj, aż łożysko ulegnie zatarciu – umów się na przegląd już dziś.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Czy MLX90614 wymaga kalibracji przed użyciem?</summary>
+        <p>Czujnik jest fabrycznie kalibrowany przez producenta w szerokim zakresie temperatur. W warunkach warsztatowych zaleca się jedynie weryfikację poprawności odczytów względem wzorca w docelowym środowisku pracy.</p>
+      </details>
+      <details>
+        <summary>Jaka jest maksymalna długość przewodu dla magistrali I2C?</summary>
+        <p>Standard I2C nie jest przeznaczony do pracy na dużych odległościach. Przy długościach powyżej 1 metra zaleca się stosowanie dedykowanych układów buforujących lub konwerterów na standard RS485.</p>
+      </details>
+      <details>
+        <summary>Dlaczego czujnik pokazuje temperaturę otoczenia zamiast łożyska?</summary>
+        <p>Najprawdopodobniej problemem jest zbyt duży kąt widzenia (FOV) czujnika w stosunku do wielkości łożyska. Czujnik uśrednia temperaturę z całego obszaru, który widzi, w tym z otaczającej obudowy.</p>
+      </details>
+      <details>
+        <summary>Czy mogę zamontować czujnik bezpośrednio na obudowie łożyska?</summary>
+        <p>Tak, jest to możliwe, o ile temperatura obudowy nie przekracza dopuszczalnej temperatury pracy czujnika. Należy stosować podkładki izolacyjne termicznie, aby uniknąć przewodzenia ciepła z obudowy do obudowy czujnika.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

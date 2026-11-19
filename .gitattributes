@@ -1,0 +1,13 @@
+# Build (build.py) zapisuje pliki z LF. Bez tego checkout na Windows robi z
+# nich CRLF, a kolejny build pokazuje jako zmienione pliki, ktorych nikt nie
+# ruszal — i rozjezdza hash ?v= w cache-busterach.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.mp4 binary
+*.ico binary
+*.woff binary
+*.woff2 binary

@@ -1,0 +1,48 @@
+<section class="page-hero pracownia-hero">
+  <div class="container">
+    <h1>Pracownia Drucika</h1>
+    <p class="lead">Zapal diodę, ustaw rytm robota albo odkryj, od której warstwy zaczyna się druk 3D. Wybierz, co chcesz sprawdzić najpierw.</p>
+  </div>
+</section>
+
+<!-- PRACOWNIA_KURS -->
+
+<section class="container pracownia-sekcja" id="twoj-drucik" aria-labelledby="drucik-tytul">
+  <h2 id="drucik-tytul">Zaprogramuj swojego Drucika</h2>
+  <p>Wybierz kolor, ustaw kolejność poleceń i daj robotowi trochę energii. Zaloguj się, by zachować swojego Drucika na koncie.</p>
+  <div class="lab-panel" data-drucik-studio hidden>
+    <div class="lab-uklad">
+      <div class="drucik-podglad">
+        <div data-drucik-model></div>
+        <p data-drucik-stan role="status"></p>
+      </div>
+      <div>
+        <form id="drucik-profil">
+          <div class="lab-pasek">
+            <label>Imię <input name="imie" maxlength="24" value="Drucik" autocomplete="off" required></label>
+            <label>Kolor <select name="kolor"><option value="mosiadz">Mosiądz</option><option value="plazma">Turkus</option><option value="miedz">Miedź</option><option value="stal">Stal</option></select></label>
+            <label>Ulubione paliwo w grze <select name="paliwo"><option value="diesel">Olej napędowy</option><option value="benzyna">Benzyna</option><option value="lpg">LPG</option></select></label>
+          </div>
+          <h3>Program robota</h3>
+          <p>Uruchomienie każdego kroku zużywa 6 punktów energii. Po zapisaniu polecenia pojawiają się też w zachowaniu robota na stronie.</p>
+          <div class="lab-pasek drucik-kroki" id="drucik-kroki"></div>
+          <div class="lab-pasek">
+            <button type="button" id="drucik-start" class="btn btn-primary">Uruchom program</button>
+            <button type="submit" class="btn btn-outline" data-gdy="zalogowany" hidden>Zapisz na koncie</button>
+            <a href="/konto/" data-gdy="niezalogowany">Zaloguj się, aby zapisać</a>
+          </div>
+        </form>
+        <h3>Nakarm Drucika</h3>
+        <div class="lab-pasek" id="drucik-jedzenie">
+          <button type="button" class="btn btn-outline" data-przekaska="bit">Bit +12</button>
+          <button type="button" class="btn btn-outline" data-przekaska="srubka">Śrubka +8</button>
+          <button type="button" class="btn btn-outline" data-przekaska="paliwo">Ulubione paliwo +25</button>
+        </div>
+        <p class="lab-uwaga">Bity, śrubki i paliwa to wirtualne przedmioty w grze.</p>
+        <p id="drucik-zapis" role="status"></p>
+      </div>
+    </div>
+  </div>
+</section>
+<script src="/assets/pracownia.js" defer></script>
+<script src="/assets/pracownia-obwody.js" defer></script>

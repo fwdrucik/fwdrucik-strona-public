@@ -1,0 +1,102 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "DS18B20 — wiele czujników temperatury na jednym przewodzie",
+  "description": "Analiza techniczna czujników DS18B20. Jak poprawnie łączyć wiele sensorów na jednej magistrali 1-Wire, zasady zasilania i diagnostyka sygnału.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-08-16",
+  "dateModified": "2026-08-16",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/ds18b20-wiele-czujnikow-na-jednym-przewodzie/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-blue">Elektronika i magistrale</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 8 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 16.08.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">DS18B20 — wiele czujników temperatury na jednym przewodzie</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Wiele czujników DS18B20 na jednym pinie: zasady transmisji 1-Wire, podłączenia i topologii sieci.</p>
+  </header>
+  <!-- FILM:start -->
+  <div class="toc-box" style="margin-bottom:28px;"><div class="toc-title">🎬 Zobacz na filmie</div><div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin-top:12px;"><div style="flex:0 1 240px;"><video controls preload="none" playsinline poster="/wideo/2026-10-18-ds18b20-jeden-przewod.jpg" width="540" height="960" style="width:100%;max-width:320px;aspect-ratio:9/16;border-radius:12px;background:#000;display:block;margin:0 auto;"><source src="/wideo/2026-10-18-ds18b20-jeden-przewod.mp4" type="video/mp4">Twoja przeglądarka nie odtwarza wideo.</video><p style="font-size:0.9rem;margin-top:8px;text-align:center;">Rolka · <a href="https://www.instagram.com/reel/DepaYIcxoZu/" target="_blank" rel="noopener">Instagram</a></p></div></div><p style="font-size:0.88rem;margin-top:10px;">Więcej filmów z warsztatu: <a href="/filmy/">wszystkie filmy</a>.</p></div>
+  <!-- FILM:end -->
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#zasada-dzialania">Zasada działania magistrali 1-Wire</a></li>
+      <li><a href="#zasilanie-i-topologia">Zasilanie i topologia sieci</a></li>
+      <li><a href="#parametry-elektryczne">Parametry elektryczne i limity</a></li>
+      <li><a href="#diagnostyka-i-bledy">Diagnostyka magistrali i BHP</a></li>
+      <li><a href="#zastosowanie-warsztatowe">Zastosowanie w serwisie F.W. DRUCIK</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="zasada-dzialania">1. Zasada działania magistrali 1-Wire</h2>
+<p>DS18B20 korzysta z 1-Wire firmy Dallas Semiconductor: linii danych DQ i masy GND. Unikalny 64-bitowy kod ROM pozwala rozróżniać wiele czujników na jednej magistrali.</p><p>Linia DQ wymaga pull-upu do VCC, zwykle 4,7 kΩ. Przy długich przewodach lub wielu czujnikach dobierz rezystancję do wymaganego czasu narastania sygnału.</p>
+
+    <figure>
+      <img src="/assets/blog/ds18b20-wiele-czujnikow-na-jednym-przewodzie.png" width="184" height="157" loading="lazy" alt="DS18B20 — wiele czujników temperatury na jednym przewodzie">
+      <figcaption>Czujnik temperatury DS18B20 w obudowie TO-92 gotowy do wlutowania w układ magistrali 1-Wire.
+        <span class="zrodlo">Fot. <a href="https://commons.wikimedia.org/wiki/File:Cjam-temperature-sensor.png" target="_blank" rel="noopener nofollow">Andy Oakley</a>, <a href="http://creativecommons.org/publicdomain/zero/1.0/deed.en" target="_blank" rel="noopener nofollow">CC0</a>, Wikimedia Commons.</span>
+      </figcaption>
+    </figure>
+
+
+    <h2 id="zasilanie-i-topologia">2. Zasilanie i topologia sieci</h2>
+<p>Istnieją dwa główne sposoby zasilania czujników: standardowe (trzy przewody: VCC, GND, DQ) oraz pasożytnicze (dwa przewody: GND, DQ). W warunkach warsztatowych, gdzie występują zakłócenia elektromagnetyczne, zaleca się stosowanie zasilania standardowego.</p><ul><li><strong>Zasilanie standardowe:</strong> Zapewnia stabilną pracę przy wysokich temperaturach i długich liniach transmisyjnych.</li><li><strong>Zasilanie pasożytnicze:</strong> Wykorzystuje linię danych do ładowania wewnętrznego kondensatora czujnika. Wymaga to jednak zapewnienia silnego podciągnięcia (tzw. strong pull-up) podczas operacji zapisu do pamięci EEPROM czujnika.</li></ul><p>Topologia magistrali powinna być możliwie liniowa. Rozgałęzienia (tzw. gwiazda) wprowadzają odbicia sygnału, które przy dużej liczbie czujników mogą powodować błędy transmisji CRC.</p>
+
+    <h2 id="parametry-elektryczne">3. Parametry elektryczne i limity</h2>
+<p>Poniższa tabela przedstawia orientacyjne parametry pracy, które należy zweryfikować w dokumentacji technicznej konkretnej partii produkcyjnej układów:</p><table><thead><tr><th>Parametr</th><th>Wartość orientacyjna</th><th>Uwagi</th></tr></thead><tbody><tr><td>Napięcie zasilania (VCC)</td><td>3,0 V – 5,5 V</td><td>Zależne od wersji układu</td></tr><tr><td>Zakres pomiarowy</td><td>-55°C do +125°C</td><td>Dokładność ±0,5°C w zakresie -10°C do +85°C</td></tr><tr><td>Rezystor pull-up</td><td>4,7 kΩ</td><td>Wartość zależna od długości magistrali</td></tr><tr><td>Czas konwersji</td><td>do 750 ms</td><td>Zależny od rozdzielczości (9-12 bit)</td></tr></tbody></table><p><em>Uwaga: Wartości te są orientacyjne. Przed montażem w układzie sterowania należy zawsze sprawdzić aktualną kartę katalogową producenta.</em></p>
+
+    <h2 id="diagnostyka-i-bledy">4. Diagnostyka magistrali i BHP</h2>
+<p>Najczęstszym problemem w systemach 1-Wire jest nieprawidłowe zakończenie linii lub zbyt duża pojemność pasożytnicza przewodów. W przypadku błędów odczytu (np. wartości 85°C, co jest stanem domyślnym po resecie), należy sprawdzić:</p><ul><li>Stabilność napięcia zasilania na końcach magistrali.</li><li>Poprawność połączeń masy (GND) – różnice potencjałów mogą zakłócać transmisję.</li><li>Wpływ zakłóceń od urządzeń indukcyjnych (silniki, elektrozawory).</li></ul><p><strong>BHP:</strong> Podczas prac przy układach elektronicznych maszyn, zawsze upewnij się, że urządzenie jest odłączone od zasilania głównego. Nie kasuj błędów w sterownikach bez fizycznego usunięcia przyczyny awarii, gdyż może to prowadzić do uszkodzenia podzespołów wykonawczych.</p>
+
+    <h2 id="zastosowanie-warsztatowe">5. Zastosowanie w serwisie F.W. DRUCIK</h2>
+<p>W naszym warsztacie wykorzystujemy magistralę 1-Wire do monitorowania temperatury w zaawansowanych układach sterowania oraz przy testach obciążeniowych maszyn. Jeśli potrzebujesz wsparcia w zakresie diagnostyki elektroniki przemysłowej lub naprawy sterowników, zapraszamy do zapoznania się z naszą ofertą na stronie <a href="/uslugi/elektromechanika/">elektromechanika</a>.</p><p>W przypadku pytań technicznych dotyczących integracji czujników w Twoim projekcie, prosimy o kontakt pod numerem 601 726 924 lub poprzez formularz na stronie <a href="/kontakt/">kontakt</a>. Nasz adres: Domosław 13A, 06-120 Winnica.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Czy mogę łączyć czujniki DS18B20 w topologii gwiazdy?</summary>
+        <p>Topologia gwiazdy jest możliwa, ale przy większej liczbie czujników lub długich przewodach powoduje odbicia sygnału. Zalecamy stosowanie topologii liniowej, aby zminimalizować ryzyko błędów transmisji danych.</p>
+      </details>
+      <details>
+        <summary>Dlaczego czujnik zwraca stałą wartość 85 stopni Celsjusza?</summary>
+        <p>Wartość 85 stopni jest domyślną wartością rejestru temperatury po resecie układu. Oznacza to zazwyczaj problem z zasilaniem czujnika lub błąd w komunikacji na magistrali 1-Wire.</p>
+      </details>
+      <details>
+        <summary>Jaką maksymalną długość może mieć przewód magistrali?</summary>
+        <p>Maksymalna długość zależy od pojemności kabla i rezystancji podciągającej. W praktyce warsztatowej przy odpowiednim ekranowaniu można osiągnąć kilkadziesiąt metrów, jednak wymaga to zawsze weryfikacji oscyloskopem.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

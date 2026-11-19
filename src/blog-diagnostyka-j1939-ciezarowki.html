@@ -1,0 +1,99 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Diagnostyka J1939 w ciężarówkach: PGN, SPN i FMI",
+  "description": "Techniczne wprowadzenie do diagnostyki magistrali CAN J1939. Wyjaśniamy strukturę PGN, SPN i FMI w ciężarówkach. Sprawdź jak czytać ramki danych.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-08-04",
+  "dateModified": "2026-08-04",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/diagnostyka-j1939-ciezarowki/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-blue">Elektronika i magistrale</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 8 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 15.08.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Diagnostyka J1939 w ciężarówkach: PGN, SPN i FMI</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">SAE J1939 w ciężarówkach: jak czytać ramki CAN i kody błędów podczas diagnostyki.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#podstawy-fizyczne">Warstwa fizyczna i parametry magistrali</a></li>
+      <li><a href="#struktura-ramki">Struktura ramki danych CAN 29-bit</a></li>
+      <li><a href="#pgn-spn-fmi">Dekodowanie PGN, SPN i FMI</a></li>
+      <li><a href="#tabela-fmi">Kody FMI – interpretacja techniczna</a></li>
+      <li><a href="#praktyka-warsztatowa">Diagnostyka w warsztacie F.W. DRUCIK</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="podstawy-fizyczne">1. Warstwa fizyczna i parametry magistrali</h2>
+<p>J1939 korzysta z CAN (ISO 11898) i dwóch przewodów: CAN-High oraz CAN-Low. Typowa prędkość w ciężarówkach to 250 kb/s; potwierdź ją w dokumentacji pojazdu.</p><p>Przy wyłączonym zasilaniu zmierz rezystancję między liniami: według SAE J1939-11 powinna wynosić 60 Ohm. Napięcie spoczynkowe CAN-High i CAN-Low względem masy to zwykle około 2,5 V. Te pomiary pomagają wykryć zwarcie lub przerwę.</p><blockquote><strong>BHP:</strong> Pomiary rezystancji magistrali wykonuj zawsze przy odłączonym zasilaniu sterowników, aby uniknąć uszkodzenia multimetru lub zakłóceń w pracy modułów elektronicznych.</blockquote>
+
+    <figure>
+      <img src="/assets/blog/diagnostyka-j1939-ciezarowki.png" width="1280" height="1280" loading="lazy" alt="Diagnostyka J1939 w ciężarówkach: PGN, SPN i FMI">
+      <figcaption>Złącze magistrali CAN wykorzystywane w diagnostyce systemów elektronicznych pojazdów ciężarowych.
+        <span class="zrodlo">Fot. <a href="https://commons.wikimedia.org/wiki/File:BUS_CONNECT.png" target="_blank" rel="noopener nofollow">Bus Connect</a>, licencja <a href="http://creativecommons.org/publicdomain/zero/1.0/deed.en" target="_blank" rel="noopener nofollow">CC0</a>, Wikimedia Commons.</span>
+      </figcaption>
+    </figure>
+
+
+    <h2 id="struktura-ramki">2. Struktura ramki danych CAN 29-bit</h2>
+<p>W przeciwieństwie do standardowego CAN 2.0A (11-bit), J1939 wykorzystuje rozszerzony identyfikator 29-bitowy. Identyfikator ten nie służy tylko do adresowania, ale zawiera w sobie informacje o priorytecie komunikatu oraz jego zawartości.</p><p>Struktura 29-bitowego identyfikatora:</p><ul><li><strong>Priorytet (3 bity):</strong> Określa ważność wiadomości (0 najwyższy, 7 najniższy).</li><li><strong>Extended Data Page (1 bit) i Data Page (1 bit):</strong> Rozszerzają przestrzeń adresową PGN.</li><li><strong>PDU Format (8 bitów):</strong> Określa typ komunikatu.</li><li><strong>PDU Specific (8 bitów):</strong> W zależności od formatu, zawiera adres docelowy lub rozszerzenie PGN.</li><li><strong>Source Address (8 bitów):</strong> Adres fizyczny urządzenia nadającego komunikat.</li></ul>
+
+    <h2 id="pgn-spn-fmi">3. Dekodowanie PGN, SPN i FMI</h2>
+<p>Kluczem do diagnostyki jest zrozumienie trzech składowych kodu błędu:</p><ul><li><strong>PGN (Parameter Group Number):</strong> Identyfikuje grupę parametrów przesyłanych w ramce (np. temperatura silnika, ciśnienie oleju).</li><li><strong>SPN (Suspect Parameter Number):</strong> Wskazuje konkretny komponent lub parametr, którego dotyczy błąd (np. czujnik ciśnienia doładowania).</li><li><strong>FMI (Failure Mode Identifier):</strong> Określa rodzaj usterki (np. zwarcie do masy, sygnał poza zakresem).</li></ul><p>Listę przypisań SPN do konkretnych podzespołów znajdziesz w dokumentacji serwisowej producenta pojazdu. Przykładowo, FMI 03 oznacza zazwyczaj napięcie powyżej normy lub zwarcie do zasilania, jednak interpretacja zawsze zależy od specyfikacji danego sterownika.</p>
+
+    <h2 id="tabela-fmi">4. Kody FMI – interpretacja techniczna</h2>
+<p>Poniższa tabela przedstawia standardowe znaczenie kodów FMI zgodnie z normą SAE J1939-73. Pamiętaj, że producenci mogą stosować własne rozszerzenia.</p><table><thead><tr><th>Kod FMI</th><th>Opis usterki</th></tr></thead><tbody><tr><td>00</td><td>Wartość powyżej zakresu, ale poniżej krytycznego</td></tr><tr><td>01</td><td>Wartość poniżej zakresu, ale powyżej krytycznego</td></tr><tr><td>02</td><td>Błąd danych (nieprawidłowy sygnał)</td></tr><tr><td>03</td><td>Napięcie powyżej normy / zwarcie do plusa</td></tr><tr><td>04</td><td>Napięcie poniżej normy / zwarcie do masy</td></tr><tr><td>05</td><td>Prąd poniżej normy / przerwa w obwodzie</td></tr></tbody></table>
+
+    <h2 id="praktyka-warsztatowa">5. Diagnostyka w warsztacie F.W. DRUCIK</h2>
+<p>W pracy warsztatowej najczęstszym problemem jest fizyczne uszkodzenie magistrali (przetarcia, korozja złączy) lub błędy komunikacji wynikające z uszkodzenia jednego z modułów. Przed kasowaniem kodów błędów za pomocą testera, zawsze wykonaj weryfikację fizyczną wiązki.</p><p>Jeśli Twoje narzędzia diagnostyczne nie pozwalają na interpretację surowych ramek CAN, zapraszamy do kontaktu w celu wykonania specjalistycznej diagnostyki elektromechanicznej. Oferujemy wsparcie w zakresie:</p><ul><li>Diagnostyki magistrali CAN i J1939.</li><li>Weryfikacji ciągłości obwodów sterowania.</li><li>Naprawy wiązek elektrycznych w pojazdach ciężarowych.</li></ul><p>Zapoznaj się z naszą ofertą na stronie <a href="/uslugi/elektromechanika/">elektromechanika</a>. W razie pytań technicznych prosimy o <a href="/kontakt/">kontakt</a> z naszym warsztatem w Domosławiu.</p><blockquote><strong>BHP:</strong> Pamiętaj, że skasowanie kodu błędu bez usunięcia przyczyny (np. wymiany uszkodzonego czujnika lub naprawy zwarcia) nie rozwiązuje problemu i może prowadzić do awarii w trakcie eksploatacji pojazdu.</blockquote>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Czym różni się PGN od SPN?</summary>
+        <p>PGN to numer grupy parametrów, który określa, jakie dane są przesyłane w danej ramce CAN. SPN to numer konkretnego parametru, który wskazuje na konkretny element systemu, np. konkretny czujnik temperatury.</p>
+      </details>
+      <details>
+        <summary>Jak sprawdzić czy magistrala CAN jest sprawna?</summary>
+        <p>Należy zmierzyć rezystancję między liniami CAN-High i CAN-Low przy wyłączonym zasilaniu, która powinna wynosić około 60 Ohm. Warto również sprawdzić napięcie spoczynkowe na każdej z linii względem masy, które powinno wynosić około 2,5 V.</p>
+      </details>
+      <details>
+        <summary>Czy każdy kod FMI oznacza to samo w każdej ciężarówce?</summary>
+        <p>Standard SAE J1939 definiuje ogólne znaczenie kodów FMI, ale producenci pojazdów mogą stosować własne interpretacje dla specyficznych systemów. Zawsze należy odnosić się do dokumentacji serwisowej konkretnego modelu pojazdu.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

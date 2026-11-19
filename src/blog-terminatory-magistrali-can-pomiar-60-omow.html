@@ -1,0 +1,222 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Terminatory magistrali CAN: pomiar 60 omów jako pierwszy test sieci",
+  "description": "Diagnostyka sieci CAN zaczyna się od pomiaru rezystancji terminującej. Sprawdź, jak poprawnie wykonać test 60 omów w warsztacie F.W. DRUCIK.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-10-17",
+  "dateModified": "2026-10-17",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/terminatory-magistrali-can-pomiar-60-omow/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-blue">Elektronika i magistrale</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 6 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 17.10.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Terminatory magistrali CAN: pomiar 60 omów jako pierwszy test sieci</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Podstawowa diagnostyka fizycznej warstwy magistrali CAN (Controller Area Network) opiera się na weryfikacji rezystancji terminującej. Pomiar 60 omów to standardowy punkt wyjścia dla technika utrzymania ruchu.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#zasada-dzialania">Fizyczna warstwa magistrali CAN i rola terminatorów</a></li>
+      <li><a href="#przygotowanie-pomiaru">Procedura pomiarowa i bezpieczeństwo pracy</a></li>
+      <li><a href="#interpretacja-wynikow">Analiza odczytów i najczęstsze awarie</a></li>
+      <li><a href="#diagnostyka-zaawansowana">Kiedy pomiar 60 omów to za mało?</a></li>
+      <li><a href="#kontakt-i-uslugi">Pomoc techniczna w warsztacie F.W. DRUCIK</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="zasada-dzialania">1. Fizyczna warstwa magistrali CAN i rola terminatorów</h2>
+<p>Magistrala CAN, zgodnie ze specyfikacją ISO 11898, wykorzystuje transmisję różnicową na dwóch przewodach: CAN-High (CANH) oraz CAN-Low (CANL). Aby zapobiec zjawisku odbicia sygnału, które prowadzi do błędów transmisji i zawieszania się sterowników, końce magistrali muszą być zakończone rezystorami terminującymi. W standardowej konfiguracji High-Speed CAN, każdy z dwóch końców magistrali posiada rezystor o wartości nominalnej 120 omów. Zgodnie z prawem Ohma, połączenie równoległe dwóch takich rezystorów (120 omów || 120 omów) daje wypadkową rezystancję 60 omów. Jest to wartość referencyjna, którą każdy technik powinien zweryfikować jako pierwszy krok diagnostyczny przy problemach z komunikacją między modułami.</p><p>Warto pamiętać, że w niektórych systemach przemysłowych lub specyficznych architekturach pojazdów, terminatory mogą być zintegrowane bezpośrednio wewnątrz sterowników (ECU) lub stanowić oddzielne elementy wpięte w wiązkę. Brak terminacji lub jej uszkodzenie (np. przerwa w obwodzie) powoduje wzrost rezystancji do 120 omów, co drastycznie pogarsza jakość sygnału różnicowego. Z kolei zwarcie do masy lub zasilania, a także zwarcie między liniami CANH i CANL, całkowicie uniemożliwia transmisję ramek danych. Zawsze należy odnosić się do dokumentacji technicznej konkretnego pojazdu lub maszyny, ponieważ producenci mogą stosować odmienne topologie, np. magistrale z jednym punktem terminacji lub systemy z rezystancją 100-130 omów w zależności od długości magistrali i liczby węzłów.</p>
+
+    <figure>
+      <img src="/assets/blog/terminatory-magistrali-can-pomiar-60-omow.jpg" width="1280" height="1707" loading="lazy" alt="Terminatory magistrali CAN: pomiar 60 omów jako pierwszy test sieci">
+      <figcaption>Pomiar rezystancji magistrali CAN za pomocą multimetru w celu weryfikacji obecności terminatorów.
+        <span class="zrodlo">Fot. <a href="https://commons.wikimedia.org/wiki/File:Digital_Multimeter_(To_measure_Voltage,_Current_and_Resistance).jpg" target="_blank" rel="noopener nofollow">K.Venkataramana</a>, <a href="http://creativecommons.org/publicdomain/zero/1.0/deed.en" target="_blank" rel="noopener nofollow">CC0</a>, Wikimedia Commons.</span>
+      </figcaption>
+    </figure>
+
+
+    <h2 id="przygotowanie-pomiaru">2. Procedura pomiarowa i bezpieczeństwo pracy</h2>
+<h3>Procedura pomiarowa i bezpieczeństwo pracy</h3>
+
+<p>Przed przystąpieniem do pomiaru rezystancji magistrali CAN, kluczowe jest zapewnienie bezpieczeństwa oraz stanu spoczynkowego sieci. <strong>Ostrzeżenie BHP:</strong> Nigdy nie wykonuj pomiarów rezystancji pod napięciem. Zawsze odłącz akumulator pojazdu lub główne zasilanie maszyny przed wpięciem multimetru w linie danych. Pomiar rezystancji przy aktywnym zasilaniu może doprowadzić do uszkodzenia multimetru lub, co gorsza, do niekontrolowanego wyzwolenia systemów bezpieczeństwa (np. poduszek powietrznych), jeśli magistrala CAN jest zintegrowana z modułem SRS. Po odłączeniu zasilania należy odczekać co najmniej 5-10 minut, aby kondensatory w sterownikach uległy rozładowaniu.</p>
+
+<p><strong>Kolejność czynności:</strong></p>
+<ol>
+    <li>Wyłącz zapłon i odłącz zasilanie (akumulator).</li>
+    <li>Ustaw multimetr na zakres pomiaru rezystancji (Ω).</li>
+    <li>Przyłącz sondy do pinów CANH i CANL (w złączu OBD-II są to odpowiednio piny 6 i 14).</li>
+    <li>Odczytaj wynik po ustabilizowaniu się wskazania.</li>
+</ol>
+
+<p><strong>Interpretacja wyników i typowe błędy:</strong></p>
+<table>
+    <thead>
+        <tr>
+            <th>Wartość pomiarowa</th>
+            <th>Interpretacja</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>60 Ω</strong></td>
+            <td>Prawidłowa sieć (dwa terminatory 120 Ω połączone równolegle).</td>
+        </tr>
+        <tr>
+            <td><strong>120 Ω</strong></td>
+            <td>Przerwa w obwodzie lub brak jednego terminatora.</td>
+        </tr>
+        <tr>
+            <td><strong>0 Ω / zwarcie</strong></td>
+            <td>Zwarcie między liniami CANH i CANL.</td>
+        </tr>
+        <tr>
+            <td><strong>> 120 Ω</strong></td>
+            <td>Wysoka rezystancja przejścia, korozja styków lub uszkodzenie przewodu.</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Pamiętaj, że dopuszczalna tolerancja wynosi zazwyczaj ±5 Ω, jednak zawsze weryfikuj dane serwisowe producenta. Typowym błędem jest pomiar przy włączonym zapłonie, co skutkuje błędnymi odczytami wynikającymi z napięć szczątkowych w układzie. Pamiętaj, że pomiar 60 Ω potwierdza jedynie sprawność fizyczną linii (brak przerwy i obecność terminatorów), ale nie wyklucza błędów logicznych, zwarć do masy czy uszkodzeń samych sterowników (transceiverów CAN). Jeśli wynik odbiega od normy, należy metodą eliminacji odłączać poszczególne moduły, aż rezystancja wróci do wartości oczekiwanej.</p>
+
+    <h2 id="interpretacja-wynikow">3. Analiza odczytów i najczęstsze awarie</h2>
+<p>Interpretacja wyników pomiaru rezystancji jest prostym, lecz skutecznym narzędziem diagnostycznym. Jeśli multimetr wskazuje wartość około 60 omów, oznacza to, że oba terminatory są sprawne, a linia nie jest przerwana. Wartość 120 omów sugeruje, że jeden z terminatorów jest odłączony, uszkodzony lub wystąpiła przerwa w przewodzie magistrali, co powoduje odcięcie połowy sieci. Wartość zbliżona do 0 omów (lub bardzo niska) wskazuje na zwarcie między liniami CANH i CANL, co jest krytycznym błędem uniemożliwiającym komunikację. Jeśli wynik jest nieskończony (OL - Open Loop), oznacza to całkowitą przerwę w obu liniach lub brak jakiegokolwiek połączenia z terminatorami.</p><p>Warto zwrócić uwagę na stan złączy. Częstą przyczyną błędów jest korozja styków, która podnosi rezystancję przejścia, wprowadzając szumy do sygnału różnicowego. Nawet jeśli pomiar statyczny wykazuje 60 omów, w warunkach dynamicznych (podczas pracy silnika lub maszyny) wibracje mogą powodować chwilowe przerwy w obwodzie. W takich przypadkach warto wykonać pomiar przy poruszaniu wiązką przewodów. Pamiętaj, że kody błędów typu "U" (np. U0001 - CAN Bus Off) często wynikają z problemów fizycznych, ale ich kasowanie bez usunięcia przyczyny (np. naprawy wiązki) jest bezcelowe i nie przywróci komunikacji w systemie.</p><table><thead><tr><th>Odczyt (Ohm)</th><th>Interpretacja</th><th>Działanie</th></tr></thead><tbody><tr><td>60</td><td>Prawidłowa terminacja</td><td>Szukaj błędów logicznych</td></tr><tr><td>120</td><td>Brak jednego terminatora</td><td>Sprawdź ciągłość wiązki</td></tr><tr><td>0-10</td><td>Zwarcie między CANH/CANL</td><td>Szukaj uszkodzeń izolacji</td></tr><tr><td>OL (nieskończoność)</td><td>Przerwa w obwodzie</td><td>Weryfikacja złączy i przewodów</td></tr></tbody></table>
+
+    <h2 id="diagnostyka-zaawansowana">4. Kiedy pomiar 60 omów to za mało?</h2>
+<h3>Kiedy pomiar 60 omów to za mało?</h3>
+<p>Pomiar rezystancji jest testem statycznym i nie daje pełnego obrazu pracy magistrali. Nawet przy idealnych 60 omach, magistrala może nie działać poprawnie z powodu zakłóceń elektromagnetycznych (EMI), uszkodzonych transceiverów lub błędów w oprogramowaniu. Jeśli rezystancja jest w normie, kolejnym krokiem musi być analiza dynamiczna za pomocą oscyloskopu.</p>
+
+<p><strong>Kolejność czynności diagnostycznych:</strong></p>
+<ol>
+    <li>Wyłączenie zapłonu i pomiar rezystancji (oczekiwane 60 Ω).</li>
+    <li>Włączenie zapłonu i pomiar napięć spoczynkowych (CANH i CANL względem masy powinny wynosić ok. 2,5 V).</li>
+    <li>Analiza oscyloskopowa podczas transmisji danych: CANH powinno wzrosnąć do ok. 3,5 V, a CANL spaść do ok. 1,5 V.</li>
+</ol>
+
+<p><strong>Typowe błędy i ich objawy:</strong></p>
+<table>
+    <thead>
+        <tr>
+            <th>Objaw</th>
+            <th>Przyczyna</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Rezystancja 120 Ω</td>
+            <td>Przerwa w obwodzie lub brak jednego terminatora.</td>
+        </tr>
+        <tr>
+            <td>Rezystancja 0–20 Ω</td>
+            <td>Zwarcie między liniami CANH/CANL lub do masy.</td>
+        </tr>
+        <tr>
+            <td>Zaokrąglone zbocza sygnału</td>
+            <td>Zbyt duża pojemność magistrali lub uszkodzony przewód.</td>
+        </tr>
+        <tr>
+            <td>"Dzwonienie" (ringing)</td>
+            <td>Niewłaściwa impedancja falowa lub brak ekranowania.</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Zniekształcenia sygnału mogą świadczyć o problemach z impedancją, nawet jeśli rezystancja DC jest poprawna. W takich sytuacjach należy sprawdzić ekranowanie przewodów oraz stan punktów masowych. Pamiętaj, że każdy sterownik posiada własny transceiver, który może ulec uszkodzeniu, "ściągając" napięcie magistrali do masy lub zasilania. W takim przypadku najskuteczniejsza jest <strong>metoda eliminacji</strong>: odpinaj kolejne moduły, obserwując powrót sygnału do normy na oscyloskopie. Zawsze pracuj zgodnie z dokumentacją serwisową, aby nie doprowadzić do przypadkowego zwarcia pinów w gniazdach sterowników podczas pomiarów.</p>
+
+    <h2 id="kontakt-i-uslugi">5. Pomoc techniczna w warsztacie F.W. DRUCIK</h2>
+<h3>Pomoc techniczna w warsztacie F.W. DRUCIK</h3>
+
+<p>Jeśli diagnostyka magistrali CAN sprawia trudności lub posiadasz kody błędów, których nie da się usunąć, zapraszamy do kontaktu z naszym warsztatem. Specjalizujemy się w naprawach elektromechanicznych oraz diagnostyce zaawansowanych systemów sterowania. Kluczowym krokiem weryfikacji fizycznej warstwy sieci jest pomiar rezystancji terminującej, który wykonujemy przy wyłączonym zapłonie i odłączonym akumulatorze.</p>
+
+<p>Prawidłowa sieć CAN High-Speed powinna wykazywać rezystancję <strong>60 Ω</strong> między liniami CAN-H i CAN-L. Wynik ten wynika z połączenia równoległego dwóch rezystorów 120 Ω znajdujących się na końcach magistrali. W warsztacie F.W. DRUCIK stosujemy następującą procedurę:</p>
+
+<ul>
+    <li><strong>Krok 1:</strong> Wyłączenie zapłonu i odczekanie na uśpienie sterowników (ok. 5-10 minut).</li>
+    <li><strong>Krok 2:</strong> Ustawienie multimetru na zakres 200 Ω.</li>
+    <li><strong>Krok 3:</strong> Pomiar na złączu OBDII (piny 6 i 14) lub bezpośrednio przy sterowniku.</li>
+</ul>
+
+<p>Typowe wyniki i ich interpretacja:</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Wartość pomiarowa</th>
+            <th>Diagnoza</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>60 Ω</strong></td>
+            <td>Sieć sprawna, oba terminatory obecne.</td>
+        </tr>
+        <tr>
+            <td><strong>120 Ω</strong></td>
+            <td>Przerwa w obwodzie lub brak jednego terminatora.</td>
+        </tr>
+        <tr>
+            <td><strong>0 Ω lub zwarcie</strong></td>
+            <td>Zwarcie między liniami CAN-H i CAN-L.</td>
+        </tr>
+        <tr>
+            <td><strong>> 120 Ω</strong></td>
+            <td>Wysoka rezystancja przejścia, korozja złączy.</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Typowe objawy uszkodzeń to błędy komunikacji (U-kody), "choinka" na desce rozdzielczej lub brak możliwości połączenia testera diagnostycznego ze sterownikami. Pamiętaj, że nieprawidłowe wpięcie się w magistralę może trwale uszkodzić sterowniki. Zapraszamy do zapoznania się z naszą ofertą w zakresie <a href="/uslugi/elektromechanika/">elektromechaniki</a>. Znajdujemy się w miejscowości Domosław 13A, 06-120 Winnica. Jesteśmy dostępni od poniedziałku do piątku w godzinach 8:00-17:00 oraz w soboty od 9:00 do 13:00. Skontaktuj się z nami pod numerem 601 726 924 lub przez stronę <a href="/kontakt/">kontakt</a>.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Dlaczego pomiar rezystancji CAN zawsze wykonujemy przy odłączonym zasilaniu?</summary>
+        <p>Pomiar rezystancji pod napięciem może doprowadzić do uszkodzenia multimetru oraz sterowników w sieci. Dodatkowo, obecność napięcia w magistrali zafałszuje wynik pomiaru rezystancji.</p>
+      </details>
+      <details>
+        <summary>Czy wynik 60 omów gwarantuje, że magistrala CAN jest w 100% sprawna?</summary>
+        <p>Nie, wynik 60 omów potwierdza jedynie poprawność fizyczną linii i obecność terminatorów. Magistrala może nadal nie działać z powodu błędów logicznych, uszkodzonych transceiverów lub zakłóceń elektromagnetycznych.</p>
+      </details>
+      <details>
+        <summary>Co oznacza wynik 120 omów podczas pomiaru magistrali?</summary>
+        <p>Wartość 120 omów zazwyczaj oznacza, że jeden z dwóch terminatorów magistrali jest uszkodzony lub odłączony. Może to również świadczyć o przerwie w przewodzie magistrali w jednym z jej odcinków.</p>
+      </details>
+      <details>
+        <summary>Gdzie najczęściej szukać uszkodzeń magistrali CAN?</summary>
+        <p>Najczęstszymi punktami awarii są miejsca narażone na wibracje, wilgoć oraz zgięcia, czyli złącza wtykowe, przejścia kablowe między drzwiami a nadwoziem oraz miejsca, gdzie wiązka styka się z ostrymi elementami konstrukcyjnymi.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

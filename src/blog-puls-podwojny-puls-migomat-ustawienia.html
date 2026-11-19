@@ -1,0 +1,134 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Puls i podwójny puls w migomacie — krzywa prądowa i ustawienia",
+  "description": "Kurs MIG/MAG cz. 4: jak działa spawanie impulsowe, kształt krzywej prądowej, synergia, korekta łuku i ustawienia podwójnego pulsu.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-09-26",
+  "dateModified": "2026-09-26",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/puls-podwojny-puls-migomat-ustawienia/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-orange">Spawanie & CNC</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 6 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 26.09.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Puls i podwójny puls w migomacie — krzywa prądowa i ustawienia</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Spoina z migomatu w równe łuski, bez odprysków, na cienkim aluminium — to robota impulsu i podwójnego pulsu. Co maszyna robi z prądem i jak to ustawić: część 4 kursu MIG/MAG.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#puls">Puls: dwa poziomy prądu</a></li>
+      <li><a href="#krzywa">Krzywa prądowa — kształt impulsu</a></li>
+      <li><a href="#synergia">Krzywa synergiczna i korekta łuku</a></li>
+      <li><a href="#podwojny">Podwójny puls: impuls w impulsie</a></li>
+      <li><a href="#luski">Rozstaw łusek i kiedy używać</a></li>
+      <li><a href="#seria">Seria i wsparcie warsztatu</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="puls">1. Puls: dwa poziomy prądu</h2>
+<p>W trybie impulsowym prąd skacze kilkadziesiąt do kilkuset razy na sekundę między dwoma poziomami:</p>
+<ul>
+<li><strong>prądem szczytowym (Ip)</strong> — powyżej progu łuku natryskowego; topi drut i odrywa <strong>jedną kroplę na jeden impuls</strong>,</li>
+<li><strong>prądem bazowym (Ib)</strong> — 20–80 A; podtrzymuje łuk i prawie nie grzeje.</li>
+</ul>
+<p>Efekt: przenoszenie metalu jak w łuku natryskowym, bez odprysków, przy średnim prądzie niskim jak w łuku zwarciowym. Dlatego impuls sprawdza się na cienkiej blasze, aluminium, nierdzewce i przy spawaniu w pozycjach.</p>
+
+    <h2 id="krzywa">2. Krzywa prądowa — kształt impulsu</h2>
+<p>Jeden cykl to narost prądu, szczyt, opad i faza bazowa. Czas trwania cyklu to odwrotność częstotliwości.</p>
+<div class="tabela-wrap"><table>
+<thead><tr><th>Parametr</th><th>Typowo</th><th>Wpływ</th></tr></thead>
+<tbody>
+<tr><td>Czas szczytu tp</td><td>1–3 ms</td><td>dłuższy szczyt — większa kropla i więcej ciepła</td></tr>
+<tr><td>Częstotliwość</td><td>50–300 Hz</td><td>rośnie razem z prędkością podajnika</td></tr>
+<tr><td>Strome zbocza</td><td>—</td><td>twardszy, skupiony łuk, głębsze przetopienie</td></tr>
+<tr><td>Łagodne zbocza</td><td>—</td><td>szerszy, miękki łuk, lepsze zwilżenie brzegów</td></tr>
+</tbody>
+</table></div>
+<p>Jeśli spawarka ma w trybie impulsowym ustawienie dynamiki albo kształtu łuku, to właśnie nim zmieniasz strome i łagodne zbocza.</p>
+
+    <h2 id="synergia">3. Krzywa synergiczna i korekta łuku</h2>
+<p>Program wybierasz według trzech rzeczy: materiału, średnicy drutu i gazu, np. „AlSi5 1.0 Ar”. Maszyna sama dobiera do prędkości podajnika prąd szczytowy, prąd bazowy, częstotliwość i napięcie. <strong>Zły program daje złe spawanie, nawet przy dobrze ustawionej reszcie.</strong></p>
+<p>Ty regulujesz tylko prędkość podajnika (albo prąd) i korektę długości łuku:</p>
+<ul>
+<li><strong>minus</strong> — krótszy, skupiony łuk, mniej podtopień, ale ryzyko wbijania się drutu,</li>
+<li><strong>plus</strong> — dłuższy, szerszy łuk, zaczyna syczeć.</li>
+</ul>
+<p>Zacznij od korekty 0 i zmieniaj o 2–5%.</p>
+
+    <h2 id="podwojny">4. Podwójny puls: impuls w impulsie</h2>
+<p>Na zwykły impuls maszyna nakłada wolną modulację 0,5–5 Hz i przełącza się między <strong>fazą gorącą</strong> (wysoki poziom impulsu) a <strong>zimną</strong> (niski poziom). Daje to spoinę w łuski jak przy TIG-u, mniej ciepła w materiale, lepsze mostkowanie szczelin i mieszanie jeziorka, więc w aluminium mniej porów.</p>
+<div class="tabela-wrap"><table>
+<thead><tr><th>Parametr</th><th>Typowo</th><th>Co robi</th></tr></thead>
+<tbody>
+<tr><td>Częstotliwość</td><td>1–3 Hz</td><td>wyższa: gęstsze, drobniejsze łuski</td></tr>
+<tr><td>Amplituda</td><td>±1–3 m/min albo 20–40%</td><td>większa: wyraźniejsze łuski, mocniejsze chłodzenie</td></tr>
+<tr><td>Udział fazy gorącej</td><td>30–70%, domyślnie 50</td><td>więcej fazy gorącej: głębsze przetopienie</td></tr>
+<tr><td>Korekta łuku w fazie gorącej i zimnej</td><td>osobno</td><td>w zimnej często trochę plus, żeby łuk nie gasł</td></tr>
+</tbody>
+</table></div>
+
+    <h2 id="luski">5. Rozstaw łusek i kiedy używać</h2>
+<p><strong>Rozstaw łusek = prędkość prowadzenia ÷ częstotliwość.</strong> Przykład: 30 cm/min to 5 mm/s; przy 2 Hz łuski wychodzą co 2,5 mm. Prowadź równo — wzór zrobi się sam. Możesz też przesuwać uchwyt w rytm fazy gorącej, wtedy łuski wychodzą równiejsze.</p>
+<p>Podwójny puls włączaj przy aluminium 1,5–6 mm, cienkiej nierdzewce, spoinach widocznych, gdzie liczy się wygląd, oraz pionowo w górę bez ruchu trójkątnego.</p>
+<p><strong>Ćwiczenie:</strong> blacha aluminiowa 3 mm, drut 1,0 AlSi5, 100% argon. Najpierw zwykły impuls, potem podwójny puls przy 1, 2 i 3 Hz przy tej samej prędkości prowadzenia. Trzy ściegi obok siebie pokażą więcej niż ten artykuł.</p>
+
+    <h2 id="seria">6. Seria i wsparcie warsztatu</h2>
+<p>Cała seria kursu MIG/MAG:</p>
+<ol>
+<li><a href="/blog/jak-ustawic-migomat-mig-mag-stal/">Ustawianie migomatu do stali</a></li>
+<li><a href="/blog/technika-spawania-mig-mag-pchanie-ciagniecie-pozycje/">Technika prowadzenia uchwytu</a></li>
+<li><a href="/blog/spawanie-aluminium-migomatem-drut-gaz-technika/">Aluminium migomatem</a></li>
+<li><strong>Puls i podwójny puls</strong> (ten wpis)</li>
+</ol>
+<p>Spawamy stal, nierdzewkę i aluminium metodami MIG/MAG i TIG — konstrukcje, naprawy i elementy na zamówienie. Szczegóły: <a href="/uslugi/spawanie/">spawanie w F.W. DRUCIK</a>. Warsztat: Domosław 13A, 06-120 Winnica, pon.–pt. 8:00–17:00, sob. 9:00–13:00, tel. 601 726 924.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Czym różni się puls od podwójnego pulsu?</summary>
+        <p>Puls przełącza prąd między szczytem i bazą dziesiątki–setki razy na sekundę, odrywając jedną kroplę na impuls. Podwójny puls dodatkowo co 0,2–2 s przełącza cały impuls między fazą gorącą i zimną.</p>
+      </details>
+      <details>
+        <summary>Jak obliczyć rozstaw łusek przy podwójnym pulsie?</summary>
+        <p>Prędkość prowadzenia podzielona przez częstotliwość podwójnego pulsu. Przy 5 mm/s i 2 Hz łuska wypada co 2,5 mm.</p>
+      </details>
+      <details>
+        <summary>Od czego zacząć ustawianie spawania impulsowego?</summary>
+        <p>Od wyboru właściwego programu synergicznego dla materiału, drutu i gazu. Potem prędkość podajnika i korekta łuku od zera, zmiany o 2–5%.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

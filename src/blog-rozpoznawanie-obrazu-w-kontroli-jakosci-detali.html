@@ -1,0 +1,178 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Rozpoznawanie obrazu w kontroli jakości detali — realne możliwości",
+  "description": "Techniczne aspekty systemów wizyjnych w kontroli jakości detali. Dowiedz się, jak wdrożyć inspekcję optyczną w procesach produkcyjnych i serwisowych.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-11-07",
+  "dateModified": "2026-11-07",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/rozpoznawanie-obrazu-w-kontroli-jakosci-detali/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-green">Druk 3D</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 6 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 07.11.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Rozpoznawanie obrazu w kontroli jakości detali — realne możliwości</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Wprowadzenie systemów wizyjnych do kontroli jakości pozwala na automatyzację weryfikacji wymiarowej i wizualnej detali. Analizujemy techniczne aspekty implementacji algorytmów rozpoznawania obrazu w środowisku warsztatowym.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#zasady-optyki">Podstawy optyki i oświetlenia w systemach wizyjnych</a></li>
+      <li><a href="#algorytmy-detekcji">Algorytmy przetwarzania obrazu i klasyfikacja wad</a></li>
+      <li><a href="#procedura-wdrozenia">Procedura wdrożenia stanowiska kontroli wizyjnej</a></li>
+      <li><a href="#bledy-i-diagnostyka">Typowe błędy i diagnostyka systemów wizyjnych</a></li>
+      <li><a href="#praktyka-warsztatowa">Co z tym zrobić w warsztacie F.W. DRUCIK?</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="zasady-optyki">1. Podstawy optyki i oświetlenia w systemach wizyjnych</h2>
+<p>Skuteczność systemów rozpoznawania obrazu w kontroli jakości zależy bezpośrednio od jakości sygnału wejściowego, czyli obrazu z matrycy. W warunkach warsztatowych kluczowym parametrem jest stosunek sygnału do szumu (SNR) oraz odpowiednie oświetlenie sceny. Zgodnie z zasadami inżynierii optycznej, oświetlenie musi być dobrane do tekstury i materiału badanego detalu. W przypadku elementów metalowych, gdzie występuje zjawisko odbicia zwierciadlanego, stosuje się oświetlacze typu kopułowego (dome lights) lub pierścieniowe z dyfuzorami, aby uniknąć tzw. hot-spotów, które mogą być błędnie interpretowane przez algorytmy jako wady powierzchniowe.</p><p>Rozdzielczość matrycy musi być dobrana do najmniejszego wykrywalnego defektu. Jeśli wymagana dokładność pomiarowa wynosi 0,05 mm (wartość orientacyjna, zależna od specyfikacji projektu), pole widzenia (FOV) kamery powinno być tak skalkulowane, aby jeden piksel odpowiadał maksymalnie 1/3 tej wartości, czyli ok. 0,016 mm. Należy pamiętać o zniekształceniach geometrycznych obiektywu, takich jak dystorsja beczkowata czy poduszkowata, które wymagają kalibracji programowej za pomocą tablic wzorcowych (np. szachownicy). Wartość ogniskowej obiektywu dobiera się według wzoru: f = (w * d) / W, gdzie w to szerokość matrycy, d to dystans od obiektu, a W to szerokość pola widzenia. Każdy z tych parametrów musi być zweryfikowany w dokumentacji technicznej użytego sensora.</p><p>Ostrzeżenie BHP: Praca z systemami oświetlenia o dużej mocy, zwłaszcza w zakresie światła podczerwonego lub UV, wymaga stosowania odpowiednich środków ochrony wzroku. Należy również upewnić się, że zasilacze oświetlaczy posiadają odpowiednie stopnie ochrony IP, jeśli pracują w środowisku o podwyższonym zapyleniu lub wilgotności, zgodnie z normą PN-EN 60529.</p>
+
+    <h2 id="algorytmy-detekcji">2. Algorytmy przetwarzania obrazu i klasyfikacja wad</h2>
+<p>W procesie kontroli jakości wykorzystuje się szereg metod przetwarzania obrazu, od prostych operacji morfologicznych po zaawansowane sieci neuronowe. Podstawową techniką jest progowanie (thresholding), które pozwala na wyodrębnienie obiektu z tła. Wartość progu (threshold) może być stała lub adaptacyjna, zależnie od stabilności oświetlenia. Po binaryzacji obrazu stosuje się operacje erozji i dylatacji, które eliminują szum impulsowy i wygładzają krawędzie detalu. Kolejnym krokiem jest analiza blobów (blob analysis), pozwalająca na wyznaczenie parametrów geometrycznych, takich jak pole powierzchni, obwód, środek ciężkości czy orientacja.</p><p>Dla bardziej złożonych defektów, takich jak mikropęknięcia czy wtrącenia, stosuje się filtry splotowe (np. filtr Sobela lub Canny'ego) do detekcji krawędzi. Wartości progowe dla tych filtrów są dobierane eksperymentalnie i muszą być okresowo weryfikowane w zależności od partii materiału. W przypadku systemów uczących się (Deep Learning), model wymaga zbioru treningowego zawierającego tysiące obrazów poprawnych i wadliwych detali. Kluczowym błędem jest tzw. overfitting, czyli nadmierne dopasowanie modelu do zbioru treningowego, co skutkuje brakiem generalizacji i błędną klasyfikacją detali o minimalnych odchyleniach od wzorca.</p><p>Należy pamiętać, że systemy wizyjne nie zastępują w pełni pomiarów stykowych w sytuacjach, gdzie wymagana jest precyzja rzędu mikrometrów (np. pomiar chropowatości powierzchni). W takich przypadkach system wizyjny służy jedynie do wstępnej selekcji (pre-screening). Każdy algorytm musi być poddany walidacji zgodnie z normami jakościowymi obowiązującymi w danym zakładzie, a wyniki klasyfikacji powinny być logowane w systemie nadrzędnym w celu zapewnienia pełnej identyfikowalności procesu (traceability).</p>
+
+    <h2 id="procedura-wdrozenia">3. Procedura wdrożenia stanowiska kontroli wizyjnej</h2>
+<h3>Procedura wdrożenia stanowiska kontroli wizyjnej</h3>
+
+<p>Wdrożenie stanowiska kontroli wizyjnej w warsztacie wymaga zachowania rygorystycznej kolejności czynności, aby zapewnić powtarzalność wyników. Poniżej przedstawiono standardową procedurę przygotowania stanowiska:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Krok</th>
+      <th>Czynność</th>
+      <th>Uwagi techniczne</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Stabilizacja mechaniczna</td>
+      <td>Montaż na sztywnym profilu aluminiowym, drgania poniżej 0,05 mm.</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Kalibracja optyczna</td>
+      <td>Ustawienie przysłony na f/5.6–f/8 dla optymalnej głębi ostrości.</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Wzorcowanie</td>
+      <td>Użycie płytki kalibracyjnej z dokładnością wymiarową ±0,005 mm.</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Konfiguracja oświetlenia</td>
+      <td>Natężenie światła min. 5000 lx, kąt padania 45° dla eliminacji odblasków.</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Testy powtarzalności</td>
+      <td>Wykonanie min. 50 cykli pomiarowych dla tego samego detalu.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Podczas testów powtarzalności należy zwrócić uwagę na wskaźnik <strong>Gage R&R</strong>. Jeśli wynik przekracza 30% tolerancji detalu, system uznaje się za niezdolny do kontroli. W praktyce przemysłowej dążymy do wartości poniżej 10%.</p>
+
+<p><strong>Typowe błędy wdrożeniowe i ich objawy:</strong></p>
+<ul>
+  <li><strong>Niestabilne oświetlenie:</strong> Objawia się "pływaniem" wyników pomiarowych w zależności od pory dnia lub pracy oświetlenia hali.</li>
+  <li><strong>Błędy paralaksy:</strong> Wynikają z niewłaściwego kąta ustawienia kamery względem detalu, co powoduje zniekształcenia geometryczne (np. owalizacja otworów).</li>
+  <li><strong>Zakłócenia elektromagnetyczne:</strong> Montaż przewodów sygnałowych obok kabli zasilających silniki dużej mocy powoduje "szum" na obrazie lub zrywanie komunikacji (błędy typu <em>packet loss</em>).</li>
+</ul>
+
+<p>Należy unikać montażu kamer w pobliżu źródeł silnych zakłóceń, chyba że zastosowano ekranowanie przewodów zgodnie z normą <strong>PN-EN 61000</strong>. Każdy system musi przejść walidację, w której weryfikuje się rozdzielczość układu (np. 0,02 mm/piksel). Pamiętaj, że wartości te są orientacyjne i muszą być każdorazowo przeliczane zgodnie z dokumentacją techniczną konkretnego procesu produkcyjnego.</p>
+
+    <h2 id="bledy-i-diagnostyka">4. Typowe błędy i diagnostyka systemów wizyjnych</h2>
+<p>Najczęstszym błędem w eksploatacji systemów wizyjnych jest degradacja jakości obrazu spowodowana zabrudzeniem optyki lub zmianami w charakterystyce widmowej oświetlaczy (np. starzenie się diod LED). Objawia się to dryftem wyników pomiarowych, gdzie system zaczyna odrzucać poprawne detale (tzw. false rejection). Diagnostykę należy rozpocząć od sprawdzenia czystości soczewek oraz weryfikacji natężenia oświetlenia za pomocą luksomierza. Wartości natężenia światła powinny być zgodne z dokumentacją projektową stanowiska; odchylenia większe niż 10% wymagają kalibracji sterownika oświetlenia.</p><p>Innym problemem jest niestabilność oprogramowania wynikająca z błędów w komunikacji magistralnej (np. Ethernet/IP, PROFINET). Jeśli system wizyjny przesyła błędne dane do sterownika PLC, należy sprawdzić integralność ramek danych oraz czas cyklu (scan time). Opóźnienia w przetwarzaniu obrazu mogą prowadzić do sytuacji, w której detal opuszcza strefę inspekcji przed zakończeniem analizy. W takim przypadku konieczne jest zwiększenie mocy obliczeniowej jednostki przetwarzającej lub optymalizacja kodu algorytmu (np. poprzez zmniejszenie rozdzielczości przetwarzanego obszaru zainteresowania - ROI).</p><p>Ostrzeżenie BHP: Wszelkie prace serwisowe przy układach zasilania kamer i oświetlaczy muszą być wykonywane przy wyłączonym zasilaniu. W przypadku systemów zintegrowanych z liniami produkcyjnymi, należy bezwzględnie stosować procedury LOTO (Lockout/Tagout) przed przystąpieniem do czyszczenia lub wymiany komponentów optycznych. Nie wolno kasować błędów systemowych w sterowniku PLC bez wcześniejszego usunięcia fizycznej przyczyny awarii, gdyż może to doprowadzić do uszkodzenia mechanicznego maszyny.</p>
+
+    <h2 id="praktyka-warsztatowa">5. Co z tym zrobić w warsztacie F.W. DRUCIK?</h2>
+<h3>Co z tym zrobić w warsztacie F.W. DRUCIK?</h3>
+
+<p>W warsztacie F.W. DRUCIK (Domosław 13A, 06-120 Winnica) zajmujemy się technicznym wsparciem w zakresie utrzymania ruchu i modernizacji systemów sterowania. Jeśli Państwa park maszynowy wymaga wdrożenia lub serwisu systemów wizyjnych, zapraszamy do konsultacji. Nasze działania obejmują diagnostykę układów sterowania, serwis elektroniki przemysłowej oraz wsparcie w optymalizacji procesów produkcyjnych. Nie zajmujemy się projektowaniem systemów od zera, lecz wspieramy technicznie istniejące instalacje, które wymagają kalibracji lub naprawy elektroniki sterującej.</p>
+
+<p>W przypadku problemów z automatyką, zapraszamy do zapoznania się z naszą ofertą na stronie <a href="/uslugi/maszyny-cnc/">maszyny-cnc</a> oraz <a href="/uslugi/elektromechanika/">elektromechanika</a>. Nasze godziny pracy to Pon-Pt 8-17 oraz Sob 9-13. W sprawach pilnych prosimy o kontakt telefoniczny pod numerem 601 726 924 lub mailowy na adres fwdrucik@gmail.com. NIP firmy: 888-292-19-00. Przed wizytą prosimy o przygotowanie dokumentacji technicznej urządzenia, co znacznie przyspieszy proces diagnostyki i pozwoli na rzetelną ocenę możliwości naprawy.</p>
+
+<p>Proces serwisowy w F.W. DRUCIK przebiega według ściśle określonej procedury:</p>
+<ol>
+    <li><strong>Weryfikacja oświetlenia:</strong> Sprawdzenie natężenia światła (optymalnie 500-1000 lx) oraz stabilności zasilacza (napięcie 24V DC ±0.5V).</li>
+    <li><strong>Kalibracja optyki:</strong> Ustawienie ostrości (focus) i przysłony dla uzyskania rozdzielczości min. 0.1 mm na piksel.</li>
+    <li><strong>Testy programowe:</strong> Weryfikacja progów detekcji (threshold) oraz czasu odpowiedzi (typowo < 50 ms).</li>
+</ol>
+
+<p>Poniżej przedstawiamy typowe problemy, z którymi zgłaszają się nasi klienci:</p>
+<table>
+    <thead>
+        <tr>
+            <th>Typ błędu</th>
+            <th>Objawy</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Dryft oświetlenia</td>
+            <td>Fałszywe odrzuty (False Reject) przy zmianie pory dnia.</td>
+        </tr>
+        <tr>
+            <td>Zabrudzenie matrycy</td>
+            <td>Stałe plamy na obrazie, błędy detekcji krawędzi.</td>
+        </tr>
+        <tr>
+            <td>Błąd komunikacji</td>
+            <td>Opóźnienia w sygnale wyjściowym (I/O) powyżej 200 ms.</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Pamiętaj: każda ingerencja w układ sterowania maszyny musi być odnotowana w książce serwisowej. Nieprawidłowe ustawienia parametrów wizji mogą prowadzić do błędnej selekcji detali, co w skrajnych przypadkach skutkuje wypuszczeniem wadliwego produktu do klienta końcowego. Działaj zgodnie z dokumentacją producenta i normami jakościowymi obowiązującymi w Twoim zakładzie.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Czy system wizyjny może zastąpić czujnik indukcyjny?</summary>
+        <p>System wizyjny oferuje znacznie szersze możliwości analizy, ale jest droższy i bardziej skomplikowany w utrzymaniu. Czujnik indukcyjny jest wystarczający do prostego wykrywania obecności detalu, podczas gdy wizja służy do oceny jakości i wymiarów.</p>
+      </details>
+      <details>
+        <summary>Jak często należy kalibrować system wizyjny?</summary>
+        <p>Częstotliwość kalibracji zależy od stabilności środowiska i wymagań jakościowych. Zaleca się sprawdzanie poprawności wskazań przy każdej zmianie partii produkcyjnej lub po każdej ingerencji w układ optyczny.</p>
+      </details>
+      <details>
+        <summary>Czy oświetlenie LED wpływa na żywotność systemu?</summary>
+        <p>Tak, diody LED z czasem tracą swoją jasność, co zmienia parametry obrazu. Należy monitorować natężenie światła i w razie potrzeby korygować czas naświetlania w oprogramowaniu lub wymienić oświetlacz.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

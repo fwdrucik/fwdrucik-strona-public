@@ -1,0 +1,99 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "UDS (ISO 14229) — usługi diagnostyczne, sesje, kody NRC w praktyce warsztatowej",
+  "description": "Praktyczny przewodnik po protokole UDS ISO 14229 dla mechaników. Zrozum sesje diagnostyczne, kody NRC i obsługę błędów w nowoczesnych sterownikach.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-06-09",
+  "dateModified": "2026-06-09",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/uds-iso-14229-diagnostyka-warsztatowa/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-blue">Elektronika i magistrale</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 8 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 15.08.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">UDS (ISO 14229) — usługi diagnostyczne, sesje, kody NRC w praktyce warsztatowej</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">UDS według ISO 14229: struktura komunikacji i jej zastosowanie w diagnostyce elektroniki pojazdu.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#wprowadzenie">Czym jest UDS w praktyce warsztatowej</a></li>
+      <li><a href="#sesje">Sesje diagnostyczne i ich znaczenie</a></li>
+      <li><a href="#kody_nrc">Interpretacja kodów NRC (Negative Response Codes)</a></li>
+      <li><a href="#bezpieczenstwo">Bezpieczeństwo i praca z magistralą</a></li>
+      <li><a href="#praktyka">Co z tym zrobić w warsztacie</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="wprowadzenie">1. Czym jest UDS w praktyce warsztatowej</h2>
+<p>UDS (Unified Diagnostic Services) to protokół warstwy aplikacji zdefiniowany w normie <strong>ISO 14229</strong>. W przeciwieństwie do starszych standardów, UDS jest niezależny od warstwy fizycznej (CAN, LIN, Ethernet, FlexRay). W warsztacie najczęściej spotykamy się z nim na magistrali CAN (ISO 15765). Kluczową cechą UDS jest struktura ramki: bajt SID (Service Identifier) określa usługę, a kolejne bajty to parametry. Zawsze weryfikuj dokumentację producenta pojazdu, ponieważ standard ISO 14229 określa ramy, ale implementacja usług (np. odczyt pamięci, kasowanie błędów) może się różnić zależnie od marki.</p>
+
+    <figure>
+      <img src="/assets/blog/uds-iso-14229-diagnostyka-warsztatowa.jpg" width="1280" height="853" loading="lazy" alt="UDS (ISO 14229) — usługi diagnostyczne, sesje, kody NRC w praktyce warsztatowej">
+      <figcaption>Złącze diagnostyczne OBD-II, przez które realizowana jest komunikacja w standardzie UDS.
+        <span class="zrodlo">Fot. <a href="https://commons.wikimedia.org/wiki/File:2016-07_ODB-II_connector_01.JPG" target="_blank" rel="noopener nofollow">0x010C</a>, licencja <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener nofollow">CC BY-SA 4.0</a>, Wikimedia Commons.</span>
+      </figcaption>
+    </figure>
+
+
+    <h2 id="sesje">2. Sesje diagnostyczne i ich znaczenie</h2>
+<p>Komunikacja UDS odbywa się w ramach sesji (Diagnostic Session Control - SID 0x10). Każda sesja otwiera dostęp do określonych usług:</p><ul><li><strong>Default Session (0x01)</strong>: Tryb domyślny, w którym pojazd znajduje się po włączeniu zapłonu.</li><li><strong>Programming Session (0x02)</strong>: Używana przy aktualizacji oprogramowania sterownika.</li><li><strong>Extended Diagnostic Session (0x03)</strong>: Niezbędna do zaawansowanych funkcji, takich jak adaptacje czy testy elementów wykonawczych.</li></ul><p><em>Uwaga BHP:</em> Przejście w tryb programowania przy niestabilnym zasilaniu może doprowadzić do trwałego uszkodzenia sterownika (tzw. uceglenie). Zawsze stosuj stabilizator napięcia o wydajności prądowej zgodnej z wymogami producenta (wartość orientacyjna: 13.5V-14.2V, sprawdź w instrukcji serwisowej).</p>
+
+    <h2 id="kody_nrc">3. Interpretacja kodów NRC (Negative Response Codes)</h2>
+<p>Jeśli sterownik nie może wykonać żądanej usługi, odpowiada kodem NRC (SID 0x7F + SID usługi + kod NRC). Zrozumienie tych kodów pozwala uniknąć błędnej diagnozy:</p><table><thead><tr><th>Kod NRC</th><th>Znaczenie</th></tr></thead><tbody><tr><td>0x11</td><td>Service not supported</td></tr><tr><td>0x12</td><td>Sub-function not supported</td></tr><tr><td>0x13</td><td>Incorrect message length</td></tr><tr><td>0x22</td><td>Conditions not correct</td></tr><tr><td>0x31</td><td>Request out of range</td></tr><tr><td>0x78</td><td>Response pending</td></tr></tbody></table><p>Kod 0x78 jest szczególnie ważny — oznacza, że sterownik potrzebuje więcej czasu na wykonanie operacji (np. kasowanie pamięci Flash). Nie przerywaj komunikacji, jeśli widzisz ten kod.</p>
+
+    <h2 id="bezpieczenstwo">4. Bezpieczeństwo i praca z magistralą</h2>
+<p>Praca z UDS wymaga świadomości, że kasowanie błędów (SID 0x14) bez usunięcia przyczyny (np. uszkodzony czujnik, zwarcie w wiązce) jest działaniem doraźnym. <strong>Ostrzeżenie BHP:</strong> Nigdy nie wykonuj testów elementów wykonawczych (np. włączanie wentylatorów, pompy paliwa) przy otwartej masce, jeśli nie masz pewności co do stanu technicznego instalacji. Wartości napięć i rezystancji dla czujników muszą być zawsze porównywane z danymi serwisowymi konkretnego modelu (wartości orientacyjne dla czujników temperatury: 2k-10k Ohm w 20°C, sprawdź w dokumentacji).</p>
+
+    <h2 id="praktyka">5. Co z tym zrobić w warsztacie</h2>
+<p>Jeśli Twoje narzędzia diagnostyczne zwracają błędy komunikacji lub nie możesz uzyskać dostępu do zaawansowanych funkcji sterownika, problemem może być niekompatybilność protokołu lub brak odpowiednich uprawnień w sesji. W F.W. DRUCIK zajmujemy się diagnostyką zaawansowaną. Zapraszamy do zapoznania się z naszą ofertą na <a href="/uslugi/elektromechanika/">elektromechanikę</a>. W przypadku problemów z elektroniką sterującą, prosimy o <a href="/kontakt/">kontakt</a> z naszym warsztatem w Domosławiu. Pamiętaj, że każda ingerencja w oprogramowanie sterownika musi być poprzedzona weryfikacją stanu fizycznego instalacji elektrycznej.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Czy każdy skaner obsługuje wszystkie usługi UDS?</summary>
+        <p>Nie. Zakres UDS zależy od skanera i pojazdu. Proste urządzenia często tylko odczytują błędy, bez sesji rozszerzonych.</p>
+      </details>
+      <details>
+        <summary>Co oznacza kod NRC 0x22?</summary>
+        <p>0x22 oznacza niespełnione warunki usługi, np. niewłaściwy stan silnika przy adaptacji lub poruszający się pojazd.</p>
+      </details>
+      <details>
+        <summary>Czy mogę uszkodzić sterownik poprzez UDS?</summary>
+        <p>Tak, szczególnie podczas prób zapisu danych lub aktualizacji oprogramowania. Ryzyko wzrasta przy spadkach napięcia, dlatego zawsze używaj stabilnego zasilania podczas diagnostyki.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

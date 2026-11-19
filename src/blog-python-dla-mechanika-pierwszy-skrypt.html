@@ -1,0 +1,103 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Python od zera dla mechanika: pierwszy skrypt, który coś liczy",
+  "description": "Wprowadzenie do Pythona dla mechaników i techników utrzymania ruchu. Naucz się pisać proste skrypty do obliczeń technicznych w warsztacie.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-08-16",
+  "dateModified": "2026-08-16",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/python-dla-mechanika-pierwszy-skrypt/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-orange">Programowanie i kursy</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 8 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 16.08.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Python od zera dla mechanika: pierwszy skrypt, który coś liczy</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Pierwszy skrypt w Pythonie: przeliczanie jednostek i parametrów technicznych używanych w warsztacie.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#srodowisko">Przygotowanie środowiska pracy</a></li>
+      <li><a href="#zmienne">Zmienne i typy danych w praktyce</a></li>
+      <li><a href="#operatory">Podstawowe operacje matematyczne</a></li>
+      <li><a href="#skrypt">Twój pierwszy skrypt: przelicznik jednostek</a></li>
+      <li><a href="#bezpieczenstwo">Ostrzeżenia i weryfikacja danych</a></li>
+      <li><a href="#praktyka">Zastosowanie w warsztacie F.W. DRUCIK</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="srodowisko">1. Przygotowanie środowiska pracy</h2>
+<p>Aby uruchomić kod w Pythonie, nie potrzebujesz zaawansowanego oprogramowania. Wystarczy instalacja interpretera ze strony python.org. Dla celów warsztatowych zalecam użycie edytora VS Code lub prostego notatnika z obsługą składni.</p><p><strong>BHP:</strong> Pamiętaj, że skrypty obliczeniowe służą jedynie jako wsparcie decyzji. Każda wartość wyliczona przez program musi zostać zweryfikowana z dokumentacją techniczną producenta maszyny lub normą ISO/DIN. Nigdy nie ufaj wynikom obliczeń bez sprawdzenia ich w instrukcji serwisowej.</p>
+
+    <figure>
+      <img src="/assets/blog/python-dla-mechanika-pierwszy-skrypt.jpg" width="684" height="1024" loading="lazy" alt="Python od zera dla mechanika: pierwszy skrypt, który coś liczy">
+      <figcaption>Wykorzystanie komputera do diagnostyki i obliczeń technicznych w środowisku warsztatowym.
+        <span class="zrodlo">Fot. <a href="https://www.flickr.com/photos/26344495@N05/47741393671" target="_blank" rel="noopener nofollow">Ivan Radic</a>, <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener nofollow">CC BY 2.0</a>, Openverse.</span>
+      </figcaption>
+    </figure>
+
+
+    <h2 id="zmienne">2. Zmienne i typy danych w praktyce</h2>
+<p>W Pythonie zmienne przechowują wartości, które wykorzystasz w obliczeniach. W mechanice najczęściej operujemy na liczbach zmiennoprzecinkowych (float), które pozwalają na precyzyjne określenie wymiarów czy ciśnień.</p><ul><li><code>int</code>: liczby całkowite (np. liczba obrotów na minutę).</li><li><code>float</code>: liczby z przecinkiem (np. średnica tłoka w mm).</li><li><code>str</code>: ciągi znaków (np. nazwa części).</li></ul><p>Przykład definicji zmiennej: <code>srednica_tloka = 82.5</code>. Pamiętaj, że w Pythonie używamy kropki jako separatora dziesiętnego, zgodnie ze standardem międzynarodowym.</p>
+
+    <h2 id="operatory">3. Podstawowe operacje matematyczne</h2>
+<p>Python działa jak zaawansowany kalkulator. Poniżej przedstawiam zestawienie operatorów, które najczęściej wykorzystasz w pracy technicznej:</p><table><thead><tr><th>Operator</th><th>Działanie</th><th>Przykład</th></tr></thead><tbody><tr><td>+</td><td>Dodawanie</td><td>a + b</td></tr><tr><td>-</td><td>Odejmowanie</td><td>a - b</td></tr><tr><td>*</td><td>Mnożenie</td><td>a * b</td></tr><tr><td>/</td><td>Dzielenie</td><td>a / b</td></tr><tr><td>**</td><td>Potęgowanie</td><td>a ** 2</td></tr></tbody></table><p><em>Uwaga:</em> Przy obliczeniach związanych z wytrzymałością materiałów (np. siła nacisku w N), zawsze sprawdzaj jednostki wejściowe. Błąd w jednostkach (np. mm zamiast m) jest najczęstszą przyczyną awarii obliczeniowych.</p>
+
+    <h2 id="skrypt">4. Twój pierwszy skrypt: przelicznik jednostek</h2>
+<p>Stwórzmy prosty skrypt, który przeliczy moment obrotowy z Nm na lb-ft. Jest to częsta potrzeba przy pracy z dokumentacją amerykańską.</p><p>Kod skryptu:</p><code>moment_nm = 100<br>przelicznik = 0.73756<br>moment_lbft = moment_nm * przelicznik<br>print(f"Moment wynosi: {moment_lbft} lb-ft")</code><p>Kod mnoży wartość przez 0.73756. Dokładność zależy od zaokrąglenia; wynik sprawdź z tabelą przeliczeń w dokumentacji urządzenia.</p>
+
+    <h2 id="bezpieczenstwo">5. Ostrzeżenia i weryfikacja danych</h2>
+<p>Automatyzacja nie zwalnia z myślenia. <strong>BHP:</strong> Jeśli używasz skryptu do wyliczania parametrów układów wysokiego ciśnienia lub instalacji elektrycznych, każdorazowo porównaj wynik z danymi na tabliczce znamionowej. Błędne założenia w kodzie mogą doprowadzić do uszkodzenia komponentów lub zagrożenia zdrowia.</p><p>Nigdy nie kasuj kodów błędów za pomocą skryptów diagnostycznych bez wcześniejszego usunięcia przyczyny usterki. Skrypt powinien służyć do analizy danych, a nie do maskowania problemów technicznych.</p>
+
+    <h2 id="praktyka">6. Zastosowanie w warsztacie F.W. DRUCIK</h2>
+<p>Jeśli potrzebujesz wsparcia w zaawansowanej diagnostyce, programowaniu sterowników lub naprawach wymagających precyzyjnych obliczeń, zapraszamy do kontaktu. Nasz warsztat zajmuje się szerokim zakresem prac, od <a href="/uslugi/elektromechanika/">elektromechaniki</a> po <a href="/uslugi/maszyny-cnc/">maszyny CNC</a>.</p><p>Masz problem z nietypowym sterowaniem lub potrzebujesz wsparcia w utrzymaniu ruchu? Skontaktuj się z nami pod numerem 601 726 924 lub odwiedź nas w Domosławie 13A. Szczegółowe informacje znajdziesz na stronie <a href="/kontakt/">kontakt</a>.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Czy muszę znać angielski, żeby pisać w Pythonie?</summary>
+        <p>Angielski techniczny pomaga czytać dokumentację i błędy. Słów kluczowych Pythona można nauczyć się podczas pisania skryptów.</p>
+      </details>
+      <details>
+        <summary>Czy skrypt może uszkodzić sterownik w samochodzie?</summary>
+        <p>Sam kod obliczeniowy nie uszkodzi sterownika, dopóki tylko przetwarza dane. Niebezpieczne staje się przesyłanie błędnych wartości do sterownika przez interfejs diagnostyczny, dlatego zawsze należy weryfikować dane przed ich wysłaniem.</p>
+      </details>
+      <details>
+        <summary>Gdzie szukać pomocy, gdy skrypt nie działa?</summary>
+        <p>Warto zacząć od analizy komunikatu o błędzie, który Python wyświetla w konsoli. Często wskazuje on konkretną linię kodu, w której wystąpił problem, np. literówkę lub brakujący nawias.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

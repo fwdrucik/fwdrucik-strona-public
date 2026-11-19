@@ -1,0 +1,346 @@
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Strefa Zarządzania</div>
+    <h1>Panel Administratora F.W. DRUCIK</h1>
+    <p class="lead">Zarządzaj forum, komentarzami i kontami. Dostęp wymaga roli administratora.</p>
+  </div>
+</section>
+
+<section class="diamond-bg" id="admin-app">
+  <div class="container">
+
+    <!-- Bramka logowania (dla nieautoryzowanych) -->
+    <div id="admin-gate-login" class="auth-box" style="display:block;">
+      <h2 style="font-size:1.3rem;color:#fff;margin-bottom:12px;">🔒 Dostęp zastrzeżony</h2>
+      <p style="color:var(--muted);font-size:0.88rem;margin-bottom:20px;">Zaloguj się kontem administratora. Uprawnienia weryfikuje serwer — ukrycie tej sekcji w przeglądarce niczego samo w sobie nie chroni.</p>
+
+      <div id="admin-login-note" style="margin-bottom:14px;font-size:0.9rem;font-weight:600;"></div>
+
+      <form id="admin-login-form">
+        <div class="form-group">
+          <label for="admin-login">E-mail lub nick:</label>
+          <input type="text" id="admin-login" class="form-control" autocomplete="username" required>
+        </div>
+        <div class="form-group">
+          <label for="admin-password">Hasło:</label>
+          <input type="password" id="admin-password" class="form-control" autocomplete="current-password" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Zaloguj się →</button>
+      </form>
+    </div>
+
+    <!-- Pulpit administratora -->
+    <div id="admin-dashboard-content" class="admin-dashboard" style="display:none;">
+      <div class="admin-sidebar">
+        <h2 style="color:#fff;font-family:'Oswald',sans-serif;margin-bottom:16px;font-size:1.15rem;">Panel zarządzania</h2>
+        <ul class="admin-menu"><li><a href="#rozmowy">Rozmowy z klientami</a></li><li><a href="#panel-tresci">Edytuj teksty strony</a></li>
+          <li><a href="#kolejka" class="active">🛡️ Kolejka moderacji (<span id="mod-licznik">0</span>)</a></li>
+          <li><a href="#konta">👥 Konta użytkowników</a></li>
+          <li><a href="#tresci">✏️ Treści na stronie</a></li>
+          <li><a href="#panel-sklep">🛒 Produkty w sklepie</a></li>
+          <li><a href="/blog/" target="_blank" rel="noopener">📰 Przeglądaj bloga</a></li>
+          <li><a href="/forum/" target="_blank" rel="noopener">💬 Przeglądaj forum</a></li>
+        </ul>
+
+        <div style="margin-top:30px;padding-top:20px;border-top:1px solid var(--line);">
+          <div style="font-size:0.82rem;color:var(--muted);margin-bottom:8px;">Zalogowany jako:</div>
+          <div style="font-weight:700;color:var(--orange);">👑 <span data-pole="nick">—</span></div>
+          <button class="btn btn-outline btn-logout" style="margin-top:14px;width:100%;font-size:0.8rem;padding:8px 12px;">Wyloguj</button>
+        </div>
+      </div>
+
+      <div>
+        <!-- Kolejka moderacji -->
+        <div class="agent-config-panel" id="kolejka">
+          <h2 style="color:#fff;margin:0 0 6px;font-size:1.15rem;">🛡️ Kolejka moderacji</h2>
+          <p style="color:var(--muted);font-size:0.85rem;margin:0 0 14px;">Wątki, odpowiedzi i komentarze nowych użytkowników czekające na decyzję. Zatwierdzenie pierwszego wpisu sprawia, że kolejne treści tego autora publikują się od razu.</p>
+          <div id="mod-kolejka">
+            <p style="color:var(--muted);">Wczytywanie kolejki...</p>
+          </div>
+        </div>
+
+        <!-- Konta użytkowników -->
+        <div class="agent-config-panel" id="konta" style="margin-top:24px;">
+          <h2 style="color:#fff;margin:0 0 6px;font-size:1.15rem;">👥 Konta użytkowników</h2>
+          <p style="color:var(--muted);font-size:0.85rem;margin:0 0 14px;">Blokada konta natychmiast unieważnia wszystkie jego otwarte sesje.</p>
+          <div id="mod-uzytkownicy">
+            <p style="color:var(--muted);">Wczytywanie kont...</p>
+          </div>
+        </div>
+
+        <!-- Wszystkie treści: edycja, ukrywanie, usuwanie -->
+        <div class="agent-config-panel" id="tresci" style="margin-top:24px;">
+          <h2 style="color:#fff;margin:0 0 6px;font-size:1.15rem;">✏️ Treści na stronie</h2>
+          <p style="color:var(--muted);font-size:0.85rem;margin:0 0 14px;"><strong>Ukryj</strong> robi treść prywatną — znika ze strony i z Google, nic nie jest kasowane, można przywrócić. Na forum autor dalej widzi swój wpis. Wpisy bloga zmieniają się na stronie po minucie–dwóch (przebudowa serwisu).</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+            <select id="tresci-typ" class="form-control" style="max-width:220px;" aria-label="Rodzaj treści">
+              <option value="watek">Wątki forum</option>
+              <option value="odpowiedz">Odpowiedzi na forum</option>
+              <option value="komentarz">Komentarze pod wpisami</option>
+              <option value="wpis">Wpisy bloga</option>
+            </select>
+            <input type="search" id="tresci-szukaj" class="form-control" style="flex:1;min-width:200px;" placeholder="Szukaj w treści…" aria-label="Szukaj w treści">
+          </div>
+          <div id="tresci-lista"></div>
+        </div>
+
+        <!-- Kolejka publikacji -->
+        <div class="agent-config-panel" style="margin-top:24px;">
+          <h2 style="color:#fff;margin:0 0 6px;font-size:1.15rem;">🗂️ Kolejka publikacji</h2>
+          <p style="color:var(--muted);font-size:0.85rem;margin:0;">Wpisy blogowe generuje osobny skrypt uruchamiany poza przeglądarką — z kluczem API trzymanym na komputerze, buildem i kontrolą jakości przed publikacją. Wcześniejszy czat w tym panelu wysyłał klucz Gemini prosto z przeglądarki i nie publikował niczego naprawdę, więc został usunięty.</p>
+        </div>
+
+        <!-- ================================================ SKLEP -->
+        <div class="agent-config-panel" id="panel-sklep" style="margin-top:24px;">
+          <h2 style="color:#fff;margin:0 0 6px;font-size:1.15rem;">🛒 Produkty w sklepie</h2>
+          <p style="color:var(--muted);font-size:0.85rem;margin:0 0 14px;">
+            Dodawaj, edytuj, publikuj i ukrywaj produkty. Status <strong>szkic</strong> i
+            <strong>ukryty</strong> widzisz tylko Ty — klienci ich nie zobaczą ani w sklepie,
+            ani pod bezpośrednim adresem.
+          </p>
+
+          <div style="display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap;">
+            <button type="button" class="btn btn-primary" id="produkt-dodaj">+ Dodaj produkt</button>
+            <button type="button" class="btn btn-outline" id="allegro-import-otworz" style="border-color:#ff5a00; color:#ff8a3d;">⚡ Importuj z linku Allegro</button>
+          </div>
+
+          <div id="allegro-import-panel" style="display:none; margin-bottom:20px; padding:16px; background:rgba(255,90,0,0.08); border:1px solid rgba(255,90,0,0.3); border-radius:8px;">
+            <h3 style="margin:0 0 8px; color:#ff8a3d; display:flex; align-items:center; gap:8px;">
+              <span>⚡</span> Błyskawiczny import z aukcji Allegro
+            </h3>
+            <p style="margin:0 0 10px; font-size:0.88rem; color:var(--text-muted,#94a3b8);">
+              Wklej link do aukcji na Allegro. System pobierze ustandaryzowany opis, tytuł (max 75 zn.), cenę oraz zdjęcia i natychmiast utworzy gotowy produkt w sklepie:
+            </p>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <input type="url" id="allegro-import-url" class="form-control" placeholder="https://allegro.pl/oferta/..." style="flex:1; min-width:260px;">
+              <button type="button" class="btn btn-primary" id="allegro-import-wykonaj" style="background:#ff5a00; border-color:#ff5a00;">Pobierz i opublikuj</button>
+              <button type="button" class="btn btn-outline" id="allegro-import-anuluj">Anuluj</button>
+            </div>
+            <div id="allegro-import-komunikat" style="margin-top:10px; font-size:0.85rem;"></div>
+          </div>
+
+          <ul class="produkty-spis" id="produkty-spis">
+            <li class="pusto">Wczytywanie produktów...</li>
+          </ul>
+
+          <!-- ---------------------------------------- kreator produktu -->
+          <div class="kreator" id="produkt-kreator" hidden>
+            <div class="kreator-glowa">
+              <h3 id="kreator-tytul">Nowy produkt</h3>
+              <button type="button" class="btn btn-outline" id="kreator-zamknij">Zamknij</button>
+            </div>
+
+            <ol class="kreator-wskaznik">
+              <li data-krok="1" class="aktywny"><span>1</span> Co sprzedajesz</li>
+              <li data-krok="2"><span>2</span> Cena i dostępność</li>
+              <li data-krok="3"><span>3</span> Zdjęcia</li>
+              <li data-krok="4"><span>4</span> Publikacja</li>
+            </ol>
+
+            <form id="produkt-form">
+              <!-- KROK 1 -->
+              <div class="kreator-krok" data-krok="1">
+                <div class="form-group">
+                  <label for="pr-nazwa">Nazwa produktu *</label>
+                  <input type="text" id="pr-nazwa" class="form-control" maxlength="190" required
+                         placeholder="np. Stolik River Table — dąb i żywica">
+                </div>
+                <div class="form-group">
+                  <label for="pr-kategoria">Kategoria *</label>
+                  <input type="text" id="pr-kategoria" class="form-control" maxlength="40" required
+                         list="pr-kategorie" value="inne">
+                  <datalist id="pr-kategorie">
+                    <option value="Żywica epoksydowa"></option>
+                    <option value="Druk 3D"></option>
+                    <option value="Spawanie / Metal"></option>
+                    <option value="CNC"></option>
+                    <option value="Elektronika"></option>
+                    <option value="inne"></option>
+                  </datalist>
+                </div>
+                <div class="form-group">
+                  <label for="pr-opis-krotki">Krótki opis (pokazuje się na liście i w Google)</label>
+                  <textarea id="pr-opis-krotki" class="form-control" rows="2" maxlength="400"
+                            placeholder="Jedno–dwa zdania. To trafia do wyników wyszukiwania."></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="pr-opis">Pełny opis</label>
+                  <textarea id="pr-opis" class="form-control" rows="8"
+                            placeholder="Wymiary, materiał, wykończenie, co jest w komplecie, czego się spodziewać.&#10;&#10;Pusta linia zaczyna nowy akapit."></textarea>
+                </div>
+                <div class="kreator-nawigacja">
+                  <button type="button" class="btn btn-primary kreator-dalej">Dalej →</button>
+                </div>
+              </div>
+
+              <!-- KROK 2 -->
+              <div class="kreator-krok" data-krok="2" hidden>
+                <div class="kreator-siatka">
+                  <div class="form-group">
+                    <label for="pr-cena">Cena brutto (zł) *</label>
+                    <input type="text" id="pr-cena" class="form-control" required
+                           inputmode="decimal" placeholder="890,00">
+                  </div>
+                  <div class="form-group">
+                    <label for="pr-cena-promo">Cena promocyjna (zł)</label>
+                    <input type="text" id="pr-cena-promo" class="form-control"
+                           inputmode="decimal" placeholder="pusto = brak promocji">
+                  </div>
+                  <div class="form-group">
+                    <label for="pr-stan">Sztuk na stanie</label>
+                    <input type="number" id="pr-stan" class="form-control" min="0"
+                           placeholder="pusto = na zamówienie">
+                  </div>
+                  <div class="form-group">
+                    <label for="pr-jednostka">Jednostka</label>
+                    <input type="text" id="pr-jednostka" class="form-control" maxlength="20" value="szt.">
+                  </div>
+                  <div class="form-group">
+                    <label for="pr-waga">Waga (gramy)</label>
+                    <input type="number" id="pr-waga" class="form-control" min="0" placeholder="do wyliczenia wysyłki">
+                  </div>
+                  <div class="form-group">
+                    <label for="pr-czas">Czas realizacji</label>
+                    <input type="text" id="pr-czas" class="form-control" maxlength="80"
+                           placeholder="np. 3–5 tygodni">
+                  </div>
+                </div>
+
+                <!-- INTEGRACJA ALLEGRO -->
+                <div class="allegro-kreator-box" style="margin-top:20px; padding:16px; background:rgba(255,90,0,0.06); border:1px solid rgba(255,90,0,0.3); border-radius:8px;">
+                  <h3 style="margin:0 0 12px; color:#ff8a3d; display:flex; align-items:center; gap:8px;">
+                    <span>🟠</span> Integracja z Allegro (Zakup bezpośredni)
+                  </h3>
+                  <div class="kreator-siatka">
+                    <div class="form-group">
+                      <label for="pr-allegro-url">Link do aukcji / ogłoszenia na Allegro (URL)</label>
+                      <input type="url" id="pr-allegro-url" class="form-control"
+                             placeholder="https://allegro.pl/oferta/...">
+                      <small style="color:var(--text-muted,#94a3b8)">Kliknięcie „Kup” w sklepie fwdrucik.pl otworzy ten link</small>
+                    </div>
+                    <div class="form-group">
+                      <label for="pr-allegro-cena">Cena na Allegro (zł)</label>
+                      <input type="text" id="pr-allegro-cena" class="form-control" inputmode="decimal"
+                             placeholder="opcjonalnie (np. z prowizją)">
+                    </div>
+                    <div class="form-group">
+                      <label for="pr-allegro-id">Numer oferty Allegro (ID)</label>
+                      <input type="text" id="pr-allegro-id" class="form-control"
+                             placeholder="np. 1729482910">
+                    </div>
+                    <div class="form-group">
+                      <label for="pr-allegro-status">Status na Allegro</label>
+                      <select id="pr-allegro-status" class="form-control">
+                        <option value="brak">Brak powiązania</option>
+                        <option value="szkic">Szkic (INACTIVE)</option>
+                        <option value="aktywna">Aktywna aukcja (ACTIVE)</option>
+                        <option value="zakonczona">Zakończona</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <p class="kreator-podpowiedz">Puste „sztuk na stanie" znaczy <strong>wykonywane na
+                  zamówienie</strong> — produkt zostaje dostępny bez limitu. Wpisane 0 znaczy
+                  <strong>chwilowo niedostępny</strong> i blokuje przycisk zakupu.</p>
+                <div class="kreator-nawigacja">
+                  <button type="button" class="btn btn-outline kreator-wstecz">← Wstecz</button>
+                  <button type="button" class="btn btn-primary kreator-dalej">Dalej →</button>
+                </div>
+              </div>
+
+              <!-- KROK 3 -->
+              <div class="kreator-krok" data-krok="3" hidden>
+                <div id="kreator-zdjecia-brama" class="brama">
+                  <p>Najpierw zapisz produkt (krok 4), a potem wróć tutaj po zdjęcia.
+                    Plik musi mieć do czego się przypiąć.</p>
+                </div>
+                <div id="kreator-zdjecia-panel" hidden>
+                  <div class="zdjecia-kafle" id="kreator-zdjecia"></div>
+                  <div class="form-group">
+                    <label for="zdjecie-alt">Opis zdjęcia (dla niewidomych i dla Google)</label>
+                    <input type="text" id="zdjecie-alt" class="form-control" maxlength="190"
+                           placeholder="np. Stolik z blatem dębowym i niebieską żywicą">
+                  </div>
+                  <div class="form-group">
+                    <label for="zdjecie-plik">Wybierz zdjęcie (JPG, PNG lub WEBP, do 6 MB)</label>
+                    <input type="file" id="zdjecie-plik" class="form-control"
+                           accept="image/jpeg,image/png,image/webp">
+                  </div>
+                  <span class="komunikat" id="zdjecie-komunikat"></span>
+
+                  <!-- Wideo, modele 3D i szkice. Osobne pole, bo to inna robota
+                       niz zdjecie: film pokazuje dzialanie, model daje sie obrocic
+                       na stronie, a szkic klient pobiera do siebie. -->
+                  <div class="form-group">
+                    <label for="plik-opis">Podpis pliku (widoczny przy produkcie)</label>
+                    <input type="text" id="plik-opis" class="form-control" maxlength="190"
+                           placeholder="np. Model do wydruku 3D albo film z frezowania">
+                  </div>
+                  <div class="form-group">
+                    <label for="produkt-plik">Dodaj wideo, model 3D albo szkic</label>
+                    <input type="file" id="produkt-plik" class="form-control"
+                           accept=".mp4,.webm,.mov,.avi,.mkv,.stl,.obj,.3mf,.step,.stp,.gcode,.pdf,.dxf">
+                    <small>Wideo do 64 MB (MP4, WEBM, MOV, AVI). Modele do 32 MB
+                      (STL, OBJ, 3MF, STEP) — STL pokazuje się na stronie jako obracany
+                      podgląd 3D. Szkice: PDF, DXF, GCODE.</small>
+                  </div>
+                  <div class="zdjecia-kafle" id="kreator-pliki"></div>
+                  <span class="komunikat" id="plik-komunikat"></span>
+                </div>
+                <div class="kreator-nawigacja">
+                  <button type="button" class="btn btn-outline kreator-wstecz">← Wstecz</button>
+                  <button type="button" class="btn btn-primary kreator-dalej">Dalej →</button>
+                </div>
+              </div>
+
+              <!-- KROK 4 -->
+              <div class="kreator-krok" data-krok="4" hidden>
+                <div class="kreator-siatka">
+                  <div class="form-group">
+                    <label for="pr-status">Status</label>
+                    <select id="pr-status" class="form-control">
+                      <option value="szkic">Szkic — widoczny tylko dla Ciebie</option>
+                      <option value="opublikowany">Opublikowany — widoczny w sklepie</option>
+                      <option value="ukryty">Ukryty — schowany, ale nie skasowany</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="pr-pozycja">Kolejność na liście</label>
+                    <input type="number" id="pr-pozycja" class="form-control" value="100">
+                  </div>
+                  <div class="form-group">
+                    <label for="pr-slug">Adres produktu (pusto = z nazwy)</label>
+                    <input type="text" id="pr-slug" class="form-control" maxlength="190"
+                           placeholder="stolik-river-table-dab">
+                  </div>
+                </div>
+                <div class="kreator-nawigacja">
+                  <button type="button" class="btn btn-outline kreator-wstecz">← Wstecz</button>
+                  <button type="submit" class="btn btn-primary">Zapisz produkt</button>
+                  <span class="komunikat" id="kreator-komunikat"></span>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- ============================================ ZAMÓWIENIA -->
+        <div class="agent-config-panel" id="panel-zamowienia" style="margin-top:24px;">
+          <h2 style="color:#fff;margin:0 0 6px;font-size:1.15rem;">📦 Zamówienia</h2>
+          <ul class="zamowienia-spis" id="zamowienia-spis">
+            <li class="pusto">Wczytywanie zamówień...</li>
+          </ul>
+        </div>
+
+        <script src="/assets/sklep.js" defer></script>
+        <script src="/assets/admin-sklep.js" defer></script>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="rozmowy" class="community" hidden></section>
+<section id="panel-tresci" class="community"></section>
+<script src="/assets/czat-admin.js" defer></script>
+<script src="/assets/tresci-admin.js" defer></script>

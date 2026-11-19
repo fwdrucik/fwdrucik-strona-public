@@ -1,0 +1,24 @@
+(() => {
+ 'use strict';
+ const trigger=document.getElementById('assistant-launch'),box=document.createElement('section');
+ box.id='assistant-panel';box.hidden=true;box.setAttribute('role','dialog');box.setAttribute('aria-labelledby','assistant-title');
+ box.innerHTML='<div class="assistant-top"><h2 id="assistant-title">Porozmawiaj z DRUCIKIEM</h2><button type="button" id="assistant-close" aria-label="Zamknij czat">×</button></div><p id="chat-disclosure">Zaczynasz z asystentem AI Bielik. Pracownik może przejąć rozmowę. Wiadomości zapisujemy na 30 dni, a firma otrzymuje powiadomienia. Nie wpisuj haseł ani danych wrażliwych. <a href="/polityka-prywatnosci/">Prywatność</a></p><button type="button" id="chat-start">Rozpocznij rozmowę</button><div id="assistant-messages" role="log" aria-live="polite"></div><p id="assistant-status" role="status"></p><form hidden><label for="assistant-question">Twoja wiadomość</label><textarea id="assistant-question" maxlength="1500" required rows="2"></textarea><button type="submit">Wyślij</button></form><button type="button" id="chat-human" hidden>Poproś o człowieka</button><p><a href="/pracownia/#twoj-drucik">Zaprogramuj swojego Drucika</a></p><p><a href="tel:+48601726924">Zadzwoń: 601 726 924</a> · <a href="/kontakt/">Kontakt</a></p>';
+ document.body.append(box);
+ const form=box.querySelector('form'),input=box.querySelector('textarea'),status=box.querySelector('#assistant-status'),log=box.querySelector('#assistant-messages'),start=box.querySelector('#chat-start'),human=box.querySelector('#chat-human');
+ let active=false,last=0,busy=false,polling=false,pending=null,mode='bot';const seen=new Set();
+ const labels={klient:'Ty',bot:'DRUCIK · AI',firma:'F.W. DRUCIK · pracownik',system:'Informacja'};
+ async function api(action,data){let csrf=(document.cookie.match(/(?:^|; )fw_csrf=([^;]*)/)||[])[1];if(data&&!csrf){const r=await fetch('/api/auth.php?akcja=ja',{credentials:'same-origin'});csrf=(await r.json()).csrf;}
+ const r=await fetch('/api/czat.php?akcja='+action,{method:data?'POST':'GET',credentials:'same-origin',headers:data?{'Content-Type':'application/json','X-FW-CSRF':csrf||''}:{},body:data?JSON.stringify(data):undefined,signal:AbortSignal.timeout(data?55000:10000)});const d=await r.json();if(!r.ok||!d.ok){const e=new Error(d.blad||'Nie udało się połączyć. Zadzwoń: 601 726 924.');e.status=r.status;throw e;}return d;}
+ function render(d){if(d.rozmowa){mode=d.rozmowa.tryb;status.textContent=({bot:'Odpowiada asystent AI Bielik.',oczekuje:'Poproszono o pracownika. Odpowiedź może zająć chwilę; w pilnej sprawie zadzwoń.',czlowiek:'Rozmowę prowadzi pracownik F.W. DRUCIK.',zamkniety:'Rozmowa zakończona. Dziękujemy za kontakt.'})[mode]||'';}
+ for(const m of d.wiadomosci||[]){if(seen.has(m.id))continue;seen.add(m.id);last=Math.max(last,Number(m.id));const p=document.createElement('p');p.className=m.rola==='klient'?'user':'assistant';p.textContent=(labels[m.rola]||'Informacja')+': '+m.tresc;log.append(p);log.scrollTop=log.scrollHeight;}
+ input.disabled=busy||mode==='zamkniety';form.querySelector('button').disabled=input.disabled;human.disabled=busy||mode!=='bot';}
+ async function poll(){if(!active||box.hidden||polling||document.hidden)return;polling=true;try{render(await api('odczyt&po='+last));}catch(e){status.textContent=e.message;if(e.status===404||e.status===401){active=false;start.hidden=false;form.hidden=true;human.hidden=true;start.textContent='Rozpocznij nową rozmowę';}}finally{polling=false;}}
+ function close(){box.hidden=true;trigger.setAttribute('aria-expanded','false');trigger.focus();}
+ box.querySelector('#assistant-close').onclick=close;box.addEventListener('keydown',e=>{if(e.key==='Escape')close();});
+ window.FWChat={open(){box.hidden=false;trigger.setAttribute('aria-expanded','true');if(active){poll();input.focus();}else start.focus();}};
+ start.onclick=async()=>{start.disabled=true;try{const d=await api('start',{});active=true;start.hidden=true;form.hidden=false;human.hidden=false;last=0;seen.clear();log.replaceChildren();render(d);input.focus();}catch(e){status.textContent=e.message;}finally{start.disabled=false;}};
+ async function send(action,text){if(busy)return;busy=true;render({});status.textContent='Wysyłam…';
+ if(!pending||pending.action!==action||pending.text!==text)pending={action,text,id:crypto.randomUUID()};
+ try{await api(action,{tresc:text,request_id:pending.id});if(action==='wyslij')input.value='';pending=null;await poll();}catch(e){status.textContent=e.message+' Możesz ponowić wysyłkę — nie zapisze wiadomości drugi raz.';}finally{busy=false;input.disabled=mode==='zamkniety';form.querySelector('button').disabled=input.disabled;human.disabled=mode!=='bot';if(!box.hidden&&!input.disabled)input.focus();}}
+ form.onsubmit=e=>{e.preventDefault();const text=input.value.trim();if(text)send('wyslij',text);};human.onclick=()=>send('czlowiek','');setInterval(poll,3000);
+})();

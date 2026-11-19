@@ -1,0 +1,95 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "ADXL345 – akcelerometr do wykrywania nadmiernych wibracji",
+  "description": "Analiza techniczna czujnika ADXL345 w diagnostyce maszyn. Jak wykrywać wibracje i interpretować dane w warsztacie F.W. DRUCIK. Sprawdź szczegóły.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-10-27",
+  "dateModified": "2026-10-27",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/adxl345-akcelerometr-wibracje/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-blue">Elektronika i magistrale</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 12 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 27.10.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">ADXL345 – akcelerometr do wykrywania nadmiernych wibracji</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Układ ADXL345 to 3-osiowy akcelerometr MEMS często wykorzystywany w diagnostyce stanu technicznego maszyn. Dowiedz się, jak poprawnie zaimplementować ten sensor w warunkach warsztatowych do monitorowania drgań.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#specyfikacja">Charakterystyka techniczna układu ADXL345</a></li>
+      <li><a href="#montaz">Zasady montażu i przygotowania powierzchni</a></li>
+      <li><a href="#analiza">Interpretacja sygnału i typowe błędy</a></li>
+      <li><a href="#bezpieczenstwo">BHP przy diagnostyce maszyn</a></li>
+      <li><a href="#serwis">Wsparcie techniczne w F.W. DRUCIK</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="specyfikacja">1. Charakterystyka techniczna układu ADXL345</h2>
+<p>ADXL345 jest cyfrowym akcelerometrem o wysokiej rozdzielczości (do 13 bitów) i zakresie pomiarowym wynoszącym do +/- 16g. Zgodnie z notą katalogową producenta, urządzenie komunikuje się poprzez magistrale SPI (3- lub 4-przewodowe) oraz I2C. Kluczowym parametrem dla diagnostyki wibracji jest gęstość szumu, która wynosi typowo 150 µg/√Hz w trybie pełnej rozdzielczości. Napięcie zasilania układu mieści się w zakresie od 2,0 V do 3,6 V (wartość orientacyjna, zawsze weryfikuj z dokumentacją konkretnego modułu). W warunkach warsztatowych, przy montażu na obudowie maszyny, należy zwrócić uwagę na pasmo przenoszenia, które jest konfigurowalne i może sięgać do 1600 Hz. Przekroczenie częstotliwości Nyquista przy próbkowaniu sygnału prowadzi do zjawiska aliasingu, co w praktyce oznacza błędną interpretację widma drgań. Mechanik musi pamiętać, że ADXL345 jest czujnikiem typu MEMS, co czyni go podatnym na uszkodzenia mechaniczne przy zbyt silnym dokręcaniu śrub montażowych lub uderzeniach. Rezystancja izolacji między pinami a obudową powinna być sprawdzana przed uruchomieniem, aby uniknąć zwarć na magistrali komunikacyjnej. Pamiętaj, że wartości graniczne dla przyspieszeń w maszynach wirnikowych są definiowane przez normy takie jak ISO 10816, a ADXL345 służy jedynie jako narzędzie do akwizycji danych, które muszą zostać poddane dalszej obróbce matematycznej (np. transformata FFT). Nie należy polegać na surowych danych bez kalibracji punktu zerowego, który może ulegać przesunięciu w zależności od temperatury otoczenia. Zawsze sprawdzaj stabilność zasilania, gdyż tętnienia napięcia powyżej 50 mV mogą wprowadzać dodatkowy szum do sygnału wyjściowego, co jest częstym błędem przy budowie układów pomiarowych na płytkach stykowych.</p>
+
+    <h2 id="montaz">2. Zasady montażu i przygotowania powierzchni</h2>
+<p>Poprawny montaż akcelerometru jest krytyczny dla wiarygodności pomiarów. Wibracje przenoszone z korpusu maszyny na sensor muszą być sprzężone w sposób sztywny. Stosowanie elastycznych podkładek gumowych lub taśm dwustronnych o dużej grubości powoduje tłumienie wysokich częstotliwości, co zniekształca wynik. Zaleca się montaż bezpośrednio do metalowego korpusu za pomocą śruby M2 lub specjalistycznego kleju epoksydowego o wysokiej sztywności. Powierzchnia styku musi być oczyszczona z olejów, smarów i korozji, aby zapewnić pełne przyleganie. W przypadku pomiarów diagnostycznych w F.W. DRUCIK zwracamy uwagę na kierunkowość osi X, Y i Z. Błędne zorientowanie czujnika względem osi obrotu wału maszyny uniemożliwia poprawną analizę wektorową drgań. Podczas prac montażowych należy bezwzględnie przestrzegać zasad BHP, szczególnie przy maszynach w ruchu. Nigdy nie montuj czujnika na elementach wirujących bezpośrednio, jeśli nie posiadasz odpowiedniego systemu transmisji bezprzewodowej lub pierścieni ślizgowych. Praca przy maszynach pod napięciem wymaga stosowania izolowanych narzędzi i zachowania odpowiednich odległości od elementów pod napięciem. Jeśli maszyna posiada obudowę pod napięciem, upewnij się, że masa układu pomiarowego jest odizolowana galwanicznie od potencjału maszyny, aby uniknąć uszkodzenia mikrokontrolera lub komputera diagnostycznego. Wartość momentu dokręcania śruby montażowej powinna być minimalna, aby nie wprowadzać naprężeń wstępnych w strukturę MEMS, co mogłoby trwale zmienić charakterystykę czułości sensora. Po montażu wykonaj test statyczny, sprawdzając odczyty dla każdej osi w spoczynku (dla osi pionowej powinno to być 1g, czyli 9,81 m/s²). Jeśli odczyty odbiegają znacząco od normy, sprawdź sztywność połączenia mechanicznego.</p>
+
+    <h2 id="analiza">3. Interpretacja sygnału i typowe błędy</h2>
+<p>Analiza danych z ADXL345 wymaga zrozumienia różnicy między przyspieszeniem statycznym (grawitacja) a dynamicznym (wibracje). Typowym błędem jest brak filtracji sygnału w kodzie programu. Surowy sygnał zawiera składową stałą, którą należy odjąć, aby uzyskać czyste dane o drganiach. W praktyce warsztatowej często spotykamy się z problemem tzw. „szumu cyfrowego” wynikającego z długich przewodów sygnałowych bez odpowiedniego ekranowania. Magistrala I2C przy długościach powyżej 20-30 cm staje się podatna na zakłócenia elektromagnetyczne (EMI) generowane przez silniki elektryczne lub falowniki. W takim przypadku konieczne jest zastosowanie buforów magistrali lub przejście na standard RS-485. Kolejnym błędem jest zbyt niska częstotliwość próbkowania. Zgodnie z twierdzeniem o próbkowaniu, częstotliwość ta musi być co najmniej dwukrotnie wyższa od najwyższej częstotliwości drgań, które chcemy zarejestrować. Jeśli badamy łożysko toczne, częstotliwości uszkodzeń mogą sięgać kilku kHz, co wymaga ustawienia ADXL345 na maksymalną częstotliwość wyjściową danych (Output Data Rate - ODR). Poniższa tabela przedstawia orientacyjne kroki diagnostyczne:</p><table><thead><tr><th>Krok</th><th>Czynność</th><th>Uwagi</th></tr></thead><tbody><tr><td>1</td><td>Weryfikacja zasilania</td><td>Stabilne 3,3V, brak tętnień</td></tr><tr><td>2</td><td>Test statyczny</td><td>Odczyt 1g dla osi pionowej</td></tr><tr><td>3</td><td>Kalibracja offsetu</td><td>Zerowanie w spoczynku</td></tr><tr><td>4</td><td>Ustawienie ODR</td><td>Dostosowanie do pasma drgań</td></tr><tr><td>5</td><td>Rejestracja danych</td><td>Zapis do bufora/pliku</td></tr></tbody></table><p>Pamiętaj, że kody błędów w sterownikach maszyn często wynikają z błędnej interpretacji drgań przez czujniki fabryczne. Kasowanie błędów bez usunięcia przyczyny mechanicznej (np. wypracowane łożysko) prowadzi do awarii wtórnych. Zawsze weryfikuj, czy wibracje nie pochodzą z luzów montażowych, które są najczęstszą przyczyną fałszywych odczytów w starszych maszynach.</p>
+
+    <h2 id="bezpieczenstwo">4. BHP przy diagnostyce maszyn</h2>
+<p>Praca z układami pomiarowymi w środowisku przemysłowym wiąże się z szeregiem zagrożeń. Przed przystąpieniem do instalacji czujnika ADXL345 na pracującej maszynie, należy upewnić się, że wszystkie osłony ruchomych części są na swoim miejscu. Nigdy nie wolno prowadzić przewodów pomiarowych w pobliżu pasów napędowych, kół zębatych czy wałów napędowych, gdzie mogłyby zostać wciągnięte. W przypadku diagnostyki układów klimatyzacji lub silników spalinowych, należy pamiętać o wysokich temperaturach powierzchniowych, które mogą stopić izolację przewodów czujnika. Jeśli maszyna pracuje w strefie zagrożonej wybuchem lub w obecności łatwopalnych oparów, stosowanie niecertyfikowanej elektroniki jest niedopuszczalne. W warsztacie F.W. DRUCIK kładziemy duży nacisk na to, aby każda modyfikacja układu sterowania była udokumentowana. Nie wolno ingerować w obwody bezpieczeństwa maszyny w celu wpięcia się z sondą pomiarową. Jeśli wymagane jest zasilanie z sieci 230V, stosuj zasilacze separowane galwanicznie. Pamiętaj, że akumulatory używane do zasilania układów przenośnych mogą być źródłem dużego prądu zwarciowego – zawsze stosuj bezpieczniki topikowe na przewodach zasilających. W przypadku wystąpienia dymu lub nietypowego zapachu z elektroniki, natychmiast odłącz zasilanie. Nie dotykaj układów scalonych podczas pracy, jeśli nie masz pewności co do ich potencjału względem ziemi. Elektrostatyka (ESD) może trwale uszkodzić strukturę MEMS wewnątrz ADXL345, dlatego zawsze używaj opasek antystatycznych przy pracach serwisowych na płytkach drukowanych. Regularnie sprawdzaj stan izolacji przewodów, gdyż przetarcia w warunkach warsztatowych są częstą przyczyną zwarć prowadzących do uszkodzenia portów wejścia/wyjścia mikrokontrolera.</p>
+
+    <h2 id="serwis">5. Wsparcie techniczne w F.W. DRUCIK</h2>
+<p>Jeśli Twoje próby diagnostyki wibracji za pomocą układu ADXL345 napotykają na problemy z interpretacją sygnału lub stabilnością pomiarów, zapraszamy do kontaktu z naszym warsztatem. W F.W. DRUCIK, zlokalizowanym w Domosławiu 13A, 06-120 Winnica, specjalizujemy się w zaawansowanej diagnostyce elektromechanicznej. Oferujemy wsparcie w zakresie <a href="/uslugi/elektromechanika/">elektromechaniki</a> oraz <a href="/uslugi/maszyny-cnc/">maszyn CNC</a>, gdzie precyzyjna analiza drgań jest kluczowa dla utrzymania tolerancji wymiarowych. Nasz zespół pomoże Ci w doborze odpowiednich filtrów cyfrowych, ekranowaniu przewodów oraz poprawnym skonfigurowaniu magistrali komunikacyjnych. Jeśli problem dotyczy uszkodzeń mechanicznych wykrytych podczas testów (np. zużyte łożyska, niewyważenie wirników), przeprowadzamy niezbędne naprawy zgodnie z dokumentacją techniczną producenta. Nie podejmujemy się napraw „na skróty” – każda usterka jest weryfikowana pod kątem przyczyn źródłowych. Możesz się z nami skontaktować pod numerem telefonu 601 726 924 lub wysyłając wiadomość na adres fwdrucik@gmail.com. Jesteśmy dostępni od poniedziałku do piątku w godzinach 8:00–17:00 oraz w soboty od 9:00 do 13:00. Pamiętaj, aby przed wizytą przygotować opis objawów oraz, jeśli to możliwe, logi z pomiarów wykonanych za pomocą akcelerometru. Nasze doświadczenie w utrzymaniu ruchu pozwala nam na szybką identyfikację problemów, których nie widać „gołym okiem”. Zapraszamy również do zapoznania się z naszą pełną ofertą na stronie <a href="/kontakt/">kontakt</a>, gdzie znajdziesz szczegółowe informacje o naszych usługach serwisowych. Niezależnie od tego, czy potrzebujesz pomocy przy programowaniu sterownika, czy przy mechanicznym wyważeniu elementu, służymy wiedzą techniczną opartą na rzetelnych pomiarach.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Czy ADXL345 nadaje się do pomiaru drgań o wysokiej częstotliwości?</summary>
+        <p>Układ posiada pasmo przenoszenia do 1600 Hz, co pozwala na wykrywanie podstawowych wibracji mechanicznych. Jednak dla bardzo wysokich częstotliwości powyżej 2 kHz należy stosować dedykowane akcelerometry piezoelektryczne.</p>
+      </details>
+      <details>
+        <summary>Jakie napięcie zasilania jest bezpieczne dla ADXL345?</summary>
+        <p>Układ pracuje w zakresie od 2,0 V do 3,6 V. Zawsze należy sprawdzić notę katalogową konkretnego modułu, ponieważ stabilizator napięcia na płytce może wymagać wyższego napięcia wejściowego.</p>
+      </details>
+      <details>
+        <summary>Dlaczego odczyty z akcelerometru są niestabilne?</summary>
+        <p>Najczęstszą przyczyną jest brak ekranowania przewodów sygnałowych lub zbyt długie połączenia magistrali I2C. Warto również sprawdzić, czy zasilanie układu nie posiada tętnień napięcia powyżej 50 mV.</p>
+      </details>
+      <details>
+        <summary>Czy muszę kalibrować czujnik po każdym montażu?</summary>
+        <p>Tak, kalibracja offsetu jest niezbędna, ponieważ naprężenia mechaniczne powstałe podczas przykręcania sensora zmieniają jego punkt zerowy. Zawsze wykonuj pomiar w spoczynku, aby ustalić bazowy poziom odniesienia.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

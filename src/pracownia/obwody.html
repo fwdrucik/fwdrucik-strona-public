@@ -1,0 +1,66 @@
+  <p>Włącz baterię i zobacz, jak świecą trzy żarówki. Potem zamień jedną na LED z rezystorem lub wyjmij ją i porównaj układy.</p>
+  <div class="lab-panel" data-obwody hidden>
+    <div class="lab-pasek">
+      <label for="lab-uklad">Połączenie</label>
+      <select id="lab-uklad">
+        <option value="szereg">Szeregowe</option>
+        <option value="rownolegle">Równoległe</option>
+        <option value="mieszane">Mieszane</option>
+        <option value="pojedynczy">Jeden element</option>
+      </select>
+      <button type="button" class="btn btn-primary" id="lab-bateria" aria-pressed="false">Włącz baterię 9 V</button>
+      <button type="button" class="btn btn-outline" id="lab-jedna-led">Próba z jedną LED</button>
+      <button type="button" class="btn btn-outline" id="lab-reset">Przywróć żarówki</button>
+    </div>
+    <div class="lab-uklad">
+      <figure class="lab-plytka">
+        <svg viewBox="0 0 620 340" role="img" aria-labelledby="lab-svg-title lab-svg-desc">
+          <title id="lab-svg-title">Wirtualna płytka stykowa</title>
+          <desc id="lab-svg-desc">Trzy ponumerowane miejsca na żarówki lub diody LED z rezystorami. Elementy wybiera się pod płytką.</desc>
+          <defs><pattern id="lab-otwory" width="32" height="19" patternUnits="userSpaceOnUse"><circle cx="16" cy="9.5" r="2.1" fill="#677386"/></pattern></defs>
+          <rect x="102" y="13" width="504" height="314" rx="17" fill="#d9dfe5"/>
+          <path d="M133 43h443" stroke="#b12d35" stroke-width="3"/>
+          <path d="M133 297h443" stroke="#245893" stroke-width="3"/>
+          <path d="M160 56h160v228H160zM384 56h160v228H384z" fill="url(#lab-otwory)"/>
+          <path d="M352 56v228" stroke="#a6b1bc" stroke-width="4"/>
+          <text x="115" y="48" fill="#911e24">+</text><text x="114" y="302" fill="#163c67">−</text>
+          <rect x="14" y="131" width="68" height="78" rx="7" fill="#27384a" stroke="#a6b1bc" stroke-width="2"/>
+          <path d="M24 131v-8h13v8m19 0v-8h13v8" fill="none" stroke="#d5aa66" stroke-width="3"/>
+          <text x="48" y="176" text-anchor="middle" fill="white">9 V</text>
+          <g id="lab-sciezki"></g>
+        </svg>
+        <figcaption>Pięć otworów w każdym poziomym rzędzie jest połączonych. Szczelina rozdziela lewą i prawą stronę płytki. Przewody łączą ją z szynami + i −.</figcaption>
+      </figure>
+      <div class="lab-miernik">
+        <h3>Odczyt miernika</h3>
+        <p id="lab-odczyt" role="status"></p>
+        <p id="lab-wyzwanie"></p>
+      </div>
+    </div>
+    <div class="lab-elementy" id="lab-elementy" role="group" aria-label="Elementy na płytce"></div>
+    <aside class="lab-asystent" aria-label="Podpowiedzi Drucika">
+      <div class="lab-robot" aria-hidden="true"></div>
+      <details class="lab-dymek" open>
+        <summary>Drucik podpowiada</summary>
+        <div class="lab-tematy" role="group" aria-label="Temat podpowiedzi">
+          <button type="button" data-lab-temat="start" aria-pressed="true" aria-controls="lab-lekcja-start">Pierwsze kroki</button>
+          <button type="button" data-lab-temat="rezystor" aria-pressed="false" aria-controls="lab-lekcja-rezystor">Po co rezystor?</button>
+          <button type="button" data-lab-temat="ohm" aria-pressed="false" aria-controls="lab-lekcja-ohm">Prawo Ohma</button>
+        </div>
+        <div id="lab-lekcja-start" class="lab-lekcja">
+          <p>Włącz baterię. Teraz wyjmij element 2 i przełącz układ na równoległy. Zobacz, które lampki wciąż mają zamkniętą drogę dla prądu.</p>
+        </div>
+        <div id="lab-lekcja-rezystor" class="lab-lekcja" hidden>
+          <p>Rezystor włączony szeregowo z LED ogranicza prąd, żeby dioda się nie uszkodziła. Wybierz LED, a potem zwiększ opór z 470 do 1000 Ω. Dioda przygaśnie.</p>
+        </div>
+        <div id="lab-lekcja-ohm" class="lab-lekcja" hidden>
+          <p><strong>I = U / R</strong> — prąd w amperach to napięcie na rezystorze w woltach podzielone przez jego opór w omach.</p>
+          <p id="lab-przyklad-ohma"></p>
+        </div>
+      </details>
+    </aside>
+    <p class="lab-uwaga">Model jest uproszczony. Bateria ma zawsze 9 V, żarówka ma stały opór 90 Ω, a czerwona LED podczas świecenia ma spadek ok. 2 V. Prawdziwe obwody składaj z dorosłym. Nigdy nie podłączaj płytki do gniazdka.</p>
+  </div>
+  <noscript><p>Włącz JavaScript, aby skorzystać z symulatora.</p></noscript>
+  <p><a class="btn btn-outline" href="/assets/karta-drucika-obwod.pdf" download>Pobierz kartę obwodu (PDF)</a></p>
+  <p class="lab-zrodla"><a href="https://openstax.org/books/college-physics-2e/pages/20-2-ohms-law-resistance-and-simple-circuits">Prawo Ohma (OpenStax)</a> · <a href="https://learn.sparkfun.com/tutorials/resistors#application-examples">Rezystor do LED (SparkFun)</a> · <a href="https://learn.sparkfun.com/tutorials/how-to-use-a-breadboard/all">Jak działa płytka stykowa (SparkFun)</a></p>

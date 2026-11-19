@@ -1,0 +1,288 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Retrofit tokarki na CNC: dobór napędów i sterowania",
+  "description": "Techniczny poradnik o modernizacji tokarki konwencjonalnej na CNC. Dobór silników, enkoderów i sterowania zgodnie z zasadami sztuki inżynierskiej.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-09-13",
+  "dateModified": "2026-09-13",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/retrofit-tokarki-na-cnc-silniki-enkodery-sterowanie/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-orange">Spawanie & CNC</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 6 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 13.09.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Retrofit tokarki na CNC: dobór napędów i sterowania</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Przeróbka tokarki na CNC: jak dobrać i połączyć silniki, enkodery oraz sterowanie.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#mechanika_napedu">Dobór napędów: silniki krokowe czy serwo?</a></li>
+      <li><a href="#enkodery_i_sprzezenie">Rola enkoderów i pętli sprzężenia zwrotnego</a></li>
+      <li><a href="#sterowanie_i_komunikacja">Systemy sterowania i magistrale komunikacyjne</a></li>
+      <li><a href="#bezpieczenstwo_i_montaz">BHP i integracja elektryczna</a></li>
+      <li><a href="#praktyka_warsztatowa">Wsparcie techniczne w F.W. DRUCIK</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="mechanika_napedu">1. Dobór napędów: silniki krokowe czy serwo?</h2>
+<h3>Dobór napędów: silniki krokowe czy serwo?</h3>
+
+<p>Wybór między silnikami krokowymi a serwonapędami jest kluczowy dla dynamiki maszyny. Silniki krokowe oferują wysoki moment przy niskich prędkościach, lecz pracują w pętli otwartej, co grozi utratą kroków przy przeciążeniach. W modernizacjach rekomendujemy serwonapędy AC z enkoderami, pracujące w pętli zamkniętej, co pozwala na bieżące monitorowanie błędu nadążania (<em>following error</em>).</p>
+
+<p><strong>Kolejność czynności przy doborze napędu:</strong></p>
+<ol>
+    <li>Obliczenie momentu bezwładności (<em>inertia</em>) układu mechanicznego (śruba, suport, uchwyt).</li>
+    <li>Wyznaczenie siły posuwu: <code>F = opory skrawania + tarcie + siła bezwładności</code>.</li>
+    <li>Dobór silnika z zapasem 150% momentu znamionowego (dla tokarki średniej wielkości zazwyczaj 2–4 Nm).</li>
+    <li>Weryfikacja dopuszczalnej prędkości obrotowej (RPM) w odniesieniu do skoku śruby (np. 5 mm/obr).</li>
+</ol>
+
+<p><strong>Typowe błędy i ich objawy:</strong></p>
+<table>
+    <thead>
+        <tr>
+            <th>Błąd</th>
+            <th>Objaw</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Zbyt niski moment (niedowymiarowanie)</td>
+            <td>Gubienie kroków, "pisk" silnika, zatrzymanie osi przy głębszym skrawaniu.</td>
+        </tr>
+        <tr>
+            <td>Błędna konfiguracja PID serwa</td>
+            <td>Oscylacje suportu, "drżenie" powierzchni detalu, błąd <em>Following Error Exceeded</em>.</td>
+        </tr>
+        <tr>
+            <td>Brak ekranowania enkodera</td>
+            <td>Nagłe skoki pozycji, alarmy sterownika przy włączaniu wrzeciona.</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>W układach serwo kluczowe jest ustawienie parametru <code>Following Error Limit</code>. Dla precyzyjnych tokarek CNC wartość ta powinna mieścić się w przedziale <strong>0.01–0.05 mm</strong>. Przekroczenie tych wartości podczas pracy skutkuje natychmiastowym zatrzymaniem maszyny (E-Stop), co chroni narzędzie przed kolizją. Pamiętaj, że w przypadku serwosilników, stosunek bezwładności silnika do obciążenia (<em>inertia ratio</em>) nie powinien przekraczać 1:10, aby zapewnić stabilną pracę układu regulacji zgodnie z normą ISO 230-1.</p>
+
+    <h2 id="enkodery_i_sprzezenie">2. Rola enkoderów i pętli sprzężenia zwrotnego</h2>
+<h3>Rola enkoderów i pętli sprzężenia zwrotnego</h3>
+
+<p>Enkoder jest kluczowym elementem pętli sprzężenia zwrotnego, przekształcającym ruch mechaniczny na sygnał elektryczny. W układach CNC stosuje się enkodery inkrementalne lub absolutne. Enkodery inkrementalne generują sygnały prostokątne (kanały A, B oraz sygnał indeksowy Z). Zgodnie z normą IEC 61158, sygnały te powinny być przesyłane liniami różnicowymi (RS-422), co zapewnia wysoką odporność na zakłócenia elektromagnetyczne (EMI) generowane przez falowniki wrzeciona.</p>
+
+<p>W przypadku retrofitu, montaż enkodera na wale silnika lub bezpośrednio na śrubie pociągowej ma kluczowe znaczenie dla dokładności. Pomiar bezpośredni (np. liniały optyczne) eliminuje błędy luzów mechanicznych (backlash), jednak wymaga precyzyjnego montażu. Rozdzielczość enkodera (np. 2500 imp/obr) musi być dobrana do skoku śruby (np. 5 mm/obr), aby uzyskać wymaganą dokładność pozycjonowania (np. 0,001 mm).</p>
+
+<p><strong>Kolejność czynności montażowych:</strong></p>
+<ol>
+    <li>Weryfikacja bicia osiowego wału (dopuszczalne odchylenie &lt; 0,02 mm).</li>
+    <li>Montaż sprzęgła elastycznego kompensującego błędy współosiowości.</li>
+    <li>Podłączenie ekranowanej skrętki (ekran uziemiony jednostronnie w szafie sterowniczej).</li>
+    <li>Konfiguracja mnożnika w sterowniku CNC (np. 4x dla dekodowania kwadraturowego).</li>
+    <li>Testowa weryfikacja kierunku zliczania impulsów (zgodność z ruchem osi).</li>
+</ol>
+
+<p><strong>Typowe błędy i ich objawy:</strong></p>
+<table>
+    <thead>
+        <tr>
+            <th>Błąd</th>
+            <th>Objaw</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Brak ekranowania / pętla masy</td>
+            <td>"Skakanie" pozycji, błędy śledzenia (following error)</td>
+        </tr>
+        <tr>
+            <td>Zbyt niska rozdzielczość</td>
+            <td>Niska precyzja, "schodkowanie" powierzchni detalu</td>
+        </tr>
+        <tr>
+            <td>Błędna faza sygnałów A/B</td>
+            <td>Alarm "Encoder Direction Error" lub niekontrolowany ruch</td>
+        </tr>
+    </tbody>
+</table>
+
+<p><em>Ostrzeżenie BHP:</em> Podczas montażu enkoderów na wałach pracujących, należy bezwzględnie odłączyć zasilanie główne maszyny, aby uniknąć przypadkowego uruchomienia napędu i uszkodzenia elementów mechanicznych lub porażenia prądem.</p>
+
+    <h2 id="sterowanie_i_komunikacja">3. Systemy sterowania i magistrale komunikacyjne</h2>
+<h3>Systemy sterowania i magistrale komunikacyjne</h3>
+
+<p>Kontroler i karty I/O sterują napędami przez STEP/DIR, EtherCAT lub CANopen. STEP/DIR wymaga stabilnego 5V albo 24V. Podane 200–500 kHz wymaga szybkich transoptorów; potwierdź parametry w dokumentacji. Magistralę CAN zakończ rezystorami 120 Ohm.</p>
+
+<p><strong>Kolejność czynności konfiguracyjnych:</strong></p>
+<ol>
+    <li>Weryfikacja ciągłości ekranowania przewodów sygnałowych (rezystancja ekranu do masy < 1 Ohm).</li>
+    <li>Ustawienie parametrów bazowych: rozdzielczość enkodera (np. 2500 imp/obr) oraz przełożenie przekładni.</li>
+    <li>Konfiguracja pętli PID: dobór wzmocnienia proporcjonalnego (Kp), całkującego (Ki) i różniczkującego (Kd).</li>
+    <li>Testy dynamiczne: stopniowe zwiększanie przyspieszenia (np. od 100 mm/s² do wartości docelowej).</li>
+</ol>
+
+<p><strong>Typowe błędy i ich objawy:</strong></p>
+<table>
+    <thead>
+        <tr>
+            <th>Błąd</th>
+            <th>Objawy</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Brak terminacji magistrali</td>
+            <td>Błędy komunikacji "bus-off", sporadyczne zatrzymania osi.</td>
+        </tr>
+        <tr>
+            <td>Zbyt wysokie przyspieszenie</td>
+            <td>Wzbudzenia mechaniczne, pisk silników, błąd "following error".</td>
+        </tr>
+        <tr>
+            <td>Błędna polaryzacja STEP/DIR</td>
+            <td>Silnik wykonuje ruch tylko w jednym kierunku lub drga w miejscu.</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Podczas konfiguracji sprawdź parametry <em>acceleration</em> i <em>jerk</em>, które muszą być dobrane do sztywności łoża tokarki. Zbyt agresywne nastawy prowadzą do wzbudzeń destrukcyjnych dla łożysk śrub pociągowych. Należy zawsze weryfikować dokumentację serwisową, aby nie przekroczyć prędkości posuwów krytycznych dla układu mechanicznego. Pamiętaj, że przekroczenie dopuszczalnego błędu nadążania (<em>following error limit</em>, np. powyżej 0.5 mm) powinno skutkować natychmiastowym zatrzymaniem awaryjnym (E-Stop).</p>
+
+    <h2 id="bezpieczenstwo_i_montaz">4. BHP i integracja elektryczna</h2>
+<h3>BHP i integracja elektryczna</h3>
+
+<p>Modernizacja obejmuje bezpieczeństwo maszyny. E-Stop według ISO 13850 musi skutecznie zatrzymać napędy; sam program nie wystarczy przy awarii procesora. Odseparuj galwanicznie sterowanie 24V DC od mocy 400V AC. Prowadź sygnały i zasilanie silników w osobnych korytach.</p>
+
+<p>Podczas prac przy szafie sterowniczej stosuj procedury <strong>LOTO</strong>. Pamiętaj, że kondensatory w falownikach mogą utrzymywać napięcie niebezpieczne dla życia przez kilka minut po wyłączeniu zasilania. Przed pomiarami używaj miernika z certyfikatem <strong>CAT III/IV</strong>.</p>
+
+<p><strong>Kolejność czynności przy uruchomieniu:</strong></p>
+<ol>
+    <li>Weryfikacja ciągłości przewodu ochronnego (PE) – rezystancja musi wynosić <code>&lt; 0,1 Ω</code>.</li>
+    <li>Pomiar rezystancji izolacji (napięcie probiercze 500V DC) – wynik powinien być <code>&gt; 1 MΩ</code>.</li>
+    <li>Podanie napięcia sterowniczego 24V DC i test logiki E-Stop.</li>
+    <li>Uruchomienie napędów przy odłączonych mechanicznie silnikach (test "na sucho").</li>
+</ol>
+
+<p><strong>Typowe błędy i ich objawy:</strong></p>
+<table>
+    <thead>
+        <tr>
+            <th>Błąd</th>
+            <th>Objaw</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Brak ekranowania przewodów enkoderowych</td>
+            <td>Skoki pozycji, błędy "Following Error"</td>
+        </tr>
+        <tr>
+            <td>Wspólne prowadzenie kabli mocy i sygnału</td>
+            <td>Losowe resety sterownika, błędy komunikacji</td>
+        </tr>
+        <tr>
+            <td>Zbyt wysoka rezystancja uziemienia</td>
+            <td>Przebicia na obudowę, zakłócenia pracy falownika</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Wszelkie modyfikacje muszą być udokumentowane schematem powykonawczym. W przypadku problemów z konfiguracją sterowania, zapraszamy do kontaktu z naszym warsztatem w celu konsultacji technicznej lub wykonania serwisu.</p>
+
+    <h2 id="praktyka_warsztatowa">5. Wsparcie techniczne w F.W. DRUCIK</h2>
+<h3>Wsparcie techniczne w F.W. DRUCIK</h3>
+
+<p>W warsztacie F.W. DRUCIK (Domosław 13A, 06-120 Winnica) oferujemy kompleksowe wsparcie przy modernizacji tokarek. Retrofit to proces wymagający precyzji, dlatego nasza pomoc obejmuje nie tylko dobór komponentów, ale także rygorystyczną weryfikację stanu mechanicznego maszyny.</p>
+
+<p><strong>Kluczowe parametry diagnostyczne:</strong></p>
+<ul>
+    <li><strong>Luz nawrotny (backlash):</strong> Dopuszczalna wartość dla maszyn konwencjonalnych po modernizacji nie powinna przekraczać <strong>0,02–0,03 mm</strong>. Wartości powyżej 0,05 mm wymagają regeneracji nakrętek śrub pociągowych.</li>
+    <li><strong>Bicie osiowe wrzeciona:</strong> Maksymalnie <strong>0,01 mm</strong> mierzone czujnikiem zegarowym przy czole wrzeciona.</li>
+    <li><strong>Sztywność układu:</strong> Odchyłka przy obciążeniu 100 N nie powinna przekraczać <strong>0,015 mm</strong>.</li>
+</ul>
+
+<p><strong>Zalecana kolejność czynności przy retroficie:</strong></p>
+<ol>
+    <li>Weryfikacja geometrii łoża i stanu łożyskowania śrub.</li>
+    <li>Montaż silników serwo z enkoderami (rozdzielczość min. 20-bit dla płynnej pracy).</li>
+    <li>Instalacja szafy sterowniczej i okablowania ekranowanego (zgodnie z normą EMC).</li>
+    <li>Konfiguracja pętli PID w sterowniku CNC.</li>
+    <li>Testy dynamiczne i kalibracja kompensacji luzów.</li>
+</ol>
+
+<p><strong>Typowe błędy i ich objawy:</strong></p>
+<table>
+    <thead>
+        <tr>
+            <th>Błąd</th>
+            <th>Objaw</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Brak ekranowania przewodów enkodera</td>
+            <td>Błędy pozycji, "skakanie" osi, alarmy typu <code>Following Error</code>.</td>
+        </tr>
+        <tr>
+            <td>Zbyt wysokie wzmocnienie pętli (Gain)</td>
+            <td>Wibracje silnika, pisk, przegrzewanie się uzwojeń.</td>
+        </tr>
+        <tr>
+            <td>Niewłaściwe sprzęgło silnik-śruba</td>
+            <td>Nierównomierna praca, błędy powtarzalności przy nawrotach.</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Zapraszamy do zapoznania się z naszą ofertą na stronie <a href="/uslugi/maszyny-cnc/">maszyny CNC</a> oraz <a href="/uslugi/elektromechanika/">elektromechanika</a>. W razie pytań technicznych prosimy o kontakt pod numerem 601 726 924 lub adresem e-mail fwdrucik@gmail.com. Pracujemy od poniedziałku do piątku w godzinach 8-17 oraz w soboty 9-13. NIP: 888-292-19-00. Przed wizytą prosimy o przygotowanie dokumentacji technicznej maszyny, co przyspieszy weryfikację kompatybilności podzespołów.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Czy silnik krokowy wystarczy do modernizacji tokarki?</summary>
+        <p>Silnik krokowy może wystarczyć w bardzo lekkich pracach, ale w profesjonalnym zastosowaniu CNC zaleca się serwonapędy. Serwa zapewniają pracę w pętli zamkniętej, co eliminuje ryzyko gubienia kroków i zapewnia wyższą precyzję.</p>
+      </details>
+      <details>
+        <summary>Jakie są najczęstsze przyczyny błędów pozycjonowania?</summary>
+        <p>Najczęstszą przyczyną jest luz mechaniczny śruby pociągowej oraz zakłócenia elektromagnetyczne w przewodach enkodera. Należy również sprawdzić, czy ekranowanie przewodów jest wykonane zgodnie z zasadami EMC.</p>
+      </details>
+      <details>
+        <summary>Czy muszę wymieniać śruby pociągowe przy retroficie?</summary>
+        <p>Nie zawsze, ale należy sprawdzić ich stan techniczny i luzy. Jeśli luz przekracza dopuszczalne wartości serwisowe, sterowanie CNC nie będzie w stanie zachować wysokiej dokładności obróbki.</p>
+      </details>
+      <details>
+        <summary>Jakie napięcie jest bezpieczne przy pracy z enkoderami?</summary>
+        <p>Enkodery zazwyczaj pracują na napięciu 5V lub 24V DC. Należy bezwzględnie unikać kontaktu tych linii z obwodami mocy, gdyż grozi to trwałym uszkodzeniem elektroniki enkodera.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

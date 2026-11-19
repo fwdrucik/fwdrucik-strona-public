@@ -1,0 +1,62 @@
+{
+  "can-zlacze-obd2": {
+    "plik": "/assets/blog/can-zlacze-obd2.jpg",
+    "szerokosc": 1280,
+    "wysokosc": 853,
+    "tytul": "2016-07 ODB-II connector 01.JPG",
+    "autor": "0x010C",
+    "licencja": "CC BY-SA 4.0",
+    "licencja_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "strona": "https://commons.wikimedia.org/wiki/File:2016-07_ODB-II_connector_01.JPG"
+  },
+  "rs485-okablowanie": {
+    "plik": "/assets/blog/rs485-okablowanie.png",
+    "szerokosc": 644,
+    "wysokosc": 268,
+    "tytul": "RS-485 wiring.png",
+    "autor": "VamosSandor",
+    "licencja": "CC BY-SA 4.0",
+    "licencja_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "strona": "https://commons.wikimedia.org/wiki/File:RS-485_wiring.png"
+  },
+  "esp32-plytka": {
+    "plik": "/assets/blog/esp32-plytka.jpg",
+    "szerokosc": 1280,
+    "wysokosc": 1707,
+    "tytul": "ESP32 Dev Board.jpg",
+    "autor": "Edwiyanto",
+    "licencja": "CC BY-SA 4.0",
+    "licencja_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "strona": "https://commons.wikimedia.org/wiki/File:ESP32_Dev_Board.jpg"
+  },
+  "arduino-uno": {
+    "plik": "/assets/blog/arduino-uno.jpg",
+    "szerokosc": 1280,
+    "wysokosc": 963,
+    "tytul": "Arduino Uno board.jpg",
+    "autor": "JrawX",
+    "licencja": "CC0",
+    "licencja_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "strona": "https://commons.wikimedia.org/wiki/File:Arduino_Uno_board.jpg"
+  },
+  "klimatyzacja-manometry": {
+    "plik": "/assets/blog/klimatyzacja-manometry.jpg",
+    "szerokosc": 1280,
+    "wysokosc": 855,
+    "tytul": "Cool under pressure- 386th ECES HVAC technicians in action (9047740).jpg",
+    "autor": "U.S. Air Force photo by Senior Airman Mark Colmenares",
+    "licencja": "Public domain",
+    "licencja_url": "",
+    "strona": "https://commons.wikimedia.org/wiki/File:Cool_under_pressure-_386th_ECES_HVAC_technicians_in_action_(9047740).jpg"
+  },
+  "cnc-frezarka": {
+    "plik": "/assets/blog/cnc-frezarka.jpg",
+    "szerokosc": 1280,
+    "wysokosc": 853,
+    "tytul": "CNC milling machine.jpg",
+    "autor": "Impressionmanufacturer",
+    "licencja": "CC BY-SA 4.0",
+    "licencja_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "strona": "https://commons.wikimedia.org/wiki/File:CNC_milling_machine.jpg"
+  }
+}

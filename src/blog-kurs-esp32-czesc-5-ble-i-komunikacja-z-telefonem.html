@@ -1,0 +1,216 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Kurs ESP32 część 5: BLE i komunikacja z telefonem",
+  "description": "Poznaj podstawy komunikacji BLE w układach ESP32. Dowiedz się, jak poprawnie skonfigurować serwer GATT i przesyłać dane do urządzeń mobilnych w warsztacie.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-08-26",
+  "dateModified": "2026-08-26",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/kurs-esp32-czesc-5-ble-i-komunikacja-z-telefonem/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-orange">Programowanie i kursy</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 6 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 26.08.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Kurs ESP32 część 5: BLE i komunikacja z telefonem</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Odczytuj czujniki ESP32 na telefonie przez Bluetooth Low Energy (BLE). Omawiamy GATT i budowę serwera danych.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#podstawy-ble-i-gatt">Architektura BLE i model GATT</a></li>
+      <li><a href="#konfiguracja-serwera">Implementacja serwera BLE w ESP32</a></li>
+      <li><a href="#procedura-diagnostyczna">Procedura wdrożenia i testowania komunikacji</a></li>
+      <li><a href="#bezpieczenstwo-i-bhp">Bezpieczeństwo i uwagi techniczne</a></li>
+      <li><a href="#zastosowanie-w-warsztacie">Zastosowanie w warsztacie F.W. DRUCIK</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="podstawy-ble-i-gatt">1. Architektura BLE i model GATT</h2>
+<p>W BLE ESP32 udostępnia dane jako serwer, a telefon, np. z BLE Scanner, odczytuje je jako klient. GATT grupuje charakterystyki w usługi. Charakterystyki mają UUID: 128-bitowy lub 16-bitowy dla standardowych profili SIG. Obsługują odczyt, zapis lub subskrypcję; Notify wysyła dane bez ciągłego odpytywania.</p><p>Domyślne MTU BLE 4.2/5.0 wynosi 23 bajty, w tym 20 bajtów danych użytkownika. Większe MTU trzeba wynegocjować przy połączeniu. Dobieraj UUID tak, by jednoznacznie rozpoznawać usługę wśród urządzeń pasma 2.4 GHz. Sprawdź obsługę Bluetooth i zużycie RAM w użytym środowisku: Arduino IDE i ESP-IDF różnią się implementacją, co ma znaczenie przy wielu połączeniach.</p>
+
+    <figure>
+      <img src="/assets/blog/kurs-esp32-czesc-5-ble-i-komunikacja-z-telefonem.jpg" width="1280" height="1707" loading="lazy" alt="Kurs ESP32 część 5: BLE i komunikacja z telefonem">
+      <figcaption>Moduł ESP32 podłączony do płytki stykowej w trakcie testów komunikacji bezprzewodowej.
+        <span class="zrodlo">Fot. <a href="https://commons.wikimedia.org/wiki/File:ESP32_Dev_Board.jpg" target="_blank" rel="noopener nofollow">Edwiyanto</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener nofollow">CC BY-SA 4.0</a>, Wikimedia Commons.</span>
+      </figcaption>
+    </figure>
+
+
+    <h2 id="konfiguracja-serwera">2. Implementacja serwera BLE w ESP32</h2>
+<h3>Implementacja serwera BLE w ESP32</h3>
+
+<p>Proces uruchomienia serwera BLE na ESP32 składa się z kilku kluczowych etapów, które muszą zostać wykonane w ściśle określonej kolejności:</p>
+<ol>
+    <li><strong>Inicjalizacja:</strong> Wywołanie <code>BLEDevice::init("Nazwa_ESP32")</code> przygotowuje stos Bluetooth.</li>
+    <li><strong>Tworzenie serwera:</strong> Użycie <code>BLEDevice::createServer()</code> inicjuje obiekt serwera.</li>
+    <li><strong>Definicja usługi:</strong> Utworzenie <code>BLEService</code> z unikalnym UUID.</li>
+    <li><strong>Definicja charakterystyki:</strong> Dodanie <code>BLECharacteristic</code> z przypisanymi uprawnieniami (np. <code>PROPERTY_READ | PROPERTY_NOTIFY</code>).</li>
+    <li><strong>Konfiguracja deskryptora:</strong> Dodanie <code>BLE2902</code> (CCCD), co jest niezbędne do obsługi powiadomień (notify).</li>
+    <li><strong>Reklama:</strong> Uruchomienie <code>BLEAdvertising</code>, aby telefon mógł wykryć urządzenie.</li>
+</ol>
+
+<p>W aplikacjach IoT przesyłamy dane w konkretnych formatach. Przykładowe wartości pomiarowe, które warto mapować na charakterystyki, przedstawia poniższa tabela:</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Parametr</th>
+            <th>Jednostka</th>
+            <th>Typ danych</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Temperatura</td>
+            <td>°C</td>
+            <td>float</td>
+        </tr>
+        <tr>
+            <td>Wilgotność</td>
+            <td>%</td>
+            <td>uint8_t</td>
+        </tr>
+        <tr>
+            <td>Ciśnienie</td>
+            <td>hPa</td>
+            <td>uint32_t</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Podczas programowania należy uważać na typowe błędy:</p>
+<ul>
+    <li><strong>Zbyt częste wysyłanie danych:</strong> Próba aktualizacji wartości częściej niż co 50-100 ms prowadzi do przepełnienia bufora, co objawia się nagłym rozłączeniem sesji (<em>GATT Error 0x08</em>).</li>
+    <li><strong>Brak obsługi zdarzeń:</strong> Pominięcie klasy <code>BLEServerCallbacks</code> skutkuje tym, że po rozłączeniu z telefonem ESP32 przestaje być widoczne dla innych urządzeń.</li>
+    <li><strong>Zasobożerność:</strong> Stos BLE zajmuje znaczną część pamięci RAM. Jeśli aplikacja ulega restartom (<em>Guru Meditation Error</em>), sprawdź, czy nie alokujesz zbyt wielu obiektów w pętli <code>loop()</code>.</li>
+</ul>
+
+<p>Pamiętaj, że stabilność połączenia zależy od środowiska elektromagnetycznego. W przypadku zakłóceń, zwiększ interwał przesyłania danych do 500 ms, co znacząco poprawi niezawodność transmisji w systemach automatyki.</p>
+
+    <h2 id="procedura-diagnostyczna">3. Procedura wdrożenia i testowania komunikacji</h2>
+<h3>Procedura wdrożenia i testowania komunikacji</h3>
+
+<p>Poniższa lista przedstawia standardową procedurę wdrożenia komunikacji BLE w urządzeniu opartym na ESP32. Przestrzeganie tej kolejności minimalizuje ryzyko błędów w warstwie logicznej aplikacji:</p>
+
+<ol>
+    <li><strong>Definicja UUID:</strong> Wybór unikalnych 128-bitowych identyfikatorów dla usługi i charakterystyk.</li>
+    <li><strong>Inicjalizacja:</strong> Uruchomienie stosu BLE i nadanie nazwy widocznej w skanerze (np. "ESP32_Sensor_01").</li>
+    <li><strong>Konfiguracja GATT:</strong> Budowa struktury serwera i rejestracja usług.</li>
+    <li><strong>Obsługa zdarzeń:</strong> Implementacja callbacków dla <code>onConnect</code> oraz <code>onDisconnect</code>.</li>
+    <li><strong>Advertising:</strong> Uruchomienie rozgłaszania z interwałem 100–500 ms.</li>
+    <li><strong>Weryfikacja:</strong> Testy za pomocą aplikacji nRF Connect lub LightBlue.</li>
+    <li><strong>Walidacja danych:</strong> Sprawdzenie zgodności typów (np. <code>int16_t</code> dla temperatury, <code>float</code> dla wilgotności).</li>
+</ol>
+
+<p>Podczas testów kluczowe jest monitorowanie parametrów sygnału oraz stabilności stosu. Poniższa tabela przedstawia interpretację wartości RSSI:</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Wartość RSSI</th>
+            <th>Jakość połączenia</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>-30 dBm do -50 dBm</td>
+            <td>Idealna (bliskość)</td>
+        </tr>
+        <tr>
+            <td>-50 dBm do -80 dBm</td>
+            <td>Stabilna (zalecana)</td>
+        </tr>
+        <tr>
+            <td>Poniżej -90 dBm</td>
+            <td>Niestabilna / brak łączności</td>
+        </tr>
+    </tbody>
+</table>
+
+<p><strong>Typowe błędy i ich objawy:</strong></p>
+<ul>
+    <li><strong>Błąd parowania (Bonding):</strong> Objawia się natychmiastowym rozłączeniem po próbie odczytu charakterystyki. Rozwiązaniem jest wyczyszczenie pamięci NVRAM lub wyłączenie wymuszania szyfrowania w kodzie.</li>
+    <li><strong>Zbyt krótki interwał Advertisingu:</strong> Powoduje szybkie wyczerpanie baterii i przegrzewanie modułu.</li>
+    <li><strong>Brak obsługi callbacków:</strong> Prowadzi do "zawieszenia" ESP32, gdy telefon nagle traci zasięg, a urządzenie nie zwalnia zasobów pamięci.</li>
+</ul>
+
+<p>Zawsze wykonuj testy w warunkach docelowych. Pamiętaj, że przeszkody metalowe oraz ściany żelbetowe drastycznie tłumią sygnał 2.4 GHz, co może skutkować gubieniem pakietów danych mimo poprawnego nawiązania sesji.</p>
+
+    <h2 id="bezpieczenstwo-i-bhp">4. Bezpieczeństwo i uwagi techniczne</h2>
+<p>Przed programowaniem odizoluj ESP32 od obwodów siłowych i zabezpiecz układy ciśnieniowe. Przy zasilaniu akumulatorowym stosuj zabezpieczenie nadprądowe. Funkcje bezpieczeństwa, w tym wyłączniki awaryjne, muszą działać sprzętowo i niezależnie od BLE.</p><p>Unikaj blokujących pętli w callbackach. Zawory i przekaźniki odseparuj transoptorami lub SSR. Sterowanie sprężarką wymaga niezależnej kontroli ciśnienia czujnikiem analogowym. Przed zmianą kodu zrób kopię wsadu. Kasowanie błędów nie zastępuje usunięcia usterki.</p>
+
+    <h2 id="zastosowanie-w-warsztacie">5. Zastosowanie w warsztacie F.W. DRUCIK</h2>
+<h3>Zastosowanie w warsztacie F.W. DRUCIK</h3>
+
+<p>W warsztacie F.W. DRUCIK wykorzystujemy moduły ESP32 do tworzenia systemów monitoringu parametrów pracy maszyn, co pozwala na szybką diagnostykę bez konieczności rozbierania obudów. Nasze systemy BLE przesyłają w czasie rzeczywistym kluczowe dane, takie jak temperatura silnika (zakres 20-95 °C), pobór prądu (0-16 A) czy wibracje (0-500 Hz). Dzięki temu operatorzy mogą monitorować stan techniczny urządzeń bezpośrednio na ekranie smartfona.</p>
+
+<p><strong>Kolejność czynności przy wdrażaniu systemu:</strong></p>
+<ol>
+    <li>Montaż czujników wewnątrz urządzenia i podłączenie ich do pinów GPIO modułu ESP32.</li>
+    <li>Konfiguracja ESP32 jako serwera GATT (Generic Attribute Profile) z unikalnym identyfikatorem UUID.</li>
+    <li>Uruchomienie aplikacji typu BLE Scanner na telefonie w celu weryfikacji transmisji danych.</li>
+    <li>Kalibracja odczytów w kodzie programu, aby zapewnić dokładność pomiarową na poziomie ±1%.</li>
+</ol>
+
+<p>Podczas prac często spotykamy się z typowymi błędami, które mogą utrudniać komunikację:</p>
+<ul>
+    <li><strong>Niestabilne zasilanie:</strong> Objawia się nagłym zrywaniem połączenia BLE przy obciążeniu procesora. Rozwiązaniem jest dodanie kondensatora elektrolitycznego 100 µF przy pinach zasilania ESP32.</li>
+    <li><strong>Błędny format danych:</strong> Jeśli telefon odbiera "śmieci" zamiast wartości liczbowych, sprawdź, czy dane są przesyłane w formacie Little Endian zgodnie ze specyfikacją BLE.</li>
+    <li><strong>Zbyt duża częstotliwość odświeżania:</strong> Próba wysyłania danych częściej niż co 100 ms może powodować zawieszanie się stosu Bluetooth.</li>
+</ul>
+
+<p>Jeśli Twoje urządzenie wymaga modernizacji w zakresie zdalnego odczytu danych, zapraszamy do kontaktu. Nasze usługi obejmują <a href="/uslugi/elektromechanika/">elektromechanikę</a> oraz <a href="/uslugi/programowanie-aplikacje/">programowanie systemów wbudowanych</a>. Znajdziesz nas w Domosławiu 13A (06-120 Winnica). Pracujemy od poniedziałku do piątku (8-17) oraz w soboty (9-13). W sprawach technicznych prosimy o kontakt pod numerem 601 726 924 lub adresem fwdrucik@gmail.com. NIP: 888-292-19-00. Niezależnie od tego, czy potrzebujesz wsparcia w zakresie <a href="/uslugi/spawanie/">spawania</a>, <a href="/uslugi/klimatyzacja-samochodowa/">serwisu klimatyzacji</a> czy <a href="/uslugi/maszyny-cnc/">obróbki CNC</a>, zapewniamy rzeczowe podejście. Przed wizytą zalecamy kontakt telefoniczny. Więcej informacji znajdziesz w sekcji <a href="/uslugi/">usługi</a>.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Jaki jest maksymalny zasięg komunikacji BLE dla ESP32?</summary>
+        <p>W otwartej przestrzeni zasięg wynosi zazwyczaj od 10 do 30 metrów. W warunkach warsztatowych, ze względu na przeszkody metalowe i zakłócenia, zasięg ten może być znacznie mniejszy.</p>
+      </details>
+      <details>
+        <summary>Czy ESP32 może łączyć się z wieloma telefonami jednocześnie?</summary>
+        <p>Standardowo ESP32 obsługuje jedno aktywne połączenie typu central-peripheral. Możliwe jest jednak zarządzanie wieloma klientami poprzez odpowiednią konfigurację stosu, choć jest to wymagające dla zasobów procesora.</p>
+      </details>
+      <details>
+        <summary>Jakie aplikacje na telefon polecacie do testowania BLE?</summary>
+        <p>Najbardziej stabilnymi narzędziami są nRF Connect for Mobile oraz LightBlue. Pozwalają one na pełny podgląd usług, charakterystyk oraz wysyłanie danych testowych do modułu.</p>
+      </details>
+      <details>
+        <summary>Czy BLE w ESP32 zużywa dużo energii?</summary>
+        <p>BLE jest zaprojektowane jako energooszczędne, jednak pobór prądu zależy od interwału reklamowania i częstotliwości przesyłania danych. Przy odpowiedniej optymalizacji kodu można osiągnąć bardzo długi czas pracy na zasilaniu bateryjnym.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

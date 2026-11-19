@@ -1,0 +1,228 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Kurs ESP32 i Arduino, część 1 — wybór płytki i pierwsze układy",
+  "description": "Czym różni się ESP32 od Arduino Uno, jak nie spalić wejścia 3,3 V, których pinów nie używać i jak zasilić układ w pojeździe. Pierwsza część kursu.",
+  "author": {"@type": "Organization", "name": "F.W. DRUCIK"},
+  "publisher": {"@type": "Organization", "name": "F.W. DRUCIK", "logo": {"@type": "ImageObject", "url": "https://fwdrucik.pl/assets/favicon.png"}},
+  "datePublished": "2026-07-24",
+  "dateModified": "2026-07-24",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/kurs-esp32-arduino-czesc-1/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-orange">Programowanie i kursy</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 13 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 08.08.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Kurs ESP32 i Arduino, część 1 — wybór płytki i pierwsze układy</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">ESP32 a Arduino Uno: różnice, dobór pinów i zasilanie w pojeździe. Uwaga: 5 V na wejściu ESP32 może uszkodzić moduł.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#po-co">Po co warsztatowi mikrokontroler</a></li>
+      <li><a href="#plytki">Arduino Uno, Uno R4, ESP32 — porównanie</a></li>
+      <li><a href="#napiecia">Napięcia i piny, czyli jak nie spalić płytki</a></li>
+      <li><a href="#srodowisko">Środowisko pracy i pierwszy program</a></li>
+      <li><a href="#wejscia">Wejścia: przycisk, styk, czujnik analogowy</a></li>
+      <li><a href="#wyjscia">Wyjścia: przekaźnik, tranzystor, PWM</a></li>
+      <li><a href="#zasilanie">Zasilanie układu w pojeździe i w szafie</a></li>
+      <li><a href="#dalej">Co dalej — plan kolejnych części</a></li>
+      <li><a href="#warsztat">Elektronika na zamówienie w Winnicy</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="po-co">1. Po co warsztatowi mikrokontroler</h2>
+    <p>Mikrokontroler za kilkadziesiąt złotych rozwiązuje w warsztacie problemy, które inaczej kosztują tysiące albo są nie do kupienia:</p>
+    <ul>
+      <li>rejestrator temperatury, ciśnienia albo napięcia z zapisem na kartę — do wyłapania usterki, która pojawia się raz na dwa dni,</li>
+      <li>symulator czujnika do sprawdzenia reakcji sterownika bez rozbierania maszyny,</li>
+      <li>sterownik do stanowiska: nawiew, oświetlenie, odciąg, obrotnica spawalnicza,</li>
+      <li>czytnik magistrali (CAN, RS-485) podglądający, co naprawdę jeździ po przewodach,</li>
+      <li>prosty licznik cykli albo detektor przestoju maszyny.</li>
+    </ul>
+    <p>Wszystko poniżej opisujemy w środowisku Arduino, bo pozwala programować zarówno klasyczne płytki Arduino, jak i moduły ESP32 tym samym kodem i tymi samymi bibliotekami.</p>
+
+    <h2 id="plytki">2. Arduino Uno, Uno R4, ESP32 — porównanie</h2>
+    <p>Najczęstszy błąd początkującego to kupienie płytki „bo taka była w poradniku". Wybór wynika z zadania. Poniżej dane katalogowe najpopularniejszych rodzin — do zweryfikowania w dokumentacji konkretnego modułu, bo warianty potrafią się różnić:</p>
+    <div class="tabela-wrap">
+      <table>
+        <thead>
+          <tr><th>Cecha</th><th>Arduino Uno R3</th><th>Arduino Uno R4</th><th>ESP32 (klasyczny)</th><th>ESP32-C3</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Rdzeń</td><td>ATmega328P, 8-bit</td><td>Renesas RA4M1, Cortex-M4</td><td>dwurdzeniowy Xtensa LX6</td><td>jednordzeniowy RISC-V</td></tr>
+          <tr><td>Taktowanie</td><td>16 MHz</td><td>48 MHz</td><td>do 240 MHz</td><td>do 160 MHz</td></tr>
+          <tr><td>Pamięć RAM</td><td>2 kB</td><td>32 kB</td><td>520 kB</td><td>ok. 400 kB</td></tr>
+          <tr><td>Pamięć programu</td><td>32 kB</td><td>256 kB</td><td>zewnętrzna pamięć flash, typowo 4 MB</td><td>typowo 4 MB</td></tr>
+          <tr><td>Napięcie wejść/wyjść</td><td>5 V</td><td>5 V</td><td>3,3 V</td><td>3,3 V</td></tr>
+          <tr><td>Łączność bezprzewodowa</td><td>brak</td><td>zależnie od wersji (Uno R4 WiFi)</td><td>Wi-Fi + Bluetooth</td><td>Wi-Fi + Bluetooth LE</td></tr>
+          <tr><td>Przetwornik analogowo-cyfrowy</td><td>10-bitowy</td><td>do 14 bitów</td><td>12-bitowy, nieliniowy</td><td>12-bitowy</td></tr>
+          <tr><td>Kontroler CAN</td><td>brak</td><td>tak (w wybranych wariantach)</td><td>tak (TWAI), wymaga zewnętrznego transceivera</td><td>tak, wymaga transceivera</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <figure>
+      <img src="/assets/blog/arduino-uno.jpg" width="1280" height="963" loading="lazy"
+           alt="Płytka Arduino Uno z mikrokontrolerem ATmega328P i listwami goldpin">
+      <figcaption>Arduino Uno — wejścia i wyjścia pracują na 5 V, co bardzo ułatwia współpracę ze starszymi modułami i czujnikami.
+        <span class="zrodlo">Fot. <a href="https://commons.wikimedia.org/wiki/File:Arduino_Uno_board.jpg" target="_blank" rel="noopener nofollow">JrawX</a>, licencja <a href="http://creativecommons.org/publicdomain/zero/1.0/deed.en" target="_blank" rel="noopener nofollow">CC0</a>, Wikimedia Commons.</span>
+      </figcaption>
+    </figure>
+
+    <figure>
+      <img src="/assets/blog/esp32-plytka.jpg" width="1280" height="1707" loading="lazy"
+           alt="Moduł deweloperski ESP32 z układem Wi-Fi i Bluetooth osadzony w płytce stykowej">
+      <figcaption>Typowy moduł deweloperski ESP32. Uwaga: wszystkie wyprowadzenia pracują na 3,3 V i nie są odporne na 5 V.
+        <span class="zrodlo">Fot. <a href="https://commons.wikimedia.org/wiki/File:ESP32_Dev_Board.jpg" target="_blank" rel="noopener nofollow">Edwiyanto</a>, licencja <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener nofollow">CC BY-SA 4.0</a>, Wikimedia Commons.</span>
+      </figcaption>
+    </figure>
+
+    <p><strong>Jak wybrać:</strong></p>
+    <ul>
+      <li><strong>Uno R3</strong> — proste sterowanie, nauka, praca z modułami na 5 V. Zaleta, o której się zapomina: odporność na pomyłki i ogromna liczba gotowych przykładów.</li>
+      <li><strong>ESP32</strong> — gdy potrzebujesz Wi-Fi, Bluetooth, dużej mocy obliczeniowej, obsługi magistral albo zapisu danych. Domyślny wybór do rejestratorów i podglądu magistral.</li>
+      <li><strong>ESP32-C3</strong> — mniejszy i tańszy, gdy wystarczy jeden rdzeń, a zależy nam na Bluetooth LE i niskim poborze prądu.</li>
+    </ul>
+
+    <h2 id="napiecia">3. Napięcia i piny, czyli jak nie spalić płytki</h2>
+    <p class="uwaga"><strong>Najważniejsza zasada kursu:</strong> wejścia i wyjścia ESP32 pracują na 3,3 V i <strong>nie są odporne na 5 V</strong>. Podanie 5 V na pin uszkadza układ, czasem od razu, czasem po tygodniu. Sygnał 5 V trzeba obniżyć dzielnikiem rezystorowym (przy wolnych sygnałach) albo konwerterem poziomów logicznych (przy szybkich, jak I²C i SPI).</p>
+    <p>Kolejne pułapki, które kosztują najwięcej straconego czasu:</p>
+    <ul>
+      <li><strong>Piny zajęte przez pamięć flash.</strong> W klasycznym ESP32 grupa pinów obsługuje wbudowaną pamięć programu. Ich użycie kończy się tym, że moduł nie startuje. Sprawdź w dokumentacji swojego modułu, które piny są wyprowadzone „do użytku", a które tylko fizycznie istnieją.</li>
+      <li><strong>Piny startowe (strapping).</strong> Kilka pinów decyduje o trybie uruchomienia. Podłączenie do nich rezystora podciągającego albo diody potrafi uniemożliwić start albo wprowadzić moduł w tryb programowania.</li>
+      <li><strong>Drugi przetwornik analogowo-cyfrowy a Wi-Fi.</strong> W klasycznym ESP32 część wejść analogowych jest niedostępna przy włączonym Wi-Fi. Do pomiarów wybieraj wejścia z pierwszej grupy.</li>
+      <li><strong>Nieliniowość przetwornika.</strong> Wejście analogowe ESP32 nie jest liniowe na krańcach zakresu. Do pomiarów wymagających dokładności użyj zewnętrznego przetwornika na magistrali I²C.</li>
+      <li><strong>Obciążalność wyjścia.</strong> Wyjście mikrokontrolera służy do sterowania, nie do zasilania. Przekaźnik, silnik czy taśma LED wymagają tranzystora lub gotowego modułu sterownika.</li>
+    </ul>
+
+    <h2 id="srodowisko">4. Środowisko pracy i pierwszy program</h2>
+    <p>Użyj Arduino IDE ze wsparciem ESP32 z menedżera płytek albo PlatformIO w Visual Studio Code. PlatformIO ułatwia większe projekty, oddzielając ich biblioteki.</p>
+    <p>Program w środowisku Arduino ma zawsze dwie funkcje: <code>setup()</code> wykonywaną raz po starcie i <code>loop()</code> powtarzaną w kółko.</p>
+<pre><code>void setup() {
+  Serial.begin(115200);       // port szeregowy do podglądu na komputerze
+  pinMode(2, OUTPUT);         // wbudowana dioda na wielu modułach
+}
+
+void loop() {
+  digitalWrite(2, HIGH);
+  Serial.println("dioda wlaczona");
+  delay(500);
+  digitalWrite(2, LOW);
+  delay(500);
+}</code></pre>
+    <p>Dwie uwagi praktyczne. Po pierwsze, prędkość portu szeregowego w kodzie i w monitorze musi być identyczna — inaczej zobaczysz krzaki. Po drugie, <code>delay()</code> blokuje cały program. W układzie, który ma jednocześnie mrugać, mierzyć i odpowiadać na przycisk, zamiast <code>delay()</code> używa się porównywania czasu:</p>
+<pre><code>unsigned long ostatnio = 0;
+const unsigned long OKRES = 500;
+
+void loop() {
+  unsigned long teraz = millis();
+  if (teraz - ostatnio &gt;= OKRES) {
+    ostatnio = teraz;
+    // tu rzecz wykonywana co pol sekundy
+  }
+  // reszta programu dziala bez przerwy
+}</code></pre>
+
+    <h2 id="wejscia">5. Wejścia: przycisk, styk, czujnik analogowy</h2>
+    <p><strong>Wejście dwustanowe.</strong> Nigdy nie zostawiaj wejścia „w powietrzu" — bez podciągnięcia będzie łapać zakłócenia i zmieniać stan losowo. Najprostsze rozwiązanie to wewnętrzny rezystor podciągający i zwieranie wejścia do masy:</p>
+<pre><code>const int PIN_STYK = 4;
+
+void setup() {
+  pinMode(PIN_STYK, INPUT_PULLUP);   // stan wysoki, gdy styk otwarty
+}
+
+bool zwarty() {
+  return digitalRead(PIN_STYK) == LOW;
+}</code></pre>
+    <p><strong>Drgania styków.</strong> Mechaniczny styk przy przełączaniu generuje serię impulsów przez kilka–kilkanaście milisekund. Bez filtrowania jedno naciśnięcie policzy się jako kilka. Najprostszy filtr programowy: zapamiętaj czas ostatniej zmiany i ignoruj kolejne przez ustalony czas.</p>
+    <p><strong>Wejście analogowe.</strong> Czujniki dające napięcie 0–5 V (czujniki ciśnienia, potencjometry, dzielniki) wymagają obniżenia poziomu przed wejściem ESP32. Prosty dzielnik z dwóch rezystorów wystarczy przy wolnozmiennych sygnałach. Pamiętaj o wspólnej masie między czujnikiem a mikrokontrolerem — jej brak jest najczęstszą przyczyną „dziwnych" odczytów.</p>
+    <p class="uwaga"><strong>Pomiar w instalacji pojazdu.</strong> Napięcie 12 V lub 24 V nigdy nie trafia bezpośrednio na wejście mikrokontrolera. Do pomiaru napięcia akumulatora używa się dzielnika i diody zabezpieczającej, a przy większych zakłóceniach — wejścia z separacją optyczną.</p>
+
+    <h2 id="wyjscia">6. Wyjścia: przekaźnik, tranzystor, PWM</h2>
+    <p>Trzy typowe sposoby sterowania odbiornikiem:</p>
+    <ul>
+      <li><strong>Moduł przekaźnikowy</strong> — najprostszy, izoluje obwód mocy, ale przełącza wolno i zużywa się mechanicznie. Do sterowania oświetleniem, nawiewem, blokadą.</li>
+      <li><strong>Tranzystor MOSFET</strong> — do sterowania prądem stałym z regulacją mocy. Sprawdź, czy tranzystor otwiera się w pełni przy napięciu bramki 3,3 V (tzw. logic level). Zwykły MOSFET mocy przy 3,3 V pozostanie w stanie częściowego przewodzenia i zacznie się grzać.</li>
+      <li><strong>Wyjście PWM</strong> — regulacja jasności, obrotów wentylatora, mocy grzałki. W ESP32 służy do tego sprzętowy sterownik <code>ledc</code> z ustawianą częstotliwością i rozdzielczością.</li>
+    </ul>
+<pre><code>// ESP32: PWM na kanale 0, 5 kHz, rozdzielczosc 8 bitow
+void setup() {
+  ledcSetup(0, 5000, 8);
+  ledcAttachPin(18, 0);
+}
+
+void loop() {
+  ledcWrite(0, 128);   // wypelnienie 50%
+}</code></pre>
+    <p>Przy obciążeniach indukcyjnych (przekaźnik, zawór, silnik) zawsze montuj diodę gaszącą równolegle do cewki. Bez niej impuls przepięciowy przy wyłączaniu uszkodzi tranzystor, a przy okazji zakłóci pracę całego układu.</p>
+
+    <h2 id="zasilanie">7. Zasilanie układu w pojeździe i w szafie</h2>
+    <p>To jest miejsce, w którym większość samodzielnych konstrukcji umiera. Instalacja pojazdu to trudne środowisko: napięcie zmienia się w szerokim zakresie, przy rozruchu zapada, a przy odłączaniu odbiorników pojawiają się impulsy przepięciowe. Norma <strong>ISO 7637-2</strong> opisuje typowe zaburzenia przewodzone w instalacji pojazdu — warto o niej wiedzieć, wybierając przetwornicę.</p>
+    <p>Minimum, które trzeba przewidzieć:</p>
+    <ul>
+      <li><strong>Bezpiecznik</strong> na zasilaniu, dobrany do przekroju przewodu, jak najbliżej źródła.</li>
+      <li><strong>Przetwornica impulsowa</strong> obniżająca napięcie do 5 V, z zapasem napięcia wejściowego (dla instalacji 24 V minimum 36 V, lepiej więcej).</li>
+      <li><strong>Dioda transil (TVS)</strong> i kondensatory filtrujące na wejściu przetwornicy.</li>
+      <li><strong>Zabezpieczenie przed odwrotną polaryzacją</strong> — dioda szeregowa lub tranzystor MOSFET w układzie ochronnym.</li>
+      <li><strong>Stabilny zasilacz 3,3 V</strong> o zapasie prądowym: moduł z Wi-Fi pobiera w impulsach nadawania wielokrotnie więcej niż średnio. Za słabe zasilanie objawia się losowymi restartami przy próbie połączenia — to najczęstsza „tajemnicza" usterka układów z ESP32.</li>
+      <li><strong>Osobne prowadzenie mas</strong> sygnałowej i mocy, połączonych w jednym punkcie.</li>
+    </ul>
+    <p>W szafie sterowniczej dochodzi jeszcze separacja galwaniczna wejść i wyjść oraz trzymanie przewodów sygnałowych z dala od kabli silnikowych — o czym piszemy szerzej we wpisie <a href="/blog/rs485-modbus-rtu/">o RS-485 i Modbus RTU</a>.</p>
+
+    <h2 id="dalej">8. Co dalej — plan kolejnych części</h2>
+    <ol>
+      <li><strong>Część 2</strong> — Wi-Fi i MQTT: wysyłanie pomiarów z warsztatu i podgląd na telefonie.</li>
+      <li><strong>Część 3</strong> — CAN na ESP32 (kontroler TWAI plus transceiver): podsłuchiwanie ramek w pojeździe.</li>
+      <li><strong>Część 4</strong> — Modbus RTU przez RS-485: odczyt falownika i licznika energii.</li>
+    </ol>
+    <p>Zanim przejdziesz do magistral, warto przeczytać podstawy: <a href="/blog/magistrala-can-diagnostyka/">jak działa CAN</a> i <a href="/blog/rs485-modbus-rtu/">jak zestawić RS-485</a>. Oszczędza to sporo prób i błędów.</p>
+
+    <h2 id="warsztat">9. Elektronika na zamówienie w Winnicy</h2>
+    <p>Jeśli potrzebujesz gotowego urządzenia zamiast projektu do samodzielnego złożenia — zajmujemy się tym zawodowo. Piszemy oprogramowanie mikrokontrolerów w C++, aplikacje Android w Kotlinie i skrypty w Pythonie, a także budujemy elektronikę sterującą maszynami. Zakres opisaliśmy na stronie <a href="/uslugi/programowanie-aplikacje/">programowanie i aplikacje</a> oraz <a href="/uslugi/maszyny-cnc/">budowa maszyn CNC</a>. Instalacje, szafy i okablowanie: <a href="/uslugi/elektromechanika/">elektromechanika</a>.</p>
+    <p>Warsztat: Domosław 13A, 06-120 Winnica (powiat pułtuski). Telefon 601 726 924, e-mail fwdrucik@gmail.com. Pon.–pt. 8:00–17:00, sob. 9:00–13:00. Opisz pomysł przez <a href="/kontakt/">formularz kontaktowy</a> — wstępna wycena jest bezpłatna.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Od której płytki zacząć naukę?</summary>
+        <p>Jeśli chcesz przede wszystkim zrozumieć podstawy i pracować z modułami na 5 V, zacznij od Arduino Uno. Jeśli od razu potrzebujesz Wi-Fi, zapisu danych albo obsługi magistral, wybierz ESP32 — kosztuje podobnie, a możliwości ma nieporównywalnie większe.</p>
+      </details>
+      <details>
+        <summary>Dlaczego ESP32 restartuje się przy łączeniu z Wi-Fi?</summary>
+        <p>Najpierw sprawdź zasilanie. Krótkie impulsy prądu podczas nadawania mogą wywołać spadek napięcia na słabym stabilizatorze lub cienkim USB. Pomaga wydajniejsze zasilanie i kondensator blisko modułu.</p>
+      </details>
+      <details>
+        <summary>Czy mogę podłączyć czujnik 5 V bezpośrednio do ESP32?</summary>
+        <p>Nie. Wejścia ESP32 pracują na 3,3 V i nie są odporne na 5 V. Trzeba użyć dzielnika rezystorowego przy sygnałach wolnozmiennych albo konwertera poziomów logicznych przy magistralach I²C i SPI.</p>
+      </details>
+      <details>
+        <summary>Czy ESP32 nadaje się do zastosowań w pojeździe?</summary>
+        <p>Tak, pod warunkiem prawidłowego zasilania i zabezpieczeń: bezpiecznika, przetwornicy z zapasem napięcia, diody transil i ochrony przed odwrotną polaryzacją. Bez tego układ padnie przy pierwszym poważniejszym impulsie w instalacji.</p>
+      </details>
+      <details>
+        <summary>Czy do odczytu CAN wystarczy sam ESP32?</summary>
+        <p>Nie. ESP32 ma wbudowany kontroler CAN, ale nie ma warstwy fizycznej — potrzebny jest zewnętrzny transceiver przetwarzający sygnał logiczny na różnicowy sygnał magistrali. Bez niego moduł nie zobaczy żadnej ramki.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

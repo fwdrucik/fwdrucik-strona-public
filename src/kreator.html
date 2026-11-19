@@ -1,0 +1,1835 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>DRUCIK Studio — Allegro Pro Studio & Kreator Ofert</title>
+  <meta name="description" content="Profesjonalny kreator ofert Allegro, asystent SEO i panel zarządzania asortymentem dla warsztatu F.W. DRUCIK.">
+  <link rel="canonical" href="https://fwdrucik.pl/kreator/">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --card: #131922;
+      --card-2: #1a222f;
+      --card-hover: #222d3d;
+      --border: #263344;
+      --border-accent: #3b4d66;
+      --text: #e2e8f0;
+      --muted: #8fa3b8;
+      --orange: #ff5a00;
+      --orange-hover: #ff701e;
+      --orange-glow: rgba(255, 90, 0, 0.25);
+      --cyan: #00d2ff;
+      --cyan-hover: #38e1ff;
+      --cyan-glow: rgba(0, 210, 255, 0.25);
+      --green: #10b981;
+      --green-glow: rgba(16, 185, 129, 0.2);
+      --red: #ef4444;
+      --font-ui: "Source Sans 3", system-ui, sans-serif;
+      --font-head: Archivo, sans-serif;
+      --font-mono: "JetBrains Mono", monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-ui);
+      font-size: 15px;
+      line-height: 1.5;
+      padding-bottom: 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+    header {
+      background: rgba(19, 25, 34, 0.95);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+    }
+    .brand span.badge-pro {
+      background: linear-gradient(135deg, #ff5a00 0%, #d44300 100%);
+      color: #fff;
+      font-size: 0.72rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+    .user-box {
+      font-size: 0.85rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 16px;
+    }
+    .tabs-nav {
+      display: flex;
+      gap: 8px;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 24px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+    .tab-nav-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 12px 18px;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tab-nav-btn:hover {
+      color: #fff;
+    }
+    .tab-nav-btn.active {
+      color: var(--orange);
+      border-bottom-color: var(--orange);
+    }
+    .tab-nav-btn.active.tab-cyan {
+      color: var(--cyan);
+      border-bottom-color: var(--cyan);
+    }
+    .pill-count {
+      background: var(--card-2);
+      padding: 2px 7px;
+      border-radius: 10px;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      color: var(--text);
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+    }
+    .card-title {
+      font-family: var(--font-head);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .label-with-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .char-counter {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .char-counter.good { color: var(--green); font-weight: 700; }
+    .char-counter.warning { color: var(--red); font-weight: 700; }
+    input[type="text"], input[type="url"], input[type="number"], textarea, select {
+      width: 100%;
+      background: var(--card-2);
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 2px rgba(255, 90, 0, 0.35);
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    @media (max-width: 768px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+    .allegro-box {
+      background: rgba(255, 90, 0, 0.04);
+      border: 1px solid rgba(255, 90, 0, 0.25);
+      border-radius: 10px;
+      padding: 18px;
+      margin-top: 20px;
+    }
+    .allegro-box h3 {
+      color: var(--orange);
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--font-head);
+      font-weight: 600;
+      padding: 11px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      font-size: 0.92rem;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: var(--cyan);
+      color: #0b0f14;
+    }
+    .btn-primary:hover {
+      background: var(--cyan-hover);
+      box-shadow: 0 0 14px var(--cyan-glow);
+    }
+    .btn-allegro {
+      background: linear-gradient(135deg, #ff5a00 0%, #d44300 100%);
+      color: #fff;
+      box-shadow: 0 4px 14px var(--orange-glow);
+    }
+    .btn-allegro:hover {
+      background: linear-gradient(135deg, #ff701e 0%, #e64a00 100%);
+      box-shadow: 0 4px 18px rgba(255, 90, 0, 0.5);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-outline:hover {
+      background: var(--card-2);
+      border-color: var(--muted);
+    }
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 0.82rem;
+    }
+    .photo-upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      background: var(--card-2);
+      transition: all 0.2s;
+      margin-bottom: 14px;
+    }
+    .photo-upload-zone:hover {
+      border-color: var(--orange);
+      background: rgba(255, 90, 0, 0.05);
+    }
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 12px;
+    }
+    .photo-tile {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      aspect-ratio: 1;
+      border: 1px solid var(--border);
+      background: #000;
+    }
+    .photo-tile img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .photo-tile .badge-cover {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      background: var(--orange);
+      color: #fff;
+      font-size: 0.68rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+    }
+    .photo-tile .btn-remove-foto {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      background: rgba(239, 68, 68, 0.85);
+      color: #fff;
+      border: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* LIVE PREVIEW */
+    .preview-split {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      align-items: start;
+    }
+    @media (max-width: 980px) {
+      .preview-split { grid-template-columns: 1fr; }
+    }
+    .allegro-preview-card {
+      background: #ffffff;
+      color: #222222;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+    .allegro-preview-card .ap-badge-smart {
+      background: #00a79d;
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 8px;
+      letter-spacing: 0.02em;
+    }
+    .allegro-preview-card .ap-seller {
+      font-size: 0.82rem;
+      color: #555;
+      margin-bottom: 6px;
+    }
+    .allegro-preview-card .ap-seller strong {
+      color: #ff5a00;
+    }
+    .allegro-preview-card .ap-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: #111;
+      margin-bottom: 12px;
+    }
+    .allegro-preview-card .ap-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .allegro-preview-card .ap-price {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #111;
+    }
+    .allegro-preview-card .ap-delivery {
+      font-size: 0.88rem;
+      color: #008a00;
+      font-weight: 600;
+    }
+    .allegro-preview-card .ap-img-box {
+      width: 100%;
+      aspect-ratio: 1;
+      background: #ffffff;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .allegro-preview-card .ap-img-box img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    .allegro-preview-card .ap-params-box {
+      background: #f7f7f8;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 16px;
+      font-size: 0.85rem;
+    }
+    .allegro-preview-card .ap-params-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .allegro-preview-card .ap-param-item {
+      display: flex;
+      flex-direction: column;
+    }
+    .allegro-preview-card .ap-param-name {
+      font-size: 0.72rem;
+      color: #767676;
+    }
+    .allegro-preview-card .ap-param-val {
+      font-weight: 600;
+      color: #222;
+    }
+    .allegro-preview-card .ap-desc-preview {
+      border-top: 1px solid #eee;
+      padding-top: 16px;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: #333;
+    }
+    .allegro-preview-card .ap-desc-preview h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #111;
+      margin: 14px 0 8px 0;
+    }
+    .allegro-preview-card .ap-desc-preview p {
+      margin-bottom: 10px;
+    }
+    .allegro-preview-card .ap-desc-preview ul {
+      padding-left: 20px;
+      margin-bottom: 12px;
+    }
+    .allegro-preview-card .ap-desc-preview li {
+      margin-bottom: 4px;
+    }
+    /* SALES CENTER DRAFTS */
+    .draft-card {
+      background: var(--card-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      transition: all 0.2s;
+    }
+    .draft-card:hover {
+      border-color: var(--orange);
+      background: var(--card-hover);
+    }
+    .draft-thumb {
+      width: 90px;
+      height: 90px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #000;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+    }
+    .draft-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .draft-info h4 {
+      font-family: var(--font-head);
+      font-size: 1.05rem;
+      color: #fff;
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .draft-meta {
+      font-size: 0.85rem;
+      color: var(--muted);
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+    .draft-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .badge-inactive {
+      background: rgba(255, 90, 0, 0.15);
+      border: 1px solid rgba(255, 90, 0, 0.4);
+      color: #ff9d5c;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 14px 20px;
+      border-radius: 10px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+      z-index: 1000;
+      display: none;
+      max-width: 400px;
+      font-weight: 600;
+      animation: slideIn 0.3s ease;
+    }
+    .toast.show { display: flex; align-items: center; gap: 10px; }
+    .toast.success { border-color: var(--green); }
+    .toast.error { border-color: var(--red); }
+    @keyframes slideIn {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .product-list-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px;
+      background: var(--card-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .product-list-item img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+    .product-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .product-info h4 {
+      font-size: 1rem;
+      color: #fff;
+      margin-bottom: 3px;
+    }
+    .product-info p {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 class="brand" style="margin:0;font-size:1.15rem;">
+      <span>⚡ DRUCIK Studio</span>
+      <span class="badge-pro">ALLEGRO PRO</span>
+    </h1>
+    <div class="user-box" id="header-user-box">
+      <span class="status-badge" id="allegro-api-badge" style="display:none;">🟢 Panel Aktywny</span>
+      <span id="user-info-badge" style="font-size:0.85rem; color:var(--orange); font-weight:700; display:none;">👑 <span id="user-nick">—</span></span>
+      <a href="/sklep/" target="_blank" class="btn btn-outline btn-sm">Sklep ↗</a>
+      <a href="https://salescenter.allegro.pl/offer-management" target="_blank" class="btn btn-allegro btn-sm">Sales Center ↗</a>
+      <button id="btn-logout" class="btn btn-outline btn-sm" style="display:none;" onclick="wylogujKreatora()">Wyloguj</button>
+    </div>
+  </header>
+
+  <!-- BRAMKA BEZPIECZEŃSTWA -->
+  <div class="container" id="kreator-auth-gate" style="max-width:540px; margin: 50px auto;">
+    <div class="card" style="border: 1px solid var(--border-accent); box-shadow: 0 10px 30px rgba(0,0,0,0.5); padding: 28px;">
+      <div style="text-align:center; margin-bottom:24px;">
+        <div style="font-size:2.6rem; margin-bottom:8px;">🔒</div>
+        <h2 style="font-family:var(--font-head); font-size:1.45rem; color:#fff; letter-spacing:-0.01em;">Dostęp Zastrzeżony</h2>
+        <p style="color:var(--muted); font-size:0.9rem; margin-top:8px; line-height:1.45;">
+          Strefa narzędziowa warsztatu F.W. DRUCIK. Zaloguj się kontem administratora serwisu lub użyj Tokenu Warsztatu / Agenta, aby uzyskać dostęp do Kreatora Allegro Pro.
+        </p>
+      </div>
+
+      <div id="gate-alert" style="display:none; padding:12px 16px; border-radius:8px; margin-bottom:18px; font-size:0.88rem; font-weight:600;"></div>
+
+      <!-- Logowanie kontem administratora -->
+      <form id="gate-login-form" style="margin-bottom:24px;">
+        <div class="form-group" style="margin-bottom:14px;">
+          <label for="gate-login" style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:6px; color:var(--text);">Nick lub adres e-mail</label>
+          <input type="text" id="gate-login" name="login" class="form-control" autocomplete="username" placeholder="Dawid lub fwdrucik@gmail.com" required style="width:100%; padding:10px 14px; background:var(--card-2); border:1px solid var(--border); border-radius:6px; color:#fff; font-size:0.95rem;">
+        </div>
+        <div class="form-group" style="margin-bottom:18px;">
+          <label for="gate-password" style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:6px; color:var(--text);">Hasło</label>
+          <input type="password" id="gate-password" name="haslo" class="form-control" autocomplete="current-password" placeholder="Twoje hasło..." required style="width:100%; padding:10px 14px; background:var(--card-2); border:1px solid var(--border); border-radius:6px; color:#fff; font-size:0.95rem;">
+        </div>
+        <button type="submit" id="btn-gate-login" class="btn btn-primary" style="width:100%; justify-content:center; padding:12px; font-size:0.95rem; font-weight:700;">
+          <span>Zaloguj się do Panelu →</span>
+        </button>
+      </form>
+
+      <div style="position:relative; text-align:center; margin: 24px 0;">
+        <hr style="border:none; border-top:1px solid var(--border);">
+        <span style="position:absolute; top:-10px; left:50%; transform:translateX(-50%); background:var(--card); padding:0 12px; font-size:0.75rem; color:var(--muted); font-family:var(--font-mono); font-weight:700;">LUB AUTORYZACJA KLUCZEM</span>
+      </div>
+
+      <!-- Logowanie tokenem warsztatu -->
+      <form id="gate-token-form">
+        <div class="form-group" style="margin-bottom:16px;">
+          <label for="gate-token" style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:6px; color:var(--text);">Klucz Agenta / Warsztatu (X-Agent-Token)</label>
+          <input type="password" id="gate-token" class="form-control" placeholder="Wklej token autoryzacyjny..." style="width:100%; padding:10px 14px; background:var(--card-2); border:1px solid var(--border); border-radius:6px; color:#fff; font-size:0.92rem; font-family:var(--font-mono); letter-spacing:0.04em;">
+        </div>
+        <button type="submit" id="btn-gate-token" class="btn btn-outline" style="width:100%; justify-content:center; padding:11px; border-color:var(--orange); color:#ff9d5c; font-weight:600;">
+          <span>⚡ Odblokuj Kluczem Agenta</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="container" id="kreator-app" style="display:none;">
+    <nav class="tabs-nav" aria-label="Główne zakładki kreatora">
+      <button class="tab-nav-btn active" onclick="pokazZakladke('kreator')">
+        <span>➕ Kreator Oferty & Allegro Studio</span>
+      </button>
+      <button class="tab-nav-btn" onclick="pokazZakladke('salescenter')">
+        <span>🟠 Allegro Sales Center (Szkice & Asortyment)</span>
+        <span class="pill-count" id="licznik-szkicow">4</span>
+      </button>
+      <button class="tab-nav-btn tab-cyan" onclick="pokazZakladke('lista')">
+        <span>📋 Katalog Sklepu</span>
+        <span class="pill-count" id="licznik-prod">0</span>
+      </button>
+    </nav>
+
+    <!-- ========================================================================= -->
+    <!-- ZAKŁADKA 1: KREATOR OFERTY I ALLEGRO STUDIO -->
+    <!-- ========================================================================= -->
+    <div id="tab-kreator">
+      <!-- Błyskawiczny import -->
+      <div class="card" style="border-left: 4px solid var(--orange); background: rgba(255, 90, 0, 0.06);">
+        <div class="card-title" style="color: var(--orange); margin-bottom: 6px;">
+          <span>⚡ Błyskawiczny Import z Istniejącej Oferty Allegro</span>
+        </div>
+        <p style="font-size:0.88rem; color:var(--text); margin-bottom: 12px;">
+          Wystawiłeś już ofertę na Allegro? Wklej link do aukcji poniżej. Sklep pobierze parametry, zdjęcia, opis i cenę, a następnie natychmiast zsynchronizuje ją ze sklepem <code>fwdrucik.pl</code>!
+        </p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <input type="url" id="allegro-quick-url" placeholder="https://allegro.pl/oferta/..." style="flex:1; min-width:280px;">
+          <button type="button" class="btn btn-allegro" id="btn-quick-import" onclick="importujZAukcjiAllegro()">📥 Pobierz i zintegruj ze sklepem</button>
+        </div>
+      </div>
+
+      <div class="preview-split">
+        <!-- LEWA KOLUMNA: FORMULARZ -->
+        <div>
+          <div class="card">
+            <div class="card-title">
+              <span id="form-tytul">Konfigurator Nowej Oferty Allegro & Sklepu</span>
+              <button type="button" class="btn btn-outline btn-sm" onclick="resetFormularza()">Wyczyść</button>
+            </div>
+
+            <form id="kreator-form">
+              <input type="hidden" id="p-id" value="0">
+
+              <!-- TYTUŁ & SEO TRAFFIC ASSISTANT -->
+              <div class="form-group">
+                <div class="label-with-meta">
+                  <label for="p-nazwa">Tytuł Oferty Allegro & Sklepu *</label>
+                  <span id="nazwa-counter" class="char-counter">0 / 75 znaków</span>
+                </div>
+                <input type="text" id="p-nazwa" maxlength="75" required placeholder="np. Stolik Kawowy Plaster Dębu Żywica Epoksydowa Loft Stal">
+                
+                <div style="margin-top:6px; font-size:0.8rem; display:flex; flex-direction:column; gap:4px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <small style="color:var(--muted); font-size:0.78rem;">Formuła: [Typ wyrobu] [Materiał] [Styl/Cecha] [Wymiar/Przeznaczenie]</small>
+                    <span id="seo-wskaznik-status" style="font-family:var(--font-mono); font-size:0.75rem; font-weight:600;"></span>
+                  </div>
+                  <!-- Alert Buzzwordów -->
+                  <div id="seo-alert-slowa" style="display:none; color:var(--red); background:rgba(239,68,68,0.12); padding:8px 12px; border-radius:6px; border:1px solid rgba(239,68,68,0.3); align-items:center; justify-content:space-between; margin-top:4px;">
+                    <span>⚠️ Słowa zakazane przez Allegro (<strong id="seo-znalezione-buzzwordy"></strong>). Obniżają pozycję w Trafności!</span>
+                    <button type="button" class="btn btn-outline btn-sm" style="border-color:var(--red); color:#fff; padding:2px 8px; font-size:0.75rem;" onclick="wyczyscBuzzwordy()">Usuń zakazane</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- KATEGORIE -->
+              <div class="grid-2">
+                <div class="form-group">
+                  <label for="p-kategoria">Kategoria w Sklepie *</label>
+                  <select id="p-kategoria" required onchange="dopasujKategorieAllegro(this.value)">
+                    <option value="Żywica epoksydowa">Żywica epoksydowa</option>
+                    <option value="Druk 3D">Druk 3D</option>
+                    <option value="Spawanie / Metal">Spawanie / Metal</option>
+                    <option value="CNC">CNC</option>
+                    <option value="Elektronika">Elektronika</option>
+                    <option value="inne">Inne rękodzieło</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="p-allegro-kat">Kategoria Allegro (Produktyzacja)</label>
+                  <select id="p-allegro-kat" onchange="aktualizujParametryKategorii()">
+                    <option value="110888">Patery (110888 — Zastawa stołowa)</option>
+                    <option value="254294">Świeczniki (254294 — Dekoracje)</option>
+                    <option value="54089">Stoliki i ławy (54089 — Meble/Salon)</option>
+                    <option value="15557">Breloki (15557 — Gadżety)</option>
+                    <option value="26069">Podstawki i deski dekoracyjne (26069)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- CENY I KALKULATOR PROWIZJI -->
+              <div class="grid-2">
+                <div class="form-group">
+                  <label for="p-cena">Cena w Sklepie (zł brutto) *</label>
+                  <input type="text" id="p-cena" inputmode="decimal" required placeholder="np. 160,00" oninput="przeliczCeneAllegro()">
+                  <small style="color:var(--muted); font-size:0.75rem;">Cena zakupu bezpośrednio na fwdrucik.pl</small>
+                </div>
+                <div class="form-group">
+                  <label for="p-cena-allegro">Cena Allegro (zł brutto, +12% bufor)</label>
+                  <input type="text" id="p-cena-allegro" inputmode="decimal" placeholder="np. 179,00" oninput="aktualizujPodglad()">
+                  <small style="color:var(--orange); font-size:0.75rem;">Zawiera bufor na prowizję Allegro Smart</small>
+                </div>
+              </div>
+
+              <!-- STAN I CZAS WYSYŁKI -->
+              <div class="grid-2">
+                <div class="form-group">
+                  <label for="p-stan">Dostępność magazynowa (szt.)</label>
+                  <input type="number" id="p-stan" min="0" placeholder="Puste = na zamówienie" oninput="aktualizujPodglad()">
+                </div>
+                <div class="form-group">
+                  <label for="p-wysylka">Czas wysyłki</label>
+                  <select id="p-wysylka">
+                    <option value="24h">Natychmiast (wysyłka w 24h)</option>
+                    <option value="48h">Wysyłka w 48h</option>
+                    <option value="3-5dni">Wykonywane na zamówienie (3–5 dni)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- SEKCJA ALLEGRO LINK I STATUS -->
+              <div class="allegro-box">
+                <h3><span>🟠</span> Powiązanie z Ofertą Allegro</h3>
+                <div class="grid-2">
+                  <div class="form-group">
+                    <label for="p-allegro-id">Numer Oferty Allegro (ID)</label>
+                    <input type="text" id="p-allegro-id" placeholder="np. 18905741114" oninput="aktualizujLinkAllegro()">
+                  </div>
+                  <div class="form-group">
+                    <label for="p-allegro-status">Status w Allegro Sales Center</label>
+                    <select id="p-allegro-status">
+                      <option value="brak">Brak powiązania</option>
+                      <option value="szkic" selected>Szkic (INACTIVE — 0 zł opłat)</option>
+                      <option value="aktywna">Aktywna (ACTIVE — na żywo)</option>
+                      <option value="zakonczona">Zakończona</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="p-allegro-url">Bezpośredni Link do Oferty (URL)</label>
+                  <input type="url" id="p-allegro-url" placeholder="https://allegro.pl/oferta/...">
+                </div>
+              </div>
+
+              <!-- EDYTOR SEKCJI OPISU ALLEGRO -->
+              <div style="margin-top:20px;">
+                <div class="label-with-meta">
+                  <label>Sekcje Opisu (Zgodne z Allegro REST API: h2, p, ul, li, b)</label>
+                  <span style="font-size:0.75rem; color:var(--muted);">Tylko dozwolone tagi</span>
+                </div>
+                <!-- Szybkie szablony -->
+                <div style="display:flex; gap:6px; margin-bottom:10px; flex-wrap:wrap;">
+                  <button type="button" class="btn btn-outline btn-sm" onclick="wstawSzablon('zywica')">🌿 Szablon: Żywica / Drewno</button>
+                  <button type="button" class="btn btn-outline btn-sm" onclick="wstawSzablon('stolik')">🪵 Szablon: Stolik Kawowy Loft</button>
+                  <button type="button" class="btn btn-outline btn-sm" onclick="wstawSzablon('cnc')">⚙️ Szablon: Detal CNC / Metal</button>
+                </div>
+                <textarea id="p-opis" rows="8" placeholder="<h2>O produkcie</h2><p>Treść...</p><h2>Specyfikacja</h2><ul><li>Wymiary: ...</li></ul>" oninput="aktualizujPodglad()"></textarea>
+              </div>
+
+              <!-- ZDJĘCIA -->
+              <div style="margin-top:20px;">
+                <div class="label-with-meta">
+                  <label>Zdjęcia Oferty (Miniaturka: białe tło RGB 255,255,255 bez znaków wodnych)</label>
+                  <span style="font-size:0.75rem; color:var(--orange);">Wymóg Allegro</span>
+                </div>
+                <div class="photo-upload-zone" onclick="document.getElementById('file-input').click()">
+                  <input type="file" id="file-input" accept="image/*" style="display:none;" onchange="wgrajZdjecie(event)">
+                  <div style="font-size:1.8rem; margin-bottom:6px;">📷</div>
+                  <div><strong>Kliknij, aby dodać zdjęcie z dysku lub aparatu</strong></div>
+                  <div style="font-size:0.8rem; color:var(--muted); margin-top:2px;">Miniatura na białym tle, kolejne zdjęcia aranżacyjne w warsztacie.</div>
+                </div>
+                <div class="photo-grid" id="foto-podglad"></div>
+              </div>
+
+              <!-- PRZYCISKI AKCJI -->
+              <div style="margin-top:24px; display:flex; gap:10px; flex-wrap:wrap;">
+                <button type="submit" class="btn btn-primary" style="flex:1; min-width:200px;">💾 Zapisz w Sklepie fwdrucik.pl</button>
+                <button type="button" class="btn btn-allegro" onclick="generujSzkicAllegroJSON()">🟠 Eksportuj Szkic Allegro (0 zł)</button>
+                <button type="button" class="btn btn-outline" onclick="otworzPodgladAllegro()">👁️ Sprawdź link Allegro</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- PRAWA KOLUMNA: LIVE PREVIEW W STYLU ALLEGRO -->
+        <div>
+          <div style="position: sticky; top: 80px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <span style="font-family:var(--font-head); font-weight:700; font-size:1.05rem; color:var(--orange);">
+                🟠 Podgląd na żywo (Allegro Live Preview)
+              </span>
+              <span style="font-size:0.75rem; font-family:var(--font-mono); color:var(--muted);">Standard Allegro 2026</span>
+            </div>
+
+            <div class="allegro-preview-card" id="allegro-live-card">
+              <div class="ap-badge-smart">smart!</div>
+              <div class="ap-seller">Sprzedawca: <strong>F.W. DRUCIK</strong> · Super Sprzedawca</div>
+              <div class="ap-title" id="prev-tytul">Patera 3-poziomowa z żywicy epoksydowej żółto-złota</div>
+              
+              <div class="ap-img-box">
+                <img id="prev-foto" src="/assets/hero-bg-640.webp" alt="Podgląd oferty" width="400" height="300">
+              </div>
+
+              <div class="ap-price-row">
+                <div class="ap-price" id="prev-cena">160,00 zł</div>
+                <div class="ap-delivery">Darmowa dostawa z Smart!</div>
+              </div>
+
+              <div class="ap-params-box">
+                <div style="font-weight:700; margin-bottom:6px; font-size:0.78rem; color:#444; text-transform:uppercase;">Parametry oferty</div>
+                <div class="ap-params-grid">
+                  <div class="ap-param-item">
+                    <span class="ap-param-name">Stan</span>
+                    <span class="ap-param-val" id="prev-stan-val">Nowy</span>
+                  </div>
+                  <div class="ap-param-item">
+                    <span class="ap-param-name">Marka</span>
+                    <span class="ap-param-val">F.W. DRUCIK</span>
+                  </div>
+                  <div class="ap-param-item">
+                    <span class="ap-param-name">Kategoria</span>
+                    <span class="ap-param-val" id="prev-kat-val">Patery (110888)</span>
+                  </div>
+                  <div class="ap-param-item">
+                    <span class="ap-param-name">Wysyłka</span>
+                    <span class="ap-param-val" id="prev-wysylka-val">Wysyłka w 24h</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ap-desc-preview" id="prev-opis">
+                <div class="ap-desc-heading" style="font-size:1.15rem;font-weight:700;margin-bottom:8px;color:#111;">O wyrobie</div>
+                <p>Unikalne rękodzieło stworzone z najwyższej klasy materiałów w pracowni rzemieślniczej F.W. DRUCIK.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- ZAKŁADKA 2: ALLEGRO SALES CENTER (SZKICE & ASORTYMENT) -->
+    <!-- ========================================================================= -->
+    <div id="tab-salescenter" style="display:none;">
+      <div class="card" style="border-top: 4px solid var(--orange);">
+        <div class="card-title">
+          <div>
+            <span>Centrum Asortymentu Allegro Sales Center</span>
+            <div style="font-size:0.85rem; color:var(--muted); font-weight:normal; margin-top:4px;">
+              Konto Sprzedawcy: <strong>F.W. DRUCIK</strong> (Client ID: <code>3a027268...</code>) · Cennik dostaw: <code>male paczki (Smart!)</code>
+            </div>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <button class="btn btn-outline btn-sm" onclick="odswiezSzkiceAllegro()">🔄 Odśwież status</button>
+            <a href="https://salescenter.allegro.pl/offer-management" target="_blank" class="btn btn-allegro btn-sm">Otwórz Sales Center ↗</a>
+          </div>
+        </div>
+
+        <div style="background:rgba(255, 90, 0, 0.06); border:1px solid rgba(255, 90, 0, 0.25); border-radius:8px; padding:14px; margin-bottom:20px; font-size:0.88rem;">
+          ℹ️ <strong>Status Szkiców (INACTIVE):</strong> Oferty robocze znajdują się bezpośrednio w Twoim panelu Allegro Sales Center. Mają status <code>INACTIVE</code>, co oznacza, że <strong>nie naliczają żadnych prowizji ani opłat wystawieniowych (0 zł)</strong> i są niewidoczne dla kupujących do momentu publikacji jednym kliknięciem.
+        </div>
+
+        <!-- LISTA SZKICÓW Z ALLEGRO REST API -->
+        <div id="allegro-drafts-list" style="display:flex; flex-direction:column; gap:14px;">
+          <!-- 1. Patera 3-poziomowa -->
+          <div class="draft-card">
+            <img class="draft-thumb" src="https://a.allegroimg.com/original/11e144/f496e2e44765b707fd058a5db5ab" alt="Patera" width="80" height="80">
+            <div class="draft-info">
+              <h3 style="font-size:1.05rem;margin-bottom:6px;">Patera 3-poziomowa z żywicy epoksydowej żółto-złota</h3>
+              <div class="draft-meta">
+                <span>Nr oferty: <code>18905741114</code></span>
+                <span>Kategoria: <strong>110888 (Patery)</strong></span>
+                <span>Cena: <strong>160,00 zł</strong></span>
+                <span class="badge-inactive">INACTIVE · Szkic (0 zł)</span>
+              </div>
+              <div class="draft-actions">
+                <a href="https://salescenter.allegro.pl/offer-management/offers/18905741114/edit" target="_blank" class="btn btn-allegro btn-sm">Edytuj w Sales Center ↗</a>
+                <a href="https://allegro.pl/oferta/18905741114" target="_blank" class="btn btn-outline btn-sm">Podgląd Allegro ↗</a>
+                <button class="btn btn-primary btn-sm" onclick="wczytajSzkicDoKreatora('18905741114', 'Patera 3-poziomowa z żywicy epoksydowej żółto-złota', '160,00', '110888', 'https://a.allegroimg.com/original/11e144/f496e2e44765b707fd058a5db5ab')">Wczytaj do Kreatora</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Świecznik Kwiat Lotosu -->
+          <div class="draft-card">
+            <img class="draft-thumb" src="https://a.allegroimg.com/original/116a99/5e2c32714cd888e97742bfb05220" alt="Świecznik" width="80" height="80">
+            <div class="draft-info">
+              <h3 style="font-size:1.05rem;margin-bottom:6px;">Patera Świecznik Kwiat Lotosu Żywica Epoksydowa Złoty Perłowy</h3>
+              <div class="draft-meta">
+                <span>Nr oferty: <code>18905781125</code></span>
+                <span>Kategoria: <strong>254294 (Świeczniki)</strong></span>
+                <span>Cena: <strong>120,00 zł</strong></span>
+                <span class="badge-inactive">INACTIVE · Szkic (0 zł)</span>
+              </div>
+              <div class="draft-actions">
+                <a href="https://salescenter.allegro.pl/offer-management/offers/18905781125/edit" target="_blank" class="btn btn-allegro btn-sm">Edytuj w Sales Center ↗</a>
+                <a href="https://allegro.pl/oferta/18905781125" target="_blank" class="btn btn-outline btn-sm">Podgląd Allegro ↗</a>
+                <button class="btn btn-primary btn-sm" onclick="wczytajSzkicDoKreatora('18905781125', 'Patera Świecznik Kwiat Lotosu Żywica Epoksydowa Złoty Perłowy', '120,00', '254294', 'https://a.allegroimg.com/original/116a99/5e2c32714cd888e97742bfb05220')">Wczytaj do Kreatora</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Ozdobna Patera Złocona -->
+          <div class="draft-card">
+            <img class="draft-thumb" src="https://a.allegroimg.com/original/11e144/f496e2e44765b707fd058a5db5ab" alt="Ozdobna Patera" width="80" height="80">
+            <div class="draft-info">
+              <h3 style="font-size:1.05rem;margin-bottom:6px;">Ozdobna Patera Złocona Żywica Epoksydowa Rękodzieło F.W. DRUCIK</h3>
+              <div class="draft-meta">
+                <span>Nr oferty: <code>18905781481</code></span>
+                <span>Kategoria: <strong>110888 (Patery)</strong></span>
+                <span>Cena: <strong>139,00 zł</strong></span>
+                <span class="badge-inactive">INACTIVE · Szkic (0 zł)</span>
+              </div>
+              <div class="draft-actions">
+                <a href="https://salescenter.allegro.pl/offer-management/offers/18905781481/edit" target="_blank" class="btn btn-allegro btn-sm">Edytuj w Sales Center ↗</a>
+                <a href="https://allegro.pl/oferta/18905781481" target="_blank" class="btn btn-outline btn-sm">Podgląd Allegro ↗</a>
+                <button class="btn btn-primary btn-sm" onclick="wczytajSzkicDoKreatora('18905781481', 'Ozdobna Patera Złocona Żywica Epoksydowa Rękodzieło F.W. DRUCIK', '139,00', '110888', 'https://a.allegroimg.com/original/11e144/f496e2e44765b707fd058a5db5ab')">Wczytaj do Kreatora</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Stolik Kawowy Plaster Dębu -->
+          <div class="draft-card">
+            <img class="draft-thumb" src="https://a.allegroimg.com/original/116249/6cb2291747749281ba5768db0127" alt="Stolik" width="80" height="80">
+            <div class="draft-info">
+              <h3 style="font-size:1.05rem;margin-bottom:6px;">Stolik Kawowy Plaster Dębu Żywica Epoksydowa Loft Stalowy Stelaż</h3>
+              <div class="draft-meta">
+                <span>Nr oferty: <code>18905782627</code></span>
+                <span>Kategoria: <strong>54089 (Stoliki i ławy)</strong></span>
+                <span>Cena: <strong>850,00 zł</strong></span>
+                <span class="badge-inactive">INACTIVE · Szkic (0 zł)</span>
+              </div>
+              <div class="draft-actions">
+                <a href="https://salescenter.allegro.pl/offer-management/offers/18905782627/edit" target="_blank" class="btn btn-allegro btn-sm">Edytuj w Sales Center ↗</a>
+                <a href="https://allegro.pl/oferta/18905782627" target="_blank" class="btn btn-outline btn-sm">Podgląd Allegro ↗</a>
+                <button class="btn btn-primary btn-sm" onclick="wczytajSzkicDoKreatora('18905782627', 'Stolik Kawowy Plaster Dębu Żywica Epoksydowa Loft Stalowy Stelaż', '850,00', '54089', 'https://a.allegroimg.com/original/116249/6cb2291747749281ba5768db0127')">Wczytaj do Kreatora</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- ZAKŁADKA 3: LISTA PRODUKTÓW W SKLEPIE -->
+    <!-- ========================================================================= -->
+    <div id="tab-lista" style="display:none;">
+      <div class="card">
+        <div class="card-title">
+          <span>Katalog Produktów Sklepu fwdrucik.pl</span>
+          <button class="btn btn-primary btn-sm" onclick="pokazZakladke('kreator'); resetFormularza();">➕ Dodaj nowy produkt</button>
+        </div>
+        <div id="lista-kontener">
+          <p style="color:var(--muted);">Ładowanie produktów...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    const $ = id => document.getElementById(id);
+    let produktyCache = [];
+    let zdjeciaCache = [];
+
+    const BUZZWORDS = ['HIT', 'OKAZJA', 'NOWOŚĆ', 'NOWOSC', 'WYPRZEDAŻ', 'WYPRZEDAZ', 'POLECAM', 'SUPER', 'CENA', 'GRATIS', 'BESTSELLER'];
+
+    function pokazZakladke(ktora) {
+      document.querySelectorAll('.tab-nav-btn').forEach(b => b.classList.remove('active'));
+      $('tab-kreator').style.display = ktora === 'kreator' ? 'block' : 'none';
+      $('tab-salescenter').style.display = ktora === 'salescenter' ? 'block' : 'none';
+      $('tab-lista').style.display = ktora === 'lista' ? 'block' : 'none';
+
+      if (ktora === 'kreator') document.querySelectorAll('.tab-nav-btn')[0].classList.add('active');
+      if (ktora === 'salescenter') document.querySelectorAll('.tab-nav-btn')[1].classList.add('active');
+      if (ktora === 'lista') {
+        document.querySelectorAll('.tab-nav-btn')[2].classList.add('active');
+        wczytajProdukty();
+      }
+    }
+
+    function pokazToast(komunikat, typ = 'success') {
+      const t = $('toast');
+      t.textContent = komunikat;
+      t.className = `toast show ${typ}`;
+      setTimeout(() => t.className = 'toast', 4000);
+    }
+
+    // SEO TITLE ANALYSIS
+    function analizujTytulSeo(tytul) {
+      const len = tytul.length;
+      const counter = $('nazwa-counter');
+      const status = $('seo-wskaznik-status');
+      const alertBox = $('seo-alert-slowa');
+      const buzzSpan = $('seo-znalezione-buzzwordy');
+
+      counter.textContent = `${len} / 75 znaków`;
+      counter.classList.remove('good', 'warning');
+
+      if (len === 0) {
+        counter.style.color = 'var(--muted)';
+        status.textContent = '';
+        alertBox.style.display = 'none';
+      } else if (len < 40) {
+        counter.style.color = 'var(--muted)';
+        status.textContent = 'Za krótki (dodaj materiał / styl)';
+        status.style.color = 'var(--muted)';
+      } else if (len <= 75) {
+        counter.classList.add('good');
+        counter.style.color = 'var(--green)';
+        status.textContent = '✅ Optymalna długość Allegro Trafność';
+        status.style.color = 'var(--green)';
+      } else {
+        counter.classList.add('warning');
+        counter.style.color = 'var(--red)';
+        status.textContent = '❌ Przekroczono limit 75 znaków!';
+        status.style.color = 'var(--red)';
+      }
+
+      const slowa = tytul.split(/[\s,.;:!?\/\\-]+/);
+      const znalezione = [];
+      for (const s of slowa) {
+        const czyste = s.trim().toUpperCase();
+        if (BUZZWORDS.includes(czyste)) {
+          znalezione.push(czyste);
+        }
+      }
+      if (tytul.includes('!')) znalezione.push('wykrzyknik (!)');
+
+      if (znalezione.length > 0) {
+        buzzSpan.textContent = [...new Set(znalezione)].join(', ');
+        alertBox.style.display = 'flex';
+      } else {
+        alertBox.style.display = 'none';
+      }
+
+      aktualizujPodglad();
+    }
+
+    function wyczyscBuzzwordy() {
+      let t = $('p-nazwa').value;
+      for (const b of BUZZWORDS) {
+        const reg = new RegExp('\\b' + b + '\\b', 'gi');
+        t = t.replace(reg, '');
+      }
+      t = t.replace(/!+/g, '');
+      t = t.replace(/\s{2,}/g, ' ').trim();
+      $('p-nazwa').value = t;
+      analizujTytulSeo(t);
+      pokazToast('Usunięto zakazane słowa ze wskazanego tytułu');
+    }
+
+    $('p-nazwa').addEventListener('input', e => analizujTytulSeo(e.target.value));
+
+    // PRICE CALCULATION (+12% ALLEGRO)
+    function przeliczCeneAllegro() {
+      const val = $('p-cena').value.replace(',', '.');
+      const num = parseFloat(val);
+      if (!isNaN(num) && num > 0) {
+        const allegro = Math.round(num * 1.12);
+        $('p-cena-allegro').value = allegro.toFixed(2).replace('.', ',');
+      }
+      aktualizujPodglad();
+    }
+
+    function aktualizujLinkAllegro() {
+      const id = $('p-allegro-id').value.trim();
+      if (id && !$('p-allegro-url').value) {
+        $('p-allegro-url').value = `https://allegro.pl/oferta/${id}`;
+      }
+    }
+
+    // LIVE PREVIEW UPDATER
+    function aktualizujPodglad() {
+      const tytul = $('p-nazwa').value.trim() || 'Tytuł Oferty Allegro';
+      const cena = $('p-cena-allegro').value.trim() || $('p-cena').value.trim() || '0,00';
+      const opis = $('p-opis').value.trim() || '<h2>O wyrobie</h2><p>Opis wyrobu z warsztatu F.W. DRUCIK...</p>';
+      const katNazwa = $('p-allegro-kat').options[$('p-allegro-kat').selectedIndex].text;
+      const wysylkaNazwa = $('p-wysylka').options[$('p-wysylka').selectedIndex].text;
+
+      $('prev-tytul').textContent = tytul;
+      $('prev-cena').textContent = `${cena} zł`;
+      $('prev-kat-val').textContent = katNazwa.split(' (')[0];
+      $('prev-wysylka-val').textContent = wysylkaNazwa;
+      $('prev-opis').innerHTML = opis;
+
+      if (zdjeciaCache.length > 0) {
+        $('prev-foto').src = zdjeciaCache[0].src;
+      }
+    }
+
+    // TEMPLATES
+    function wstawSzablon(typ) {
+      if (typ === 'zywica') {
+        $('p-opis').value = `<h2>Rzemiosło i Unikalny Charakter</h2>
+<p>Każdy wyrób z naszej pracowni jest jedyny w swoim rodzaju. Zastosowanie wysokiej jakości żywicy epoksydowej o krystalicznej przejrzystości oraz naturalnego drewna gwarantuje niepowtarzalny układ słojów i głębię barw.</p>
+<h2>Specyfikacja Techniczna</h2>
+<ul>
+<li>Materiał: żywica epoksydowa odlewnicza UV, drewno naturalne</li>
+<li>Wykończenie: polerowanie na wysoki połysk, impregnacja olejem twardym</li>
+<li>Wymiary: podane w parametrach oferty</li>
+<li>Przeznaczenie: dekoracja wnętrz, salon, jadalnia, prezent okolicznościowy</li>
+</ul>
+<h2>Gwarancja Jakości Warsztatu F.W. DRUCIK</h2>
+<p>Produkt wykonany ręcznie w warsztacie elektromechanicznym i rzemieślniczym F.W. DRUCIK w Domosławiu. Bezpiecznie zapakowany do transportu.</p>`;
+      } else if (typ === 'stolik') {
+        $('p-opis').value = `<h2>Stolik Kawowy Loft — Połączenie Drewna i Stali</h2>
+<p>Ekskluzywny stolik kawowy wykonany z litego plastra drewna dębowego oraz żywicy epoksydowej. Stabilny stelaż stalowy spawany metodą TIG w naszym warsztacie ślusarskim.</p>
+<h2>Parametry i Wykonanie</h2>
+<ul>
+<li>Blat: lity plaster sezonowanego dębu z naturalną krawędzią (live edge)</li>
+<li>Wypełnienie: żywica epoksydowa barwiona pigmentami perłowymi</li>
+<li>Stelaż: profil stalowy malowany proszkowo na kolor czarny mat</li>
+<li>Zabezpieczenie: certyfikowany olejowosk odporny na wilgoć i plamy</li>
+</ul>
+<h2>Bezpieczny Transport</h2>
+<p>Mebel wysyłany na palecie lub bezpieczną przesyłką kurierską w dedykowanym drewnianym zabezpieczeniu.</p>`;
+      } else if (typ === 'cnc') {
+        $('p-opis').value = `<h2>Precyzyjny Detal CNC / Metaloplastyka F.W. DRUCIK</h2>
+<p>Wykonany na maszynach numerycznych CNC z najwyższą dokładnością wymiarową. Solidna konstrukcja z certyfikowanych metali.</p>
+<h2>Specyfikacja</h2>
+<ul>
+<li>Materiał: stal konstrukcyjna / aluminium lotnicze</li>
+<li>Obróbka: frezowanie CNC, cięcie plazmowe, gratowanie</li>
+<li>Zabezpieczenie antykorozyjne: malowanie proszkowe / ocynk</li>
+</ul>`;
+      }
+      aktualizujPodglad();
+      pokazToast('Wstawiono szablon opisu Allegro');
+    }
+
+    function dopasujKategorieAllegro(katSklepu) {
+      if (katSklepu === 'Żywica epoksydowa') {
+        $('p-allegro-kat').value = '110888'; // Patery
+      } else if (katSklepu === 'Spawanie / Metal') {
+        $('p-allegro-kat').value = '54089'; // Stoliki
+      } else if (katSklepu === 'Elektronika' || katSklepu === 'Druk 3D') {
+        $('p-allegro-kat').value = '15557'; // Breloki/gadżety
+      }
+      aktualizujPodglad();
+    }
+
+    function aktualizujParametryKategorii() {
+      aktualizujPodglad();
+    }
+
+    // PHOTOS
+    function wgrajZdjecie(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        zdjeciaCache.push({ src: e.target.result, isNew: true, file: file });
+        renderujZdjecia(zdjeciaCache);
+        aktualizujPodglad();
+        pokazToast('Dodano zdjęcie do oferty');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function renderujZdjecia(obrazy) {
+      const kontener = $('foto-podglad');
+      kontener.innerHTML = obrazy.map((o, idx) => `
+        <div class="photo-tile">
+          <img src="${o.src}" alt="Zdjęcie produktu" width="110" height="110">
+          ${idx === 0 ? '<span class="badge-cover">MINIATURKA</span>' : ''}
+          <button type="button" class="btn-remove-foto" onclick="usunZdjecie(${idx})">&times;</button>
+        </div>
+      `).join('');
+    }
+
+    function usunZdjecie(idx) {
+      zdjeciaCache.splice(idx, 1);
+      renderujZdjecia(zdjeciaCache);
+      aktualizujPodglad();
+    }
+
+    // LOAD DRAFT INTO CREATOR
+    function wczytajSzkicDoKreatora(id, tytul, cena, kategoria, imgUrl) {
+      $('p-allegro-id').value = id;
+      $('p-allegro-url').value = `https://allegro.pl/oferta/${id}`;
+      $('p-allegro-status').value = 'szkic';
+      $('p-nazwa').value = tytul;
+      $('p-cena-allegro').value = cena;
+      const nettoCena = (parseFloat(cena.replace(',', '.')) / 1.12).toFixed(2).replace('.', ',');
+      $('p-cena').value = nettoCena;
+      $('p-allegro-kat').value = kategoria;
+      
+      zdjeciaCache = [{ src: imgUrl, isNew: false }];
+      renderujZdjecia(zdjeciaCache);
+
+      analizujTytulSeo(tytul);
+      pokazZakladke('kreator');
+      pokazToast(`Wczytano szkic ${id} do edytora`);
+    }
+
+    // GENERATE JSON PAYLOAD FOR ALLEGRO
+    function generujSzkicAllegroJSON() {
+      const tytul = $('p-nazwa').value.trim();
+      if (!tytul) {
+        pokazToast('Wpisz najpierw tytuł oferty', 'error');
+        return;
+      }
+      const payload = {
+        name: tytul,
+        category: { id: $('p-allegro-kat').value },
+        sellingMode: {
+          price: {
+            amount: ($('p-cena-allegro').value || $('p-cena').value || '100.00').replace(',', '.'),
+            currency: 'PLN'
+          }
+        },
+        stock: {
+          available: parseInt($('p-stan').value, 10) || 1
+        },
+        publication: {
+          status: 'INACTIVE'
+        },
+        responsibleProducer: {
+          name: 'F.W. DRUCIK Dawid Tutak',
+          address: { street: 'Domosław 13A', postalCode: '06-120', city: 'Winnica', countryCode: 'PL' },
+          email: 'fwdrucik@gmail.com'
+        },
+        safetyInformation: {
+          type: 'NO_SAFETY_INFORMATION'
+        }
+      };
+
+      navigator.clipboard.writeText(JSON.stringify(payload, null, 2)).then(() => {
+        pokazToast('✅ Skopiowano gotowy JSON oferty do schowka!');
+      }).catch(() => {
+        alert(JSON.stringify(payload, null, 2));
+      });
+    }
+
+    // AUTH STATE & HEADERS
+    window.fwCsrfToken = '';
+    window.isAuthorized = false;
+
+    function getCsrfToken() {
+      if (window.fwCsrfToken) return window.fwCsrfToken;
+      const m = document.cookie.match(/(?:^|; )fw_csrf=([^;]*)/);
+      return m ? decodeURIComponent(m[1]) : '';
+    }
+
+    function getAuthHeaders(isJson = false) {
+      const h = {};
+      if (isJson) {
+        h['Content-Type'] = 'application/json';
+      }
+      const csrf = getCsrfToken();
+      if (csrf) {
+        h['X-FW-CSRF'] = csrf;
+      }
+      const token = sessionStorage.getItem('fw_agent_token');
+      if (token) {
+        h['X-Agent-Token'] = token;
+      }
+      return h;
+    }
+
+    function pokazKomunikatBramki(msg, typ = 'error') {
+      const b = $('gate-alert');
+      if (!b) return;
+      b.textContent = msg;
+      b.style.display = 'block';
+      if (typ === 'error') {
+        b.style.background = 'rgba(239, 68, 68, 0.15)';
+        b.style.border = '1px solid rgba(239, 68, 68, 0.4)';
+        b.style.color = '#f87171';
+      } else {
+        b.style.background = 'rgba(16, 185, 129, 0.15)';
+        b.style.border = '1px solid rgba(16, 185, 129, 0.4)';
+        b.style.color = '#34d399';
+      }
+    }
+
+    function odblokujAplikacje(uzytkownik, token = null) {
+      window.isAuthorized = true;
+      $('kreator-auth-gate').style.display = 'none';
+      $('kreator-app').style.display = 'block';
+      $('allegro-api-badge').style.display = 'inline-flex';
+      $('btn-logout').style.display = 'inline-flex';
+      if (uzytkownik && uzytkownik.nick) {
+        $('user-nick').textContent = uzytkownik.nick;
+        $('user-info-badge').style.display = 'inline-flex';
+      } else if (token) {
+        $('user-nick').textContent = 'AGENT';
+        $('user-info-badge').style.display = 'inline-flex';
+      }
+      wczytajProdukty();
+      odswiezSzkiceAllegro();
+      analizujTytulSeo($('p-nazwa').value);
+    }
+
+    async function sprawdzAutoryzacje() {
+      // 1. Sprawdź sesję administratora i pobierz token CSRF
+      try {
+        const res = await fetch('/api/auth.php?akcja=ja', { credentials: 'same-origin' });
+        const data = await res.json();
+        if (data.csrf) {
+          window.fwCsrfToken = data.csrf;
+        }
+        if (data.ok && data.uzytkownik && data.uzytkownik.rola === 'admin') {
+          odblokujAplikacje(data.uzytkownik);
+          return;
+        }
+      } catch (e) {}
+
+      // 2. Sprawdź zapamiętany token warsztatu w sessionStorage
+      const zapisanyToken = sessionStorage.getItem('fw_agent_token');
+      if (zapisanyToken) {
+        try {
+          const res = await fetch('/api/sklep.php?akcja=allegro-szkice', {
+            headers: { 'X-Agent-Token': zapisanyToken },
+            credentials: 'same-origin'
+          });
+          const data = await res.json();
+          if (data.ok) {
+            odblokujAplikacje(null, zapisanyToken);
+            return;
+          }
+        } catch (e) {}
+        sessionStorage.removeItem('fw_agent_token');
+      }
+
+      // 3. Brak autoryzacji — pokazujemy bramkę
+      $('kreator-auth-gate').style.display = 'block';
+      $('kreator-app').style.display = 'none';
+    }
+
+    $('gate-login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const login = $('gate-login').value.trim();
+      const haslo = $('gate-password').value;
+      const btn = $('btn-gate-login');
+      btn.disabled = true;
+      btn.textContent = 'Weryfikacja...';
+      try {
+        // Upewnij się, że mamy ważny token CSRF przed logowaniem
+        let csrf = getCsrfToken();
+        if (!csrf) {
+          try {
+            const rJa = await fetch('/api/auth.php?akcja=ja', { credentials: 'same-origin' });
+            const dJa = await rJa.json();
+            if (dJa.csrf) {
+              window.fwCsrfToken = dJa.csrf;
+              csrf = dJa.csrf;
+            }
+          } catch (_) {}
+          if (!csrf) csrf = getCsrfToken();
+        }
+
+        const res = await fetch('/api/auth.php?akcja=logowanie', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-FW-CSRF': csrf || getCsrfToken()
+          },
+          credentials: 'same-origin',
+          body: JSON.stringify({ login, haslo })
+        });
+        const d = await res.json();
+        if (d.ok && d.uzytkownik && d.uzytkownik.rola === 'admin') {
+          pokazKomunikatBramki('Zalogowano pomyślnie. Witaj, ' + (d.uzytkownik.nick || 'Administratorze') + '!', 'success');
+          if (d.csrf) window.fwCsrfToken = d.csrf;
+          setTimeout(() => odblokujAplikacje(d.uzytkownik), 250);
+        } else if (d.ok) {
+          pokazKomunikatBramki('Zalogowano, ale to konto (' + (d.uzytkownik.nick || '') + ') nie posiada uprawnień administratora.', 'error');
+        } else {
+          pokazKomunikatBramki(d.blad || 'Błędny login lub hasło.', 'error');
+        }
+      } catch (err) {
+        pokazKomunikatBramki('Błąd połączenia: ' + err.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<span>Zaloguj się do Panelu →</span>';
+      }
+    });
+
+    $('gate-token-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const token = $('gate-token').value.trim();
+      if (!token) return;
+      const btn = $('btn-gate-token');
+      btn.disabled = true;
+      btn.textContent = 'Sprawdzanie tokenu...';
+      try {
+        const res = await fetch('/api/sklep.php?akcja=allegro-szkice', {
+          headers: { 'X-Agent-Token': token },
+          credentials: 'same-origin'
+        });
+        const d = await res.json();
+        if (d.ok) {
+          sessionStorage.setItem('fw_agent_token', token);
+          pokazKomunikatBramki('Token zweryfikowany pomyślnie! Odblokowywanie...', 'success');
+          setTimeout(() => odblokujAplikacje(null, token), 250);
+        } else {
+          pokazKomunikatBramki(d.blad || 'Nieprawidłowy klucz / token agenta.', 'error');
+        }
+      } catch (err) {
+        pokazKomunikatBramki('Błąd weryfikacji: ' + err.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<span>⚡ Odblokuj Kluczem Agenta</span>';
+      }
+    });
+
+    async function wylogujKreatora() {
+      sessionStorage.removeItem('fw_agent_token');
+      try {
+        await fetch('/api/auth.php?akcja=wylogowanie', {
+          method: 'POST',
+          headers: getAuthHeaders(),
+          credentials: 'same-origin'
+        });
+      } catch (e) {}
+      window.location.reload();
+    }
+
+    // PRODUCTS LIST
+    async function wczytajProdukty() {
+      try {
+        const res = await fetch('/api/sklep.php?akcja=admin-produkty', {
+          headers: getAuthHeaders()
+        });
+        const data = await res.json();
+        if (data.ok && data.produkty) {
+          produktyCache = data.produkty;
+          $('licznik-prod').textContent = data.produkty.length;
+          renderujListe(data.produkty);
+        } else if (!data.ok) {
+          $('lista-kontener').innerHTML = `<p style="color:var(--red);">${data.blad || 'Brak uprawnień do listy produktów.'}</p>`;
+        }
+      } catch (err) {
+        $('lista-kontener').innerHTML = `<p style="color:var(--red);">Błąd wczytywania: ${err.message}</p>`;
+      }
+    }
+
+    function renderujListe(lista) {
+      if (!lista.length) {
+        $('lista-kontener').innerHTML = '<p style="color:var(--muted);">Brak produktów w sklepie.</p>';
+        return;
+      }
+      $('lista-kontener').innerHTML = lista.map(p => `
+        <div class="product-list-item">
+          <img src="${p.obrazy && p.obrazy[0] ? p.obrazy[0].src : '/assets/hero-bg-640.webp'}" alt="Miniaturka produktu" width="60" height="60">
+          <div class="product-info">
+            <h3 style="font-size:1rem;color:#fff;margin-bottom:3px;">${p.nazwa}</h3>
+            <p>${p.kategoria} · <strong>${(p.cena_gr / 100).toFixed(2)} zł</strong> ${p.allegro_url ? '· <span style="color:var(--orange); font-weight:600;">🟠 Powiązano z Allegro</span>' : ''}</p>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-outline btn-sm" onclick="edytujProdukt(${p.id})">Edytuj</button>
+            ${p.allegro_url ? `<a href="${p.allegro_url}" target="_blank" class="btn btn-allegro btn-sm">Allegro ↗</a>` : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function edytujProdukt(id) {
+      const p = produktyCache.find(x => x.id === id);
+      if (!p) return;
+      $('p-id').value = p.id;
+      $('p-nazwa').value = p.nazwa;
+      $('p-kategoria').value = p.kategoria;
+      $('p-stan').value = p.stan === null ? '' : p.stan;
+      $('p-cena').value = (p.cena_gr / 100).toFixed(2).replace('.', ',');
+      $('p-cena-allegro').value = p.allegro_cena_gr ? (p.allegro_cena_gr / 100).toFixed(2).replace('.', ',') : '';
+      $('p-opis').value = p.opis || '';
+      $('p-allegro-url').value = p.allegro_url || '';
+      $('p-allegro-id').value = p.allegro_id || '';
+      $('p-allegro-status').value = p.allegro_status || 'brak';
+      
+      zdjeciaCache = (p.obrazy || []).map(o => ({ src: o.src, isNew: false }));
+      renderujZdjecia(zdjeciaCache);
+
+      analizujTytulSeo(p.nazwa || '');
+      $('form-tytul').textContent = `Edycja: ${p.nazwa}`;
+      pokazZakladke('kreator');
+    }
+
+    function resetFormularza() {
+      $('kreator-form').reset();
+      $('p-id').value = '0';
+      $('form-tytul').textContent = 'Konfigurator Nowej Oferty Allegro & Sklepu';
+      zdjeciaCache = [];
+      $('foto-podglad').innerHTML = '';
+      analizujTytulSeo('');
+    }
+
+    function otworzPodgladAllegro() {
+      const url = $('p-allegro-url').value.trim();
+      if (url) {
+        window.open(url, '_blank');
+      } else {
+        alert('Wprowadź link do oferty Allegro');
+      }
+    }
+
+    function wczytajSzkicDoKreatora(allegroId, nazwa, cena, kategoria, imgUrl) {
+      if (allegroId) {
+        $('p-allegro-id').value = allegroId;
+        $('p-allegro-url').value = 'https://allegro.pl/oferta/' + allegroId;
+        $('p-allegro-status').value = 'szkic';
+      }
+      if (nazwa) {
+        $('p-nazwa').value = nazwa;
+        analizujTytulSeo(nazwa);
+      }
+      if (cena) {
+        $('p-cena').value = cena;
+        $('p-cena-allegro').value = cena;
+      }
+      if (kategoria) {
+        $('p-kategoria').value = kategoria;
+      }
+      if (imgUrl) {
+        zdjeciaCache = [{ src: imgUrl, isNew: false }];
+        renderujZdjecia(zdjeciaCache);
+      }
+      aktualizujPodglad();
+      $('form-tytul').textContent = `Szkic Allegro: ${nazwa || allegroId}`;
+      pokazZakladke('kreator');
+      pokazToast(`Wczytano szkic ${allegroId || ''} do formularza`);
+    }
+
+    async function generujSzkicAllegroJSON() {
+      const nazwa = ($('p-nazwa').value || '').trim();
+      if (!nazwa) {
+        pokazToast('Wpisz najpierw nazwę produktu!', 'error');
+        return;
+      }
+      const kategoria = ($('p-kategoria').value || '').trim();
+      const cenaStr = ($('p-cena-allegro').value || $('p-cena').value || '0').trim().replace(',', '.');
+      const cenaFloat = parseFloat(cenaStr) || 0;
+      if (cenaFloat <= 0) {
+        pokazToast('Wpisz poprawną dodatnią cenę!', 'error');
+        return;
+      }
+      const stan = parseInt($('p-stan').value, 10) || 1;
+      const opis = ($('p-opis').value || '').trim();
+      const allegroId = ($('p-allegro-id').value || '').trim();
+      const asortymentId = allegroId || ('FWD-' + ($('p-id').value > 0 ? $('p-id').value : ('ART-' + Date.now().toString(36).toUpperCase())));
+      const zdjecia = zdjeciaCache.map(z => z.src).filter(u => u && !u.startsWith('data:'));
+
+      const szkic = {
+        name: nazwa.substring(0, 75),
+        category: { id: kategoria.match(/^\d+$/) ? kategoria : "110888" },
+        external: { id: asortymentId },
+        sellingMode: {
+          format: "BUY_NOW",
+          price: { amount: cenaFloat.toFixed(2), currency: "PLN" }
+        },
+        stock: { available: stan, unit: "UNIT" },
+        publication: { status: "INACTIVE" },
+        description: {
+          sections: [
+            {
+              items: [
+                { type: "TEXT", content: `<h2>${nazwa}</h2><p>${opis ? opis.replace(/\n/g, '</p><p>') : 'Rękodzieło z żywicy epoksydowej F.W. DRUCIK.'}</p>` }
+              ]
+            }
+          ]
+        },
+        images: zdjecia.map(u => ({ url: u }))
+      };
+
+      pokazModalSzkicuAllegro(szkic, asortymentId);
+    }
+
+    function pokazModalSzkicuAllegro(szkic, asortymentId) {
+      let modal = $('modal-allegro-szkic');
+      if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'modal-allegro-szkic';
+        modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
+        document.body.appendChild(modal);
+      }
+      const jsonStr = JSON.stringify(szkic, null, 2);
+      modal.innerHTML = `
+        <div style="background:#1e1e24;border:1px solid #333;border-radius:12px;max-width:720px;width:100%;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 12px 40px rgba(0,0,0,0.8);overflow:hidden;">
+          <div style="padding:16px 20px;background:#25252d;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <strong style="color:var(--orange);font-size:1.1rem;">🟠 Szkic Oferty Allegro (0 zł) · Asortyment: <code>${asortymentId}</code></strong>
+              <div style="font-size:0.8rem;color:var(--muted);margin-top:2px;">Format POST /sale/product-offers (status: INACTIVE)</div>
+            </div>
+            <button onclick="document.getElementById('modal-allegro-szkic').style.display='none'" style="background:transparent;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">&times;</button>
+          </div>
+          <div style="padding:16px 20px;overflow-y:auto;flex:1;">
+            <pre style="background:#111;color:#4ade80;padding:14px;border-radius:8px;font-size:0.82rem;overflow-x:auto;max-height:360px;margin:0;font-family:var(--font-mono);">${jsonStr}</pre>
+          </div>
+          <div style="padding:16px 20px;background:#25252d;border-top:1px solid #333;display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;">
+            <button class="btn btn-outline btn-sm" onclick="navigator.clipboard.writeText(decodeURIComponent('${encodeURIComponent(jsonStr)}')); pokazToast('Skopiowano JSON do schowka!');">📋 Kopiuj JSON</button>
+            <button class="btn btn-outline btn-sm" onclick="pobierzPlikJSON('${asortymentId}', decodeURIComponent('${encodeURIComponent(jsonStr)}'))">💾 Pobierz .json</button>
+            <a href="https://salescenter.allegro.pl/offer-management" target="_blank" class="btn btn-allegro btn-sm">Otwórz Sales Center ↗</a>
+            <button class="btn btn-primary btn-sm" onclick="wyslijDoLokalnegoSerwera('${asortymentId}')">⚡ Utwórz na Allegro przez warsztat (8770)</button>
+          </div>
+        </div>
+      `;
+      modal.style.display = 'flex';
+    }
+
+    function pobierzPlikJSON(asortymentId, content) {
+      const blob = new Blob([content], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `allegro-szkic-${asortymentId}.json`;
+      a.click();
+      pokazToast('Pobrano plik szkicu JSON');
+    }
+
+    async function wyslijDoLokalnegoSerwera(asortymentId) {
+      const btn = event.target;
+      const stary = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '⏳ Wysyłanie do Allegro...';
+      try {
+        const fd = new FormData();
+        fd.append('tytul', $('p-nazwa').value.trim());
+        fd.append('kategoria_id', $('p-kategoria').value.trim() || '110888');
+        fd.append('cena_pln', parseFloat(($('p-cena-allegro').value || $('p-cena').value || '99').replace(',', '.')));
+        fd.append('opis_tekst', $('p-opis').value.trim());
+        fd.append('stan_sztuk', parseInt($('p-stan').value, 10) || 1);
+        fd.append('asortyment_id', asortymentId);
+        fd.append('tlo_efekty', 'true');
+        const urls = zdjeciaCache.map(z => z.src).filter(u => u && !u.startsWith('data:')).join(';');
+        fd.append('zdjecia', urls);
+
+        const res = await fetch('http://127.0.0.1:8770/allegro/szkic', {
+          method: 'POST',
+          body: fd
+        });
+        const d = await res.json();
+        if (d.ok) {
+          $('p-allegro-id').value = d.id;
+          if (d.url) $('p-allegro-url').value = d.url;
+          $('p-allegro-status').value = 'szkic';
+          pokazToast(`✅ Utworzono szkic Allegro ID: ${d.id}!`);
+          if (d.sales_center_url) {
+            window.open(d.sales_center_url, '_blank');
+          }
+          document.getElementById('modal-allegro-szkic').style.display = 'none';
+        } else {
+          pokazToast('Błąd serwera warsztatowego: ' + (d.blad || 'brak odpowiedzi'), 'error');
+        }
+      } catch (err) {
+        pokazToast('Nie połączono z serwerem warsztatowym port 8770: ' + err.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = stary;
+      }
+    }
+
+    async function odswiezSzkiceAllegro() {
+      const kontener = $('allegro-drafts-list');
+      try {
+        const res = await fetch('/api/sklep.php?akcja=allegro-szkice', {
+          headers: getAuthHeaders()
+        });
+        const data = await res.json();
+        if (data.ok && Array.isArray(data.szkice)) {
+          $('licznik-szkicow').textContent = data.szkice.length;
+          if (data.szkice.length > 0 && kontener) {
+            kontener.innerHTML = data.szkice.map(s => {
+              const imgUrl = (s.obrazy && s.obrazy[0] && s.obrazy[0].src) ? s.obrazy[0].src : 'https://a.allegroimg.com/original/11e144/f496e2e44765b707fd058a5db5ab';
+              const cenaZl = (s.allegro_cena_gr ? (s.allegro_cena_gr / 100) : (s.cena_gr / 100)).toFixed(2).replace('.', ',');
+              const scUrl = s.sales_center_url || (s.allegro_id ? `https://salescenter.allegro.pl/offer-management/offers/${s.allegro_id}/edit` : '');
+              return `
+                <div class="draft-card">
+                  <img class="draft-thumb" src="${imgUrl}" alt="${s.nazwa}" width="80" height="80">
+                  <div class="draft-info">
+                    <h3 style="font-size:1.05rem;margin-bottom:6px;">${s.nazwa}</h3>
+                    <div class="draft-meta">
+                      <span>Nr oferty: <code>${s.allegro_id || '—'}</code></span>
+                      <span>Kategoria: <strong>${s.allegro_kategoria || s.kategoria || 'inne'}</strong></span>
+                      <span>Cena: <strong>${cenaZl} zł</strong></span>
+                      <span class="badge-inactive">${s.allegro_status || 'szkic'}</span>
+                    </div>
+                    <div class="draft-actions">
+                      ${scUrl ? `<a href="${scUrl}" target="_blank" class="btn btn-allegro btn-sm">Edytuj w Sales Center ↗</a>` : ''}
+                      ${s.allegro_url ? `<a href="${s.allegro_url}" target="_blank" class="btn btn-outline btn-sm">Podgląd Allegro ↗</a>` : ''}
+                      <button class="btn btn-primary btn-sm" onclick="wczytajSzkicDoKreatora('${s.allegro_id || ''}', '${s.nazwa.replace(/'/g, "\\'")}', '${cenaZl}', '${s.allegro_kategoria || ''}', '${imgUrl}')">Wczytaj do Kreatora</button>
+                    </div>
+                  </div>
+                </div>
+              `;
+            }).join('');
+          }
+          pokazToast(`Zsynchronizowano szkice Allegro (${data.szkice.length})`);
+        } else if (!data.ok) {
+          pokazToast(data.blad || 'Brak autoryzacji do szkiców Allegro', 'error');
+        }
+      } catch (err) {
+        pokazToast('Błąd pobierania szkiców: ' + err.message, 'error');
+      }
+    }
+
+    async function importujZAukcjiAllegro() {
+      const url = $('allegro-quick-url').value.trim();
+      if (!url || !url.startsWith('http')) {
+        pokazToast('Wklej prawidłowy link do oferty Allegro', 'error');
+        return;
+      }
+      const btn = $('btn-quick-import');
+      const stary = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '⏳ Pobieranie z Allegro...';
+      try {
+        const fd = new FormData();
+        fd.append('url', url);
+        const res = await fetch('/api/sklep.php?akcja=allegro-import-z-linku', {
+          method: 'POST',
+          headers: getAuthHeaders(),
+          body: fd
+        });
+        const data = await res.json();
+        if (data.ok) {
+          pokazToast('✅ Oferta Allegro zaimportowana do sklepu!');
+          $('allegro-quick-url').value = '';
+          pokazZakladke('lista');
+        } else {
+          pokazToast(data.blad || 'Błąd importu', 'error');
+        }
+      } catch (err) {
+        pokazToast('Błąd: ' + err.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = stary;
+      }
+    }
+
+    // FORM SUBMISSION
+    $('kreator-form').addEventListener('submit', async e => {
+      e.preventDefault();
+      const dane = {
+        id: parseInt($('p-id').value, 10) || 0,
+        nazwa: $('p-nazwa').value.trim(),
+        kategoria: $('p-kategoria').value,
+        stan: $('p-stan').value,
+        cena: $('p-cena').value,
+        allegro_cena: $('p-cena-allegro').value,
+        opis: $('p-opis').value.trim(),
+        allegro_url: $('p-allegro-url').value.trim(),
+        allegro_id: $('p-allegro-id').value.trim(),
+        allegro_status: $('p-allegro-status').value,
+        status: 'opublikowany'
+      };
+
+      try {
+        const fd = new FormData();
+        for (const k in dane) fd.append(k, dane[k]);
+        const res = await fetch('/api/sklep.php?akcja=admin-produkt-zapisz', {
+          method: 'POST',
+          headers: getAuthHeaders(),
+          body: fd
+        });
+        const resp = await res.json();
+        if (resp.ok) {
+          const noweZdjecia = zdjeciaCache.filter(z => z.isNew && z.file);
+          for (const item of noweZdjecia) {
+            try {
+              const fotoFd = new FormData();
+              fotoFd.append('produkt_id', resp.id);
+              fotoFd.append('plik', item.file);
+              fotoFd.append('alt', dane.nazwa);
+              await fetch('/api/sklep.php?akcja=obraz-wgraj', {
+                method: 'POST',
+                headers: getAuthHeaders(),
+                body: fotoFd
+              });
+            } catch (errFoto) {
+              console.error('Błąd wgrywania zdjęcia:', errFoto);
+            }
+          }
+          pokazToast('✅ Produkt pomyślnie zapisany w sklepie i powiązany z Allegro!');
+          pokazZakladke('lista');
+        } else {
+          pokazToast(resp.blad || 'Błąd zapisu produktu', 'error');
+        }
+      } catch (err) {
+        pokazToast('Błąd: ' + err.message, 'error');
+      }
+    });
+
+    // INIT WITH SECURITY CHECK
+    sprawdzAutoryzacje();
+
+  </script>
+</body>
+</html>

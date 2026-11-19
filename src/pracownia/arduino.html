@@ -1,0 +1,33 @@
+  <p>Ustaw czas świecenia i przerwy. Przewidź, co się zmieni, gdy skrócisz pierwsze czekanie.</p>
+  <div class="lab-panel" data-lekcja-arduino>
+    <div class="lekcja-uklad">
+      <div class="lekcja-przyrzad">
+        <div class="lekcja-plytka" aria-hidden="true"><span>UNO</span><span class="lekcja-dioda">L</span></div>
+        <div class="lekcja-rytm" aria-hidden="true"><span>Świeci</span><span>Przerwa</span></div>
+        <p id="blink-wynik" role="status">1 s światła i 1 s przerwy. Cały cykl trwa 2 s.</p>
+      </div>
+      <div>
+        <div class="lab-pasek">
+          <label>Czas świecenia
+            <select id="blink-swiatlo"><option value="250">0,25 s</option><option value="1000" selected>1 s</option></select>
+          </label>
+          <label>Czas przerwy
+            <select id="blink-przerwa"><option value="250">0,25 s</option><option value="1000" selected>1 s</option></select>
+          </label>
+        </div>
+        <button type="button" id="blink-podglad" class="btn btn-primary" aria-pressed="false">Pokaż mruganie</button>
+        <pre class="lekcja-kod" aria-label="Program Arduino"><code>void setup() {
+  pinMode(LED_BUILTIN, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(<span id="blink-kod-swiatlo">1000</span>);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(<span id="blink-kod-przerwa">1000</span>);
+}</code></pre>
+      </div>
+    </div>
+    <p class="lab-uwaga">To podgląd diody wbudowanej w Arduino Uno. W kodzie podajemy czas w milisekundach. 1000 ms to 1 s.</p>
+  </div>
+  <p><a class="btn btn-outline" href="/assets/karta-drucika-arduino.pdf" download>Pobierz kartę rytmu (PDF)</a></p>

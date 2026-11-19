@@ -1,0 +1,95 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Modele językowe w serwisie: diagnostyka wspomagana AI",
+  "description": "Analiza przydatności modeli językowych w pracy diagnosty. Sprawdź, w jakich zadaniach AI wspiera serwis, a gdzie stanowi zagrożenie dla bezpieczeństwa.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-07-07",
+  "dateModified": "2026-07-07",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/modele-jezykowe-w-diagnostyce-pojazdow/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-orange">Programowanie i kursy</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 8 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 15.08.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Modele językowe w serwisie: diagnostyka wspomagana AI</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Jak wykorzystać modele językowe (LLM) w warsztacie i dlaczego ich odpowiedzi trzeba sprawdzać w dokumentacji.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#mechanizm_dzialania">Jak działają modele językowe w kontekście technicznym</a></li>
+      <li><a href="#gdzie_pomaga">Obszary wsparcia: gdzie AI faktycznie przyspiesza pracę</a></li>
+      <li><a href="#ryzyko_halucynacji">Zagrożenia: zjawisko halucynacji i błędne dane</a></li>
+      <li><a href="#tabela_weryfikacji">Procedura weryfikacji informacji z AI</a></li>
+      <li><a href="#bezpieczenstwo_bhp">BHP i odpowiedzialność technika</a></li>
+      <li><a href="#praktyka_warsztatowa">Co z tym zrobić w warsztacie F.W. DRUCIK?</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="mechanizm_dzialania">1. Jak działają modele językowe w kontekście technicznym</h2>
+<p>LLM przewidują kolejne słowa na podstawie danych tekstowych, m.in. instrukcji i artykułów. Nie mają fizycznego rozumienia silnika ani magistrali CAN.</p><p>Dla technika oznacza to jedno: <strong>model nie przeprowadza analizy logicznej</strong>, lecz generuje tekst na podstawie wzorców. W diagnostyce, gdzie kluczowa jest precyzja, każde wygenerowane zdanie musi zostać zweryfikowane z dokumentacją serwisową (np. schematami elektrycznymi czy procedurami naprawczymi producenta).</p>
+
+    <h2 id="gdzie_pomaga">2. Obszary wsparcia: gdzie AI faktycznie przyspiesza pracę</h2>
+<p>Modele językowe sprawdzają się w zadaniach wymagających przetwarzania dużych ilości tekstu:</p><ul><li><strong>Tłumaczenie dokumentacji:</strong> Szybkie przekładanie zagranicznych not serwisowych na język polski.</li><li><strong>Streszczanie długich procedur:</strong> Wyodrębnianie kluczowych kroków z obszernych instrukcji naprawczych.</li><li><strong>Wyszukiwanie opisów kodów błędów:</strong> AI potrafi szybko zestawić kod błędu z typowymi przyczynami opisywanymi w literaturze technicznej, co stanowi dobry punkt wyjścia do dalszej diagnostyki.</li></ul><p>Pamiętaj jednak, że każda informacja uzyskana od AI jest jedynie sugestią, a nie diagnozą ostateczną.</p>
+
+    <h2 id="ryzyko_halucynacji">3. Zagrożenia: zjawisko halucynacji i błędne dane</h2>
+<p>Największym zagrożeniem w pracy z AI jest tzw. halucynacja, czyli generowanie przez model informacji brzmiących bardzo wiarygodnie, lecz całkowicie fałszywych. W diagnostyce samochodowej może to prowadzić do:</p><ul><li>Podania błędnych wartości napięć (np. sugerowanie 12V tam, gdzie występuje 5V dla czujnika).</li><li>Zalecenia niebezpiecznych procedur (np. pominięcie procedury rozładowania kondensatorów w układach hybrydowych).</li><li>Błędnej interpretacji pinoutów złączy sterowników.</li></ul><p>Zawsze weryfikuj dane w oficjalnej dokumentacji. Wartości takie jak rezystancja cewek czy ciśnienie paliwa muszą być zgodne z wytycznymi producenta dla danego numeru VIN.</p>
+
+    <h2 id="tabela_weryfikacji">4. Procedura weryfikacji informacji z AI</h2>
+<p>Poniższa tabela przedstawia standard postępowania przy wykorzystaniu AI w warsztacie:</p><table><thead><tr><th>Krok</th><th>Działanie</th><th>Źródło weryfikacji</th></tr></thead><tbody><tr><td>1</td><td>Zapytanie o procedurę</td><td>Model językowy (AI)</td></tr><tr><td>2</td><td>Weryfikacja danych</td><td>Dokumentacja serwisowa/RMI</td></tr><tr><td>3</td><td>Sprawdzenie norm</td><td>Normy ISO/DIN/SAE</td></tr><tr><td>4</td><td>Pomiar fizyczny</td><td>Multimetr/Oscyloskop</td></tr></tbody></table><p><em>Uwaga: Nigdy nie kasuj kodów błędów bez usunięcia przyczyny źródłowej. AI może sugerować wymianę podzespołów, podczas gdy problemem jest często wiązka elektryczna lub brak masy.</em></p>
+
+    <h2 id="bezpieczenstwo_bhp">5. BHP i odpowiedzialność technika</h2>
+<p>Przy pojazdach hybrydowych i elektrycznych przestrzegaj procedur bezpieczeństwa. Odpowiedź LLM nie zastępuje ich ani odpowiedzialności technika: błąd grozi porażeniem, wybuchem akumulatora lub uszkodzeniem sterownika.</p><p>Podczas prac przy układach wysokiego napięcia lub klimatyzacji (czynniki chłodnicze pod ciśnieniem), zawsze opieraj się na certyfikowanych procedurach. AI nie zastąpi wiedzy o bezpiecznym odłączaniu zasilania (tzw. <em>service disconnect</em>).</p>
+
+    <h2 id="praktyka_warsztatowa">6. Co z tym zrobić w warsztacie F.W. DRUCIK?</h2>
+<p>W naszym warsztacie w Domosławiu 13A stawiamy na sprawdzoną wiedzę techniczną. Jeśli masz problem z diagnostyką skomplikowanych usterek elektronicznych, nie polegaj wyłącznie na sugestiach z sieci. Zapraszamy do skorzystania z naszych usług:</p><ul><li><a href="/uslugi/elektromechanika/">Elektromechanika</a> – profesjonalna diagnostyka oparta na dokumentacji producenta.</li><li><a href="/uslugi/klimatyzacja-samochodowa/">Klimatyzacja samochodowa</a> – serwis z zachowaniem norm BHP.</li><li><a href="/uslugi/remonty-silnikow/">Remonty silników</a> – precyzyjne pomiary i weryfikacja podzespołów.</li></ul><p>Jeśli potrzebujesz wsparcia w trudnym przypadku, <a href="/kontakt/">skontaktuj się z nami</a>. NIP 888-292-19-00, telefon 601 726 924. Pracujemy od poniedziałku do piątku w godzinach 8-17 oraz w soboty 9-13.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Czy AI może zastąpić skaner diagnostyczny?</summary>
+        <p>Nie, AI nie posiada fizycznego połączenia z magistralą CAN pojazdu. Może jedynie pomóc w interpretacji kodów błędów, które już odczytałeś za pomocą profesjonalnego urządzenia diagnostycznego.</p>
+      </details>
+      <details>
+        <summary>Czy dane techniczne z AI są zawsze poprawne?</summary>
+        <p>Absolutnie nie. Modele językowe często generują dane, które brzmią technicznie poprawnie, ale są błędne w szczegółach, takich jak wartości rezystancji czy napięcia referencyjne.</p>
+      </details>
+      <details>
+        <summary>Jak bezpiecznie korzystać z AI w warsztacie?</summary>
+        <p>Traktuj AI jako narzędzie do szybkiego wyszukiwania informacji, które zawsze musisz zweryfikować w oficjalnej dokumentacji serwisowej. Nigdy nie podejmuj decyzji o naprawie na podstawie samej odpowiedzi wygenerowanej przez czat.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

@@ -1,0 +1,99 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Retrofit starej frezarki na sterowanie CNC — od czego zacząć",
+  "description": "Dowiedz się, jak technicznie podejść do modernizacji starej frezarki na sterowanie CNC. Analiza napędów, sterowników i wymogów bezpieczeństwa w F.W. DRUCIK.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-06-26",
+  "dateModified": "2026-06-26",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/retrofit-frezarki-cnc-od-czego-zaczac/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-orange">Spawanie & CNC</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 8 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 15.08.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Retrofit starej frezarki na sterowanie CNC — od czego zacząć</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Przeróbka frezarki na CNC: od oceny maszyny i doboru napędów po połączenie układów sterowania.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#analiza-mechaniczna">Ocena stanu technicznego mechaniki</a></li>
+      <li><a href="#naped-i-silniki">Dobór napędów: serwo vs krokowe</a></li>
+      <li><a href="#sterowanie-i-elektronika">Wybór sterownika CNC i magistrali</a></li>
+      <li><a href="#bhp-i-bezpieczenstwo">Bezpieczeństwo pracy i wymogi BHP</a></li>
+      <li><a href="#wsparcie-warsztatu">Jak możemy pomóc w F.W. DRUCIK</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="analiza-mechaniczna">1. Ocena stanu technicznego mechaniki</h2>
+<p>Przed zakupem elektroniki sprawdź geometrię łoża, prowadnice, śruby i łożyska wrzeciona. Retrofit nie usunie zużycia mechaniki. Luzy nawrotne wymagają naprawy lub kompensacji; programowa kompensacja ma ograniczenia dynamiczne.</p><p>Zaleca się pomiar luzów za pomocą czujnika zegarowego. Wartości dopuszczalne zależą od klasy dokładności maszyny, ale dla typowych zastosowań warsztatowych luzy powyżej 0,05 mm wymagają ingerencji w mechanikę (np. wymiana nakrętek śrub pociągowych na śruby kulowe).</p>
+
+    <figure>
+      <img src="/assets/blog/retrofit-frezarki-cnc-od-czego-zaczac.png" width="394" height="318" loading="lazy" alt="Retrofit starej frezarki na sterowanie CNC — od czego zacząć">
+      <figcaption>Widok na wrzeciono frezarki podczas prac modernizacyjnych układu sterowania.
+        <span class="zrodlo">Fot. <a href="https://commons.wikimedia.org/wiki/File:CNC_Milling.png" target="_blank" rel="noopener nofollow">Cnccp5</a>, <a href="http://creativecommons.org/publicdomain/zero/1.0/deed.en" target="_blank" rel="noopener nofollow">CC0</a>, Wikimedia Commons.</span>
+      </figcaption>
+    </figure>
+
+
+    <h2 id="naped-i-silniki">2. Dobór napędów: serwo vs krokowe</h2>
+<p>Wybór między silnikami krokowymi a serwomechanizmami zależy od wymaganej dynamiki i dokładności. Silniki krokowe są tańsze, ale pracują w pętli otwartej, co oznacza ryzyko gubienia kroków przy przeciążeniach. Serwomechanizmy (AC Servo) pracują w pętli zamkniętej, oferując znacznie wyższą kulturę pracy i moment obrotowy przy wysokich prędkościach obrotowych.</p><p>Moment napędów dobierz do oporów skrawania i masy stołu na podstawie danych maszyny oraz charakterystyk silników. Oblicz też przełożenia pasowe lub zębate, które wpływają na rozdzielczość.</p>
+
+    <h2 id="sterowanie-i-elektronika">3. Wybór sterownika CNC i magistrali</h2>
+<p>Sercem układu jest sterownik ruchu (Motion Controller). Obecnie standardem jest komunikacja po magistrali Ethernet lub EtherCAT, co zapewnia stabilność transmisji danych. Należy unikać rozwiązań opartych na starych portach LPT, które są podatne na zakłócenia elektromagnetyczne (EMI).</p><p>Ważnym elementem jest separacja galwaniczna sygnałów wejściowych (krańcówki, czujniki bazowania) od układu sterowania. Zgodnie z dobrymi praktykami inżynierskimi, wszystkie przewody sygnałowe powinny być ekranowane, a ekrany uziemione w jednym punkcie, aby uniknąć pętli masy.</p><table><thead><tr><th>Element</th><th>Wymóg techniczny</th></tr></thead><tbody><tr><td>Zasilanie</td><td>Stabilizowane, zgodne z normą PN-EN 60204-1</td></tr><tr><td>Sygnały</td><td>Ekranowane, min. 0,5 mm²</td></tr><tr><td>Krańcówki</td><td>NC (Normally Closed) dla bezpieczeństwa</td></tr></tbody></table>
+
+    <h2 id="bhp-i-bezpieczenstwo">4. Bezpieczeństwo pracy i wymogi BHP</h2>
+<p>Modernizacja maszyny wiąże się z koniecznością zapewnienia bezpieczeństwa operatora. Każdy retrofit musi uwzględniać wyłącznik bezpieczeństwa (E-Stop), który fizycznie odcina zasilanie napędów (zgodnie z wymogami dyrektywy maszynowej). Nie wolno polegać wyłącznie na programowym zatrzymaniu maszyny przez sterownik.</p><p>Ostrzeżenie: Prace przy układach elektrycznych pod napięciem są śmiertelnie niebezpieczne. Zawsze upewnij się, że kondensatory w falownikach i zasilaczach zostały rozładowane przed przystąpieniem do prac serwisowych. Kody błędów sterownika należy analizować w kontekście przyczyny źródłowej, a nie tylko kasować w pamięci urządzenia.</p>
+
+    <h2 id="wsparcie-warsztatu">5. Jak możemy pomóc w F.W. DRUCIK</h2>
+<p>Jeśli planujesz modernizację maszyny, nasz warsztat oferuje wsparcie w zakresie elektromechaniki oraz integracji układów sterowania. Pomagamy w doborze komponentów, montażu szaf sterowniczych oraz uruchomieniu napędów. Zapraszamy do zapoznania się z naszą ofertą na stronie <a href="/uslugi/elektromechanika/">elektromechanika</a> oraz <a href="/uslugi/maszyny-cnc/">maszyny cnc</a>.</p><p>W celu omówienia szczegółów technicznych Twojego projektu, prosimy o kontakt pod numerem telefonu 601 726 924 lub przez formularz na stronie <a href="/kontakt/">kontakt</a>. Pracujemy od poniedziałku do piątku w godzinach 8-17 oraz w soboty 9-13.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Czy warto stosować silniki krokowe w profesjonalnym retroficie?</summary>
+        <p>Silniki krokowe sprawdzają się w prostych maszynach hobbystycznych, gdzie nie jest wymagana duża dynamika. W zastosowaniach profesjonalnych zdecydowanie zalecamy serwomechanizmy, które dzięki pracy w pętli zamkniętej eliminują ryzyko gubienia kroków.</p>
+      </details>
+      <details>
+        <summary>Jakie są główne zagrożenia przy modernizacji elektryki?</summary>
+        <p>Największym zagrożeniem jest brak separacji galwanicznej oraz niewłaściwe uziemienie, co prowadzi do zakłóceń pracy sterownika. Należy również pamiętać o fizycznym odcięciu zasilania napędów przez wyłącznik bezpieczeństwa, a nie tylko przez program.</p>
+      </details>
+      <details>
+        <summary>Czy można użyć starych silników DC w nowym sterowaniu?</summary>
+        <p>Jest to możliwe, ale wymaga zastosowania odpowiednich sterowników (serwosterowników DC) oraz enkoderów sprzężenia zwrotnego. Często jednak koszt adaptacji starych silników przewyższa koszt zakupu nowoczesnych napędów AC.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

@@ -1,0 +1,558 @@
+{
+ "/": {
+  "data": "2026-11-19",
+  "skrot": "181ffea478d0b3ed"
+ },
+ "/404": {
+  "data": "2026-09-20",
+  "skrot": "4465efd90de34eef"
+ },
+ "/admin/": {
+  "data": "2026-09-20",
+  "skrot": "1123533791c6cdb7"
+ },
+ "/automatyzacje/": {
+  "data": "2026-11-19",
+  "skrot": "5f3dc9d479e173ac"
+ },
+ "/blog/": {
+  "data": "2026-11-19",
+  "skrot": "6c1923afce6f349b"
+ },
+ "/blog/adxl345-akcelerometr-wibracje/": {
+  "data": "2026-10-27",
+  "skrot": "09fb8fb68c48bd76"
+ },
+ "/blog/ai-w-programowaniu-cnc/": {
+  "data": "2026-09-20",
+  "skrot": "e91eac67a5f85f5b"
+ },
+ "/blog/analiza-logow-magistrali-can-python/": {
+  "data": "2026-11-05",
+  "skrot": "60726e1f15f3da19"
+ },
+ "/blog/audyt-alarmu-i-monitoringu/": {
+  "data": "2026-11-11",
+  "skrot": "f90f73808527248b"
+ },
+ "/blog/bme280-czujnik-temperatury-wilgotnosci-cisnienia/": {
+  "data": "2026-09-20",
+  "skrot": "9996f50eaba02be3"
+ },
+ "/blog/bramka-can-gateway-diagnostyka-i-usterki/": {
+  "data": "2026-09-21",
+  "skrot": "0b736640c2ec48cb"
+ },
+ "/blog/csmio-ip-s-ip-m-ip-a-porownanie/": {
+  "data": "2026-10-11",
+  "skrot": "acfc9edf359ddf88"
+ },
+ "/blog/dht22-aht20-pomiar-temperatury-wilgotnosci/": {
+  "data": "2026-09-20",
+  "skrot": "c5b76435c7b7ed65"
+ },
+ "/blog/diagnostyka-czujnikow-oscyloskopem/": {
+  "data": "2026-09-20",
+  "skrot": "cabe4fb4080eeea8"
+ },
+ "/blog/diagnostyka-j1939-ciezarowki/": {
+  "data": "2026-11-11",
+  "skrot": "528a439b3bafbe07"
+ },
+ "/blog/diagnostyka-ukladu-klimatyzacji-mostkowanie-przekaznika/": {
+  "data": "2026-10-03",
+  "skrot": "604723b847c22fc7"
+ },
+ "/blog/dobor-materialow-do-druku-3d-w-warsztacie/": {
+  "data": "2026-10-25",
+  "skrot": "047019b2afd97611"
+ },
+ "/blog/dobor-parametrow-skrawania/": {
+  "data": "2026-11-11",
+  "skrot": "010f04697e38b435"
+ },
+ "/blog/drukarka-fdm-w-warsztacie/": {
+  "data": "2026-09-20",
+  "skrot": "b14cd0ff518eb315"
+ },
+ "/blog/ds18b20-wiele-czujnikow-na-jednym-przewodzie/": {
+  "data": "2026-10-26",
+  "skrot": "1f714d93d4d097ee"
+ },
+ "/blog/elektrody-wolframowe-dobor-szlifowanie/": {
+  "data": "2026-10-26",
+  "skrot": "b689cd3bbc27161e"
+ },
+ "/blog/flexray-i-automotive-ethernet-sieci-pokladowe/": {
+  "data": "2026-09-20",
+  "skrot": "fe768d040c9ea46b"
+ },
+ "/blog/frezarka-cnc-od-zera-poradnik/": {
+  "data": "2026-09-20",
+  "skrot": "d0567ee0c35ccadc"
+ },
+ "/blog/jak-ustawic-migomat-mig-mag-stal/": {
+  "data": "2026-09-26",
+  "skrot": "fea784f954370ddd"
+ },
+ "/blog/klimatyzacja-cisnienia-procedura/": {
+  "data": "2026-09-20",
+  "skrot": "31eed332f0031c22"
+ },
+ "/blog/klimatyzacja-po-wymianie-akumulatora/": {
+  "data": "2026-10-26",
+  "skrot": "85e0e4d547baef78"
+ },
+ "/blog/klimatyzacja-samochodowa-r134a-vs-r1234yf/": {
+  "data": "2026-10-26",
+  "skrot": "6cc847a68c73cae3"
+ },
+ "/blog/kondensatory-470u-400v-inwerter-diagnostyka/": {
+  "data": "2026-10-29",
+  "skrot": "e542550ea084729c"
+ },
+ "/blog/kurs-esp32-arduino-czesc-1/": {
+  "data": "2026-09-20",
+  "skrot": "f3013b9af2ff171f"
+ },
+ "/blog/kurs-esp32-czesc-2-wifi-mqtt/": {
+  "data": "2026-09-20",
+  "skrot": "1ce6103714700183"
+ },
+ "/blog/kurs-esp32-czesc-3-can-twai/": {
+  "data": "2026-10-09",
+  "skrot": "664cda1546ee2904"
+ },
+ "/blog/kurs-esp32-czesc-5-ble-i-komunikacja-z-telefonem/": {
+  "data": "2026-09-20",
+  "skrot": "875e15cb00e71f1b"
+ },
+ "/blog/kurs-esp32-karta-sd-rejestrator-pomiarow/": {
+  "data": "2026-09-20",
+  "skrot": "17fa87e0456c5b1d"
+ },
+ "/blog/kurs-esp32-oled-enkoder/": {
+  "data": "2026-09-20",
+  "skrot": "fa579bd2a6eb8d1c"
+ },
+ "/blog/lokalizacja-sterownikow-w-samochodzie/": {
+  "data": "2026-09-20",
+  "skrot": "3432c9e8be2e0b1b"
+ },
+ "/blog/magistrala-can-diagnostyka/": {
+  "data": "2026-10-26",
+  "skrot": "e1c8956179e95985"
+ },
+ "/blog/magistrala-lin-w-pojazdach-diagnostyka/": {
+  "data": "2026-10-26",
+  "skrot": "d931b45013d9f1a9"
+ },
+ "/blog/materialy-do-druku-3d-w-warsztacie/": {
+  "data": "2026-11-11",
+  "skrot": "79106c45a21a23d6"
+ },
+ "/blog/mlx90614-bezdotykowy-pomiar-temperatury-lozyska/": {
+  "data": "2026-09-20",
+  "skrot": "5e6e6019cd62e294"
+ },
+ "/blog/modele-jezykowe-w-diagnostyce-pojazdow/": {
+  "data": "2026-09-20",
+  "skrot": "8adbf013db95a27d"
+ },
+ "/blog/modele-jezykowe-w-diagnostyce/": {
+  "data": "2026-09-20",
+  "skrot": "2fb1e8e04e3e08bb"
+ },
+ "/blog/modul-nadwozia-bcm-diagnostyka/": {
+  "data": "2026-09-20",
+  "skrot": "ec1ace04ac92811b"
+ },
+ "/blog/mpu6050-pomiar-drgan-i-przechylu-maszyny/": {
+  "data": "2026-10-29",
+  "skrot": "062d70a7a38fefd7"
+ },
+ "/blog/n8n-pierwsza-automatyzacja-w-firmie/": {
+  "data": "2026-11-19",
+  "skrot": "6fc3e68a266750fd"
+ },
+ "/blog/odczyt-danych-z-rejestratora-i-wykres/": {
+  "data": "2026-09-20",
+  "skrot": "7a81aab308912b0c"
+ },
+ "/blog/oktokopter-lx1100-budowa-i-konfiguracja/": {
+  "data": "2026-10-26",
+  "skrot": "216d1eecb7fcf6fc"
+ },
+ "/blog/pierwsza-warstwa-kalibracja-stolu-i-typowe-problemy/": {
+  "data": "2026-10-01",
+  "skrot": "ceda61c17c76e71b"
+ },
+ "/blog/predykcyjne-utrzymanie-ruchu-pomiary/": {
+  "data": "2026-09-20",
+  "skrot": "3cb4ebe51d369842"
+ },
+ "/blog/prowadnice-liniowe-kontra-tuleje/": {
+  "data": "2026-10-26",
+  "skrot": "7c9df2069d8c5b2f"
+ },
+ "/blog/pt100-z-max31865-pomiar-precyzyjny/": {
+  "data": "2026-10-26",
+  "skrot": "5806f781061ffab3"
+ },
+ "/blog/puls-podwojny-puls-migomat-ustawienia/": {
+  "data": "2026-09-26",
+  "skrot": "bd371f17b0a815f6"
+ },
+ "/blog/python-dla-mechanika-pierwszy-skrypt/": {
+  "data": "2026-09-20",
+  "skrot": "f0641acb4a822483"
+ },
+ "/blog/regeneracja-alternatora-krok-po-kroku/": {
+  "data": "2026-11-12",
+  "skrot": "7ce22cc3fdb32bbd"
+ },
+ "/blog/regeneracja-alternatorow-pultusk/": {
+  "data": "2026-11-12",
+  "skrot": "f70f9a458e8c4d4e"
+ },
+ "/blog/regeneracja-sprezarki-klimatyzacji-wyciek-na-wale/": {
+  "data": "2026-10-26",
+  "skrot": "d6a39aec64ff9f8c"
+ },
+ "/blog/regulator-napiecia-alternator-diagnostyka/": {
+  "data": "2026-11-12",
+  "skrot": "08e5f04992c2656a"
+ },
+ "/blog/retarder-tempomat-skrzynia-amt-komunikacja-can/": {
+  "data": "2026-09-20",
+  "skrot": "31284367caeb3d3e"
+ },
+ "/blog/retrofit-frezarki-cnc-od-czego-zaczac/": {
+  "data": "2026-09-20",
+  "skrot": "c11959d4e28f6d5a"
+ },
+ "/blog/retrofit-tokarki-na-cnc-silniki-enkodery-sterowanie/": {
+  "data": "2026-09-20",
+  "skrot": "9cff4b1056bf4d51"
+ },
+ "/blog/rozpoznawanie-obrazu-w-kontroli-jakosci-detali/": {
+  "data": "2026-11-07",
+  "skrot": "3dfbe3fd19f7fda3"
+ },
+ "/blog/rs485-modbus-rtu/": {
+  "data": "2026-09-20",
+  "skrot": "dea77b20923391a0"
+ },
+ "/blog/silnik-dymi-na-zimnym-rozruchu-diagnoza/": {
+  "data": "2026-11-01",
+  "skrot": "3c2d1d0ff4a7b145"
+ },
+ "/blog/skanowanie-3d-uszkodzonej-czesci/": {
+  "data": "2026-09-20",
+  "skrot": "7457a117f91ab653"
+ },
+ "/blog/spawanie-aluminium-mig-podajnik-spool-gun-drut/": {
+  "data": "2026-09-20",
+  "skrot": "f8b780620e89df10"
+ },
+ "/blog/spawanie-aluminium-migomatem-drut-gaz-technika/": {
+  "data": "2026-09-26",
+  "skrot": "c5ac3623062f288f"
+ },
+ "/blog/spawanie-cienkie-blachy-metody-techniczne/": {
+  "data": "2026-10-26",
+  "skrot": "5ea409588c4e23b1"
+ },
+ "/blog/spawanie-tig-aluminium-vs-mig/": {
+  "data": "2026-09-20",
+  "skrot": "1b2272db8db9260a"
+ },
+ "/blog/spawarka-inwertorowa-diagnostyka/": {
+  "data": "2026-10-26",
+  "skrot": "146cb767a3ed5333"
+ },
+ "/blog/sprezarka-klimatyzacji-nie-zalacza-sie/": {
+  "data": "2026-10-26",
+  "skrot": "1f23065429f1714c"
+ },
+ "/blog/sprzeglo-elektromagnetyczne-sprezarki-pomiar-i-regulacja/": {
+  "data": "2026-11-03",
+  "skrot": "65c65b668b63bed2"
+ },
+ "/blog/sruby-trapezowe-kontra-kulowe/": {
+  "data": "2026-10-27",
+  "skrot": "91a1387420504d65"
+ },
+ "/blog/sterowniki-bcm-i-siec-komfortu/": {
+  "data": "2026-09-20",
+  "skrot": "70199acf7a25d6ad"
+ },
+ "/blog/sterowniki-ecu-vecu-ebs-ecas/": {
+  "data": "2026-09-20",
+  "skrot": "884569e5669bc65f"
+ },
+ "/blog/sublimacja-a-flex/": {
+  "data": "2026-11-11",
+  "skrot": "d26c9df36f330617"
+ },
+ "/blog/technika-spawania-mig-mag-pchanie-ciagniecie-pozycje/": {
+  "data": "2026-10-26",
+  "skrot": "94767b205a1c9d2b"
+ },
+ "/blog/terminatory-magistrali-can-pomiar-60-omow/": {
+  "data": "2026-10-17",
+  "skrot": "0406fc395cca2de0"
+ },
+ "/blog/termopara-typu-k-z-max6675/": {
+  "data": "2026-09-23",
+  "skrot": "33e3454930cf3e2f"
+ },
+ "/blog/tig-ac-balans-i-czestotliwosc-aluminium/": {
+  "data": "2026-10-26",
+  "skrot": "113c117f19126883"
+ },
+ "/blog/uds-iso-14229-diagnostyka-warsztatowa/": {
+  "data": "2026-11-11",
+  "skrot": "796988e043ceba2c"
+ },
+ "/blog/uklady-scalone-sg3525-i-ka3525a-w-spawarkach/": {
+  "data": "2026-10-15",
+  "skrot": "21bcc98ce588ed0f"
+ },
+ "/blog/warping-i-odklejanie-wydrukow-3d/": {
+  "data": "2026-10-26",
+  "skrot": "39281990b4d8912c"
+ },
+ "/blog/weryfikacja-odpowiedzi-ai-dokumentacja-serwisowa/": {
+  "data": "2026-10-23",
+  "skrot": "bb867207521e56d5"
+ },
+ "/blog/wizja-komputerowa-w-kontroli-jakosci/": {
+  "data": "2026-09-20",
+  "skrot": "d402b480a0342754"
+ },
+ "/blog/zajarzanie-hf-kontra-lift-arc/": {
+  "data": "2026-09-20",
+  "skrot": "e8f7002fe6ebe7e5"
+ },
+ "/blog/zalozenia-do-budowy-maszyny/": {
+  "data": "2026-11-11",
+  "skrot": "99c2c5c8a5112883"
+ },
+ "/blog/zasilanie-24v-pojazdy-ciezarowe/": {
+  "data": "2026-09-20",
+  "skrot": "44b61f7682235739"
+ },
+ "/brelok/": {
+  "data": "2026-11-11",
+  "skrot": "3f70113ca3933742"
+ },
+ "/filmy/": {
+  "data": "2026-10-26",
+  "skrot": "7bffb7e68f19a5c1"
+ },
+ "/forum/": {
+  "data": "2026-09-20",
+  "skrot": "4208fda747978c29"
+ },
+ "/kompendium-ai/": {
+  "data": "2026-09-20",
+  "skrot": "9aaa91ac47dee0d5"
+ },
+ "/kompendium-ai/agenci-ai-i-mcp/": {
+  "data": "2026-09-20",
+  "skrot": "8835d01bca136ef9"
+ },
+ "/kompendium-ai/comfyui-architektura-wezlowa/": {
+  "data": "2026-09-20",
+  "skrot": "d64545c961c2cfb0"
+ },
+ "/kompendium-ai/comfyui-flux-konfiguracja/": {
+  "data": "2026-09-20",
+  "skrot": "bdc5e7ce1244d9e8"
+ },
+ "/kompendium-ai/comfyui-laczenie-lora/": {
+  "data": "2026-09-20",
+  "skrot": "9ca3c916c59648d4"
+ },
+ "/kompendium-ai/comfyui-skroty-i-praktyki/": {
+  "data": "2026-09-20",
+  "skrot": "471264fa94151ebf"
+ },
+ "/kompendium-ai/fooocus-przewodnik/": {
+  "data": "2026-09-20",
+  "skrot": "24861369e817eb02"
+ },
+ "/kompendium-ai/lm-studio-od-a-do-z/": {
+  "data": "2026-09-20",
+  "skrot": "e7dfa98b4129f22f"
+ },
+ "/kompendium-ai/lokalny-agent-z-narzedziami/": {
+  "data": "2026-09-20",
+  "skrot": "34be0c05feea1b0b"
+ },
+ "/kompendium-ai/lokalny-serwer-api-llm/": {
+  "data": "2026-09-20",
+  "skrot": "56bded95cedf2af8"
+ },
+ "/kompendium-ai/parametry-samplingu-llm/": {
+  "data": "2026-09-20",
+  "skrot": "d8d95ef9e13abc20"
+ },
+ "/kompendium-ai/prompty/": {
+  "data": "2026-09-20",
+  "skrot": "dcfba0551b835970"
+ },
+ "/kompendium-ai/sd-webui-forge/": {
+  "data": "2026-09-20",
+  "skrot": "898aa96fdb9c0d73"
+ },
+ "/kompendium-ai/slownik/": {
+  "data": "2026-09-20",
+  "skrot": "26082f897dfc796c"
+ },
+ "/kompendium-ai/sprzet/": {
+  "data": "2026-09-20",
+  "skrot": "7ce474443ff47778"
+ },
+ "/kompendium-ai/workflowy/": {
+  "data": "2026-09-20",
+  "skrot": "377312c7e7f7ab77"
+ },
+ "/konsultacje/": {
+  "data": "2026-09-06",
+  "skrot": "15616025fe826828"
+ },
+ "/kontakt/": {
+  "data": "2026-11-11",
+  "skrot": "d3b368d062c05577"
+ },
+ "/konto/": {
+  "data": "2026-11-11",
+  "skrot": "a17de08f262e5303"
+ },
+ "/koszulki/": {
+  "data": "2026-11-11",
+  "skrot": "0422e39aa0ccd648"
+ },
+ "/koszyk/": {
+  "data": "2026-09-20",
+  "skrot": "8b837ee18c6fe417"
+ },
+ "/kursy/": {
+  "data": "2026-09-20",
+  "skrot": "f954ce07d7c1fab8"
+ },
+ "/kursy/diagnostyka-magistral-pojazdowych/": {
+  "data": "2026-09-20",
+  "skrot": "2680d3ff4076b2d6"
+ },
+ "/kursy/esp32-w-warsztacie/": {
+  "data": "2026-09-06",
+  "skrot": "86773df51b582e29"
+ },
+ "/kursy/klimatyzacja-samochodowa/": {
+  "data": "2026-09-06",
+  "skrot": "6b0c7d14281612b1"
+ },
+ "/kursy/spawanie-tig-aluminium/": {
+  "data": "2026-09-06",
+  "skrot": "542d3d99116f04d5"
+ },
+ "/narzedzia/": {
+  "data": "2026-11-11",
+  "skrot": "6bc505ee4a68e065"
+ },
+ "/o-nas/": {
+  "data": "2026-11-19",
+  "skrot": "3c537aedf1db228b"
+ },
+ "/obszar-dzialania/": {
+  "data": "2026-11-12",
+  "skrot": "66bfdb4344ca8dc9"
+ },
+ "/odstapienie/": {
+  "data": "2026-09-20",
+  "skrot": "cf1fa86b77b4e91b"
+ },
+ "/polityka-prywatnosci/": {
+  "data": "2026-11-11",
+  "skrot": "520e482fc362e9a9"
+ },
+ "/pracownia/": {
+  "data": "2026-11-11",
+  "skrot": "31a97e4ca8eac88e"
+ },
+ "/pracownia/kompendium/": {
+  "data": "2026-11-11",
+  "skrot": "8c8397dbf9d69368"
+ },
+ "/realizacje/": {
+  "data": "2026-09-20",
+  "skrot": "80df650314f741ff"
+ },
+ "/regulamin/": {
+  "data": "2026-09-20",
+  "skrot": "77280f8f0b816a9d"
+ },
+ "/sklep/": {
+  "data": "2026-09-08",
+  "skrot": "5ed78be29d450b70"
+ },
+ "/uslugi/": {
+  "data": "2026-11-19",
+  "skrot": "11ccc89cadf7ea09"
+ },
+ "/uslugi/bezpieczenstwo-obiektow/": {
+  "data": "2026-11-12",
+  "skrot": "576833f35fa89053"
+ },
+ "/uslugi/budowa-maszyn/": {
+  "data": "2026-11-11",
+  "skrot": "55b2051aa5e74ba3"
+ },
+ "/uslugi/druk-3d/": {
+  "data": "2026-11-11",
+  "skrot": "fda95bdb3e163f9f"
+ },
+ "/uslugi/elektromechanika/": {
+  "data": "2026-11-12",
+  "skrot": "3db2e4483649801d"
+ },
+ "/uslugi/klimatyzacja-samochodowa/": {
+  "data": "2026-09-20",
+  "skrot": "6e87839a4f18358c"
+ },
+ "/uslugi/lutowanie-twarde/": {
+  "data": "2026-09-20",
+  "skrot": "a6e6bd42fc0d4358"
+ },
+ "/uslugi/maszyny-cnc/": {
+  "data": "2026-11-12",
+  "skrot": "9f7c2208fecd3aa4"
+ },
+ "/uslugi/nadruki-i-sublimacja/": {
+  "data": "2026-11-11",
+  "skrot": "78a84ee1d0e59b40"
+ },
+ "/uslugi/programowanie-aplikacje/": {
+  "data": "2026-11-19",
+  "skrot": "a8bb960398ef848c"
+ },
+ "/uslugi/remonty-silnikow/": {
+  "data": "2026-09-20",
+  "skrot": "bfaffbda766e3d2c"
+ },
+ "/uslugi/spawanie/": {
+  "data": "2026-09-20",
+  "skrot": "c7ef1260403283fa"
+ },
+ "/uslugi/zywica-epoksydowa/": {
+  "data": "2026-11-19",
+  "skrot": "0834f1d4eaca1051"
+ },
+ "/zamowienie/": {
+  "data": "2026-09-20",
+  "skrot": "ac8b4e46afdf2686"
+ }
+}

@@ -1,0 +1,161 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Diagnostyka czujników: indukcyjne, Halla, PWM, SENT",
+  "description": "Analiza sygnałów czujników samochodowych na oscyloskopie. Jak odróżnić czujnik indukcyjny, Halla, PWM i SENT w praktyce warsztatowej F.W. DRUCIK.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-08-11",
+  "dateModified": "2026-08-11",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/diagnostyka-czujnikow-oscyloskopem/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-blue">Elektromechanika</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 8 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 15.08.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Diagnostyka czujników: indukcyjne, Halla, PWM, SENT na oscyloskopie</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Jak rozpoznać sygnały czujników indukcyjnych, Halla, PWM i SENT oraz ustawić oscyloskop do pomiaru.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#wstep">Podstawy diagnostyki sygnałów</a></li>
+      <li><a href="#indukcyjne">Czujniki indukcyjne (VRS)</a></li>
+      <li><a href="#halla">Czujniki Halla</a></li>
+      <li><a href="#pwm">Sygnały PWM (Pulse Width Modulation)</a></li>
+      <li><a href="#sent">Protokół SENT (Single Edge Nibble Transmission)</a></li>
+      <li><a href="#tabela">Zestawienie parametrów sygnałów</a></li>
+      <li><a href="#ustawienia">Jak ustawić oscyloskop, żeby zobaczyć usterkę</a></li>
+      <li><a href="#dwa-kanaly">Wał i wałek na dwóch kanałach</a></li>
+      <li><a href="#usterki">Typowe usterki i ich obraz na ekranie</a></li>
+      <li><a href="#praktyka">Co zrobić w warsztacie?</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="wstep">1. Podstawy diagnostyki sygnałów</h2>
+<p>Oscyloskop pokazuje zmiany napięcia w czasie i pomaga sprawdzić sygnał czujnika.</p>
+
+    <figure>
+      <img src="/assets/blog/diagnostyka-czujnikow-oscyloskopem.jpg" width="1280" height="1408" loading="lazy" alt="Diagnostyka czujników: indukcyjne, Halla, PWM, SENT na oscyloskopie">
+      <figcaption>Pomiar sygnału czujnika indukcyjnego za pomocą oscyloskopu w warunkach warsztatowych.
+        <span class="zrodlo">Fot. <a href="https://commons.wikimedia.org/wiki/File:Analog_CRT_oscilloscope_Tektronix_475A_(1977)_and_digital_storage_oscilloscope_Tektronix_TPS_2014B_(c._2012).jpg" target="_blank" rel="noopener nofollow">
+derivative work: TeKaBe
+File:Tektronix Oscilloscope 475A.jpg: Pittigrilli
+derivative work: Pittigrilli</a>, licencja <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener nofollow">CC BY-SA 3.0</a>, Wikimedia Commons.</span>
+      </figcaption>
+    </figure>
+
+
+    <h2 id="indukcyjne">2. Czujniki indukcyjne (VRS)</h2>
+<p>Czujniki indukcyjne wytwarzają napięcie zmienne (AC) bez zewnętrznego zasilania. Przebieg przypomina sinusoidę.</p>
+
+    <h2 id="halla">3. Czujniki Halla</h2>
+<p>Czujnik Halla wymaga zasilania (zazwyczaj 5V lub 12V). Na oscyloskopie widać sygnał prostokątny. Sprawdź jego wypełnienie.</p>
+
+    <h2 id="pwm">4. Sygnały PWM (Pulse Width Modulation)</h2>
+<p>PWM steruje elementami wykonawczymi lub przekazuje informacje z czujników, np. temperatury i poziomu.</p>
+
+    <h2 id="sent">5. Protokół SENT (Single Edge Nibble Transmission)</h2>
+<p>SENT to cyfrowy protokół transmisji danych. Na oscyloskopie widać serię impulsów o zmiennej szerokości.</p>
+
+    <h2 id="tabela">6. Zestawienie parametrów sygnałów</h2>
+<table><thead><tr><th>Typ czujnika</th><th>Rodzaj sygnału</th><th>Zasilanie</th><th>Uwagi</th></tr></thead><tbody><tr><td>Indukcyjny</td><td>Sinusoida (AC)</td><td>Brak</td><td>Porównaj amplitudę przy rozruchu i wyższych obrotach.</td></tr></tbody></table>
+
+    <h2 id="ustawienia">7. Jak ustawić oscyloskop, żeby zobaczyć usterkę</h2>
+    <p>Większość „niejednoznacznych" przebiegów bierze się z ustawień, nie z czujnika. Cztery rzeczy
+      decydują o tym, czy wada w ogóle pojawi się na ekranie.</p>
+    <ul>
+      <li><strong>Sprzężenie DC, nie AC.</strong> Sprzężenie zmienne usuwa składową stałą, a razem z nią
+        informację o tym, że sygnał Halla nie schodzi do zera albo że linia zasilania osiadła. Do oceny
+        poziomów zawsze zaczynamy od DC.</li>
+      <li><strong>Podstawa czasu obejmująca dwa pełne obroty wału.</strong> Przy 700 obr/min jeden obrót
+        trwa ok. 85 ms, więc sensowne okno to 200 ms na ekran. Krótsze pokaże ładny przebieg i ukryje
+        pojedynczy brakujący impuls, który jest właśnie przyczyną zgłoszenia.</li>
+      <li><strong>Wyzwalanie na luce koła impulsowego</strong>, a nie na zboczu dowolnego zęba. Stabilny
+        obraz z zakotwiczoną luką od razu pokazuje, czy odstęp między impulsami jest równomierny.</li>
+      <li><strong>Masa pomiarowa przy sterowniku.</strong> Krokodylek wpięty w byle śrubę karoserii dodaje
+        do przebiegu spadek napięcia całej ścieżki masowej — a potem szukamy usterki czujnika, który jest
+        sprawny.</li>
+    </ul>
+    <p>Amplituda czujnika indukcyjnego może wzrosnąć z kilku woltów przy rozruchu do kilkudziesięciu przy wysokich obrotach. Zwiększ zakres pionowy, żeby nie pomylić obciętych szczytów z usterką.</p>
+
+    <h2 id="dwa-kanaly">8. Wał i wałek na dwóch kanałach — pomiar, który wykrywa rozciągnięty łańcuch</h2>
+    <p>Najbardziej wartościowy pomiar w tej grupie nie dotyczy pojedynczego czujnika, tylko relacji
+      między dwoma. Podpinamy kanał pierwszy do czujnika położenia wału korbowego, kanał drugi do czujnika
+      wałka rozrządu i obserwujemy, w którym miejscu przebiegu wału wypada impuls z wałka.</p>
+    <p>W sprawnym rozrządzie zależność sygnałów jest stała. Przesunięcie impulsu wałka względem luki wału, inne niż we wzorcu, może wskazywać rozciągnięty łańcuch, zużytą prowadnicę lub przeskoczony pasek. Kod korelacji sygnalizuje błąd, a przebieg pozwala ocenić jego wielkość.</p>
+    <p>Tym samym sposobem sprawdzamy działanie fazowania zmiennych faz rozrządu: przy wymuszeniu
+      sterowania widać, czy impuls z wałka faktycznie przesuwa się o zadaną wartość, czy zawór jest zapchany
+      i nic się nie dzieje.</p>
+
+    <h2 id="usterki">9. Typowe usterki i ich obraz na ekranie</h2>
+    <table>
+      <thead>
+        <tr><th>Obraz przebiegu</th><th>Najczęstsza przyczyna</th><th>Co sprawdzić</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Amplituda indukcyjnego niższa niż zwykle na całym zakresie</td><td>Powiększona szczelina lub opiłki na czole czujnika</td><td>Wykręcić czujnik, oczyścić, zmierzyć szczelinę</td></tr>
+        <tr><td>Pojedyncze impulsy o mniejszej amplitudzie w regularnym rytmie</td><td>Uszkodzone zęby koła impulsowego</td><td>Oględziny wieńca, ślady po rozruszniku</td></tr>
+        <tr><td>Sygnał Halla nie schodzi poniżej ok. 1 V</td><td>Rezystancja na masie czujnika</td><td>Spadek napięcia na przewodzie masy pod obciążeniem</td></tr>
+        <tr><td>Zaokrąglone zbocza sygnału prostokątnego</td><td>Utleniony styk lub wilgoć w złączu</td><td>Rozebrać i przejrzeć złącze, sprawdzić uszczelnienie</td></tr>
+        <tr><td>Wypełnienie PWM sztywne mimo zmiany warunków</td><td>Sterownik w trybie awaryjnym albo zwarcie linii</td><td>Odczyt parametrów bieżących, pomiar przy odłączonym elemencie</td></tr>
+        <tr><td>Zakłócenia nakładające się na przebieg przy pracy silnika</td><td>Przetarta izolacja, brak ekranu, sąsiedztwo przewodu wysokiego napięcia</td><td>Przebieg przy zgaszonym i pracującym silniku, ułożenie wiązki</td></tr>
+      </tbody>
+    </table>
+    <p>Reguła, która oszczędza najwięcej czasu: przebieg zawsze porównujemy z tym samym pomiarem na
+      sprawnym pojeździe albo z dokumentacją producenta. Sam kształt „wygląda dobrze" nie jest diagnozą.</p>
+
+    <h2 id="praktyka">10. Co zrobić w warsztacie?</h2>
+<p>Jeśli masz problem z interpretacją sygnałów lub podejrzewasz usterkę w układzie elektronicznym, zapraszamy do <a href="/uslugi/elektromechanika/">naszego serwisu elektromechaniki</a>. Pam[...]
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Czy mogę sprawdzić czujnik Halla zwykłym miernikiem?</summary>
+        <p>Multimetr pozwoli jedynie sprawdzić obecność zasilania i przejście masy. Nie zobaczysz nim jednak przebiegu prostokątnego, co uniemożliwia ocenę poprawności pracy czujnika w cza[...]
+      </details>
+      <details>
+        <summary>Dlaczego sygnał indukcyjny ma różną amplitudę?</summary>
+        <p>Czujnik indukcyjny generuje napięcie w wyniku zmiany strumienia magnetycznego. Im szybciej element metalowy mija czujnik, tym większa jest szybkość zmian pola, co przekłada się na[...]
+      </details>
+      <details>
+        <summary>Czy protokół SENT można zdiagnozować bez specjalistycznego sprzętu?</summary>
+        <p>Standardowy oscyloskop pozwoli jedynie stwierdzić, czy na przewodzie występuje jakakolwiek aktywność elektryczna. Do odczytania konkretnych wartości przesyłanych w ramkach niezbę[...]
+      </details>
+      <details>
+        <summary>Jakie są najczęstsze przyczyny błędów czujników?</summary>
+        <p>Najczęściej spotykamy uszkodzenia mechaniczne obudowy, przerwy w wiązkach elektrycznych oraz zaśniedziałe styki w złączach. Rzadziej dochodzi do wewnętrznego uszkodzenia elektro[...]
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

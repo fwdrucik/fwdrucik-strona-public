@@ -1,0 +1,103 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Diagnostyka układów scalonych SG3525 i KA3525A w spawarkach inwertorowych",
+  "description": "Poradnik techniczny dla serwisantów spawarek inwertorowych: diagnostyka układów SG3525 i KA3525A. Sprawdź objawy uszkodzeń i procedury pomiarowe.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-10-15",
+  "dateModified": "2026-10-15",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/uklady-scalone-sg3525-i-ka3525a-w-spawarkach/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-blue">Elektronika i magistrale</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 12 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 15.10.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Diagnostyka układów scalonych SG3525 i KA3525A w spawarkach inwertorowych</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Układy SG3525 oraz KA3525A to popularne kontrolery PWM stosowane w stopniach sterujących spawarek inwertorowych. Ich awaria często prowadzi do całkowitego braku pracy falownika. W tym wpisie analizujemy techniczne aspekty ich diagnostyki.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#charakterystyka">Budowa i rola układu SG3525/KA3525A</a></li>
+      <li><a href="#objawy">Typowe objawy uszkodzenia kontrolera</a></li>
+      <li><a href="#pomiary">Procedura pomiarowa i weryfikacja napięć</a></li>
+      <li><a href="#bezpieczenstwo">Zasady BHP przy naprawie elektroniki spawalniczej</a></li>
+      <li><a href="#serwis">Działania warsztatowe i wsparcie techniczne</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="charakterystyka">1. Budowa i rola układu SG3525/KA3525A</h2>
+<p>Układy SG3525 oraz KA3525A to zintegrowane kontrolery modulacji szerokości impulsu (PWM), zaprojektowane do sterowania stopniami mocy w zasilaczach impulsowych oraz falownikach spawalniczych. Z punktu widzenia technika utrzymania ruchu, kluczowe jest zrozumienie, że układ ten pełni rolę 'mózgu' sekcji inwertora. Odpowiada za generowanie sygnałów sterujących dla tranzystorów mocy (zazwyczaj MOSFET lub IGBT), dbając o zachowanie odpowiedniego czasu martwego (dead-time), co zapobiega zjawisku przewodzenia skrośnego (shoot-through). W dokumentacjach producentów (np. Fairchild, STMicroelectronics) układ ten jest opisywany jako kontroler o wysokiej częstotliwości pracy, zdolny do obsługi szerokiego zakresu napięć zasilania. Zgodnie z notami katalogowymi, typowe napięcie zasilania VCC wynosi od 8V do 35V, przy czym należy zawsze weryfikować konkretną dokumentację serwisową danej spawarki, gdyż producenci często stosują własne ograniczenia w układach aplikacyjnych. Wewnętrzny oscylator układu pozwala na precyzyjne ustawienie częstotliwości przełączania za pomocą zewnętrznego rezystora (RT) i kondensatora (CT). Błędne wartości tych elementów lub ich degradacja termiczna mogą prowadzić do pracy poza założonym zakresem częstotliwości, co skutkuje przegrzewaniem się transformatora głównego lub tranzystorów mocy. Warto pamiętać, że KA3525A jest często traktowany jako bezpośredni zamiennik SG3525, jednak w precyzyjnych układach sterowania warto sprawdzić parametry czasowe narastania i opadania sygnału wyjściowego, które mogą minimalnie różnić się między producentami. Podczas pracy z tymi układami należy zachować szczególną ostrożność: pracujemy w obwodach, gdzie nawet po wyłączeniu zasilania, kondensatory elektrolityczne w sekcji pierwotnej mogą utrzymywać wysokie napięcie stałe (często przekraczające 300V DC). Zawsze przed dotknięciem płytki należy dokonać pomiaru napięcia na szynie DC po rozładowaniu przez odpowiedni rezystor rozładowczy.</p>
+
+    <figure>
+      <img src="/assets/blog/uklady-scalone-sg3525-i-ka3525a-w-spawarkach.jpg" width="1024" height="768" loading="lazy" alt="Diagnostyka układów scalonych SG3525 i KA3525A w spawarkach inwertorowych">
+      <figcaption>Weryfikacja sygnału sterującego na wyjściu układu PWM za pomocą oscyloskopu.
+        <span class="zrodlo">Fot. <a href="https://www.flickr.com/photos/17425845@N00/2672864543" target="_blank" rel="noopener nofollow">oskay</a>, <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener nofollow">CC BY 2.0</a>, Openverse.</span>
+      </figcaption>
+    </figure>
+
+
+    <h2 id="objawy">2. Typowe objawy uszkodzenia kontrolera</h2>
+<p>Uszkodzenie układu SG3525/KA3525A w spawarkach inwertorowych objawia się zazwyczaj całkowitym brakiem napięcia wyjściowego na zaciskach spawalniczych, mimo poprawnej pracy układu pomocniczego (zasilacza 24V/12V). Pierwszym sygnałem, który powinien zwrócić uwagę serwisanta, jest brak charakterystycznego 'pisku' lub 'szumu' transformatora głównego podczas próby załączenia urządzenia. Jeśli zasilacz pomocniczy działa, a na bramkach tranzystorów mocy (IGBT/MOSFET) nie obserwujemy sygnału sterującego (przebiegu prostokątnego), istnieje duże prawdopodobieństwo uszkodzenia samego kontrolera lub obwodów jego otoczenia. Częstym objawem jest również zwarcie wewnętrzne w strukturze układu, co powoduje nadmierny pobór prądu z linii zasilającej 12V/15V, prowadząc do przegrzewania się stabilizatora napięcia na płycie sterującej. Warto sprawdzić temperaturę obudowy układu palcem lub kamerą termowizyjną – jeśli układ parzy w dotyku przy zasilaniu, jest to jednoznaczny dowód na jego wewnętrzne uszkodzenie. Innym, bardziej subtelnym objawem, jest zniekształcenie sygnału wyjściowego. Używając oscyloskopu, należy sprawdzić przebiegi na wyjściach 11 i 14. Prawidłowy sygnał powinien być czystym przebiegiem prostokątnym o odpowiedniej amplitudzie. Jeśli przebieg jest zaokrąglony, posiada 'szpilki' lub jest niestabilny, może to świadczyć o uszkodzeniu wewnętrznych stopni wyjściowych układu (tzw. totem-pole output). Należy pamiętać, że uszkodzenie SG3525 często jest skutkiem, a nie przyczyną awarii. Jeśli tranzystory mocy uległy przebiciu, wysokie napięcie mogło przedostać się przez transformatory sterujące (driver) bezpośrednio na wyjścia układu scalonego, niszcząc go w ułamku sekundy. Dlatego przed wymianą samego układu na nowy, bezwzględnie należy sprawdzić stan tranzystorów mocy, diod zabezpieczających w obwodach bramek oraz samych transformatorów sterujących. Wymiana układu bez usunięcia przyczyny pierwotnej (np. zwarcia w stopniu mocy) niemal zawsze kończy się natychmiastowym uszkodzeniem nowego elementu.</p>
+
+    <h2 id="pomiary">3. Procedura pomiarowa i weryfikacja napięć</h2>
+<p>Diagnostyka układu SG3525/KA3525A wymaga systematycznego podejścia. Poniższa tabela przedstawia kluczowe punkty pomiarowe, które należy zweryfikować w pierwszej kolejności. Pamiętaj, że podane wartości są orientacyjne i zawsze należy je odnieść do dokumentacji serwisowej konkretnego urządzenia. Pomiary wykonujemy względem masy układu (Pin 12). <table><thead><tr><th>Pin</th><th>Funkcja</th><th>Wartość orientacyjna</th></tr></thead><tbody><tr><td>15</td><td>VCC (Zasilanie)</td><td>12V - 15V DC</td></tr><tr><td>16</td><td>VREF (Napięcie odniesienia)</td><td>5.0V - 5.1V DC</td></tr><tr><td>13</td><td>VC (Kolektor wyjścia)</td><td>12V - 15V DC</td></tr><tr><td>11/14</td><td>Wyjścia PWM</td><td>Przebieg prostokątny</td></tr></tbody></table> Procedura diagnostyczna powinna przebiegać w następującej kolejności: 1. Sprawdzenie napięcia zasilania na pinie 15. Jeśli napięcie jest niższe niż 8V, układ nie wystartuje (zabezpieczenie UVLO - Under Voltage Lock Out). 2. Weryfikacja napięcia odniesienia na pinie 16. Jeśli wynosi ono 0V lub jest znacznie odbiegające od 5V, układ jest uszkodzony lub przeciążony. 3. Sprawdzenie sygnału na pinie 8 (Soft Start). Napięcie powinno powoli narastać po włączeniu zasilania. Jeśli pozostaje na poziomie 0V, układ może być w stanie ciągłego resetu. 4. Pomiar oscyloskopem sygnałów na pinach 11 i 14. Jeśli zasilanie i VREF są poprawne, a na wyjściach brak sygnału, układ jest uszkodzony. Podczas pomiarów należy zachować szczególną ostrożność, aby nie zewrzeć sondą oscyloskopu sąsiednich nóżek układu, co może doprowadzić do nieodwracalnego uszkodzenia ścieżek na płytce drukowanej. W przypadku braku oscyloskopu, diagnostyka jest znacznie utrudniona i ogranicza się jedynie do pomiarów statycznych napięć stałych, co nie zawsze pozwala na wykrycie uszkodzeń wewnątrz struktury układu. Jeśli podejrzewasz usterkę, a nie posiadasz odpowiedniego sprzętu pomiarowego, zapraszamy do kontaktu z naszym serwisem w Domosławiu.</p>
+
+    <h2 id="bezpieczenstwo">4. Zasady BHP przy naprawie elektroniki spawalniczej</h2>
+<p>Praca przy układach sterowania spawarek inwertorowych wiąże się z ryzykiem porażenia prądem elektrycznym oraz uszkodzenia sprzętu przez wyładowania elektrostatyczne (ESD). Układ SG3525/KA3525A jest wrażliwy na ładunki elektrostatyczne, dlatego podczas jego wymiany należy stosować opaskę antystatyczną oraz matę ESD. Największym zagrożeniem pozostaje jednak sekcja mocy. Kondensatory elektrolityczne w obwodzie pośrednim (DC bus) mogą gromadzić energię wystarczającą do wywołania groźnego łuku elektrycznego nawet po odłączeniu urządzenia od sieci 230V. Zawsze po wyłączeniu spawarki należy odczekać minimum 5-10 minut, a następnie zweryfikować miernikiem napięcie na głównych kondensatorach. W przypadku spawarek z aktywnym układem PFC, napięcie to może utrzymywać się znacznie dłużej. Nigdy nie wykonuj pomiarów 'pod napięciem' bez wyraźnej potrzeby i odpowiedniego zabezpieczenia. Jeśli musisz dokonać pomiarów oscyloskopowych w trakcie pracy urządzenia, upewnij się, że oscyloskop jest odizolowany od sieci (np. poprzez transformator separacyjny) lub używaj sond różnicowych. Podłączanie masy oscyloskopu do potencjału innego niż masa układu sterowania (często połączona z masą wyjściową spawarki) może doprowadzić do zwarcia i zniszczenia zarówno spawarki, jak i oscyloskopu. Pamiętaj, że kody błędów wyświetlane na panelu spawarki często są wynikiem zadziałania zabezpieczeń (np. termicznych lub nadprądowych). Kasowanie tych błędów bez usunięcia przyczyny (np. uszkodzony wentylator, zabrudzone radiatory, zwarcie w przewodach spawalniczych) prowadzi do powtarzających się awarii i może trwale uszkodzić elektronikę sterującą. W warsztacie F.W. DRUCIK kładziemy duży nacisk na bezpieczeństwo – jeśli nie masz pewności co do procedury, nie ryzykuj zdrowia i sprzętu.</p>
+
+    <h2 id="serwis">5. Działania warsztatowe i wsparcie techniczne</h2>
+<p>W warsztacie F.W. DRUCIK specjalizujemy się w diagnostyce i naprawie zaawansowanej elektroniki spawalniczej. Jeśli po wykonaniu wstępnych pomiarów napięć zasilania i VREF stwierdzisz, że układ SG3525/KA3525A nie generuje sygnałów sterujących, konieczna jest jego wymiana. W naszym serwisie stosujemy wyłącznie sprawdzone komponenty, dbając o zachowanie oryginalnych parametrów czasowych układu. Proces naprawy obejmuje nie tylko wymianę samego układu, ale przede wszystkim weryfikację całego toru sterowania bramkami (driverów). Często zdarza się, że uszkodzony układ scalony pociąga za sobą awarię tranzystorów sterujących (np. typu BC807/BC817 lub dedykowanych driverów push-pull). Po wymianie komponentów zawsze przeprowadzamy testy pod obciążeniem, monitorując przebiegi na bramkach tranzystorów mocy przy użyciu oscyloskopu. Dzięki temu mamy pewność, że sygnał jest poprawny i nie występuje zjawisko przewodzenia skrośnego. Jeśli Twoja spawarka przestała pracować, a diagnostyka układu PWM przekracza Twoje możliwości techniczne lub nie posiadasz odpowiedniego zaplecza pomiarowego, zapraszamy do skorzystania z naszych usług. Oferujemy profesjonalną diagnostykę i naprawę płyt głównych spawarek inwertorowych. Nasz warsztat mieści się pod adresem: Domosław 13A, 06-120 Winnica. Możesz się z nami skontaktować telefonicznie pod numerem 601 726 924 lub mailowo: fwdrucik@gmail.com. Więcej informacji o zakresie naszych prac znajdziesz na stronie <a href="/uslugi/elektromechanika/">elektromechanika</a>. Pamiętaj, że każda naprawa elektroniki wymaga precyzji i wiedzy – nie warto ryzykować uszkodzenia droższych podzespołów przez nieumiejętne lutowanie czy błędną diagnozę. Zapraszamy do kontaktu w godzinach pracy: Pon-Pt 8-17, Sob 9-13.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Czy KA3525A można zawsze zamienić na SG3525?</summary>
+        <p>W większości przypadków są to układy kompatybilne pod względem wyprowadzeń i funkcji. Należy jednak sprawdzić noty katalogowe obu producentów, aby upewnić się, że parametry czasowe i zakresy napięć są identyczne dla konkretnej aplikacji.</p>
+      </details>
+      <details>
+        <summary>Jakie napięcie powinno być na pinie 16 układu SG3525?</summary>
+        <p>Prawidłowe napięcie odniesienia (VREF) na pinie 16 powinno wynosić około 5.0V do 5.1V DC. Jeśli wartość ta jest znacznie niższa lub wynosi 0V, układ jest uszkodzony lub występuje zwarcie w obwodzie.</p>
+      </details>
+      <details>
+        <summary>Dlaczego po wymianie układu SG3525 spawarka nadal nie działa?</summary>
+        <p>Prawdopodobnie przyczyna awarii leży głębiej, na przykład w uszkodzonych tranzystorach mocy lub driverach bramek. Wymiana samego układu scalonego bez sprawdzenia elementów wykonawczych zazwyczaj kończy się ponownym uszkodzeniem nowego elementu.</p>
+      </details>
+      <details>
+        <summary>Czy do diagnostyki układu PWM wystarczy multimetr?</summary>
+        <p>Multimetr pozwala jedynie na sprawdzenie napięć stałych, takich jak zasilanie czy VREF. Do pełnej diagnostyki pracy układu, w tym sprawdzenia przebiegu prostokątnego na wyjściach, niezbędny jest oscyloskop.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

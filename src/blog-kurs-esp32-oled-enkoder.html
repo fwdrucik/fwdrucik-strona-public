@@ -1,0 +1,157 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Kurs ESP32 część 7: Wyświetlacz OLED i menu z enkoderem",
+  "description": "Dowiedz się, jak zintegrować wyświetlacz OLED z mikrokontrolerem ESP32 i obsługiwać menu za pomocą enkodera obrotowego w projektach automatyki.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-09-15",
+  "dateModified": "2026-09-15",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/kurs-esp32-oled-enkoder/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-blue">Elektronika i magistrale</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 6 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 15.09.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Kurs ESP32 część 7: Wyświetlacz OLED i menu z enkoderem</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Zbuduj menu ESP32 z wyświetlaczem OLED I2C i enkoderem obrotowym. To siódma część kursu.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#magistrala-i2c">Komunikacja I2C i parametry fizyczne</a></li>
+      <li><a href="#enkoder-przerwania">Obsługa enkodera obrotowego przez przerwania</a></li>
+      <li><a href="#struktura-menu">Implementacja struktury menu w pamięci</a></li>
+      <li><a href="#tabela-parametrow">Tabela parametrów i procedur diagnostycznych</a></li>
+      <li><a href="#warsztat-praktyka">Zastosowanie w warsztacie i wsparcie techniczne</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="magistrala-i2c">1. Komunikacja I2C i parametry fizyczne</h2>
+<p>SSD1306 komunikuje się przez I2C. Typowe piny ESP32 to GPIO21 SDA i GPIO22 SCL. Standard-mode obsługuje do 100 kbit/s, Fast-mode do 400 kbit/s. Przy przewodach ponad 20 cm sprawdź pull-upy: zwykle 4.7 kΩ, czasem 2.2 kΩ przy większych zakłóceniach. Zbyt duża rezystancja zaokrągla zbocza i powoduje błędy ACK/NACK.</p><p>Sprawdź napięcie modułu: zwykle 3.3V; 5V bez właściwej konwersji może go uszkodzić. Skontroluj lutowanie i adres skanerem I2C, zwykle 0x3C lub 0x3D. Przy awarii zmierz VCC–GND, przebiegi SDA/SCL, ciągłość połączeń i pull-upy. Przed zmianą połączeń i pomiarami rezystancji odłącz zasilanie.</p>
+
+    <figure>
+      <img src="/assets/blog/kurs-esp32-oled-enkoder.jpg" width="1024" height="608" loading="lazy" alt="Kurs ESP32 część 7: Wyświetlacz OLED i menu z enkoderem">
+      <figcaption>Wyświetlacz OLED podłączony do płytki rozwojowej ESP32 za pomocą przewodów typu jumper.
+        <span class="zrodlo">Fot. <a href="https://www.flickr.com/photos/32985045@N08/3863903197" target="_blank" rel="noopener nofollow">LGEPR</a>, <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener nofollow">CC BY 2.0</a>, Openverse.</span>
+      </figcaption>
+    </figure>
+
+
+    <h2 id="enkoder-przerwania">2. Obsługa enkodera obrotowego przez przerwania</h2>
+<p>KY-040 daje sygnały A/B przesunięte o 90 stopni. Zbyt wolny polling gubi impulsy; można użyć ISR na zboczu A i odczytywać B. Relacja stanów A/B określa kierunek według przyjętego okablowania.</p><p>Drgania styków wymagają debounce, orientacyjnie 5–10 ms według komponentu. Za krótki czas mnoży kroki, za długi gubi szybki obrót. Przycisk SW też wymaga filtracji; pomocny bywa kondensator 100 nF równolegle do styków.</p><p>Odseparuj galwanicznie sygnały od obwodów wysokiego napięcia. Transoptory chronią przed przepięciami długich linii. Podczas testów używaj zasilacza z ograniczeniem prądu.</p>
+
+    <h2 id="struktura-menu">3. Implementacja struktury menu w pamięci</h2>
+<p>Menu można opisać tablicą struktur C++: nazwa, funkcja i relacje między poziomami. Kontroluj RAM: przy 520 KB SRAM bufor OLED 128x64, 1 bit/piksel zajmuje 1024 bajty. Stałe napisy przechowuj we Flash, np. PROGMEM.</p><p>Dane zmieniane w ISR oznacz odpowiednio, np. volatile, i zadbaj o bezpieczny dostęp. Odświeżaj ekran po zmianie stanu, zamiast stale go czyścić — ograniczysz migotanie. Do diagnostyki użyj UART 115200 bodów. Zmiany programu wymagają kompilacji i wgrania; wcześniej przetestuj logikę, np. w symulatorze.</p>
+
+    <h2 id="tabela-parametrow">4. Tabela parametrów i procedur diagnostycznych</h2>
+<h3>Tabela parametrów i procedur diagnostycznych</h3>
+
+<p>Tabela podaje orientacyjne parametry. Potwierdź je w dokumentacji swoich podzespołów.</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Parametr</th>
+            <th>Wartość/Zakres</th>
+            <th>Uwagi</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Napięcie zasilania</td>
+            <td>3.3V ±0.15V DC</td>
+            <td>Wymagana stabilizacja dla stabilnej pracy OLED</td>
+        </tr>
+        <tr>
+            <td>Magistrala I2C</td>
+            <td>100-400 kHz</td>
+            <td>Zależne od długości przewodów (max 20-30 cm)</td>
+        </tr>
+        <tr>
+            <td>Rezystancja pull-up</td>
+            <td>2.2k - 4.7k Ω</td>
+            <td>Wymagane dla linii SDA/SCL przy braku wbudowanych</td>
+        </tr>
+        <tr>
+            <td>Czas debouncingu</td>
+            <td>5 - 10 ms</td>
+            <td>Wartość orientacyjna dla enkodera KY-040</td>
+        </tr>
+        <tr>
+            <td>Prędkość UART</td>
+            <td>115200 bps</td>
+            <td>Standardowa dla debugowania w Serial Monitor</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Przy problemach sprawdzaj układ w tej kolejności:</p>
+<ol>
+    <li><strong>Zasilanie:</strong> Zmierz multimetrem napięcie na pinach 3V3 i GND. Wartość poniżej 3.1V może powodować migotanie wyświetlacza OLED.</li>
+    <li><strong>Skanowanie I2C:</strong> Uruchom skaner magistrali. Brak wykrycia adresu (zazwyczaj 0x3C lub 0x3D) oznacza błąd połączenia lub uszkodzenie modułu.</li>
+    <li><strong>Sygnały logiczne:</strong> Sprawdź oscyloskopem stan linii SDA/SCL. Brak "pływania" sygnału (stałe 0V lub 3.3V) sugeruje zwarcie lub brak rezystorów pull-up.</li>
+    <li><strong>Konfiguracja przerwań:</strong> Zweryfikuj w kodzie, czy piny enkodera obsługują przerwania (GPIO 34-39 nie posiadają wbudowanych pull-upów).</li>
+</ol>
+
+<p><strong>Typowe błędy i ich objawy:</strong></p>
+<ul>
+    <li><em>Brak reakcji menu:</em> Zbyt długi czas przetwarzania wewnątrz ISR (Interrupt Service Routine). Pamiętaj: w przerwaniu ustawiaj tylko flagi, logikę menu przetwarzaj w <code>loop()</code>.</li>
+    <li><em>"Skaczące" wartości enkodera:</em> Brak lub zbyt krótki debouncing programowy. Objawia się chaotycznym przeskakiwaniem pozycji w menu przy jednym obrocie.</li>
+    <li><em>Zawieszenie systemu:</em> Użycie funkcji <code>delay()</code> wewnątrz przerwania. Jest to niedopuszczalne, gdyż blokuje system i prowadzi do <em>stack overflow</em>.</li>
+</ul>
+
+    <h2 id="warsztat-praktyka">5. Zastosowanie w warsztacie i wsparcie techniczne</h2>
+<p>Pomagamy łączyć ESP32 z układami maszyn: <a href="/uslugi/elektromechanika/">elektromechanika</a> i <a href="/uslugi/maszyny-cnc/">maszyny CNC</a>. Modyfikacje muszą odpowiadać DTR; błędne podłączenie grozi uszkodzeniem PLC i I/O.</p><p>Przed wizytą zadzwoń: 601 726 924, pon.–pt. 8–17, sob. 9–13. Warsztat: Domosław 13A, 06-120 Winnica; <a href="/kontakt/">kontakt</a>. Prace przy sieci wymagają odpowiednich uprawnień. Przed ingerencją odłącz zasilanie i rozładuj kondensatory.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Dlaczego wyświetlacz OLED migocze podczas zmiany menu?</summary>
+        <p>Nie czyść całego ekranu w każdej pętli. Odświeżaj zmienione elementy po zmianie stanu.</p>
+      </details>
+      <details>
+        <summary>Jakie napięcie jest bezpieczne dla wyświetlacza SSD1306?</summary>
+        <p>Sprawdź moduł: wiele OLED SSD1306 pracuje przy 3.3V. Podanie 5V na nieprzystosowany moduł grozi uszkodzeniem.</p>
+      </details>
+      <details>
+        <summary>Czy enkoder można podłączyć do dowolnych pinów ESP32?</summary>
+        <p>Tak, wiele GPIO może obsługiwać przerwania. Unikaj pinów zajętych przez Flash i sprawdź ograniczenia pinów strap przy starcie.</p>
+      </details>
+      <details>
+        <summary>Jak wyeliminować błędy zliczania impulsów enkodera?</summary>
+        <p>Sprawdź drgania styków i czas ISR. Zastosuj debounce lub właściwie dobraną filtrację kondensatorami.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

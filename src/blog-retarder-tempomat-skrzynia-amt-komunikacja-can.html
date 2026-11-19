@@ -1,0 +1,99 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Retarder, tempomat, skrzynia AMT: kto z kim rozmawia po CAN",
+  "description": "Analiza techniczna wymiany danych w magistrali CAN między retarderem, tempomatem a skrzynią biegów AMT. Wskazówki diagnostyczne dla mechaników.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-06-30",
+  "dateModified": "2026-06-30",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/retarder-tempomat-skrzynia-amt-komunikacja-can/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-blue">Elektronika i magistrale</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 8 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 15.08.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Retarder, tempomat, skrzynia AMT: kto z kim rozmawia po CAN</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Retarder, tempomat i skrzynia AMT wymieniają dane przez CAN. Sprawdź, jak priorytety komunikatów wpływają na diagnostykę usterek.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#architektura">Architektura magistrali CAN w układzie napędowym</a></li>
+      <li><a href="#tempomat">Logika tempomatu i interakcja z retarderem</a></li>
+      <li><a href="#amt">Sterowanie skrzynią AMT a priorytety CAN</a></li>
+      <li><a href="#tabela">Parametry diagnostyczne magistrali</a></li>
+      <li><a href="#praktyka">Diagnostyka w warsztacie F.W. DRUCIK</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="architektura">1. Architektura magistrali CAN w układzie napędowym</h2>
+<p>CAN (ISO 11898) łączy ECU silnika, TCU skrzyni i retarder. Ramki mają priorytety: niższy identyfikator wygrywa arbitraż. Komunikaty momentu obrotowego i stanu retardera wymagają odpowiednio wysokiego priorytetu.</p><p>Sterownik skrzyni AMT (Automated Manual Transmission) pełni rolę nadrzędną w zarządzaniu przełożeniami, jednak w momencie aktywacji retardera, sterownik zwalniacza przejmuje kontrolę nad wymaganym momentem hamującym, wysyłając żądanie do TCU o rozłączenie sprzęgła lub zmianę biegu na wyższy, aby zwiększyć obroty silnika i wydajność chłodzenia cieczą.</p>
+
+    <figure>
+      <img src="/assets/blog/retarder-tempomat-skrzynia-amt-komunikacja-can.png" width="1280" height="1280" loading="lazy" alt="Retarder, tempomat, skrzynia AMT: kto z kim rozmawia po CAN">
+      <figcaption>Złącze diagnostyczne magistrali CAN w pojeździe ciężarowym podczas pomiaru oscyloskopowego.
+        <span class="zrodlo">Fot. <a href="https://commons.wikimedia.org/wiki/File:BUS_CONNECT.png" target="_blank" rel="noopener nofollow">Bus Connect</a>, licencja <a href="http://creativecommons.org/publicdomain/zero/1.0/deed.en" target="_blank" rel="noopener nofollow">CC0</a>, Wikimedia Commons.</span>
+      </figcaption>
+    </figure>
+
+
+    <h2 id="tempomat">2. Logika tempomatu i interakcja z retarderem</h2>
+<p>Tempomat aktywny (ACC) oraz tempomat przewidujący (Predictive Powertrain Control) nieustannie monitorują obciążenie silnika oraz prędkość obrotową wału wyjściowego skrzyni. Wymiana danych odbywa się w czasie rzeczywistym. Gdy tempomat wykryje przekroczenie zadanej prędkości na zjeździe, wysyła ramkę CAN do sterownika retardera z żądaniem aktywacji określonego stopnia hamowania.</p><p>Sygnały analogowe mają orientacyjnie 0–5V; sprawdź dokumentację modułu. CAN przesyła sygnał różnicowy CAN-High/CAN-Low. Przed ingerencją sprawdź terminację: około 60 Ohm między liniami, mierzone bez zasilania (ISO 11898).</p>
+
+    <h2 id="amt">3. Sterowanie skrzynią AMT a priorytety CAN</h2>
+<p>Skrzynia AMT interpretuje sygnały z retardera jako priorytetowe w sytuacjach awaryjnych. Jeśli sterownik retardera zgłosi błąd (np. przegrzanie lub zwarcie w cewce), TCU automatycznie ogranicza funkcje tempomatu, aby zapobiec niekontrolowanemu wzrostowi prędkości pojazdu. Diagnostyka takich przypadków wymaga analizy logów CAN w poszukiwaniu błędów typu 'Timeout' lub 'Invalid Data' w ramkach przesyłanych przez moduł retardera.</p><p><em>BHP:</em> Nigdy nie wykonuj pomiarów oscyloskopowych na magistrali CAN przy podłączonym prostowniku do akumulatorów. Skoki napięcia mogą trwale uszkodzić sterowniki (ECU/TCU). Zawsze używaj sond z odpowiednią izolacją.</p>
+
+    <h2 id="tabela">4. Parametry diagnostyczne magistrali</h2>
+<table><thead><tr><th>Parametr</th><th>Wartość orientacyjna</th><th>Uwagi</th></tr></thead><tbody><tr><td>Rezystancja magistrali</td><td>60 Ohm</td><td>Pomiar między CAN-H a CAN-L</td></tr><tr><td>Napięcie CAN-High</td><td>2.5V - 3.5V</td><td>Zależne od stanu magistrali</td></tr><tr><td>Napięcie CAN-Low</td><td>1.5V - 2.5V</td><td>Zależne od stanu magistrali</td></tr><tr><td>Prędkość transmisji</td><td>250 kbit/s</td><td>Standard dla układów napędowych</td></tr></tbody></table><p>Wszystkie powyższe wartości są orientacyjne. Dokładne dane serwisowe należy każdorazowo weryfikować w dokumentacji technicznej konkretnego pojazdu.</p>
+
+    <h2 id="praktyka">5. Diagnostyka w warsztacie F.W. DRUCIK</h2>
+<p>W przypadku problemów z komunikacją między retarderem a skrzynią biegów, nasza procedura diagnostyczna obejmuje przede wszystkim sprawdzenie ciągłości wiązek oraz czystości styków w złączach magistrali. Częstą przyczyną awarii jest korozja styków w złączach narażonych na warunki atmosferyczne.</p><p>Jeśli Twój pojazd wykazuje błędy magistrali lub nieprawidłowe działanie tempomatu, zapraszamy do kontaktu. Specjalizujemy się w zaawansowanej diagnostyce układów elektronicznych. Sprawdź naszą ofertę w sekcji <a href="/uslugi/elektromechanika/">elektromechanika</a>. W celu umówienia wizyty w naszym warsztacie w Domosławiu 13A, prosimy o kontakt przez stronę <a href="/kontakt/">kontakt</a>.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Dlaczego tempomat wyłącza się przy błędzie retardera?</summary>
+        <p>Systemy te są zintegrowane aby zapewnić bezpieczeństwa. Jeśli sterownik retardera zgłasza błąd, TCU ogranicza funkcje tempomatu, aby zapobiec utracie kontroli nad prędkością pojazdu na wzniesieniach.</p>
+      </details>
+      <details>
+        <summary>Jak sprawdzić rezystancję magistrali CAN?</summary>
+        <p>Pomiaru dokonuje się omomierzem między liniami CAN-High i CAN-Low przy wyłączonym zapłonie i odłączonym zasilaniu. Prawidłowa wartość dla większości systemów to 60 Ohm, co wynika z zastosowania dwóch rezystorów terminujących 120 Ohm połączonych równolegle.</p>
+      </details>
+      <details>
+        <summary>Czy mogę kasować błędy CAN bez usuwania przyczyny?</summary>
+        <p>Nie jest to zalecane. Kasowanie błędów bez naprawy usterki fizycznej, takiej jak przetarta wiązka lub uszkodzony czujnik, spowoduje natychmiastowy powrót błędu i może prowadzić do poważniejszych awarii sterowników.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

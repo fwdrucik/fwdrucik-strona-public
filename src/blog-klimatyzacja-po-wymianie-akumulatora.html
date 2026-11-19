@@ -1,0 +1,110 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Klimatyzacja nie działa po wymianie akumulatora: diagnostyka",
+  "description": "Sprawdź, dlaczego klimatyzacja przestaje działać po odłączeniu zasilania. Analiza techniczna przyczyn, procedury adaptacji i diagnostyka w F.W. DRUCIK.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-08-26",
+  "dateModified": "2026-08-26",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/klimatyzacja-po-wymianie-akumulatora/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-green">Klimatyzacja</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 6 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 26.08.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Klimatyzacja nie działa po wymianie akumulatora: diagnostyka</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Klimatyzacja nie działa po wymianie akumulatora? Sprawdź nastawy sterowników i kolejne kroki diagnostyki.</p>
+  </header>
+  <!-- FILM:start -->
+  <div class="toc-box" style="margin-bottom:28px;"><div class="toc-title">🎬 Zobacz na filmie</div><div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin-top:12px;"><div style="flex:0 1 240px;"><video controls preload="none" playsinline poster="/wideo/2026-10-20-klimatyzacja-po-wymianie-akumulatora.jpg" width="540" height="960" style="width:100%;max-width:320px;aspect-ratio:9/16;border-radius:12px;background:#000;display:block;margin:0 auto;"><source src="/wideo/2026-10-20-klimatyzacja-po-wymianie-akumulatora.mp4" type="video/mp4">Twoja przeglądarka nie odtwarza wideo.</video><p style="font-size:0.9rem;margin-top:8px;text-align:center;">Rolka · <a href="https://www.instagram.com/fwdrucik/reel/DeuSbDihzhf/" target="_blank" rel="noopener">Instagram</a></p></div></div><p style="font-size:0.88rem;margin-top:10px;">Więcej filmów z warsztatu: <a href="/filmy/">wszystkie filmy</a>.</p></div>
+  <!-- FILM:end -->
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#utrata-adaptacji">Utrata adaptacji klap nawiewu i nastawy podstawowe</a></li>
+      <li><a href="#magistrala-can">Problemy z komunikacją na magistrali CAN</a></li>
+      <li><a href="#zabezpieczenia-i-bezpieczniki">Zabezpieczenia elektryczne i stan instalacji</a></li>
+      <li><a href="#tabela-diagnostyczna">Procedura diagnostyczna krok po kroku</a></li>
+      <li><a href="#warsztat-kontakt">Wsparcie techniczne w F.W. DRUCIK</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="utrata-adaptacji">1. Utrata adaptacji klap nawiewu i nastawy podstawowe</h2>
+
+<p>Po zaniku zasilania HVAC może utracić nastawy krańcowe klap mieszalnika i obiegu zamkniętego. Skutkiem bywa błędny kierunek nawiewu lub blokada sprężarki. Odczyty potencjometrów zwykle mieszczą się w zakresie 0–5V.</p><p>Nastawy Basic Settings uruchamiane testerem przeprowadzają klapy między skrajnymi położeniami. Stukanie za deską może oznaczać nieudaną kalibrację. Najpierw odczytaj DTC i usuń przyczynę błędów: End stop not reached może wskazywać blokadę mechanizmu lub uszkodzenie potencjometru. Sama adaptacja nie naprawi takiej usterki.</p>
+
+
+    <figure>
+      <img src="/assets/blog/klimatyzacja-po-wymianie-akumulatora.jpg" width="1024" height="768" loading="lazy" alt="Klimatyzacja nie działa po wymianie akumulatora: diagnostyka">
+      <figcaption>Klema akumulatora i przewody zasilające, których stan ma kluczowe znaczenie dla stabilności napięcia w sterownikach pojazdu.
+        <span class="zrodlo">Fot. <a href="https://www.flickr.com/photos/78593866@N00/8480754316" target="_blank" rel="noopener nofollow">zombieite</a>, CC BY, Openverse.</span>
+      </figcaption>
+    </figure>
+
+    <h2 id="magistrala-can">2. Problemy z komunikacją na magistrali CAN</h2>
+
+<p>Zakłócenia napięcia przy odłączaniu lub podłączaniu akumulatora mogą zakłócić komunikację ECU–HVAC przez CAN (ISO 11898). Objawy to brak odpowiedzi HVAC lub zezwolenia AC Request. Sprawdź rezystancję CAN-High–CAN-Low: orientacyjnie 60 Ohm przy wyłączonym zapłonie i odłączonym zasilaniu, według instrukcji serwisowej. Odchylenie może oznaczać usterkę terminacji lub wiązki.</p><p>Sprawdź zasilanie HVAC, orientacyjnie 12.6V–14.4V, i napięcie za bezpiecznikiem. Sam wygląd bezpiecznika nie potwierdza sprawności. Jeśli instrukcja pojazdu dopuszcza reset przez odłączenie akumulatora na 10–15 minut, wcześniej zabezpiecz kody radia i dane konfiguracyjne — mogą zostać utracone.</p>
+
+    <h2 id="zabezpieczenia-i-bezpieczniki">3. Zabezpieczenia elektryczne i stan instalacji</h2>
+
+<p>Sprawdź styki i bezpieczniki kabiny oraz wysokoprądowe MIDI/MEGA zasilające HVAC. Dobierz prąd znamionowy według instrukcji skrzynki. Skontroluj masy przy akumulatorze: korozja powoduje spadki napięcia. Mierz je pod obciążeniem, na zakresie miliwoltów; spadek ponad 0.5V wymaga sprawdzenia połączenia.</p><p>Brak sygnału czujnika ciśnienia może blokować sprężarkę. Sygnał bywa analogowy 0.5V–4.5V lub cyfrowy, np. LIN — sprawdź dokumentację. Przy 0 bar lub nierealnym odczycie sprawdź wiązkę. Zachowaj ostrożność: czynnik pod ciśnieniem może spowodować odmrożenia.</p>
+
+    <h2 id="tabela-diagnostyczna">4. Procedura diagnostyczna krok po kroku</h2>
+<p>Poniższa tabela przedstawia sugerowaną kolejność działań przy diagnozie braku pracy klimatyzacji po wymianie akumulatora. Pamiętaj, że każda wartość jest orientacyjna i wymaga weryfikacji z dokumentacją serwisową konkretnego pojazdu.</p><table><thead><tr><th>Krok</th><th>Czynność</th><th>Wartość/Cel</th></tr></thead><tbody><tr><td>1</td><td>Odczyt błędów (DTC)</td><td>Identyfikacja kodów typu 'Communication loss' lub 'Basic settings'</td></tr><tr><td>2</td><td>Kontrola bezpieczników</td><td>Sprawdzenie ciągłości obwodu (rezystancja < 1 Ohm)</td></tr><tr><td>3</td><td>Pomiar napięcia</td><td>12.6V - 14.4V na zasilaniu sterownika HVAC</td></tr><tr><td>4</td><td>Adaptacja klap</td><td>Procedura 'Basic Settings' przez tester diagnostyczny</td></tr><tr><td>5</td><td>Test presostatu</td><td>Weryfikacja sygnału (np. 0.5V - 4.5V dla czujników analogowych)</td></tr></tbody></table><p>Jeśli po wykonaniu powyższych kroków klimatyzacja nadal nie działa, problem może leżeć w uszkodzeniu oprogramowania sterownika (tzw. 'soft corruption') lub fizycznym uszkodzeniu cewki sprzęgła sprężarki, co mogło zbiec się w czasie z wymianą akumulatora. W takim przypadku konieczne jest sprawdzenie rezystancji cewki sprzęgła (zazwyczaj 3-5 Ohm, sprawdź w danych serwisowych) oraz sprawdzenie, czy sterownik podaje napięcie na przekaźnik sprzęgła. Uwaga: nie zwieraj styków przekaźnika na stałe w celu sprawdzenia sprężarki, gdyż może to doprowadzić do uszkodzenia elektroniki sterującej lub zatarcia sprężarki przy braku czynnika.</p>
+
+    <h2 id="warsztat-kontakt">5. Wsparcie techniczne w F.W. DRUCIK</h2>
+
+<h3>Wsparcie techniczne w F.W. DRUCIK</h3><p>Jeśli samodzielna diagnostyka nie przyniosła rezultatu, zapraszamy do naszego warsztatu F.W. DRUCIK w Domosławiu. Specjalizujemy się w zaawansowanej diagnostyce elektromechanicznej, w tym w problemach z magistralami danych (CAN/LIN) i adaptacją sterowników po awariach zasilania. Często po odłączeniu akumulatora dochodzi do utraty nastaw podstawowych klap nawiewu lub zawieszenia się modułu HVAC.</p><p>W naszym serwisie proces diagnostyczny przebiega według ściśle określonej procedury:</p><ol><li><strong>Odczyt kodów błędów:</strong> Analiza pamięci usterek sterownika klimatyzacji (np. błąd komunikacji z czujnikiem ciśnienia).</li><li><strong>Weryfikacja parametrów rzeczywistych:</strong> Sprawdzenie sygnału z czujnika ciśnienia czynnika chłodniczego. Prawidłowa wartość spoczynkowa przy wyłączonej klimatyzacji (zależna od temperatury otoczenia) powinna wynosić ok. <strong>4-6 bar</strong>.</li><li><strong>Test elementów wykonawczych:</strong> Wymuszenie pracy sprężarki za pomocą testera diagnostycznego.</li><li><strong>Pomiary elektryczne:</strong> Sprawdzenie napięcia na wtyczce zaworu sterującego sprężarką (zazwyczaj sygnał PWM).</li></ol><p>Typowe błędy, z którymi się spotykamy, to:</p><ul><li><strong>Błąd adaptacji klap:</strong> Objawia się brakiem zmiany temperatury mimo ustawienia panelu na "LO".</li><li><strong>Brak sygnału z czujnika ciśnienia:</strong> Często spowodowany skokiem napięcia przy podłączaniu akumulatora, co skutkuje zablokowaniem sprężarki przez sterownik (wartość <code>0 bar</code> w parametrach).</li><li><strong>Utrata kodowania modułu:</strong> Wymaga ponownej konfiguracji sterownika pod konkretne wyposażenie pojazdu.</li></ul><p>Warto pamiętać, że kasowanie błędów bez usunięcia przyczyny źródłowej jest działaniem doraźnym. Posiadamy zaplecze do weryfikacji sygnałów sterujących i naprawy wiązek. Zapraszamy do zapoznania się z naszą ofertą na stronie <a href="/uslugi/elektromechanika/">elektromechanika</a> oraz <a href="/uslugi/klimatyzacja-samochodowa/">klimatyzacja samochodowa</a>. W celu umówienia wizyty prosimy o kontakt pod numerem <strong>601 726 924</strong> lub poprzez formularz na stronie <a href="/kontakt/">kontakt</a>. Nasz adres: Domosław 13A, 06-120 Winnica. Pracujemy od poniedziałku do piątku w godzinach 8-17 oraz w soboty od 9-13.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Czy odłączenie akumulatora zawsze powoduje rozkodowanie klimatyzacji?</summary>
+        <p>Nie zawsze, ale w wielu nowoczesnych autach sterownik klimatyzacji wymaga ponownej adaptacji klap po utracie zasilania. Jest to procedura zabezpieczająca mechanizmy przed uszkodzeniem.</p>
+      </details>
+      <details>
+        <summary>Jakie napięcie powinno być na czujniku ciśnienia klimatyzacji?</summary>
+        <p>Większość czujników analogowych pracuje w zakresie od 0.5V do 4.5V. Dokładną wartość dla swojego modelu sprawdzisz w dokumentacji serwisowej producenta.</p>
+      </details>
+      <details>
+        <summary>Czy mogę sam zresetować błędy klimatyzacji?</summary>
+        <p>Możesz spróbować odczytać i skasować błędy testerem OBD-II, ale jeśli przyczyna usterki nie została usunięta, błąd powróci natychmiast. Pamiętaj, że kasowanie błędów bez naprawy to tylko maskowanie problemu.</p>
+      </details>
+      <details>
+        <summary>Dlaczego słyszę stukanie po wymianie akumulatora?</summary>
+        <p>Stukanie to prawdopodobnie dźwięk silników krokowych, które próbują odnaleźć swoje położenie krańcowe po utracie pamięci. Wymaga to przeprowadzenia procedury nastaw podstawowych.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

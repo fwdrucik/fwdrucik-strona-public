@@ -1,0 +1,91 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "FlexRay i Automotive Ethernet — ewolucja sieci pokładowych",
+  "description": "Analiza techniczna standardów FlexRay oraz Automotive Ethernet w nowoczesnych pojazdach. Dowiedz się, jak ewoluuje diagnostyka sieci pokładowych.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-08-10",
+  "dateModified": "2026-08-10",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/flexray-i-automotive-ethernet-sieci-pokladowe/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-blue">Elektronika i magistrale</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 8 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 10.08.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">FlexRay i Automotive Ethernet — ewolucja sieci pokładowych</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">FlexRay i Automotive Ethernet uzupełniają CAN w szybszych sieciach pojazdu. Omawiamy ich działanie i diagnostykę układów ADAS oraz infotainment.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#flexray-charakterystyka">FlexRay: determinizm i redundancja</a></li>
+      <li><a href="#automotive-ethernet">Automotive Ethernet: standard IEEE 802.3bw</a></li>
+      <li><a href="#porownanie-techniczne">Zestawienie parametrów transmisji</a></li>
+      <li><a href="#diagnostyka-wyzwania">Wyzwania diagnostyczne w warsztacie</a></li>
+      <li><a href="#praktyka-warsztatowa">Co z tym zrobić w F.W. DRUCIK?</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="flexray-charakterystyka">1. FlexRay: determinizm i redundancja</h2>
+<p>FlexRay to protokół komunikacyjny zaprojektowany do systemów typu <em>drive-by-wire</em>, gdzie kluczowe znaczenie ma determinizm czasowy. W przeciwieństwie do magistrali CAN, która opiera się na arbitrażu zdarzeń, FlexRay wykorzystuje podział na cykle komunikacyjne (statyczne i dynamiczne).</p><p>Kluczowe parametry techniczne (wartości orientacyjne, wymagają weryfikacji w dokumentacji producenta):</p><ul><li>Prędkość transmisji: do 10 Mbit/s na kanał (standard ISO 17458).</li><li>Topologia: magistrala, gwiazda lub hybrydowa.</li><li>Medium: skrętka ekranowana (STP).</li></ul><p><em>BHP:</em> Podczas pomiarów oscyloskopowych na magistrali FlexRay pamiętaj, że systemy te często pracują w trybie redundantnym (kanał A i B). Uszkodzenie ekranowania przewodu może prowadzić do błędów transmisji, które są trudne do wychwycenia prostym skanerem diagnostycznym.</p>
+
+    <h2 id="automotive-ethernet">2. Automotive Ethernet: standard IEEE 802.3bw</h2>
+<p>Automotive Ethernet (100BASE-T1) różni się od standardowego Ethernetu biurowego przede wszystkim fizyczną warstwą transmisji. Wykorzystuje pojedynczą, nieekranowaną skrętkę (UTP), co redukuje masę wiązek przewodów w pojeździe.</p><p>Główne różnice techniczne:</p><ul><li>Pasmo: 100 Mbit/s (standard IEEE 802.3bw).</li><li>Transmisja: pełny dupleks na jednej parze przewodów.</li><li>Złącza: dedykowane złącza MATE-AX lub podobne, zapewniające odpowiednią impedancję falową.</li></ul><p>Typowa impedancja linii wynosi 100 Ohm; potwierdź ją w dokumentacji wiązki. Przy naprawie zachowaj geometrię skręcenia żył, aby uniknąć odbić sygnału i utraty pakietów.</p>
+
+    <h2 id="porownanie-techniczne">3. Zestawienie parametrów transmisji</h2>
+<table><thead><tr><th>Cecha</th><th>CAN FD</th><th>FlexRay</th><th>Automotive Ethernet</th></tr></thead><tbody><tr><td>Przepustowość</td><td>do 5-8 Mbit/s</td><td>do 10 Mbit/s</td><td>100-1000 Mbit/s</td></tr><tr><td>Determinizm</td><td>Niski</td><td>Bardzo wysoki</td><td>Średni (zależny od protokołu)</td></tr><tr><td>Topologia</td><td>Magistrala</td><td>Gwiazda/Magistrala</td><td>Punkt-punkt/Switch</td></tr></tbody></table><p>Powyższe dane są wartościami orientacyjnymi. Dokładne parametry pracy sieci należy każdorazowo weryfikować w dokumentacji serwisowej konkretnego modelu pojazdu.</p>
+
+    <h2 id="diagnostyka-wyzwania">4. Wyzwania diagnostyczne w warsztacie</h2>
+<p>Do oceny transmisji Automotive Ethernet nie wystarczy multimetr. Potrzebna jest analiza pakietów i oscyloskop o odpowiednim paśmie (min. 100 MHz) z dekodowaniem protokołu.</p><p><em>Ostrzeżenie BHP:</em> Wiele systemów ADAS wykorzystujących te magistrale jest zasilanych z akumulatorów wysokonapięciowych (w autach hybrydowych i elektrycznych). Przed pomiarów na magistrali, upewnij się, że układ jest w stanie bezpiecznym (wyłączony zapłon, odłączone zasilanie HV zgodnie z procedurą producenta).</p>
+
+    <h2 id="praktyka-warsztatowa">5. Co z tym zrobić w F.W. DRUCIK?</h2>
+<p>W naszym warsztacie w Domosławiu 13A zajmujemy się diagnostyką zaawansowanych systemów elektroniki samochodowej. Jeśli Twój pojazd zgłasza błędy komunikacji w modułach Gateway, ADAS lub systemach multimedialnych, zapraszamy do kontaktu.</p><p>Oferujemy:</p><ul><li>Diagnostykę magistral danych (CAN, LIN, FlexRay).</li><li>Weryfikację ciągłości wiązek przewodów w standardzie Automotive Ethernet.</li><li>Naprawę modułów elektronicznych zgodnie z dokumentacją techniczną.</li></ul><p>Zapraszamy do zapoznania się z naszą ofertą na stronie <a href="/uslugi/elektromechanika/">elektromechanika</a>. W celu umówienia wizyty prosimy o kontakt pod numerem 601 726 924 lub poprzez formularz na stronie <a href="/kontakt/">kontakt</a>.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Czy zwykły skaner OBD-II obsłuży Automotive Ethernet?</summary>
+        <p>Standardowy skaner OBD-II nie obsługuje fizycznej warstwy Automotive Ethernet. Wymagany jest dedykowany interfejs typu DoIP (Diagnostics over IP) oraz odpowiednie oprogramowanie diagnostyczne.</p>
+      </details>
+      <details>
+        <summary>Czy mogę naprawić uszkodzoną skrętkę Ethernet w aucie poprzez lutowanie?</summary>
+        <p>Lutowanie zmienia impedancję falową przewodu i wprowadza zakłócenia, co w sieciach o wysokiej częstotliwości powoduje błędy transmisji. Zaleca się wymianę całego odcinka wiązki zgodnie ze specyfikacją producenta.</p>
+      </details>
+      <details>
+        <summary>Dlaczego FlexRay jest stosowany w układach kierowniczych?</summary>
+        <p>FlexRay zapewnia determinizm czasowy, co oznacza, że dane docierają do odbiornika w dokładnie określonym czasie. Jest to niezbędne dla bezpieczeństwa w systemach sterowania typu drive-by-wire.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

@@ -1,0 +1,157 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Kurs ESP32 część 6: Karta SD i rejestrator pomiarów",
+  "description": "Dowiedz się, jak zaimplementować obsługę kart SD w ESP32 do rejestracji danych pomiarowych. Poradnik techniczny dla elektroników i automatyków.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-09-07",
+  "dateModified": "2026-09-07",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/kurs-esp32-karta-sd-rejestrator-pomiarow/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-orange">Programowanie i kursy</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 6 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 07.09.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Kurs ESP32 część 6: Karta SD i rejestrator pomiarów</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Zapisuj pomiary z ESP32 na karcie SD. Wyjaśniamy obsługę SPI, wymagania napięciowe i budowę rejestratora.</p>
+  </header>
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#interfejs_spi">Standard komunikacji SPI w ESP32</a></li>
+      <li><a href="#system_plikow">System plików FAT32 i biblioteka SD</a></li>
+      <li><a href="#rejestracja_danych">Implementacja rejestratora pomiarów</a></li>
+      <li><a href="#tabela_parametrow">Zestawienie parametrów technicznych</a></li>
+      <li><a href="#praktyka_warsztatowa">Zastosowanie w warsztacie F.W. DRUCIK</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="interfejs_spi">1. Standard komunikacji SPI w ESP32</h2>
+<p>Kartę SD można obsługiwać przez synchroniczną magistralę SPI. W opisywanym układzie występują oznaczenia SPI0, SPI1 i SPI2 (VSPI); sprawdź mapowanie dla swojej wersji ESP32. GPIO matrix pozwala zmieniać piny, ale typowy zestaw to MOSI GPIO 23, MISO GPIO 19, SCK GPIO 18 i CS GPIO 5.</p><p>Przy zegarze około 40 MHz długie przewody mogą powodować błędy CRC — częstotliwość dobierz do karty i połączeń. Logika ESP32 i zasilanie karty SD mają 3.3V. Sprawdź kolejność inicjalizacji oraz pull-up CS. W adapterze dla 5V zweryfikuj stabilizator LDO i konwersję poziomów według dokumentacji; niewłaściwe napięcie grozi uszkodzeniem karty. Przed zmianą przewodów lub lutowaniem odłącz zasilanie.</p>
+
+    <h2 id="system_plikow">2. System plików FAT32 i biblioteka SD</h2>
+<p>W środowisku Arduino dla ESP32, obsługa kart SD realizowana jest przez bibliotekę <code>SD.h</code> lub <code>FS.h</code>. Standardem dla kart SD o pojemności do 32GB jest system plików FAT32. ESP32 natywnie wspiera ten format, co umożliwia łatwe odczytywanie danych na komputerze PC bez konieczności stosowania specjalistycznego oprogramowania. Kluczowym elementem jest proces montowania systemu plików (mount). W kodzie programu należy wywołać funkcję <code>SD.begin(CS_PIN)</code>, która inicjalizuje magistralę SPI i sprawdza poprawność partycji na karcie. Jeśli funkcja zwróci wartość <code>false</code>, oznacza to najczęściej problem z zasilaniem karty, błędne połączenie pinów lub nieprawidłowy format karty (np. exFAT, który nie jest wspierany przez standardową bibliotekę). Wartością orientacyjną dla prądu rozruchowego karty SD jest około 100-200 mA, dlatego stabilność zasilania 3.3V jest krytyczna. Podczas zapisu danych do pliku, należy pamiętać o zamykaniu pliku metodą <code>file.close()</code>. Pozwala to na poprawne zaktualizowanie metadanych w tablicy alokacji plików (FAT). Nagłe odłączenie zasilania w trakcie zapisu może prowadzić do uszkodzenia struktury systemu plików, co objawia się niemożnością odczytu karty. W celach diagnostycznych, jeśli system plików ulegnie uszkodzeniu, konieczne może być ponowne formatowanie karty przy użyciu narzędzia 'SD Memory Card Formatter' zgodnie z wytycznymi SD Association. Pamiętaj, że częsty zapis małych porcji danych (np. pojedynczych bajtów) powoduje szybkie zużycie komórek pamięci Flash karty SD. Dobrą praktyką inżynierską jest buforowanie danych w pamięci RAM ESP32 i zapisywanie ich w blokach o rozmiarze 512 bajtów lub wielokrotnościach, co jest zgodne z fizyczną strukturą sektora karty SD. Zawsze weryfikuj dostępną przestrzeń na karcie przed rozpoczęciem długotrwałej rejestracji, aby uniknąć nadpisania ważnych danych pomiarowych.</p>
+
+    <h2 id="rejestracja_danych">3. Implementacja rejestratora pomiarów</h2>
+<p>Budowa rejestratora danych (data logger) wymaga precyzyjnego zarządzania czasem. ESP32 posiada wbudowany zegar czasu rzeczywistego (RTC), jednak dla celów długoterminowych zaleca się stosowanie zewnętrznego modułu RTC (np. DS3231) komunikującego się przez I2C, co zapewnia wysoką dokładność (błąd rzędu 2 ppm w zakresie temperatur -40 do +85 stopni Celsjusza, zgodnie z notą katalogową układu). Dane pomiarowe powinny być zapisywane w formacie CSV (Comma Separated Values), co ułatwia późniejszą analizę w arkuszach kalkulacyjnych. Przykładowa struktura rekordu to: <code>Timestamp, Sensor_ID, Value, Unit</code>. Podczas implementacji pętli zapisu, należy uwzględnić obsługę błędów. Jeśli karta SD zostanie wyjęta podczas pracy urządzenia, program powinien wykryć ten stan i podjąć próbę ponownej inicjalizacji lub zasygnalizować błąd (np. za pomocą diody LED). Wartości pomiarowe z czujników analogowych (ADC) w ESP32 mają rozdzielczość 12-bitową (0-4095). Należy pamiętać, że charakterystyka ADC w ESP32 nie jest idealnie liniowa, szczególnie w pobliżu napięć skrajnych (0V i 3.3V). Zgodnie z dokumentacją producenta, dla uzyskania dokładnych pomiarów zaleca się stosowanie zewnętrznego napięcia odniesienia lub kalibrację programową. Typowym błędem jest brak filtracji sygnału wejściowego, co przy pracy w środowisku warsztatowym (zakłócenia elektromagnetyczne od silników, spawarek) prowadzi do dużego szumu na odczytach. Zastosowanie kondensatorów filtrujących (np. 100nF) oraz uśrednianie wyników (np. z 16 próbek) jest niezbędne dla wiarygodności danych. Pamiętaj o BHP: rejestratory pracujące w układach wysokiego napięcia muszą posiadać odpowiednią izolację galwaniczną między obwodem pomiarowym a mikrokontrolerem. Użycie transoptorów lub wzmacniaczy izolowanych jest wymagane, aby chronić sprzęt i operatora przed przebiciem napięcia na magistralę danych.</p>
+
+    <h2 id="tabela_parametrow">4. Zestawienie parametrów technicznych</h2>
+<h3>Zestawienie parametrów technicznych</h3>
+
+<p>Poniższa tabela przedstawia kluczowe parametry, które należy uwzględnić przy projektowaniu rejestratora opartego na ESP32 i kartach SD. Wartości te są orientacyjne i powinny być weryfikowane z dokumentacją techniczną konkretnych komponentów użytych w projekcie.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parametr</th>
+      <th>Wartość orientacyjna</th>
+      <th>Uwagi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Napięcie zasilania SD</td>
+      <td>3.3V DC</td>
+      <td>Wymagana stabilizacja</td>
+    </tr>
+    <tr>
+      <td>Interfejs komunikacji</td>
+      <td>SPI</td>
+      <td>Tryb 0 (CPOL=0, CPHA=0)</td>
+    </tr>
+    <tr>
+      <td>Rozdzielczość ADC ESP32</td>
+      <td>12-bit (0-4095)</td>
+      <td>Wymaga kalibracji</td>
+    </tr>
+    <tr>
+      <td>Prąd pracy karty SD</td>
+      <td>100-200 mA</td>
+      <td>Szczytowo przy zapisie</td>
+    </tr>
+    <tr>
+      <td>Max częstotliwość SPI</td>
+      <td>40 MHz</td>
+      <td>Zależna od jakości kabli</td>
+    </tr>
+    <tr>
+      <td>Format plików</td>
+      <td>FAT32</td>
+      <td>Zalecane dla kompatybilności</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Przy doborze komponentów sprawdź zakres temperatur pracy. Standardowe karty SD klasy konsumenckiej mogą nie pracować poprawnie w warunkach warsztatowych przy temperaturach poniżej 0°C lub powyżej 60°C. W zastosowaniach profesjonalnych należy stosować karty typu <strong>Industrial Grade</strong>, które posiadają wyższą odporność na cykle zapisu i trudne warunki środowiskowe. Zawsze sprawdzaj noty katalogowe pod kątem parametru <strong>TBW</strong> (Terabytes Written).</p>
+
+<p><strong>Kolejność czynności przy uruchamianiu rejestratora:</strong></p>
+<ol>
+  <li>Formatowanie karty SD do systemu plików FAT32.</li>
+  <li>Podłączenie modułu SD do pinów SPI (VSPI: MOSI-23, MISO-19, SCK-18, CS-5).</li>
+  <li>Inicjalizacja karty w kodzie (<code>SD.begin()</code>).</li>
+  <li>Otwarcie pliku w trybie dopisywania (<code>FILE_APPEND</code>).</li>
+  <li>Zapis danych i obowiązkowe zamknięcie pliku (<code>file.close()</code>) w celu uniknięcia utraty danych.</li>
+</ol>
+
+<p><strong>Typowe błędy i ich objawy:</strong></p>
+<ul>
+  <li><strong>Brak inicjalizacji karty:</strong> Często spowodowany zbyt długimi przewodami lub brakiem kondensatora 10-100µF przy zasilaniu modułu SD.</li>
+  <li><strong>Uszkodzenie systemu plików:</strong> Objawia się zawieszaniem programu podczas zapisu; wynika z odłączania zasilania w trakcie operacji na karcie.</li>
+  <li><strong>Błędy odczytu ADC:</strong> Niestabilne wartości pomiarowe wynikają z braku kondensatora filtrującego na wejściu analogowym lub braku wspólnej masy (GND) między czujnikiem a ESP32.</li>
+</ul>
+
+    <h2 id="praktyka_warsztatowa">5. Zastosowanie w warsztacie F.W. DRUCIK</h2>
+<p>W codziennej pracy warsztatu F.W. DRUCIK, rejestratory danych oparte na mikrokontrolerach ESP32 znajdują zastosowanie w diagnostyce maszyn i systemów sterowania. Pozwalają one na monitorowanie parametrów pracy silników, ciśnienia w układach pneumatycznych czy przebiegów napięć w instalacjach elektrycznych, co jest kluczowe przy diagnozowaniu usterek okresowych. Jeśli potrzebujesz wsparcia w zakresie integracji systemów pomiarowych, naprawy elektroniki sterującej lub programowania sterowników, zapraszamy do zapoznania się z naszą ofertą na stronie <a href="/uslugi/elektromechanika/">elektromechanika</a>. Nasz zespół posiada doświadczenie w diagnostyce układów sterowania i naprawach elektroniki przemysłowej. W przypadku problemów z automatyką lub koniecznością wdrożenia systemów monitoringu, prosimy o kontakt pod numerem 601 726 924 lub wizytę w naszym warsztacie w Domosławiu 13A. Pamiętaj, że każda modyfikacja w układach sterowania musi być przeprowadzona zgodnie z dokumentacją techniczno-ruchową (DTR) urządzenia. Nieprawidłowe podłączenie rejestratora do magistrali komunikacyjnej maszyny może zakłócić jej pracę i doprowadzić do awarii. Przed podłączeniem jakiegokolwiek urządzenia pomiarowego do pracującej maszyny, upewnij się, że posiadasz odpowiednie uprawnienia i schemat elektryczny urządzenia. Zapraszamy do kontaktu przez formularz na stronie <a href="/kontakt/">kontakt</a> w celu omówienia szczegółów zlecenia.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Dlaczego karta SD nie jest wykrywana przez ESP32?</summary>
+        <p>Najczęstszą przyczyną jest nieprawidłowe podłączenie pinów magistrali SPI lub niewystarczające zasilanie modułu karty. Sprawdź, czy napięcie 3.3V jest stabilne i czy pin CS jest poprawnie zdefiniowany w kodzie programu.</p>
+      </details>
+      <details>
+        <summary>Czy mogę użyć karty SD o pojemności 128GB?</summary>
+        <p>Standardowa biblioteka SD w środowisku Arduino dla ESP32 obsługuje system plików FAT32, który ma ograniczenia partycji. Karty o dużej pojemności często wymagają formatowania exFAT, co może powodować problemy z kompatybilnością w prostych projektach.</p>
+      </details>
+      <details>
+        <summary>Jak zabezpieczyć dane przed utratą przy zaniku zasilania?</summary>
+        <p>Buforuj dane w RAM i zamykaj plik po zapisie lub w ustalonych odstępach. W krytycznym rejestratorze rozważ superkondensator podtrzymujący zasilanie do zamknięcia pliku.</p>
+      </details>
+      <details>
+        <summary>Jakie są typowe objawy uszkodzenia karty SD?</summary>
+        <p>Objawy to brak inicjalizacji w kodzie, błędy zapisu (CRC error) lub niemożność odczytu plików na komputerze. Często przyczyną jest zużycie komórek pamięci Flash lub uszkodzenie systemu plików spowodowane nagłym odcięciem zasilania.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

@@ -1,0 +1,153 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Regeneracja alternatorów i rozruszników – kiedy opłaca się bardziej niż kupno nowego?",
+  "description": "Jak sprawdzić ładowanie, spadki napięcia i tętnienia oraz kiedy wybrać regenerację alternatora lub rozrusznika.",
+  "author": {"@type": "Organization", "name": "F.W. DRUCIK"},
+  "publisher": {"@type": "Organization", "name": "F.W. DRUCIK", "logo": {"@type": "ImageObject", "url": "https://fwdrucik.pl/assets/favicon.png"}},
+  "datePublished": "2026-08-07",
+  "dateModified": "2026-11-11",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/regeneracja-alternatorow-pultusk/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;">
+      <span class="badge badge-blue">Elektromechanika</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 7 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 07.08.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Regeneracja alternatorów i rozruszników – kiedy się opłaca?</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">Przed wymianą alternatora sprawdź przewody, sprzęgło i sterowanie. Omawiamy pomiary, regenerację i porównanie kosztów.</p>
+  </header>
+
+  <!-- Spis Treści (TOC) -->
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis Treści Artykułu</div>
+    <ol class="toc-list">
+      <li><a href="#objawy">Objawy awarii alternatora i rozrusznika</a></li>
+      <li><a href="#pomiary">Pomiary, które rozstrzygają przed demontażem</a></li>
+      <li><a href="#sterowane">Alternatory sterowane przez komputer — inne reguły gry</a></li>
+      <li><a href="#sprzeglo">Sprzęgło koła pasowego — usterka udająca alternator</a></li>
+      <li><a href="#proces">Jak wygląda profesjonalny proces regeneracji?</a></li>
+      <li><a href="#rozrusznik">Rozrusznik: co się w nim zużywa</a></li>
+      <li><a href="#oszczednosc">Regeneracja vs nowy zamiennik – porównanie kosztów</a></li>
+      <li><a href="#kontakt">Kiedy zgłosić usterkę instalacji pojazdu?</a></li>
+    </ol>
+  </div>
+
+  <!-- Pełna Treść (Odblokowywana po zalogowaniu w script.js) -->
+  <div id="blog-full-content" class="article-body">
+    <h2 id="objawy">1. Objawy awarii alternatora i rozrusznika</h2>
+    <p>Alternator odpowiada za zasilanie instalacji elektrycznej pojazdu oraz ładowanie akumulatora podczas pracy silnika. Z kolei rozrusznik to silnik prądu stałego, który ma za zadanie obrócić wał korbowy w momencie rozruchu.</p>
+    <p>Najczęstsze sygnały świadczące o usterce alternatora to:</p>
+    <ul>
+      <li><strong>Czerwona kontrolka akumulatora</strong> na desce rozdzielczej — brak ładowania albo napięcie poza zakresem.</li>
+      <li><strong>Szum, wycie lub gwizd</strong> z okolic paska, narastające z obrotami — zwykle łożyska.</li>
+      <li><strong>Przygasanie świateł</strong> przy załączeniu dmuchawy, ogrzewania szyby czy świateł drogowych.</li>
+      <li><strong>Akumulator rozładowany po nocy</strong> — może być zwarta dioda prostownicza, przez którą prąd wraca z akumulatora do uzwojenia.</li>
+      <li><strong>Zapach elektrolitu i gorący akumulator</strong> — to najczęściej uszkodzony regulator napięcia i przeładowanie. Objaw pilny: przeładowanie niszczy akumulator w kilka dni i potrafi uszkodzić moduły elektroniczne.</li>
+      <li><strong>Trzeszczenie w radiu</strong> zmieniające ton z obrotami silnika — typowy ślad uszkodzonej diody.</li>
+    </ul>
+    <p>Rozrusznik zgłasza się prościej: pojedyncze „klik" bez obrotu, wolne i ciężkie kręcenie mimo dobrego akumulatora, albo obracanie się rozrusznika bez zazębienia z kołem zamachowym (charakterystyczny wysoki dźwięk wirowania).</p>
+
+    <h2 id="pomiary">2. Pomiary, które rozstrzygają przed demontażem</h2>
+    <p>Przed demontażem sprawdzamy akumulator, napęd paskowy i połączenia. Napięcia oceniamy według danych pojazdu, przy obrotach i obciążeniu wskazanych przez producenta.</p>
+    <table>
+      <thead>
+        <tr><th>Pomiar</th><th>Punkt odniesienia</th><th>Co sprawdzić dalej</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Napięcie spoczynkowe akumulatora</td><td>Dane dla typu akumulatora i temperatury, po zaniku ładunku powierzchniowego</td><td>Niski wynik wymaga naładowania i powtórzenia testu.</td></tr>
+        <tr><td>Napięcie i prąd przy pracującym silniku</td><td>Warunki testu producenta. W układach sterowanych porównaj napięcie zmierzone z żądanym.</td><td>Sprawdź napęd paskowy, sterowanie, przewody i wydajność pod obciążeniem.</td></tr>
+        <tr><td>Tętnienia napięcia, pomiar AC na alternatorze</td><td>Fluke 88 V podaje mniej niż 0,5 V AC w swojej procedurze. Pierwszeństwo ma specyfikacja pojazdu.</td><td>Podwyższony wynik sprawdź oscyloskopem. Nieregularność może wskazywać na prostownik lub uzwojenie stojana.</td></tr>
+        <tr><td>Spadek napięcia podczas ładowania</td><td>Zmierz oddzielnie tor B+ i tor masy, przy obciążonym alternatorze.</td><td>Podwyższony spadek pomaga wskazać przewód lub połączenie o zbyt dużej rezystancji.</td></tr>
+        <tr><td>Napięcie przy rozruchu</td><td>Według procedury dla pojazdu, z uwzględnieniem temperatury i stanu naładowania.</td><td>Porównaj odczyt na akumulatorze z odczytem na rozruszniku. Zmierz spadki w torach zasilania i masy.</td></tr>
+      </tbody>
+    </table>
+    <p>Multimetr pokazuje poziom składowej zmiennej. Oscyloskop pozwala zobaczyć kształt przebiegu i powtarzające się przerwy. Próg z multimetru nie jest limitem napięcia międzyszczytowego z oscyloskopu.</p>
+
+    <p>Procedury pomiarowe opisują <a href="https://assets.denso-am.eu/production/attachments/Starter-Alternator-Manual-English.pdf">podręcznik alternatorów i rozruszników DENSO</a> oraz <a href="https://assets.fluke.com/manuals/88v_____umeng0000.pdf">instrukcja Fluke 88 V</a>.</p>
+
+    <h2 id="sterowane">3. Alternatory sterowane przez komputer — inne reguły gry</h2>
+    <p>W pojazdach z systemem zarządzania energią alternator nie pracuje już „na sztywno" na 14,4 V. Sterownik silnika komunikuje się z regulatorem po magistrali <strong>LIN</strong>, a czujnik na klemie akumulatora mierzy prąd, napięcie i temperaturę. Napięcie ładowania zmienia się celowo: przy hamowaniu rośnie nawet do 15 V, żeby odzyskać energię, a przy równomiernej jeździe potrafi spaść do 12,5 V, by odciążyć silnik.</p>
+    <p>Wniosek praktyczny jest istotny: <strong>samo napięcie zmierzone woltomierzem niczego tu nie dowodzi</strong>. Alternator, który „ładuje tylko 12,8 V", może być całkowicie sprawny i wykonywać polecenie sterownika. Diagnostyka wymaga odczytu parametrów bieżących ze sterownika oraz sprawdzenia czujnika akumulatora — bardzo często to właśnie ten czujnik albo jego przewód jest źródłem objawów.</p>
+    <p>Drugi typowy błąd w takich pojazdach to zamontowanie akumulatora innego typu lub pojemności bez zarejestrowania go w sterowniku. Strategia ładowania pozostaje wtedy dopasowana do poprzedniego akumulatora, a nowy albo się nie doładowuje, albo pracuje w ciągłym przeładowaniu.</p>
+
+    <h2 id="sprzeglo">4. Sprzęgło koła pasowego — usterka udająca alternator</h2>
+    <p>Większość nowszych alternatorów ma koło pasowe ze sprzęgłem jednokierunkowym lub z tłumikiem drgań skrętnych. Zadaniem tego elementu jest odsprzęgnięcie masy wirnika przy gwałtownych zmianach obrotów silnika, dzięki czemu pasek nie jest szarpany.</p>
+    <p>Gdy sprzęgło się zużyje, objawy mylnie wskazują na alternator albo napinacz:</p>
+    <ul>
+      <li>pisk lub „warkot" paska przy zdejmowaniu gazu i przy gaszeniu silnika,</li>
+      <li>drgania układu paskowego na wolnych obrotach,</li>
+      <li>okresowe spadki napięcia ładowania przy zmianach obrotów.</li>
+    </ul>
+    <p>Sprawdzenie jest szybkie: przy zdjętym pasku koło powinno obracać się swobodnie w jedną stronę, a w drugą zabierać wirnik bez luzu i bez wyczuwalnego przeskoku. Wymiana samego sprzęgła jest kilkukrotnie tańsza niż wymiana alternatora, na którą wielu kierowców trafia po nieudanej diagnozie.</p>
+
+    <h2 id="proces">5. Jak wygląda profesjonalny proces regeneracji?</h2>
+    <p>Wyspecjalizowany zakład po demontażu ocenia stan mechaniczny i elektryczny podzespołu. Zakres regeneracji zależy od wyników oględzin i pomiarów.</p>
+    <ol>
+      <li>Oczyszczenie części i sprawdzenie uzwojeń, obudowy oraz połączeń.</li>
+      <li>Weryfikacja elementów zużywalnych i dobór części według modelu podzespołu.</li>
+      <li>Test po złożeniu. W alternatorze próba pod obciążeniem pozwala ocenić napięcie, prąd i tętnienia.</li>
+    </ol>
+    <p>Przed zleceniem porównaj zakres naprawy, jej koszt i warunki próby końcowej z warunkami wymiany podzespołu.</p>
+
+    <h2 id="rozrusznik">6. Rozrusznik: co się w nim zużywa</h2>
+    <p>W rozruszniku psuje się kilka rzeczy i warto wiedzieć które, bo objaw wskazuje na konkretny element:</p>
+    <ul>
+      <li><strong>Elektromagnes (automat)</strong> — pojedynczy głośny „klik" bez obrotu. Przyczyną bywają wypalone styki wewnątrz, które da się wymienić bez wymiany całego rozrusznika.</li>
+      <li><strong>Szczotki i komutator</strong> — wolne, ciężkie kręcenie mimo dobrego akumulatora i pełnego napięcia na zaciskach.</li>
+      <li><strong>Bendix (sprzęgło jednokierunkowe)</strong> — rozrusznik wiruje z wysokim dźwiękiem, ale nie zabiera koła zamachowego.</li>
+      <li><strong>Tuleje ślizgowe</strong> — zużycie powoduje ocieranie wirnika o magnesy albo bicie zębatki i wyszczerbienie wieńca koła zamachowego.</li>
+    </ul>
+    <p>Zanim jednak wymienimy rozrusznik, mierzymy napięcie na jego zacisku w czasie próby rozruchu. Jeśli między punktami pomiaru widać dużą różnicę, mierzymy osobno spadek po stronie zasilania i masy. Prąd rozruchu pomaga ocenić, czy przyczyna leży w połączeniu, rozruszniku lub obciążeniu mechanicznym.</p>
+
+    <h2 id="oszczednosc">7. Regeneracja vs nowy zamiennik – porównanie kosztów</h2>
+    <p>Porównaj wycenę regeneracji z ceną pasującego nowego podzespołu, uwzględniając montaż i warunki gwarancji. Jeśli korpus i uzwojenia są sprawne, mogą zostać w oryginalnym podzespole. Uszkodzenia wykryte przy rozbiórce mogą zmienić zakres prac.</p>
+    <p>Regeneracja bywa opłacalna, gdy części są drogie lub trudno dostępne, zamienniki mają niską jakość albo oryginał ma mocniejsze uzwojenie. Dotyczy to m.in. maszyn rolniczych, pojazdów użytkowych i starszych aut.</p>
+    <p>Nie zawsze jednak ma sens. Warto z niej zrezygnować, gdy oględziny wykażą przepalone uzwojenie stojana, pęknięty korpus albo zatarcie, które uszkodziło gniazda łożysk — koszt odbudowy zbliża się wtedy do ceny nowego podzespołu, a trwałość pozostaje niepewna.</p>
+
+    <h2 id="kontakt">8. Kiedy zgłosić usterkę instalacji pojazdu?</h2>
+    <p>F.W. DRUCIK diagnozuje instalacje elektryczne pojazdów. Naprawę lub regenerację alternatora albo rozrusznika zleć warsztatowi specjalizującemu się w tych podzespołach. Zobacz <a href="/uslugi/elektromechanika/">zakres usług elektrycznych F.W. DRUCIK</a>.</p>
+
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Czy można sprawdzić alternator, odłączając klemę przy pracującym silniku?</summary>
+        <p>Nie. To metoda z czasów instalacji bez elektroniki. Odłączenie akumulatora przy pracującym silniku powoduje skok napięcia, który potrafi uszkodzić sterowniki, radio i moduły komfortu. Alternator sprawdza się pomiarem napięcia i tętnienia przy podłączonym akumulatorze.</p>
+      </details>
+      <details>
+        <summary>Ile trwa regeneracja alternatora?</summary>
+        <p>Termin zależy od konstrukcji podzespołu i dostępności części. Potwierdź go u wykonawcy po oględzinach.</p>
+      </details>
+      <details>
+        <summary>Czy zregenerowany alternator jest gorszy od nowego?</summary>
+        <p>Nie, jeśli regeneracja objęła wszystkie elementy zużywalne, a uzwojenie i korpus są sprawne. Fabryczne uzwojenie miedziane bywa lepszej jakości niż w tanich zamiennikach, więc zregenerowany oryginał często pracuje dłużej niż nowa część z niższej półki.</p>
+      </details>
+      <details>
+        <summary>Czy naprawiacie alternatory i rozruszniki?</summary>
+        <p>Nie przyjmujemy alternatorów ani rozruszników do naprawy lub regeneracji. Diagnozujemy instalacje elektryczne pojazdów.</p>
+      </details>
+    </div>
+  </div>
+
+  <!-- Sekcja Komentarzy -->
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze Czytelników</h2>
+    <div id="comments-list">
+      <!-- Wczytywane z JS -->
+    </div>
+
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <div id="comment-note" style="font-size:0.9rem;font-weight:600;margin-bottom:10px;"></div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>

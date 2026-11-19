@@ -1,0 +1,94 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Magistrala LIN w pojazdach: rola i diagnostyka",
+  "description": "Dowiedz się, czym jest magistrala LIN, dlaczego uzupełnia sieć CAN i jak poprawnie diagnozować jej usterki w warsztacie samochodowym.",
+  "author": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "F.W. DRUCIK",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fwdrucik.pl/assets/favicon.png"
+    }
+  },
+  "datePublished": "2026-07-14",
+  "dateModified": "2026-07-14",
+  "inLanguage": "pl-PL",
+  "mainEntityOfPage": "https://fwdrucik.pl/blog/magistrala-lin-w-pojazdach-diagnostyka/"
+}
+</script>
+
+<article class="article-container" style="padding:60px 24px;">
+  <header style="margin-bottom:30px;">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge badge-blue">Elektronika i magistrale</span>
+      <span style="color:var(--muted);font-size:0.88rem;">⏱️ 8 min czytania</span>
+      <span style="color:var(--muted);font-size:0.88rem;">📅 08.08.2026</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:16px;">Magistrala LIN w pojazdach: rola i diagnostyka</h1>
+    <p class="lead" style="color:var(--metal-light);font-size:1.1rem;">LIN odciąża CAN w prostszych układach pojazdu. Poznaj zasady komunikacji i pomiarów przy diagnostyce.</p>
+  </header>
+  <!-- FILM:start -->
+  <div class="toc-box" style="margin-bottom:28px;"><div class="toc-title">🎬 Zobacz na filmie</div><div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin-top:12px;"><div style="flex:0 1 240px;"><video controls preload="none" playsinline poster="/wideo/2026-10-20-magistrala-lin-diagnostyka.jpg" width="540" height="960" style="width:100%;max-width:320px;aspect-ratio:9/16;border-radius:12px;background:#000;display:block;margin:0 auto;"><source src="/wideo/2026-10-20-magistrala-lin-diagnostyka.mp4" type="video/mp4">Twoja przeglądarka nie odtwarza wideo.</video><p style="font-size:0.9rem;margin-top:8px;text-align:center;">Rolka · <a href="https://www.instagram.com/fwdrucik/reel/DetXfbaM1_3/" target="_blank" rel="noopener">Instagram</a></p></div></div><p style="font-size:0.88rem;margin-top:10px;">Więcej filmów z warsztatu: <a href="/filmy/">wszystkie filmy</a>.</p></div>
+  <!-- FILM:end -->
+
+  <div class="toc-box">
+    <div class="toc-title">📍 Spis treści</div>
+    <ol class="toc-list">
+      <li><a href="#charakterystyka">Czym jest magistrala LIN i dlaczego powstała</a></li>
+      <li><a href="#elektryka">Parametry elektryczne i warstwa fizyczna</a></li>
+      <li><a href="#diagnostyka">Procedura diagnostyczna krok po kroku</a></li>
+      <li><a href="#oscyloskop">Interpretacja przebiegów na oscyloskopie</a></li>
+      <li><a href="#warsztat">Jak możemy pomóc w F.W. DRUCIK</a></li>
+    </ol>
+  </div>
+
+  <div id="blog-full-content" class="article-body">
+    <h2 id="charakterystyka">1. Czym jest magistrala LIN i dlaczego powstała</h2>
+<p>Magistrala LIN została opracowana jako tania alternatywa dla sieci CAN w zastosowaniach, gdzie wysoka przepustowość nie jest wymagana. Podczas gdy CAN obsługuje kluczowe systemy (silnik, ABS, skrzynia biegów), LIN zajmuje się komfortem: sterowaniem szybami, lusterkami, oświetleniem wnętrza czy czujnikami deszczu.</p><p>W LIN jeden master zarządza komunikacją, a urządzenia slave odpowiadają na zapytania. Maksymalna prędkość to 20 kbit/s; rzeczywistą konfigurację sprawdź w dokumentacji pojazdu.</p>
+
+    <h2 id="elektryka">2. Parametry elektryczne i warstwa fizyczna</h2>
+<p>LIN wykorzystuje pojedynczą linię transmisyjną (Single-Wire). Poziom logiczny 1 (recesywny) odpowiada napięciu bliskiemu napięciu zasilania akumulatora (Vbat), natomiast poziom logiczny 0 (dominujący) to napięcie bliskie masie (GND).</p><p>Kluczowe parametry fizyczne:</p><ul><li>Napięcie zasilania: zazwyczaj 12V (wartość orientacyjna, sprawdź w dokumentacji serwisowej).</li><li>Rezystancja pull-up: w sterowniku Master wymagany jest rezystor podciągający (zazwyczaj 1 kΩ).</li><li>Dopuszczalne zakłócenia: ze względu na pojedynczą linię, magistrala jest bardziej podatna na zakłócenia elektromagnetyczne niż różnicowy CAN.</li></ul><p><strong>BHP:</strong> Podczas pomiarów oscyloskopowych należy uważać, aby nie doprowadzić do zwarcia linii danych do masy lub zasilania, co może uszkodzić transceivery w sterownikach.</p>
+
+    <h2 id="diagnostyka">3. Procedura diagnostyczna krok po kroku</h2>
+<p>Diagnostyka magistrali LIN wymaga podejścia systemowego. Poniższa tabela przedstawia standardowe kroki weryfikacji:</p><table><thead><tr><th>Krok</th><th>Czynność</th><th>Cel</th></tr></thead><tbody><tr><td>1</td><td>Pomiar napięcia DC</td><td>Weryfikacja obecności zasilania i stanu linii w spoczynku.</td></tr><tr><td>2</td><td>Analiza oscyloskopowa</td><td>Sprawdzenie kształtu przebiegu i częstotliwości ramek.</td></tr><tr><td>3</td><td>Test ciągłości</td><td>Weryfikacja połączeń między Master a Slave.</td></tr><tr><td>4</td><td>Odłączanie modułów</td><td>Izolacja uszkodzonego sterownika Slave blokującego magistralę.</td></tr></tbody></table><p>Jeśli magistrala nie działa, najczęstszą przyczyną jest uszkodzenie jednego z modułów Slave, który "ciągnie" linię do masy lub zasilania, uniemożliwiając komunikację pozostałym urządzeniom.</p>
+
+    <h2 id="oscyloskop">4. Interpretacja przebiegów na oscyloskopie</h2>
+<p>Podczas diagnostyki oscyloskopowej sprawdź czasy narastania i opadania sygnału. Zbyt wolne narastanie może świadczyć o zbyt dużej pojemności linii lub uszkodzeniu rezystora podciągającego. Wartości te są zależne od długości wiązki i liczby podłączonych modułów.</p><p>Pamiętaj, że kasowanie kodów błędów bez usunięcia przyczyny (np. przetartej wiązki lub uszkodzonego modułu) jest bezcelowe. Sterownik ponownie wygeneruje błąd komunikacji, gdy tylko magistrala zostanie zainicjowana.</p>
+
+    <h2 id="warsztat">5. Jak możemy pomóc w F.W. DRUCIK</h2>
+<p>W warsztacie F.W. DRUCIK przy ul. Domosław 13A (06-120 Winnica) zajmujemy się zaawansowaną diagnostyką układów elektronicznych. Jeśli masz problem z komunikacją w pojeździe, zapraszamy do skorzystania z naszych usług w zakresie <a href="/uslugi/elektromechanika/">elektromechaniki</a>.</p><p>Kontakt: 601 726 924, fwdrucik@gmail.com. Pon.–pt. 8–17, sob. 9–13. NIP: 888-292-19-00. Na wizytę przygotuj dokumentację techniczną pojazdu.</p>
+
+    <h2 id="faq">Najczęstsze pytania</h2>
+    <div class="faq">
+      <details>
+        <summary>Czy magistrala LIN może działać, gdy odłączę jeden z modułów?</summary>
+        <p>Tak, magistrala LIN zazwyczaj pozostanie sprawna dla pozostałych modułów, o ile uszkodzony sterownik nie powoduje zwarcia linii do masy lub zasilania. W przypadku zwarcia, cała magistrala przestaje działać.</p>
+      </details>
+      <details>
+        <summary>Dlaczego LIN używa tylko jednego przewodu?</summary>
+        <p>Zastosowanie jednego przewodu znacząco redukuje koszty produkcji wiązek elektrycznych w samochodzie. Jest to wystarczające dla systemów o niskim priorytecie i małej prędkości transmisji danych.</p>
+      </details>
+      <details>
+        <summary>Jakie napięcie powinienem zobaczyć na oscyloskopie?</summary>
+        <p>W stanie spoczynku napięcie powinno być bliskie napięciu akumulatora, czyli około 12V. Podczas transmisji danych napięcie będzie pulsować w dół do poziomu bliskiego 0V.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="comments-section">
+    <h2 style="font-size:1.4rem;color:#fff;margin-bottom:20px;">💬 Komentarze czytelników</h2>
+    <div id="comments-list"></div>
+    <form id="comment-form" style="margin-top:24px;">
+      <div style="margin-bottom:12px;">
+        <textarea id="comment-text" class="form-control" rows="3" placeholder="Napisz komentarz lub zadaj pytanie..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+    </form>
+  </section>
+</article>
